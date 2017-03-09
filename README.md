@@ -3,29 +3,30 @@
 Todo
 ---
 
-- [] init
-	- [] history 
+- [ ] init
+	- [ ] history 
 
-- [] edit input
-	- [] affichage prompt
-	- [] lecture
-	- [] history (up/down)
-	- [] gauche/dte/insertion
-	- [] copier/coller
-	- [] deplacement mot droite/gauche
-	- [] edition sur plusieurs lignes
-	- [] home/end
-	- [] ctrl-c
-	- [] ctrl-d
+- [ ] edit input
+	- [ ] affichage prompt
+	- [ ] lecture
+	- [ ] history (up/down)
+	- [ ] gauche/dte/insertion
+	- [ ] copier/coller
+	- [ ] deplacement mot droite/gauche
+	- [ ] edition sur plusieurs lignes
+	- [ ] home/end
+	- [ ] ctrl-c
+	- [ ] ctrl-d
 
-- [] break input
+- [ ] break input
 
-- [] parse input
+- [ ] parse input
 
-- [] word expansion
+- [ ] word expansion
 
-- [] redirection
+- [ ] redirection
 
-- [] execution
+- [ ] execution
 
-- [] wait
+- [ ] wait
+
