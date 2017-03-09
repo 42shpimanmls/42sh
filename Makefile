@@ -1,8 +1,8 @@
 PROG_NAME = 42sh
 
-COMPILER = gcc -c
+COMPILER = clang -c
 CFLAGS = -Wall -Wextra -Werror -g -I$(INCL_ROOT)
-LINKER = gcc
+LINKER = clang
 
 SRCS_ROOT = srcs
 INCL_ROOT = includes
@@ -24,7 +24,7 @@ $(PROG_NAME): $(OBJS_DIRS) $(OBJS)
 	@$(LINKER) -o $@ $(OBJS)
 
 $(OBJS_DIRS):
-	@mkdir $@
+	@mkdir -p $@
 
 $(OBJS_ROOT)/%.o: $(SRCS_ROOT)/%.c
 	@echo "COMPILE" $(patsubst $(SRCS_ROOT)/%.c,%,$^)
