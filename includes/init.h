@@ -1,0 +1,1 @@
+t_global	*ft_init(char **env);
