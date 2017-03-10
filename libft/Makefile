@@ -75,7 +75,9 @@ SRCO	=	$(SRCA:.c=.o)
 
 CC		=	gcc -g
 LIB		=	-L ./libft/ -lft
-FLAGS	=	-Wall -Wextra -Werror -pedantic 
+FLAGS	=	-Wall -Wextra -Werror -pedantic
+
+MAKE_OPTS = --no-print-directory -j9
 
 SRC 	=	$(patsubst %.c, $(SDIR)%.c, $(SRCA))
 HDR		=	$(patsubst %.h, $(HDIR)%.h, $(SRCH))
@@ -85,7 +87,7 @@ all: compil
 
 compil: 
 	@mkdir -p $(ODIR)
-	@make $(NAME)
+	@make $(NAME) $(MAKE_OPTS)
 
 $(NAME): $(OBJ) $(SRC)
 	@ar rc $(NAME) $(OBJ)
