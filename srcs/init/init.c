@@ -8,5 +8,7 @@ t_global	*ft_init(char **env)
 	ft_bzero(global, sizeof(t_global));
 	
 	global->env = ft_tabdup(env);
+	//READ HISTORY
+	
 	return (global);
 }
