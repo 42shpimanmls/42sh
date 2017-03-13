@@ -3,8 +3,11 @@
 
 /*# include "builtin_args.h"*/
 
-typedef void	(*t_builtin)(/*t_builtin_args *smth*/);
+# define BUILTIN_RET void
+# define BUILTIN_ARGS /*t_builtin_args *smth*/
 
-void 	builtin_cd(/*t_builtin_args *smth*/);
+typedef BUILTIN_RET	(*t_builtin)(BUILTIN_ARGS);
+
+BUILTIN_RET 		builtin_cd(BUILTIN_ARGS);
 
 #endif

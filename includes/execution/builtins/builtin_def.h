@@ -2,11 +2,18 @@
 # define BUILTIN_DEF_H
 
 # include "bool.h"
-# include "event_callbacks.h"
+# include "builtins.h"
 
 typedef enum				e_builtin_id
 {
-	EXIT_BUID = 0
+	CD_BUID = 0,
+	ECHO_BUID,
+	EXIT_BUID,
+	SETENV_BUID,
+	UNSETENV_BUID,
+	UNSET_BUID,
+	EXPORT_BUID,
+	HISTORY_BUID
 }							t_builtin_id;
 
 typedef struct				s_builtin_def
@@ -16,14 +23,13 @@ typedef struct				s_builtin_def
 	t_builtin const				builtin;
 }							t_builtin_def;
 
-# define BUILTIN_DEF_COUNT 1
+# define BUILTIN_DEF_COUNT 8
 
 t_builtin_def const			*get_builtin_defs(void);
 t_builtin_def const			*get_matching_builtin(char const *str);
 
-void								print_builtin_def(
-	t_builtin_def const *def);
-void								print_builtin_defs(void);
+void						print_builtin_def(t_builtin_def const *def);
+void						print_builtin_defs(void);
 
 
 

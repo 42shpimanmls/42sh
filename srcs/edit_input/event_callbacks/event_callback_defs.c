@@ -22,9 +22,9 @@ t_event_callback_def const			*get_event_callback_defs(void)
 		{ COPY_EVID,				"COPY",					"\x2",				NULL },
 		{ CUT_EVID,					"CUT",					"\xb",				NULL },
 		{ PASTE_EVID,				"PASTE",				"\x10",				NULL },
-		{ CANCEL,					"CANCEL",				"\x3",				NULL },
-		{ EXIT,						"EXIT",					"\x4",				NULL },
-		{ DELETE,					"DELETE",				"\x7f",				NULL }
+		{ CANCEL_EVID,				"CANCEL",				"\x3",				NULL },
+		{ EXIT_EVID,				"EXIT",					"\x4",				NULL },
+		{ DELETE_EVID,				"DELETE",				"\x7f",				NULL }
 	};
 	return (defs);
 }

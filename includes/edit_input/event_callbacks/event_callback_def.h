@@ -20,9 +20,9 @@ typedef enum				e_event_id
 	COPY_EVID,
 	CUT_EVID,
 	PASTE_EVID,
-	CANCEL,
-	EXIT,
-	DELETE
+	CANCEL_EVID,
+	EXIT_EVID,
+	DELETE_EVID
 }							t_event_id;
 
 typedef struct				s_event_callback_def
