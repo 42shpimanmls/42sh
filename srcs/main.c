@@ -4,12 +4,11 @@
 #include <init.h>
 #include <edit_input.h>
 #include <stdio.h>
+#include "utils.h"
 
 int main(int ac, char **av, char **env)
 {
-	/*print_token_defs();
-
-	printf("\nget_token_def(OR_TOKID):\n");
+	/*printf("\nget_token_def(OR_TOKID):\n");
 	print_token_def(get_token_def(OR_TOKID));
 	putchar('\n');
 
@@ -21,8 +20,12 @@ int main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+
 	init(env);
-	//ft_puttab(global->env);
+
+	print_token_defs();
+
+	event_callback_test();
 
 	line = edit_input();
 	ft_printf("return edit_input = %s\n", line);

@@ -6,7 +6,23 @@
 
 typedef enum				e_event_id
 {
-	CURSOR_RIGHT_EVID = 0
+	NEWLINE_EVID = 0,
+	CURSOR_LEFT_EVID,
+	CURSOR_RIGHT_EVID,
+	CURSOR_UP_EVID,
+	CURSOR_DOWN_EVID,
+	CURSOR_HOME_EVID,
+	CURSOR_END_EVID,
+	CURSOR_WORD_RIGHT_EVID,
+	CURSOR_WORD_LEFT_EVID,
+	HISTORY_UP_EVID,
+	HISTORY_DOWN_EVID,
+	COPY_EVID,
+	CUT_EVID,
+	PASTE_EVID,
+	CANCEL,
+	EXIT,
+	DELETE
 }							t_event_id;
 
 typedef struct				s_event_callback_def
@@ -17,7 +33,8 @@ typedef struct				s_event_callback_def
 	t_event_callback const	callback;
 }							t_event_callback_def;
 
-# define EVENT_CALLBACK_DEF_COUNT 1
+# define EVENT_CALLBACK_DEF_COUNT 17
+# define EVENT_STR_MAX_LEN 6
 
 t_event_callback_def const			*get_event_callback_defs(void);
 t_event_callback_def const			*get_matching_event_callback(

@@ -37,6 +37,7 @@ void						print_token_defs(void)
 	t_token_def const	*defs;
 	t_uint				u;
 
+	printf("TOKEN DEFS:\n");
 	defs = get_token_defs();
 	u = 0;
 	while (u < TOKEN_DEF_COUNT)

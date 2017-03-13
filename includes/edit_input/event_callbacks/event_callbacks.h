@@ -3,8 +3,11 @@
 
 /*# include "editor.h"*/
 
-typedef void	(*t_event_callback)(/*t_editor *ed*/);
+# define EV_CB_RET void
+# define EV_CB_ARGS /*t_editor ed*/
 
-void 	event_cursor_right(/*t_editor *editor*/);
+typedef EV_CB_RET	(*t_event_callback)(EV_CB_ARGS);
+
+EV_CB_RET 	event_cursor_right(EV_CB_ARGS);
 
 #endif
