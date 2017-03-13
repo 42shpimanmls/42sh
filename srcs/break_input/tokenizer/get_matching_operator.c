@@ -16,7 +16,7 @@ t_token_def const			*get_matching_operator(char const *str)
 	{
 		if (defs[u].str != NULL && strncmp(defs[u].str, str, strlen(str)) == 0)
 			return (defs + u);
-		u += 1;
+		u++;
 	}
 	return (NULL);
 }

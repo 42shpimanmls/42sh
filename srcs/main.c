@@ -1,13 +1,13 @@
 #include "break_input/tokenizer/token_def.h"
 #include <stdlib.h>
-#include <global.h>
+#include "shell_env.h"
 #include <init.h>
 #include <edit_input.h>
 #include <stdio.h>
 
 int main(int ac, char **av, char **env)
 {
-	print_token_defs();
+	/*print_token_defs();
 
 	printf("\nget_token_def(OR_TOKID):\n");
 	print_token_def(get_token_def(OR_TOKID));
@@ -15,15 +15,14 @@ int main(int ac, char **av, char **env)
 
 	printf("\nget_matching_operator(\"&\"):\n");
 	print_token_def(get_matching_operator("&"));
-	putchar('\n');
+	putchar('\n');*/
 
-	t_global 	*global;
 	char 		*line;
 
 	(void)ac;
 	(void)av;
-	global = ft_init(env);
-	ft_puttab(global->env);
+	init(env);
+	//ft_puttab(global->env);
 
 	line = edit_input();
 	ft_printf("return edit_input = %s\n", line);

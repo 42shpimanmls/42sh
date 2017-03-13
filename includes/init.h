@@ -1,1 +1,6 @@
-t_global	*ft_init(char **env);
+#ifndef INIT_H
+# define INIT_H
+
+void	init(char **env);
+
+#endif

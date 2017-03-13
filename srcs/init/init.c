@@ -1,14 +1,19 @@
-#include <global.h>
+#include "shell_env.h"
 
-t_global	*ft_init(char **env)
+static void	init_variables_list(t_shell_env	*shell_env)
 {
-	t_global	*global;
+	extern char **environ;
+	ft_puttab(environ);
+	(void)shell_env;
+}
 
-	global = (t_global *)malloc(sizeof(t_global));
-	ft_bzero(global, sizeof(t_global));
-	
-	global->env = ft_tabdup(env);
+void	init()
+{
+	t_shell_env		*shell_env;
+
+	shell_env = get_shell_env();
+	ft_bzero(shell_env, sizeof(shell_env));
+	init_variables_list(shell_env);
+	//init_history(shell_env);
 	//READ HISTORY
-	
-	return (global);
 }

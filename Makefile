@@ -13,7 +13,7 @@ OBJS_ROOT = objs
 SRCS_DIRS = $(shell find $(SRCS_ROOT) -type d)
 OBJS_DIRS = $(patsubst $(SRCS_ROOT)%, $(OBJS_ROOT)%, $(SRCS_DIRS))
 
-SRCS = $(shell find $(SRCS_ROOT) -type f)
+SRCS = $(filter %.c,$(shell find $(SRCS_ROOT) -type f))
 OBJS = $(patsubst $(SRCS_ROOT)/%.c, $(OBJS_ROOT)/%.o, $(SRCS))
 
 MAKE_OPTS 			= --no-print-directory

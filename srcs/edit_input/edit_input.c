@@ -1,4 +1,4 @@
-#include <global.h>
+#include <libft.h>
 
 char *edit_input()
 {
