@@ -32,3 +32,4 @@
 *.dSYM/
 
 42sh
+**/.DS_Store
