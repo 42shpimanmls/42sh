@@ -3,7 +3,7 @@
 
 # include <stdlib.h>
 # include <libft.h>
-# include "bool.h"
+# include <stdbool.h>
 
 typedef struct			s_history
 {
@@ -17,7 +17,7 @@ typedef struct			s_variable
 	struct s_variable	*next;
 	char				*name;
 	char				*value;
-	t_bool				exported;
+	bool				exported;
 }						t_variable;
 
 typedef struct			s_shell_env

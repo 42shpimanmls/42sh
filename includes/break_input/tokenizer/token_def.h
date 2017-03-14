@@ -2,7 +2,7 @@
 # define TOKEN_DEF_H
 
 # include "token_id.h"
-# include "bool.h"
+# include <stdbool.h>
 
 typedef struct				s_token_def
 {

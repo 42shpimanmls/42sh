@@ -1,7 +1,7 @@
 #ifndef EVENT_CALLBACK_DEF_H
 # define EVENT_CALLBACK_DEF_H
 
-# include "bool.h"
+# include <stdbool.h>
 # include "event_callbacks.h"
 
 typedef enum				e_event_id
