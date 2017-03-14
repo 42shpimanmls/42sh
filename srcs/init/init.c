@@ -27,12 +27,13 @@ void	init()
 	t_shell_env		*shell_env;
 
 	shell_env = get_shell_env();
-	ft_bzero(shell_env, sizeof(shell_env));
+	ft_bzero(shell_env, sizeof(t_shell_env));
 	init_variables_list(shell_env);
 	// pop_variable_by_name(&shell_env->variables, "PATH");
 	// pop_variable_by_name(&shell_env->variables, "_");
 	// pop_variable_by_name(&shell_env->variables, "TERM_SESSION_ID");
-	print_variable(shell_env->variables);
+	//print_variable(shell_env->variables);
 	//init_history(shell_env);
 	//READ HISTORY
+	shell_env->should_run = true;
 }
