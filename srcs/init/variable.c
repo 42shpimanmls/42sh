@@ -5,7 +5,7 @@ t_variable *create_variable(char *name, char *value, bool exported)
 {
 	t_variable *v;
 
-	v = (t_variable *)memalloc_or_die(sizeof(t_variable));
+	v = memalloc_or_die(sizeof(t_variable));
 	v->name = ft_strdup(name);
 	v->value = ft_strdup(value);
 	v->exported = exported;

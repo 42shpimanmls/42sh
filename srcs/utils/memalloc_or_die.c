@@ -4,7 +4,7 @@ void	*memalloc_or_die(size_t size)
 {
 	void * m;
 
-	m = (void *)malloc(size);
+	m = malloc(size);
 	if (!m)
 	{
 		ft_printf("Oh no! malloc is too heavy for me");
