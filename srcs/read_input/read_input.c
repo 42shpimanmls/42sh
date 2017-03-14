@@ -3,20 +3,14 @@
 
 static void handle_command_string(t_shell_env *shell_env)
 {
-	ft_memdel((void**)&shell_env->input_string);
-	if (!shell_env->should_keep_reading)
-		shell_env->input_string = shell_env->command_string;
-	else
-		shell_env->should_run = false;
+	shell_env->input_string = ft_strdup(shell_env->command_string);
+	shell_env->should_run = false;
 }
 
 static void handle_stdin(t_shell_env *shell_env)
 {
-	ft_memdel((void**)&shell_env->input_string);
-	// if (in_a_terminal)
-		shell_env->input_string = edit_input();
-	// else
-		// shell_env->input = get_next_line(stdin)
+	shell_env->input_string = edit_input();
+	shell_env->should_run = false;
 }
 
 void	read_input()
