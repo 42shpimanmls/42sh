@@ -5,7 +5,7 @@ t_variable *create_variable(char *name, char *value, bool exported)
 {
 	t_variable *v;
 
-	v = (t_variable *)malloc_or_die(sizeof(t_variable));
+	v = (t_variable *)memalloc_or_die(sizeof(t_variable));
 	v->name = ft_strdup(name);
 	v->value = ft_strdup(value);
 	v->exported = exported;
@@ -25,13 +25,13 @@ void print_variable(t_variable *v)
 	}
 }
 
-void free_variable(t_variable **list)
+void free_variable(t_variable *list)
 {
-	if (*list)
+	if (list)
 	{
-		free((*list)->name);
-		free((*list)->value);
-		free((*list));
+		free(list->name);
+		free(list->value);
+		free(list);
 	}
 }
 
@@ -47,7 +47,7 @@ void pop_variable_by_name(t_variable **list, char *name)
 		if (!ft_strcmp(lst->name, name))
 		{
 			*addr = lst->next;
-			free_variable(&lst);
+			free_variable(lst);
 			return ;
 		}
 		addr = &(*addr)->next;

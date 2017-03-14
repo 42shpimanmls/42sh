@@ -1,6 +1,6 @@
 #include <libft.h>
 
-void	*malloc_or_die(size_t size)
+void	*memalloc_or_die(size_t size)
 {
 	void * m;
 
