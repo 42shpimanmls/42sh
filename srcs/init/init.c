@@ -1,5 +1,5 @@
 #include "shell_env.h"
-#include "variable.h"
+#include "init/init.h"
 
 static void	init_variables_list(t_shell_env	*shell_env)
 {
