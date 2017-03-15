@@ -11,7 +11,7 @@ t_builtin_def const			*get_builtin_defs(void)
 		{ CD_BUID,					"cd",					NULL },
 		{ ECHO_BUID,				"echo",					NULL },
 		{ EXIT_BUID,				"exit",					NULL },
-		{ SETENV_BUID, 				"setenv",				NULL },
+		{ SETENV_BUID, 				"setenv",				builtin_setenv },
 		{ UNSETENV_BUID, 			"unsetenv",				NULL },
 		{ UNSET_BUID, 				"unset",				NULL },
 		{ EXPORT_BUID,				"export",				NULL },

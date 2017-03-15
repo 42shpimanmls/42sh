@@ -1,40 +1,45 @@
-#include "break_input/tokenizer/token_def.h"
 #include <stdlib.h>
 #include "shell_env.h"
-#include <init.h>
-#include <edit_input.h>
+#include "ftsh.h"
+#include "init/init.h"
 #include <stdio.h>
 #include "utils.h"
-#include "history.h"
+#include "abstract_list.h"
+#include "break_input/tokenizer/token.h"
 
-int main(int ac, char **av, char **env)
+void test_tokens(void)
 {
-	/*printf("\nget_token_def(OR_TOKID):\n");
-	print_token_def(get_token_def(OR_TOKID));
-	putchar('\n');
-
-	printf("\nget_matching_operator(\"&\"):\n");
-	print_token_def(get_matching_operator("&"));
-	putchar('\n');*/
-
-	char 		*line;
-
-	(void)ac;
-	(void)av;
-
-	init(env);
-	load_history(get_shell_env(), HISTFILE);
-	print_history(get_shell_env()->history);
-
+	t_token *token;
+	t_token *list;
 
 	print_token_defs();
+	list = NULL;
+	ft_putendl("TOKENS TEST:");
+	token = construct_token("1337", '<');
+	list_push_back((t_abstract_list**)&list, (t_abstract_list*)token);
+	token = construct_token("1337", ' ');
+	list_push_back((t_abstract_list**)&list, (t_abstract_list*)token);
+	token = construct_token(";", 'e');
+	list_push_back((t_abstract_list**)&list, (t_abstract_list*)token);
+	token = construct_token("echo", ' ');
+	list_push_back((t_abstract_list**)&list, (t_abstract_list*)token);
+	print_tokens(list);
+	ft_putendl("DONE TOKENS TEST");
+}
 
-	event_callback_test();
+static void		main_loop()
+{
+	read_input();
+	break_input();
+	//parse_input();
+	//execute_tree();
+}
 
-	line = edit_input();
-	ft_printf("return edit_input = %s\n", line);
-
-	//CALL BREAK_INPUT(char *line);
-
+int				main(int ac, char **av)
+{
+	init(ac, av);
+	test_tokens();
+	while (get_shell_env()->should_run)
+		main_loop();
 	return (EXIT_SUCCESS);
 }

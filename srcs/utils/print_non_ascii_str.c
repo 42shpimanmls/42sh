@@ -1,4 +1,6 @@
 #include <libft.h>
+
+// le %x du printf de la libft marche pas donc je laisse pour l'instant
 #include <stdio.h>
 
 void						print_non_ascii_str(char const *str)
@@ -8,7 +10,7 @@ void						print_non_ascii_str(char const *str)
 		if (!ft_isprint(*str))
 			printf("\\x%x", *str);
 		else
-			printf("%c", *str);
+			ft_putchar(*str);
 		str++;
 	}
 }

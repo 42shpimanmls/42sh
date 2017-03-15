@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <libft.h>
 #include <fcntl.h>
-#include "edit_input/event_callbacks/event_callback_def.h"
+#include "read_input/event_callbacks/event_callback_def.h"
 
 static void	termios_init(void)
 {
@@ -30,7 +30,7 @@ void	event_callback_test(void)
 
 	setbuf(stdout, NULL);
 	termios_init();
-	printf("EVENT CALLBACKS TEST, press any key:\n");
+	ft_putendl("EVENT CALLBACKS TEST, press any key:");
 	while ((ret = read(0, buf, EVENT_STR_MAX_LEN)) > 0)
 	{
 		buf[ret] = '\0';

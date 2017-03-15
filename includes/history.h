@@ -3,14 +3,11 @@
 
 #define HISTFILE ".42sh_history"  // exported env variable dans les shells
 
-typedef	struct s_hist_opt
+/*typedef	struct s_hist_opt
 {
 	
 }				t_hist_opt;
-{
-	
-};
-
+*/
 /*
 **		load_history.c
 */
