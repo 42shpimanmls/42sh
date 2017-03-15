@@ -6,9 +6,7 @@ void print_token(t_token const *token)
 {
 	ft_printf("%s: s=\"", token->type->name);
 	print_non_ascii_str(token->str);
-	ft_putstr("\", d='");
-	ft_putchar(token->delimiter);
-	ft_putendl("'");
+	ft_putendl("\"");
 }
 
 void print_tokens(t_token const *tokens)

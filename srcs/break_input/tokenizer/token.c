@@ -10,7 +10,6 @@ t_token	*construct_token(char const *str, char delim)
 	token = memalloc_or_die(sizeof(t_token));
 	token->type = get_token_def(TOKEN_TOKID);
 	token->str = ft_strdup(str);
-	token->delimiter = delim;
-	lex_me(token);
+	lex_me(token, delim);
 	return (token);
 }

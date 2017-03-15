@@ -33,9 +33,9 @@ static bool	is_io_number(char c)
 	return (false);
 }
 
-static bool	lex_io_number(t_token *token)
+static bool	lex_io_number(t_token *token, char delim)
 {
-	if (str_is_digits(token->str) && is_io_number(token->delimiter))
+	if (str_is_digits(token->str) && is_io_number(delim))
 	{
 		token->type = get_token_def(IO_NUMBER_TOKID);
 		return (true);
@@ -43,8 +43,8 @@ static bool	lex_io_number(t_token *token)
 	return (false);
 }
 
-void		lex_me(t_token *token)
+void		lex_me(t_token *token, char delim)
 {
 	if (!lex_operator(token))
-		lex_io_number(token);
+		lex_io_number(token, delim);
 }
