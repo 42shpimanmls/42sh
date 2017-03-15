@@ -28,18 +28,4 @@ typedef struct			s_shell_env
 
 t_shell_env				*get_shell_env(void);
 
-/*struct s_abstract_list
-{
-	struct s_abstract_list	*next;
-}
-
-struct s_abstract_list
-{
-	struct s_abstract_list	*next;
-	struct s_abstract_list	*prev;
-}
-
-
-size_t count_list(s_abstract_list *it);*/
-
 #endif
