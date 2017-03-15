@@ -37,8 +37,8 @@ static void		main_loop()
 
 int				main(int ac, char **av)
 {
+	setbuf(stdout, NULL);
 	init(ac, av);
-	test_tokens();
 	while (get_shell_env()->should_run)
 		main_loop();
 	return (EXIT_SUCCESS);
