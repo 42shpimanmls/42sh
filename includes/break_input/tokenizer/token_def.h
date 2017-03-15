@@ -17,6 +17,7 @@ t_token_def const			*get_token_def(t_token_id id);
 t_token_def const			*get_token_defs(void);
 
 t_token_def const			*get_matching_operator(char const *str);
+t_token_def const			*get_operator(char const *str);
 
 void						print_token_def(t_token_def const *def);
 void						print_token_defs(void);
