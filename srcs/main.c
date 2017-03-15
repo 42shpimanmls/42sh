@@ -2,7 +2,6 @@
 #include "shell_env.h"
 #include "ftsh.h"
 #include "init/init.h"
-#include <edit_input.h>
 #include <stdio.h>
 #include "utils.h"
 #include "abstract_list.h"
