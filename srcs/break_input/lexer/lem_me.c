@@ -6,7 +6,7 @@ static bool	lex_operator(t_token *token)
 {
 	t_token_def const	*match;
 
-	match = get_matching_operator(token->str);
+	match = get_operator(token->str);
 	if (match != NULL)
 	{
 		token->type = match;
