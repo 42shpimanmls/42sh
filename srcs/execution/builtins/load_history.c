@@ -6,7 +6,9 @@ void		print_history(t_history *history)//, int n) // easier with total nb of ent
 	int	i;
 
 	i = 1;
-	while (history)
+	// if (history->next)
+	// 	print_history(history->next);
+	while(history)
 	{
 		ft_putnbr(i++);
 		ft_putstr("  ");
@@ -21,13 +23,15 @@ t_history	*create_history_elem(char *line)
 
 	new = (t_history *)malloc(sizeof(t_history));
 	new->line = ft_strdup(line);
+	new->appended = false;
 	new->next = NULL;
 	new->prev = NULL;
 	return(new);
 }
 
-void	add_to_history(t_history **history, t_history *new) // keep track of nb of entries?
+void	add_to_history(t_history **history, t_history *new) // keep track of nb of entries? /// most recent at beg or end of list?
 {
+	
 		if (!*history)
 			*history = new;
 		else if ((*history)->next)
@@ -37,6 +41,15 @@ void	add_to_history(t_history **history, t_history *new) // keep track of nb of 
 			(*history)->next = new;
 			new->prev = *history;
 		}
+
+/*
+	if (*history)
+	{
+		(*history)->prev = new;
+		new->next = *history;
+	}
+	*history = new;
+	*/
 }
 
 void	load_history(t_shell_env *shell_env, char *filename)

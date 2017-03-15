@@ -24,7 +24,7 @@ int main(int ac, char **av, char **env)
 
 	init(env);
 	load_history(get_shell_env(), HISTFILE);
-
+	print_history(get_shell_env()->history);
 
 
 	print_token_defs();
