@@ -11,6 +11,8 @@ typedef struct	s_token
 	//struct s_token		*prev; ?
 }				t_token;
 
+t_token *tokenize(char const *input);
+
 t_token	*construct_token(char const *str, char delim);
 
 void	print_token(t_token const *token);
