@@ -5,6 +5,7 @@
 #include <edit_input.h>
 #include <stdio.h>
 #include "utils.h"
+#include "history.h"
 
 int main(int ac, char **av, char **env)
 {
@@ -22,6 +23,9 @@ int main(int ac, char **av, char **env)
 	(void)av;
 
 	init(env);
+	load_history(get_shell_env(), HISTFILE);
+
+
 
 	print_token_defs();
 

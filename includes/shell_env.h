@@ -9,7 +9,8 @@ typedef struct			s_history
 {
 	struct s_history	*next;
 	char				*line;
-	struct s_history	*prec;
+	bool				appended;
+	struct s_history	*prev;
 }						t_history;
 
 typedef struct			s_variable
