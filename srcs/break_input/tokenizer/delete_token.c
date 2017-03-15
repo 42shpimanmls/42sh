@@ -19,7 +19,7 @@ void	delete_all_tokens(t_token **tokens_addr)
 	t_token *token;
 
 	token = *tokens_addr;
-	if (token->next != NULL)
+	if (token != NULL)
 		delete_all_tokens(&token->next);
 	delete_token(tokens_addr);
 }
