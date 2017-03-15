@@ -25,6 +25,19 @@ void print_variable(t_variable *v)
 	}
 }
 
+bool check_if_variable_exist(t_variable *v, char *name)
+{
+	while (v)
+	{
+		if (!ft_strcmp(v->name, name))
+		{
+			return (true);
+		}
+		v = v->next;
+	}
+	return (false);
+}
+
 void free_variable(t_variable *list)
 {
 	if (list)
