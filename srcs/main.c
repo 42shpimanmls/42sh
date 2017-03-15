@@ -5,6 +5,28 @@
 #include <edit_input.h>
 #include <stdio.h>
 #include "utils.h"
+#include "abstract_list.h"
+#include "break_input/tokenizer/token.h"
+
+void test_tokens(void)
+{
+	t_token *token;
+	t_token *list;
+
+	print_token_defs();
+	list = NULL;
+	ft_putendl("TOKENS TEST:");
+	token = construct_token("1337", '<');
+	list_push_back((t_abstract_list**)&list, (t_abstract_list*)token);
+	token = construct_token("1337", ' ');
+	list_push_back((t_abstract_list**)&list, (t_abstract_list*)token);
+	token = construct_token(";", 'e');
+	list_push_back((t_abstract_list**)&list, (t_abstract_list*)token);
+	token = construct_token("echo", ' ');
+	list_push_back((t_abstract_list**)&list, (t_abstract_list*)token);
+	print_tokens(list);
+	ft_putendl("DONE TOKENS TEST");
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -23,8 +45,7 @@ int main(int ac, char **av, char **env)
 
 	init(env);
 
-	print_token_defs();
-
+	test_tokens();
 	event_callback_test();
 
 	line = edit_input();
