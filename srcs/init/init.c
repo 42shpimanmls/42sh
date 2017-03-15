@@ -1,6 +1,7 @@
 #include "shell_env.h"
 #include "init/init.h"
-#include "execution/builtins/builtins.h"  //remove 
+// #include "execution/builtins/builtins.h"  //remove 
+#include "abstract_list.h"
 
 static void	init_variables_list(t_shell_env	*shell_env)
 {
@@ -17,7 +18,8 @@ static void	init_variables_list(t_shell_env	*shell_env)
 			ft_strlen(line[0]) > 0 && ft_strlen(line[1]) > 0)
 		{
 			var = create_variable(line[0], line[1], true);
-			list_push_back(&shell_env->variables, var);
+			list_push_back((t_abstract_list**)&shell_env->variables\
+				, (t_abstract_list*)var);
 		}
 		ft_freetabchar(line);
 	}
@@ -32,7 +34,7 @@ void	init(int ac, char **av)
 	parse_options(ac, av, shell_env);
 	init_variables_list(shell_env);
 
-	//////////////TEST SETENV UNSETENV /////////////
+	// ////////////TEST SETENV UNSETENV /////////////
 	// ft_printf("Before env---------\n");
 	// print_variable(shell_env->variables);
 	// ft_printf("-------------------\n");
@@ -46,7 +48,7 @@ void	init(int ac, char **av)
 	// ft_printf("After env---------\n");
 	// print_variable(shell_env->variables);
 	// ft_printf("-------------------\n");
-	//////////////     ///////////     /////////////
+	// ////////////     ///////////     /////////////
 
 	//init_history(shell_env);
 	//READ HISTORY

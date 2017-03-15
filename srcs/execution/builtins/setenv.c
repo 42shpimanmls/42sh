@@ -1,6 +1,8 @@
 #include "builtin_def.h"
 #include <libft.h>
 #include "shell_env.h"
+#include "abstract_list.h"
+
 #include "init/init.h"  // replace by envHelper
 
 BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS)
@@ -21,7 +23,8 @@ BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS)
 			{
 				builtin_unsetenv(1, (char *[]){argv[0], NULL});
 			}
-			list_push_back(env, create_variable(argv[0], argv[1], true));
+			list_push_back((t_abstract_list**)env, 
+				(t_abstract_list*)create_variable(argv[0], argv[1], true));
 		}
 	}
 	else

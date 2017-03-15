@@ -67,18 +67,3 @@ void pop_variable_by_name(t_variable **list, char *name)
 		lst = *addr;
 	}
 }
-
-void list_push_back(t_variable **list, t_variable *new)
-{
-	t_variable *tmp;
-
-	if (*list == NULL)
-		*list = new;
-	else
-	{
-		tmp = *list;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}	
-}

@@ -1,34 +1,32 @@
 #include "token_def.h"
 #include "uint.h"
-
-// REMPLACER LES PRINTFS ET PUTCHAR!!
-#include <stdio.h>
+#include <libft.h>
 
 static void					print_token_str(char const *str)
 {
 	char c;
 
-	printf(": ");
+	ft_putstr(": ");
 	if (str == NULL)
 	{
-		printf("not an operator");
+		ft_putstr("not an operator");
 		return ;
 	}
-	putchar('"');
+	ft_putchar('"');
 	while ((c = *str) != '\0')
 	{
 		if (c == '\n')
-			printf("\\n");
+			ft_putstr("\\n");
 		else
-			putchar(c);
+			ft_putchar(c);
 		str += 1;
 	}
-	putchar('"');
+	ft_putchar('"');
 }
 
 void						print_token_def(t_token_def const *def)
 {
-	printf("%s", def->name);
+	ft_printf("%s", def->name);
 	print_token_str(def->str);
 }
 
@@ -37,13 +35,13 @@ void						print_token_defs(void)
 	t_token_def const	*defs;
 	t_uint				u;
 
-	printf("TOKEN DEFS:\n");
+	ft_putstr("TOKEN DEFS:\n");
 	defs = get_token_defs();
 	u = 0;
 	while (u < TOKEN_DEF_COUNT)
 	{
 		print_token_def(defs + u);
-		putchar('\n');
+		ft_putchar('\n');
 		u += 1;
 	}
 }
