@@ -8,6 +8,4 @@ void		free_variable(t_variable *list);
 void		pop_variable_by_name(t_variable **list, char *name);
 void		parse_options(int argc, char **argv, t_shell_env *shell_env);
 
-void		parse_options(int argc, char **argv, t_shell_env *shell_env);
-
 #endif
