@@ -8,9 +8,73 @@
 # define MAX_READ_TERM 4
 
 #include "read_input/event_callbacks/event_callback_def.h"
+
 #include "utils.h"
+#include "abstract_list.h"
 
 
+typedef struct			s_string
+{
+	struct s_string		*next;
+	struct s_string		*prev;
+	char				c;
+}						t_string;
+
+
+void	add_to_string(t_string **s, char c)
+{
+	t_string *new;
+
+	new = memalloc_or_die(sizeof(t_string));
+	new->c = c;
+
+	if (!s)
+	{
+		s = &new;
+	}
+	else
+	{
+		list_push_back((t_abstract_list **)s, (t_abstract_list *)new);
+	}
+}
+
+void print_string(t_string *s)
+{
+	while (s)
+	{
+		ft_putchar(s->c);
+		s = s->next;
+	}
+	ft_putchar('\n');
+}
+
+char *get_string_from_list(t_string *s)
+{
+	char 	*str;
+	size_t	i;
+
+	str = memalloc_or_die(99); // change count len of list !!!!!!!!
+	i = 0;
+	while (s)
+	{
+
+		str[i] = s->c;
+		i++;
+		s = s->next;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+void free_string(t_string *s)
+{
+	while (s)
+	{
+		// free(s->c);
+		s = s->next;
+	}
+	free(s);
+}
 
 int		ft_start_termcaps(void)
 {
@@ -55,10 +119,39 @@ char	*ft_read_line()
 	return (ft_strdup(buf));
 }
 
+void	ft_clear_line(t_string *s)
+{
+	char *move_left = tgetstr("le", NULL);
+
+	while (s)
+	{
+		ft_putstr(move_left);
+		ft_putstr(tgetstr("ce", NULL));
+		s = s->next;
+	}
+	// while (t->i-- > 0)
+		// ft_putstr(e->move_left);
+	// ft_putstr(tgetstr("ce", NULL));
+}
+
+// void	ft_put_line(t_term *t, char *line)
+// {
+// 	ft_putstr(line);
+// 	ft_putstr(tgetstr("cd", NULL));
+// 	t->i = ft_strlen(line);
+// 	t->imax = t->i - 1;
+// 	free(t->res);
+// 	t->res = ft_strdup(line);
+// }
+
 char *edit_input()
 {
 	//TERMCAPS
-	char *line = NULL;
+	char		*line;
+	t_string	*s;
+
+	line = NULL;
+	s = NULL;
 
 	ft_start_termcaps();
 
@@ -66,30 +159,33 @@ char *edit_input()
 	ssize_t						ret;
 	t_event_callback_def const	*def;
 
-	setbuf(stdout, NULL);
-	// termios_init();
-	ft_putendl("EVENT CALLBACKS TEST, press any key:");
 	while ((ret = read(0, buf, EVENT_STR_MAX_LEN)) > 0)
 	{
 		buf[ret] = '\0';
-		ft_putstr("buf:\"");
-		print_non_ascii_str(buf);
-		ft_putendl("\"");
 		def = get_matching_event_callback(buf);
-		print_event_callback_def(def);
+		// print_event_callback_def(def);
 		if (def)
 		{
-			// Execute action
-			ft_printf("DEFINED\n");
+			if (def->id == NEWLINE_EVID)
+			{
+				break ;
+			}
 		}
 		else
 		{
-			// Add to line
-			ft_printf("NOT DEFINED\n");
+			if (buf[0])
+			{
+				add_to_string(&s, buf[0]);
+			}
 		}
+		ft_clear_line(s);
+		line = get_string_from_list(s);
+		ft_putstr(line);
+		free(line);
 	}
 	
 	ft_close_termcaps();
-
+	line = get_string_from_list(s);
+	free_string(s);
 	return (line);	
 }
