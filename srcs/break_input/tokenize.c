@@ -17,9 +17,11 @@ t_token			*tokenize(char const *input)
 		while (*state.current_char != '\0')
 			apply_rules(&state);
 		// rule 1
+#ifdef TOKENIZER_DEBUG
 		print_tokenizer_state(&state);
-		delimit_token(&state);
 		ft_putstr("rule 1 aka I'M DONE MOTHERF***ERZ\n");
+#endif
+		delimit_token(&state);
 	}
 	return (state.result);
 }
