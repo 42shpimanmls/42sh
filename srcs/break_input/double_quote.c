@@ -12,7 +12,7 @@ char const	*find_double_quote_end(t_tokenizer_state *state)
 	{
 		nc = *(it + 1);
 		if (*it == '`')
-			it = find_substitution_end(it);
+			it = find_substitution_end(it + 1);
 		if (*it == '\\' && (nc == '`' || nc == '"' || nc == '\\' || nc == '\n'))
 			it++;
 		else if (*it == '"')
