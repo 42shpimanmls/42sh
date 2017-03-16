@@ -39,10 +39,10 @@ void	init(int ac, char **av)
 	// print_variable(shell_env->variables);
 	// ft_printf("-------------------\n");
 
-	// char* argv[] = {"TEST", "testvar", NULL};
+	// char* argv[] = {"PROGNAME", "TEST", "testvar", NULL};
 	// builtin_setenv(ft_tablen(argv), argv);
 
-	// char* argv2[] = {"PATH", NULL};
+	// char* argv2[] = {"PROGNAME", "PATH", NULL};
 	// builtin_unsetenv(ft_tablen(argv), argv2);
 	
 	// ft_printf("After env---------\n");

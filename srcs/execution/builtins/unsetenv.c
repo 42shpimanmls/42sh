@@ -9,12 +9,12 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 	size_t		i;
 
 	env = &get_shell_env()->variables;	
-	if (argc > 0)
+	if (argc > 1)
 	{
-		i = -1;
+		i = 0;
 		while (argv[++i])
 		{
-			pop_variable_by_name(env, argv[0]);
+			pop_variable_by_name(env, argv[i]);
 		}
 	}
 	else

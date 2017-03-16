@@ -11,20 +11,20 @@ BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS)
 
 	env = &get_shell_env()->variables;
 
-	if (argc == 0)
+	if (argc == 1)
 	{
 		print_variable(*env);
 	}
-	else if (argc == 2)
+	else if (argc == 3)
 	{
-		if (ft_strlen(argv[0]) > 0)
+		if (ft_strlen(argv[1]) > 0)
 		{
 			if (check_if_variable_exist(*env, argv[0]))
 			{
-				builtin_unsetenv(1, (char *[]){argv[0], NULL});
+				builtin_unsetenv(2, (char *[]){argv[0], argv[1], NULL});
 			}
 			list_push_back((t_abstract_list**)env, 
-				(t_abstract_list*)create_variable(argv[0], argv[1], true));
+				(t_abstract_list*)create_variable(argv[1], argv[2], true));
 		}
 	}
 	else
