@@ -59,6 +59,9 @@ void			apply_rules(t_tokenizer_state *state)
 	// rule 5 (incomplete !! recursion not handled)
 	if (!is_quoted(state) && is_substitution_start(state->current_char))
 	{
+		// Weird, not referenced but necessary (or illogism)
+		if (state->word_start == NULL)
+			state->word_start = state->current_char;
 		state->current_char = find_substitution_end(state->current_char + 1) + 1;
 		ft_putstr("rule 5 aka ADD SUBSTITUTION TO WORD aka JUMP JUMP\n");
 		return ;
