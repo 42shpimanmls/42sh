@@ -44,6 +44,8 @@ static void		delimit_token(t_tokenizer_context *context)
 	if (*str != '\0')
 	{
 		token = construct_token(str, *context->current_char);
+		ft_putstr("DELIMITED: ");
+		print_token(token);
 		list_push_back((t_abstract_list**)&context->result
 			, (t_abstract_list*)token);
 	}
@@ -191,9 +193,9 @@ static bool		is_quoted(t_tokenizer_context *context)
 
 static void		print_state(t_tokenizer_context *context)
 {
-	ft_putstr("char '");
+	ft_putstr("'");
 	print_non_ascii_char(*context->current_char);
-	printf("' @%ld%s last_bsl@%ld sim_quo_end@%ld  dub_quo_end@%ld\n", context->current_char - context->input, is_quoted(context) ? " quoted" : ""
+	printf("'@%ld%s last_bsl@%ld sim_quo_end@%ld  dub_quo_end@%ld\n", context->current_char - context->input, is_quoted(context) ? " QUOTED" : ""
 		, context->last_backslash ? context->last_backslash - context->input : -1
 		, context->simple_quote_end ? context->simple_quote_end - context->input : -1
 		, context->double_quote_end ? context->double_quote_end - context->input : -1);
@@ -211,28 +213,28 @@ static void		apply_rules(t_tokenizer_context *context)
 		&& is_operator_part(context))
 	{
 		context->current_char++;
-		ft_putstr("rule 2\n");
+		ft_putstr("rule 2 aka ADD TO OPERATOR\n");
 		return ;
 	}
 	// rule 3
 	if (context->op_start != NULL && !is_operator_part(context))
 	{
 		delimit_token(context);
-		ft_putstr("rule 3\n");
+		ft_putstr("rule 3 aka DELIMIT OPERATOR\n");
 		return ;
 	}
 	// rule 4
 	if (is_quote(c) && !is_quoted(context))
 	{
 		apply_quoting(context);
-		ft_putstr("rule 4\n");
+		ft_putstr("rule 4 aka APPLY QUOTING\n");
 		return ;
 	}
 	// rule 5 (incomplete !! recursion not handled)
 	if (!is_quoted(context) && is_substition_op(c))
 	{
 		context->current_char = find_substitution_end(context->current_char + 1) + 1;
-		ft_putstr("rule 5\n");
+		ft_putstr("rule 5 aka ADD SUBSTITUTION TO WORD aka JUMP JUMP\n");
 		return ;
 	}
 	// rule 6
@@ -241,7 +243,7 @@ static void		apply_rules(t_tokenizer_context *context)
 		delimit_token(context);
 		context->op_start = context->current_char;
 		context->current_char++;
-		ft_putstr("rule 6\n");
+		ft_putstr("rule 6 aka START OPERATOR\n");
 		return ;
 	}
 	// rule 7
@@ -249,14 +251,14 @@ static void		apply_rules(t_tokenizer_context *context)
 	{
 		delimit_token(context);
 		context->current_char++;
-		ft_putstr("rule 7\n");
+		ft_putstr("rule 7 aka SKIP BLANK\n");
 		return ;
 	}
 	// rule 8
 	if (context->word_start != NULL)
 	{
 		context->current_char++;
-		ft_putstr("rule 8\n");
+		ft_putstr("rule 8 aka ADD TO WORD\n");
 		return ;
 	}
 	// rule 9
@@ -265,13 +267,13 @@ static void		apply_rules(t_tokenizer_context *context)
 		while (*(context->current_char + 1) != '\0'
 			&& *(context->current_char + 1) != '\n')
 			context->current_char++;
-		ft_putstr("rule 9\n");
+		ft_putstr("rule 9 aka SKIP COMMENT\n");
 		return ;
 	}
 	// rule 10
 	context->word_start = context->current_char;
 	context->current_char++;
-	ft_putstr("rule 10\n");
+	ft_putstr("rule 10 aka START WORD\n");
 }
 
 t_token			*tokenize(char const *input)
@@ -288,7 +290,7 @@ t_token			*tokenize(char const *input)
 		// rule 1
 		print_state(&context);
 		delimit_token(&context);
-		ft_putstr("rule 1\n");
+		ft_putstr("rule 1 aka I'M DONE MOTHERF***ERZ\n");
 	}
 	return (context.result);
 }
