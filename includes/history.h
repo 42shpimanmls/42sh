@@ -1,8 +1,9 @@
 #ifndef HISTORY_H
 # define HISTORY_H
 
+#include "execution/builtins/builtins.h"
+
 #define HISTFILE ".42sh_history"  // exported env variable in shells
-#include "builtins.h"
 
 
 typedef	struct s_hist_opt

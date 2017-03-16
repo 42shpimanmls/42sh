@@ -6,6 +6,19 @@
 # include <stdbool.h>
 # include "break_input/tokenizer/token.h"
 
+/* proposition
+
+typedef struct 			s_history
+{
+	size_t			size;
+	t_history_list	*last_elem
+	t_history_list	*history_list;
+}
+
+OR liste circulaire
+
+*/
+
 typedef struct			s_history
 {
 	struct s_history	*next;

@@ -3,10 +3,10 @@
 #include "builtin_def.h"
 #include "abstract_list.h"
 
-/*******   move this to utils  ******/
+/*******   move this to utils (from lem_me.c) ******/
 
 
-static bool	str_is_digits(char const *str)  // from lem_me.c, move to tools
+static bool	str_is_digits(char const *str)
 {
 	while (*str)
 	{
@@ -17,21 +17,37 @@ static bool	str_is_digits(char const *str)  // from lem_me.c, move to tools
 	return (true);
 }
 
-size_t list_count(t_abstract_list *list)
-{
-	size_t	n;
-
-	n = 0;
-	while (list)
-	{
-		n++;
-		list = list->next;
-	}
-	return (n);
-}
-
 
 /********/
+
+void		history_test()
+{
+	char 	*print[] = {"history"};
+	char	*print_offset[] = {"history", "3"};
+	// char	*delete_entry[] = {"history", "-d3"};
+	// char	*delete_entry2[] = {"history", "-d", "3"};
+	char	*error1[] = {"history", "l"}; // numeric argument required
+	char	*error2[] = {"history", "3", "coucou"}; // too many args
+	// char	*error3[] = {"history", "-ar"}; // more than one option from anrw
+
+	ft_putendl("----- HISTORY TESTS ------");
+
+	ft_putendl("PRINT: ");
+	builtin_history(1, print);
+	ft_putendl("PRINT_last_3: ");
+	builtin_history(2, print_offset);
+	ft_putendl("ERROR_NUM_ARG: ");
+	builtin_history(2, error1);
+	ft_putendl("ERROR_2MANY_ARGS: ");
+	builtin_history(3, error2);
+
+	// builtin_history(2, delete_entry);
+	// builtin_history(2, print_offset);
+	// builtin_history(3, delete_entry2);
+	// builtin_history(2, print_offset);
+
+	ft_putendl("--------------------------\n\n");
+}
 
 void		print_history(t_history *history, int start)
 {
@@ -51,16 +67,26 @@ void		print_history(t_history *history, int start)
 	}
 }
 
+void		print_history_n(bool more_args, char *n, t_history *history)
+{
+	if (more_args)
+		ft_putendl_fd("history: too many arguments", 2); //return error_func
+	else
+		print_history(history, list_count((t_abstract_list *)history) - ft_atoi(n));
+}
 /*
-	[n] 
-	-c
-	-d offset
-	-anrw [filename]
-	-ps arg
 
-	errors 
+
+history [-c] [-d offset] [n] or history -awrn [filename] or history -ps arg [arg...]
+
+	errors
 	sh: history: cannot use more than one of -anrw
-	*/
+*/
+/*
+void		hist_parse_options(int argc, char **argv)
+{
+
+}*/
 
 BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 {
@@ -74,20 +100,19 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 		print_history(history, 0);
 	else
 	{
-		while (argv[i])
+		while (i < argc)
 		{
-			if (str_is_digits(argv[i]))
+			if (*argv[i] == '-')
 			{
-				if (argv[i + 1])
-					ft_putendl("history: too many arguments"); //return error_func
-				else
-					print_history(history, list_count((t_abstract_list *)history) - ft_atoi(argv[i]));
+				;// hist_parse_options();
 			}
-			else if (*argv[i] == '-')
+			else if (str_is_digits(argv[i]))
 			{
-				//hist_parse_options();
-				;
+				print_history_n(i + 1 < argc, argv[i], history);
+				break; // return print_hist_n
 			}
+			else
+				ft_putendl_fd("history: numeric argument required", 2); // ret err_func
 			i++;
 		}
 	}

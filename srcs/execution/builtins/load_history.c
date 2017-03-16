@@ -1,12 +1,16 @@
 #include "shell_env.h"
 #include "history.h"
 #include "abstract_list.h"
+#include "utils.h"
+
+void		history_test();
+
 
 t_history	*create_history_entry(char *line)
 {
 	t_history *new;
 
-	new = (t_history *)malloc(sizeof(t_history));
+	new = (t_history *)memalloc_or_die(sizeof(t_history));
 	new->line = ft_strdup(line);
 	new->appended = false;
 	new->next = NULL;
@@ -26,6 +30,5 @@ void	load_history(t_shell_env *shell_env, char *filename)
 		ft_strdel(&line);
 	}
 	close(fd);
-	char *test[] = {NULL};
-	builtin_history(1, test);
+	history_test();
 }
