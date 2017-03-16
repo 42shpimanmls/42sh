@@ -1,5 +1,5 @@
 #include <libft.h>
-#include "tokenizer/token.h"
+#include "tokenizer.h"
 #include "shell_env.h"
 
 void break_input(void)

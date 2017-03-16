@@ -22,6 +22,4 @@ t_token_def const			*get_operator(char const *str);
 void						print_token_def(t_token_def const *def);
 void						print_token_defs(void);
 
-
-
 #endif

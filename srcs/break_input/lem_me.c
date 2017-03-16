@@ -1,4 +1,4 @@
-#include "break_input/tokenizer/token.h"
+#include "token.h"
 #include <stdlib.h>
 #include <libft.h>
 
