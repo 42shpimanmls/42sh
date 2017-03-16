@@ -8,7 +8,7 @@ void		free_history(t_history **history)
 	*history = NULL;
 }
 
-void		delete_history_entry(t_history **history, int offset)
+void		delete_history_entry(t_history **history, int offset) // change entirely
 {
 	t_history *tmp;
 
@@ -27,7 +27,7 @@ void		delete_history_entry(t_history **history, int offset)
 		if (tmp->prev)
 			tmp->prev->next = tmp->next;
 		else
-			*history = tmp->next;	
+			*history = tmp->next;
 		free_history(&tmp);
 	}
 }

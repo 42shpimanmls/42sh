@@ -4,7 +4,7 @@
 #include "utils.h"
 
 void		history_test();
-
+void list_double_push_back(t_history **list, t_history *new);
 
 t_history	*create_history_entry(char *line)
 {
@@ -26,7 +26,7 @@ void	load_history(t_shell_env *shell_env, char *filename)
 	fd = open(filename, O_RDWR	| O_CREAT, 0666);
 	while (ft_get_next_line(fd, &line) > 0)
 	{
-		list_push_back((t_abstract_list **)&shell_env->history, (t_abstract_list *)create_history_entry(line));
+		list_double_push_back(&shell_env->history, create_history_entry(line));
 		ft_strdel(&line);
 	}
 	close(fd);

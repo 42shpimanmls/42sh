@@ -17,5 +17,6 @@ void	hist_to_file(t_history *history, char *filename)
 			ft_putendl_fd(history->line, fd);
 		}
 		history = history->next;
-	}	
+	}
+	close(fd);
 }

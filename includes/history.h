@@ -16,7 +16,9 @@ typedef	struct s_hist_opt
 	bool	w;
 	bool	p;
 	bool	s;
-	int		nb;
+	size_t	offset;
+	char	*filename;
+	char	**args;
 }				t_hist_opt;
 
 /*
