@@ -15,6 +15,7 @@ t_editor *init_editor()
 
 	new = memalloc_or_die(sizeof(t_editor));
 	new->term = init_term();
+	new->history = get_shell_env()->history;
 	return (new);
 }
 

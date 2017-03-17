@@ -22,6 +22,7 @@ typedef struct			s_editor
 {
 	t_string			*string;
 	t_term				*term;
+	t_history			*history;
 	int					cursor_position;
 	bool				need_refresh;
 }						t_editor;
