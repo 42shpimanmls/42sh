@@ -34,7 +34,10 @@ void		delete_history_entry(t_history **history, int offset) // change entirely
 
 void		clear_history_list(t_history **history)
 {
-	if ((*history)->next)
-		clear_history_list(&(*history)->next);
-	free_history(history);
+	if (*history)
+	{
+		if ((*history)->next)
+			clear_history_list(&(*history)->next);
+		free_history(history);
+	}
 }
