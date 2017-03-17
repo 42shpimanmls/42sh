@@ -1,4 +1,4 @@
-#include "break_input/tokenizer/token.h"
+#include "token.h"
 #include <stdlib.h>
 #include <libft.h>
 
@@ -6,7 +6,7 @@ static bool	lex_operator(t_token *token)
 {
 	t_token_def const	*match;
 
-	match = get_matching_operator(token->str);
+	match = get_operator(token->str);
 	if (match != NULL)
 	{
 		token->type = match;

@@ -4,7 +4,7 @@
 # include <stdlib.h>
 # include <libft.h>
 # include <stdbool.h>
-# include "break_input/tokenizer/token.h"
+# include "break_input/token.h"
 
 /* proposition
 
