@@ -10,5 +10,6 @@ typedef struct	s_abstract_list
 
 size_t list_count(t_abstract_list *list);
 void	list_push_back(t_abstract_list **list_addr, t_abstract_list *elem);
+void	list_goto_last(t_abstract_list **list);
 
 #endif

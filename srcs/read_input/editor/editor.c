@@ -11,6 +11,7 @@
 # include "read_input/event_callbacks/event_callback_def.h"
 # include "read_input/termcap/init_deinit.h"
 
+#include "history.h"
 t_editor *init_editor()
 {
 	t_editor *new;
@@ -18,6 +19,7 @@ t_editor *init_editor()
 	new = memalloc_or_die(sizeof(t_editor));
 	new->term = init_term();
 	new->history = get_shell_env()->history;
+	list_goto_last((t_abstract_list **)&new->history);
 	return (new);
 }
 
@@ -26,7 +28,7 @@ void	add_to_string(t_string **s, char c)
 	t_string *new;
 
 	new = memalloc_or_die(sizeof(t_string));
-	new->c = c;
+		new->c = c;
 
 	if (!s)
 	{

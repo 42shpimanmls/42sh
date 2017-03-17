@@ -1,6 +1,6 @@
 #include "shell_env.h"
 #include "init/init.h"
-// #include "execution/builtins/builtins.h"  //remove 
+// #include "execution/builtins/builtins.h"  //remove
 #include "abstract_list.h"
 #include "history.h"
 
@@ -48,7 +48,7 @@ void	init(int ac, char **av)
 
 	// char* argv2[] = {"PROGNAME", "PATH", NULL};
 	// builtin_unsetenv(ft_tablen(argv), argv2);
-	
+
 	// ft_printf("After env---------\n");
 	// print_variable(shell_env->variables);
 	// ft_printf("-------------------\n");
