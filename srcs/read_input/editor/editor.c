@@ -21,7 +21,6 @@ t_editor *init_editor()
 	return (new);
 }
 
-
 void	add_to_string(t_string **s, char c)
 {
 	t_string *new;
