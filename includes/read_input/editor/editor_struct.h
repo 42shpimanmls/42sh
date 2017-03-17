@@ -1,7 +1,8 @@
 #ifndef EDITOR_STRUCT_H
 # define EDITOR_STRUCT_H
 
-#include <stdbool.h>
+# include "shell_env.h"
+# include <stdbool.h>
 
 typedef struct			s_string
 {
