@@ -22,6 +22,12 @@ t_term *init_term()
 	return (new);
 }
 
+static struct termios	*get_term_save(void)
+{
+	static struct termios term;
+	return (&term);
+}
+
 void	ft_start_termcaps(void)
 {
 	struct termios	term;
@@ -34,7 +40,8 @@ void	ft_start_termcaps(void)
 		ft_dprintf(2, "%s: I need a variable \"TERM\"\n", SHNAME);
 		exit(-1);
 	}
-	term.c_lflag &= ~(ICANON | ECHO | ISIG);
+	ft_memcpy(get_term_save(), &term, sizeof(struct termios));
+	term.c_lflag &= ~(ICANON | ECHO/* | ISIG*/);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSADRAIN, &term) == -1)
@@ -46,15 +53,15 @@ void	ft_start_termcaps(void)
 
 void	ft_close_termcaps(void)
 {
-	struct termios	term;
+	/*struct termios	term;
 
 	if (tcgetattr(0, &term) == -1)
 	{
 		ft_dprintf(2, "%s: Termcap is lost\n", SHNAME);
 		exit(-1);
 	}
-	term.c_lflag = (ICANON | ECHO | ISIG);
-	if (tcsetattr(0, 0, &term) == -1)
+	term.c_lflag = (ICANON | ECHO | ISIG);*/
+	if (tcsetattr(0, 0, get_term_save()) == -1)
 	{
 		ft_dprintf(2, "%s: Termcap is lost\n", SHNAME);
 		exit(-1);

@@ -54,7 +54,7 @@ char *get_string_from_list(t_string *s)
 	char 	*str;
 	size_t	i;
 
-	str = memalloc_or_die(999); // change count len of list !!!!!!!!
+	str = memalloc_or_die(list_count((t_abstract_list*)s) + 1);
 	i = 0;
 	while (s)
 	{

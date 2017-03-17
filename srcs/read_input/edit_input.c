@@ -26,6 +26,8 @@ char *edit_input()
 		{
 			if (def->id == NEWLINE_EVID)
 			{
+				add_to_string(&ed->string, '\n');
+				ft_putchar('\n');
 				break ;
 			}
 			else
@@ -50,9 +52,9 @@ char *edit_input()
 			free(line);
 		}
 	}
-	
+
 	ft_close_termcaps();
 	line = get_string_from_list(ed->string);
 	free_string(ed->string);
-	return (line);	
+	return (line);
 }
