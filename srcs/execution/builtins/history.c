@@ -38,13 +38,13 @@ void		history_test()
 {
 	char 	*print[] = {"history"};
 	char	*print_offset[] = {"history", "3"};
-	char	*clear_hist[] = {"history", "-c"};
+	// char	*clear_hist[] = {"history", "-c"};
 	char	*delete_entry[] = {"history", "-d3"};
 	// char	*delete_entry2[] = {"history", "-d", "3"};
 	// char	*hist_to_file[] = {"history", "-w", "file", NULL};
 	// char	*hist_to_histfile[] = {"history", "-w"};
-	char	*error1[] = {"history", "l"}; // numeric argument required
-	char	*error2[] = {"history", "3", "coucou"}; // too many args
+	// char	*error1[] = {"history", "l"}; // numeric argument required
+	// char	*error2[] = {"history", "3", "coucou"}; // too many args
 	// char	*error3[] = {"history", "-ar"}; // more than one option from anrw
 
 	ft_putendl("----- HISTORY TESTS ------");
@@ -60,15 +60,15 @@ void		history_test()
 	builtin_history(2, delete_entry);
 	builtin_history(1, print);
 	// builtin_history(3, delete_entry2);
-	// builtin_history(2, print_offset);
-	ft_putendl("CLEAR_HISTORY");
-	builtin_history(2, clear_hist);
-	ft_putendl("PRINT: ");
-	builtin_history(1, print);
-	ft_putendl("ERROR_NUM_ARG: ");
-	builtin_history(2, error1);
-	ft_putendl("ERROR_2MANY_ARGS: ");
-	builtin_history(3, error2);
+	// // builtin_history(2, print_offset);
+	// ft_putendl("CLEAR_HISTORY");
+	// builtin_history(2, clear_hist);
+	// ft_putendl("PRINT: ");
+	// builtin_history(1, print);
+	// ft_putendl("ERROR_NUM_ARG: ");
+	// builtin_history(2, error1);
+	// ft_putendl("ERROR_2MANY_ARGS: ");
+	// builtin_history(3, error2);
 
 
 
