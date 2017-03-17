@@ -1,7 +1,7 @@
 #ifndef HISTORY_H
 # define HISTORY_H
 
-#include "builtin_def.h"
+#include "execution/builtins/builtin_def.h"
 
 
 #define HISTFILE ".42sh_history"  // exported env variable in shells

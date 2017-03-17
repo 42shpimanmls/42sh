@@ -15,6 +15,7 @@ t_term *init_term()
 	t_term *new;
 
 	new = memalloc_or_die(sizeof(t_term));
+	new->width = tgetnum("co");
 	new->move_left = tgetstr("le", NULL);
 	new->move_right = tgetstr("nd", NULL);
 	new->hide_cursor = tgetstr("vi", NULL);
@@ -53,14 +54,6 @@ void	ft_start_termcaps(void)
 
 void	ft_close_termcaps(void)
 {
-	/*struct termios	term;
-
-	if (tcgetattr(0, &term) == -1)
-	{
-		ft_dprintf(2, "%s: Termcap is lost\n", SHNAME);
-		exit(-1);
-	}
-	term.c_lflag = (ICANON | ECHO | ISIG);*/
 	if (tcsetattr(0, 0, get_term_save()) == -1)
 	{
 		ft_dprintf(2, "%s: Termcap is lost\n", SHNAME);
