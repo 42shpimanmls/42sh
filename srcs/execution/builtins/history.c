@@ -118,9 +118,9 @@ void		get_hist_option(char *c, t_hist_opt *options)
 		if (str_is_digits(++c))
 			options->offset = ft_atoi(c);
 	}
-	else if (*c == 'a')
+	else if (*c == 'a') // append
 		options->a = 1;
-	else if (*c == 'w') // ignored if -d
+	else if (*c == 'w') // ignored if -d // write(on t_hist_opt)
 		options->w = 1;
 	else if (*c == 'r')
 		options->r = 1;
@@ -131,19 +131,6 @@ void		get_hist_option(char *c, t_hist_opt *options)
 		options->p = 1;
 	else if (*c == 's')
 		options->s = 1;
-}
-
-void		init_hist_opt(t_hist_opt *options)
-{
-	options->c = 0;
-	options->d = 0;
-	options->a = 0;
-	options->w = 0;
-	options->r = 0;
-	options->n = 0;
-	options->p = 0;
-	options->s = 0;
-	options->args = NULL;
 }
 
 void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
@@ -180,7 +167,7 @@ void		execute_options(t_history **history, t_hist_opt options)
 			delete_history_entry(history, options.offset);
 		}
 	}
-	else if (options.w || options.a) // what's the difference?
+	else if (options.w || options.a) // choose append or write over in hist_to_file
 	{
 		if (options.args && options.args[0])
 			hist_to_file(*history, options.args[0]);
@@ -195,7 +182,7 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 	t_history	*history;
 	t_hist_opt	options;
 
-	init_hist_opt(&options);
+	ft_bzero(&options, sizeof(options));
 	history = get_shell_env()->history;
 	i = 1;
 	if (argc == 1)
