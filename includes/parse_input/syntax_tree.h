@@ -1,7 +1,7 @@
 #ifndef SYNTAX_TREE_H
 # define SYNTAX_TREE_H
 
-#include "init/init.h"
+#include "shell_env.h"
 #include "uint.h"
 
 typedef struct		s_redirection
