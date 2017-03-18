@@ -1,7 +1,7 @@
 #ifndef FTSH_H
 # define FTSH_H
 
-# define FTSH_DEBUG
+//# define FTSH_DEBUG
 
 #include "shell_env.h"
 
