@@ -18,19 +18,19 @@ int main(int argc, char **argv)
 
 	// Declare
 	CU_TestInfo		binary_tests[] = {
-	  { "42sh -c \"\"", empty_command_string },
-	  { "42sh -c \"'\"", unclosed_quote },
-	  { "42sh -c \"\\\"\"", unclosed_double_quote },
+	  { "Check that an empty command string returns no error", empty_command_string },
+	  { "Check that an unclosed single quote returns an error", unclosed_quote },
+	  { "Check that an unclosed double quote returns an error", unclosed_double_quote },
 	  CU_TEST_INFO_NULL,
 	};
 	CU_TestInfo		tokenizer_tests[] = {
-		{ "Construct IO_NUMBER", construct_io_number_token },
+		{ "Check that io numbers are lexed", construct_io_number_token },
 	  	{ "Check that construct_token copies the string", construct_token_copy_string },
 	  CU_TEST_INFO_NULL,
 	};
 	CU_SuiteInfo	suites[] = {
-		{ "Binary tests", NULL, NULL, NULL, NULL, binary_tests },
-		{ "Tinary tests", NULL, NULL, NULL, NULL, tokenizer_tests },
+		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
+		{ "Tokenizer", NULL, NULL, NULL, NULL, tokenizer_tests },
 		CU_SUITE_INFO_NULL
 	};
 
