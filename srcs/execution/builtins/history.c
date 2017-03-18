@@ -38,9 +38,10 @@ void		history_test()
 	char 	*print[] = {"history"};
 	char	*print_offset[] = {"history", "3"};
 	char	*clear_hist[] = {"history", "-c"};
-	char	*delete_entry[] = {"history", "-d3"};
-	// char	*delete_entry2[] = {"history", "-d", "3"};
+	// char	*delete_entry[] = {"history", "-d3"};
+	char	*delete_entry2[] = {"history", "-d", "3"};
 	char	*hist_to_file[] = {"history", "-w", "file", NULL};
+	char	*hist_append_file[] = {"history", "-a", "file", NULL};
 	// char	*hist_to_histfile[] = {"history", "-w"};
 	char	*error1[] = {"history", "l"}; // numeric argument required
 	char	*error2[] = {"history", "3", "coucou"}; // too many args
@@ -54,12 +55,13 @@ void		history_test()
 	builtin_history(2, print_offset);
 	ft_putendl("HIST_TO_FILE");
 	builtin_history(3, hist_to_file);
+	builtin_history(3, hist_append_file);
 	// builtin_history(2, hist_to_histfile);
 	ft_putendl("PRINT AFTER DEL_ENTRY 3");
-	builtin_history(2, delete_entry);
-	builtin_history(1, print);
-	// builtin_history(3, delete_entry2);
-	// // builtin_history(2, print_offset);
+	// builtin_history(2, delete_entry);
+	// builtin_history(1, print);
+	builtin_history(3, delete_entry2);
+	builtin_history(2, print_offset);
 	ft_putendl("CLEAR_HISTORY");
 	builtin_history(2, clear_hist);
 	ft_putendl("PRINT: ");
@@ -115,7 +117,7 @@ void		get_hist_option(char *c, t_hist_opt *options)
 	else if (*c == 'd')
 	{
 		options->d = 1;
-		if (str_is_digits(++c))
+		if (*(++c) && str_is_digits(c))
 			options->offset = ft_atoi(c);
 	}
 	else if (*c == 'a') // append
@@ -124,7 +126,7 @@ void		get_hist_option(char *c, t_hist_opt *options)
 		options->w = 1;
 	else if (*c == 'r')
 		options->r = 1;
-	else if (*c == 'n') // ?
+	else if (*c == 'n') // unnecessary?
 		options->n = 1;
 	// substitutions before clean
 	else if (*c == 'p') // make substitutions but don't execute or save in history
@@ -138,12 +140,13 @@ void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 	int			i;
 
 	i  = 1;
+	options->offset = -1;
 	while (i < argc)
 	{
 		if (*argv[i] != '-')
 		{
 			options->args = &argv[i];
-			return;
+			break;
 		}
 		while (*argv[i])
 		{
@@ -152,6 +155,8 @@ void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 		}
 		i++;
 	}
+	if (options->d && options->offset == -1)
+		options->offset = ft_atoi(options->args[0]);
 }
 
 void		execute_options(t_history **history, t_hist_opt options)
