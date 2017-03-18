@@ -1,8 +1,9 @@
 #ifndef SYNTAX_TREE_H
 # define SYNTAX_TREE_H
 
-# include "shell_env.h"
+# include "variable.h"
 # include "uint.h"
+# include "break_input/token.h"
 
 typedef enum	e_ao_type
 {
@@ -31,7 +32,7 @@ typedef struct		s_simple_command
 	struct s_simple_command	*next;
 	t_variable				*assignments;
 	t_redirection			*redirections;
-	char *const				*argv;
+	char					**argv;
 }					t_simple_command;
 
 typedef struct		s_and_or_list
