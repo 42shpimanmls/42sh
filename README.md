@@ -1,10 +1,12 @@
 # 42sh
 
+[![Build Status](https://travis-ci.org/42shpimanmls/42sh.svg?branch=master)](https://travis-ci.org/42shpimanmls/42sh)
+
 Todo
 ---
 
 - [ ] init
-	- [ ] history 
+	- [ ] history
 
 - [ ] edit input
 	- [ ] affichage prompt
@@ -29,4 +31,3 @@ Todo
 - [ ] execution
 
 - [ ] wait
-
