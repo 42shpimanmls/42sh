@@ -75,7 +75,7 @@ SRCO	=	$(SRCA:.c=.o)
 
 CC		=	gcc -g
 LIB		=	-L ./libft/ -lft
-FLAGS	=	-Wall -Wextra -Werror -pedantic
+FLAGS	=	-Wall -Wextra -Werror
 
 MAKE_OPTS = --no-print-directory -j9
 
