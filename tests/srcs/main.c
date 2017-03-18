@@ -1,5 +1,5 @@
-#include <BCUnit/BCUnit.h>
-#include <BCUnit/Basic.h>
+#include <CUnit/CUnit.h>
+#include <CUnit/Basic.h>
 #include <stdio.h>
 #include <stdlib.h>
 
