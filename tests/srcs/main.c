@@ -23,8 +23,14 @@ int main(int argc, char **argv)
 	  { "42sh -c \"\\\"\"", unclosed_double_quote },
 	  CU_TEST_INFO_NULL,
 	};
+	CU_TestInfo		tokenizer_tests[] = {
+		{ "Construct IO_NUMBER", construct_io_number_token },
+	  	{ "Check that construct_token copies the string", construct_token_copy_string },
+	  CU_TEST_INFO_NULL,
+	};
 	CU_SuiteInfo	suites[] = {
 		{ "Binary tests", NULL, NULL, NULL, NULL, binary_tests },
+		{ "Tinary tests", NULL, NULL, NULL, NULL, tokenizer_tests },
 		CU_SUITE_INFO_NULL
 	};
 

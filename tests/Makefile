@@ -8,6 +8,10 @@ SRCS_ROOT = srcs
 INCL_ROOT = includes
 OBJS_ROOT = objs
 
+TARGET_OBJS_ROOT = ../objs
+TARGET_INCL_ROOT = ../includes
+TARGET_OBJS = $(filter-out %main.o, $(filter %.o, $(shell find $(TARGET_OBJS_ROOT) -type f)))
+
 SRCS_DIRS = $(shell find $(SRCS_ROOT) -type d)
 OBJS_DIRS = $(patsubst $(SRCS_ROOT)%, $(OBJS_ROOT)%, $(SRCS_DIRS))
 SRCS = $(filter %.c,$(shell find $(SRCS_ROOT) -type f))
@@ -22,7 +26,9 @@ CUNIT_INCLUDE_ROOT ?= $(CUINT_LOCAL_DIR)/include
 LIBFT_DIR = ../libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-CFLAGS = -Wall -Wextra -Werror -I$(CUNIT_INCLUDE_ROOT) -I$(LIBFT_DIR)/includes -I$(INCL_ROOT)
+CFLAGS = -Wall -Wextra -Werror -I$(CUNIT_INCLUDE_ROOT)\
+	-I$(LIBFT_DIR)/includes -I$(INCL_ROOT) -I$(TARGET_INCL_ROOT)
+LFLAGS = -lncurses
 MAKE_OPTS = --no-print-directory
 
 
@@ -45,7 +51,7 @@ $(CUNIT_STATIC_LIB):
 
 $(PROG_NAME): $(OBJS_DIRS) $(OBJS) $(LIBFT)
 	@echo "LINK   " $@
-	@$(LINKER) -o $@ $(OBJS) $(CUNIT_STATIC_LIB) $(LIBFT)
+	@$(LINKER) -o $@ $(OBJS) $(CUNIT_STATIC_LIB) $(TARGET_OBJS) $(LIBFT) $(LFLAGS)
 
 $(OBJS_DIRS):
 	@mkdir -p $@
