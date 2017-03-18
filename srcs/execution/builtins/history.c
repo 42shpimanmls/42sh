@@ -5,16 +5,16 @@
 
 /*******   move this to utils (from lex_me.c) ******/
 
-bool	str_is_digits(char const *str)
-{
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (false);
-		str += 1;
-	}
-	return (true);
-}
+// bool	str_is_digits(char const *str)
+// {
+// 	while (*str)
+// 	{
+// 		if (!ft_isdigit(*str))
+// 			return (false);
+// 		str += 1;
+// 	}
+// 	return (true);
+// }
 
 void list_double_push_back(t_history **list, t_history *new) // make a double abstract list
 {
@@ -105,7 +105,7 @@ void		print_history(t_history *history, int start)
 void		print_history_n(bool more_args, char *n, t_history *history)
 {
 	if (more_args)
-		builtin_error("history", NULL, TOO_MANY_ARGS);
+		error_builtin("history", NULL, TOO_MANY_ARGS);
 	else
 		print_history(history, list_count((t_abstract_list *)history) - ft_atoi(n));
 }
@@ -137,7 +137,7 @@ void		get_hist_option(char *c, t_hist_opt *options)
 			options->s = 1;
 		// else
 		// {
-		// 	builtin_error("history", c, INVALID_OPTION);//ft_putendl("usage: history [-c] [-d offset] [n] or history -awrn [filename] or history -ps arg [arg...]"); // error
+		// 	error_builtin("history", c, INVALID_OPTION);//ft_putendl("usage: history [-c] [-d offset] [n] or history -awrn [filename] or history -ps arg [arg...]"); // error
 		// 	return;
 		// }
 		c++;
@@ -174,7 +174,7 @@ void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 			// }
 		}
 		else
-			builtin_error("history", NULL, NEED_NUM);
+			error_builtin("history", NULL, NEED_NUM);
 	}
 }
 
@@ -218,7 +218,7 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 		else if (str_is_digits(argv[i]))
 			print_history_n(i + 1 < argc, argv[i], history);
 		else
-			builtin_error(argv[0], NULL, NEED_NUM); // ret
+			error_builtin(argv[0], NULL, NEED_NUM); // ret
 	}
 	//check_options(options); // check if more than one of awnr
 	execute_options(&get_shell_env()->history, options);

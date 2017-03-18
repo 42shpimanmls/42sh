@@ -7,7 +7,7 @@
 
 /**DELETE*/
 
-bool	str_is_digits(char const *str);
+// bool	str_is_digits(char const *str);
 
 
 

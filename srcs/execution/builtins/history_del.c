@@ -1,6 +1,7 @@
 #include "shell_env.h"
 #include "history.h"
 #include "errors.h"
+#include "utils.h"
 
 void		free_history(t_history **history)
 {
@@ -24,7 +25,7 @@ void		delete_history_entry(t_history **history, char *offset) // change entirely
 			n_offset--;
 		}
 			if (!tmp || n_offset <= 0)
-		builtin_error("history", offset, OUT_OF_RANGE);
+				error_builtin("history", offset, OUT_OF_RANGE);
 		else
 		{
 			if (tmp->next)
@@ -37,7 +38,7 @@ void		delete_history_entry(t_history **history, char *offset) // change entirely
 		}
 	}
 	else
-		builtin_error("history", offset, OUT_OF_RANGE);
+		error_builtin("history", offset, OUT_OF_RANGE);
 }
 
 void		clear_history_list(t_history **history)
