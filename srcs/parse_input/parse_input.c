@@ -1,6 +1,7 @@
 #include "shell_env.h"
 #include "parse_syntax_tree.h"
 #include "print_syntax_tree.h"
+#include "ftsh.h"
 
 void			parse_input(void)
 {

@@ -1,7 +1,7 @@
 #include <libft.h>
 #include "tokenizer.h"
 #include "shell_env.h"
-
+#include "ftsh.h"
 
 // DANGER
 /*#include <stdio.h>

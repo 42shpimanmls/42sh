@@ -1,5 +1,6 @@
 #include "shell_env.h"
 #include "edit_input.h"
+#include "ftsh.h"
 
 static void handle_command_string(t_shell_env *shell_env)
 {
