@@ -1,19 +1,7 @@
 #include "shell_env.h"
 #include "history.h"
 #include "abstract_list.h"
-
-/*******   move this to utils (from lex_me.c) ******/
-
-static bool	str_is_digits(char const *str)
-{
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (false);
-		str += 1;
-	}
-	return (true);
-}
+#include "utils.h"
 
 void list_double_push_back(t_history **list, t_history *new) // make a double abstract list
 {
