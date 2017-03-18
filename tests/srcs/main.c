@@ -2,18 +2,9 @@
 #include <CUnit/Basic.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-static int maxi(int i1, int i2)
-{
-	return (i1 > i2) ? i1 : i2;
-}
-
-static void test_maxi(void)
-{
-	CU_ASSERT(maxi(0,2) == 2);
-	CU_ASSERT(maxi(0,-2) == 0);
-	CU_ASSERT(maxi(2,2) == 2);
-}
+#include "tests.h"
+#include <CUnit/Console.h>
+#include <libft.h>
 
 static void print_error(void)
 {
@@ -21,17 +12,17 @@ static void print_error(void)
 		printf("Error: %s\n",CU_get_error_msg());
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
 	CU_ErrorCode	result;
 
 	// Declare
-	CU_TestInfo		tests[] = {
-	  { "test_pTest_autobuild", test_maxi },
+	CU_TestInfo		binary_tests[] = {
+	  { "42sh -c \"\"", empty_command_string },
 	  CU_TEST_INFO_NULL,
 	};
 	CU_SuiteInfo	suites[] = {
-		{ "test_pSuite_autobuild", NULL, NULL, NULL, NULL, tests },
+		{ "Binary tests", NULL, NULL, NULL, NULL, binary_tests },
 		CU_SUITE_INFO_NULL
 	};
 
@@ -44,7 +35,11 @@ int main(void)
 	print_error();
 
 	// Run
-	CU_basic_run_tests();
+	if (argc > 1 && ft_strequ(argv[1], "-i"))
+		CU_console_run_tests();
+	else
+		CU_basic_run_tests();
+
 	print_error();
 
 	// Get result
