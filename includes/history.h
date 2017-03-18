@@ -4,6 +4,16 @@
 #include "execution/builtins/builtin_def.h"
 
 
+
+/**DELETE*/
+
+bool	str_is_digits(char const *str);
+
+
+
+
+
+
 #define HISTFILE ".42sh_history"  // exported env variable in shells
 
 
@@ -17,7 +27,7 @@ typedef	struct s_hist_opt
 	bool	w;
 	bool	p;
 	bool	s;
-	int		offset;
+	char	*offset;
 	char	*filename;
 	char	**args;
 }				t_hist_opt;
@@ -32,7 +42,7 @@ void	load_history(t_shell_env *shell_env, char *filename);
 */
 
 void	clear_history_list(t_history **history);
-void	delete_history_entry(t_history **history, int offset);
+void	delete_history_entry(t_history **history, char *offset);
 
 /*
 **		history_to_file.c
@@ -47,6 +57,12 @@ void	hist_to_file(t_history *history, char *filename);
 void	print_history(t_history *history, int start);
 BUILTIN_RET	builtin_history(BUILTIN_ARGS);
 
+
+/*
+**		history_errors.c
+*/
+
+void	history_error(int code, char *error);
 
 
 #endif
