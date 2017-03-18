@@ -19,6 +19,8 @@ int main(int argc, char **argv)
 	// Declare
 	CU_TestInfo		binary_tests[] = {
 	  { "42sh -c \"\"", empty_command_string },
+	  { "42sh -c \"'\"", unclosed_quote },
+	  { "42sh -c \"\\\"\"", unclosed_double_quote },
 	  CU_TEST_INFO_NULL,
 	};
 	CU_SuiteInfo	suites[] = {
