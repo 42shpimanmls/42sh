@@ -18,8 +18,13 @@ t_term	*init_term()
 	new->move_cursor_begining = tgetstr("cr", NULL);
 	new->move_left = tgetstr("le", NULL);
 	new->move_right = tgetstr("nd", NULL);
+	new->move_up = tgetstr("up", NULL);
+	new->move_down = tgetstr("down", NULL);
 	new->hide_cursor = tgetstr("vi", NULL);
 	new->show_cursor = tgetstr("ve", NULL);
+	new->clear_line = tgetstr("cd", NULL);
+	// new->save_cursor_pos = tgetstr("sc", NULL);
+	// new->restore_cursor_pos = tgetstr("rc", NULL);
 	return (new);
 }
 

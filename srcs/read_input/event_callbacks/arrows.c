@@ -1,12 +1,39 @@
 #include "event_callback_def.h"
 #include <libft.h>
 
+bool check_cursor_if_margin_right(EV_CB_ARGS)
+{
+	int md = (ed->cursor_position + 1 + ed->prompt_size) % ed->term->width;
+	if (md == 0)
+		return (true);
+	return (false);
+}
+
+bool check_cursor_if_margin_left(EV_CB_ARGS)
+{
+	int md = (ed->cursor_position + ed->prompt_size) % ed->term->width; 
+	if (md == 0)
+		return (true);
+	return (false);
+}
+
 EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 {
 	(void)ed;
+	// ed->need_refresh = true;
 	if (ed->cursor_position > 0)
 	{
-		ft_putstr(ed->term->move_left);
+		if (check_cursor_if_margin_left(ed))
+		{
+			ft_putstr(ed->term->move_up);
+			int i = -1;
+			while (++i != ed->term->width)
+				ft_putstr(ed->term->move_right);
+		}
+		else
+		{
+			ft_putstr(ed->term->move_left);
+		}
 		ed->cursor_position--;
 	}
 }
@@ -14,10 +41,20 @@ EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 EV_CB_RET 	event_cursor_right(EV_CB_ARGS)
 {
 	(void)ed;
-	ed->need_refresh = true;
+	// ed->need_refresh = true;
 	if (ed->cursor_position < ed->string_size)
 	{
-		ft_putstr(ed->term->move_right);
+		if (check_cursor_if_margin_right(ed))
+		{
+			ft_putstr(ed->term->move_down);
+			int i = -1;
+			while (++i != ed->term->width)
+				ft_putstr(ed->term->move_left);
+		}
+		else
+		{
+			ft_putstr(ed->term->move_right);
+		}
 		ed->cursor_position++;		
 	}
 }
