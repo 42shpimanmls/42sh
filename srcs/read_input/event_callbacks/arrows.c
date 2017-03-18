@@ -47,9 +47,7 @@ EV_CB_RET 	event_cursor_right(EV_CB_ARGS)
 		if (check_cursor_if_margin_right(ed))
 		{
 			ft_putstr(ed->term->move_down);
-			int i = -1;
-			while (++i != ed->term->width)
-				ft_putstr(ed->term->move_left);
+			ft_putstr(ed->term->move_cursor_begining);
 		}
 		else
 		{
