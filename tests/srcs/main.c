@@ -46,8 +46,11 @@ int main(int argc, char **argv)
 	if (argc > 1 && ft_strequ(argv[1], "-i"))
 		CU_console_run_tests();
 	else
+	{
+		CU_basic_set_mode(CU_BRM_VERBOSE);
+		print_error();
 		CU_basic_run_tests();
-
+	}
 	print_error();
 
 	// Get result

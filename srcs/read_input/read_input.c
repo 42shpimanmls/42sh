@@ -22,5 +22,7 @@ void	read_input()
 		handle_command_string(shell_env);
 	else
 		handle_stdin(shell_env);
+#ifdef FTSH_DEBUG
 	ft_printf("<input_string>\n\"%s\"\n</input_string>\n", shell_env->input_string);
+#endif
 }

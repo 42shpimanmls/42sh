@@ -49,9 +49,11 @@ void	break_input(void)
 
 	shell_env = get_shell_env();
 	shell_env->tokens = tokenize(shell_env->input_string);
+#ifdef FTSH_DEBUG
 	ft_putendl("<tokens>");
 	print_tokens(shell_env->tokens);
 	ft_putendl("</tokens>");
+#endif
 	/*test_split(shell_env->tokens);
 	test_super_split(shell_env->tokens);*/
 }
