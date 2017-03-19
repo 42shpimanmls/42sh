@@ -4,7 +4,7 @@
 #include "execution/builtins/builtin_def.h"
 
 #define HISTFILE ".42sh_history"  // exported env variable in shells
-// #define HISTORY_DEBUG
+#define HISTORY_DEBUG
 
 typedef	struct s_hist_opt
 {
@@ -24,6 +24,7 @@ typedef	struct s_hist_opt
 /*
 **		load_history.c
 */
+
 void	load_history(t_shell_env *shell_env, char *filename);
 
 /*

@@ -4,19 +4,27 @@
 #include "history.h"
 
 /*
-**			history_substitutions.h
+**			history_substitutions.c
 */
 
 int		history_substition(char **str);
 
 
 /*
-**			search_history.h
+**			get_history_entry.c
 */
 
 char	*find_in_history(bool must_start, t_history *history, char *str, t_uint *end);
+
+/*
+**			get_entry_word.c
+*/
+
 char	*get_nth_entry(t_history *history, int n);
 char	*get_nth_word(char *line, t_uint n);
+char	*get_entry_word(char **entry, char *str, t_uint *end);
+bool	start_word_designator(char c);
+
 
 
 #endif

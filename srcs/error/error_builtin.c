@@ -3,8 +3,8 @@
 
 static void		ft_putstr_colon(char *str)
 {
-	ft_putstr(str);
-	ft_putstr(": ");
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
 }
 
 void		error_builtin(char *builtin, char *error, t_error_id id)

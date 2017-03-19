@@ -6,34 +6,9 @@
 #include "utils.h"
 #include "uint.h"
 
-#include "break_input/tokenizer.h"
-
 #include "history.h"
+#include "history_substitutions.h"
 
-char	*get_last_word(char *line)
-{
-	t_token *words;
-
-	words = tokenize(line);
-	while (words->next)
-		words = words->next;
-	return (words->str);
-}
-
-char	*get_nth_word(char *line, t_uint n)
-{
-	t_token *words;
-
-	words = tokenize(line);
-	while (words && n > 0)
-	{
-		words = words->next;
-		n--;
-	}
-	if (!words)
-		return(NULL);
-	return (words->str);
-}
 
 char	*get_nth_entry(t_history *history, int n)
 {
@@ -70,13 +45,16 @@ char	*find_in_history(bool must_start, t_history *history, char *str, t_uint *en
 	list_goto_last((t_abstract_list **)&history);
 	if (must_start)
 	{
-		while (str[i] && !is_posix_blank(str[i]))   // split all that before
+		while (str[i] && !start_word_designator(str[i]) && !is_posix_blank(str[i]))
 			i++;
 	}
 	else
 	{
 		while (str[i] && !is_posix_blank(str[i]) && str[i] != '\n' && str[i] != '?')
 			i++;
+		if (str[i] && (str[i] == '?' || str[i] == '\n'))
+			(*end)++;
+		(*end)++;
 	}
 	*end += i;
 	find = ft_strsub(str, 0, i);

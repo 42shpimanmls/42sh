@@ -9,14 +9,14 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-#define NB_SUB_TESTS 11
+#define NB_SUB_TESTS 14
 
 void	substitution_test()
 {
 
 	int	i = 0;
-	char *tests[] = {"!!", "!!!!", "echo !!", "!2", "!-2", "echo !0", \
-					"!-0", "!6534", "!-6", "!fi grj", "exho !?ou", NULL};//echo !#"
+	char *tests[] = {"!", "!!", "!!!!", "echo !!", "!2", "!-2", "echo !0", \
+					"!-0", "!6534", "!-6", "!fi grj", "exho !?ou", "!?on?:0", "!fi"};// "!#"
 	char	**str;
 
 	// ft_putendl(get_nth_word("echo coucou \"re test\"", 2));
@@ -30,7 +30,7 @@ void	substitution_test()
 	ft_putendl("\n---- HISTORY SUBSTITUTION TESTS --------\n");
 	ft_putendl("Current history list: ");
 	print_history(get_shell_env()->history, 0);
-	while (str[i])
+	while (i < NB_SUB_TESTS)
 	{
 		ft_putstr("\n---- line = \"");
 		ft_putstr(str[i]);

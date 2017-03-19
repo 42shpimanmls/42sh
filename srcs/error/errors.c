@@ -43,7 +43,7 @@ void	print_error_msg(t_error_id id)
 	{
 		if (id == errors[u].id)
 		{
-			ft_putendl(errors[u].msg);
+			ft_putendl_fd(errors[u].msg, STDERR_FILENO);
 			return;
 		}
 		u++;
@@ -61,7 +61,7 @@ void	print_usage_msg(t_builtin_id id)
 	{
 		if (id == usages[u].id)
 		{
-			ft_putendl(usages[u].msg);
+			ft_putendl_fd(usages[u].msg, STDERR_FILENO);
 			return;
 		}
 		u++;
