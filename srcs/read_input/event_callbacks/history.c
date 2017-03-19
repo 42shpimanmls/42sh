@@ -13,11 +13,11 @@ void	list_free(t_abstract_list **list)
 	*list = NULL;
 }
 
-void	str_to_list(t_string **list, char *str)
+void	str_to_list(t_editor *ed, char *str)
 {
 	while (*str)
 		{
-			add_to_string(list, *str);
+			add_to_string(ed, *str);
 			str++;
 		}
 }
@@ -44,7 +44,7 @@ EV_CB_RET 	event_history_down(EV_CB_ARGS)
 	if (ed->history && ed->history->next)
 	{
 		ed->history = ed->history->next;
-		str_to_list(&ed->string, ed->history->line);
+		str_to_list(ed, ed->history->line);
 		print_string(ed->string);
 
 	}
