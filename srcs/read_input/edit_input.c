@@ -22,8 +22,6 @@ void move_start(t_editor *ed)
 void restore_old_cursor_position(t_editor *ed, int old_position)
 {
 	ed->cursor_position = ed->string_size;
-	// (void)old_position;
-	// (void)ed;
 	while (ed->cursor_position > old_position)
 	{
 		event_cursor_left(ed);
@@ -54,23 +52,17 @@ void refresh_line(t_editor *ed)
 	}
 }
 
-// # include <term.h>
-// # include <termios.h>
-// # include <curses.h>
-
 char *edit_input()
 {
 	//TERMCAPS
-	char		*line;
-	t_editor	*ed;
-
-	ft_start_termcaps();
-	ed = init_editor();
-
 	char						buf[EVENT_STR_MAX_LEN + 1];
 	ssize_t						ret;
 	t_event_callback_def const	*def;
+	t_editor					*ed;
+	char						*line;
 
+	ft_start_termcaps();
+	ed = get_editor();
 	ed->need_refresh = true;
 	refresh_line(ed);
 
@@ -102,6 +94,7 @@ char *edit_input()
 	}
 
 	ft_close_termcaps();
+
 	line = get_string_from_list(ed->string);
 	free_string(ed->string);
 	return (line);

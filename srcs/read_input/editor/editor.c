@@ -11,14 +11,21 @@
 # include "read_input/event_callbacks/event_callback_def.h"
 # include "read_input/termcap/init_deinit.h"
 
-t_editor *init_editor()
+t_editor *get_editor()
+{
+	static t_editor ed;
+	return (&ed);
+}
+
+void 	init_editor()
 {
 	t_editor *new;
 
-	new = memalloc_or_die(sizeof(t_editor));
+	new = get_editor();
+	ft_start_termcaps();
 	new->term = init_term();
+	ft_close_termcaps();
 	new->history = get_shell_env()->history;
-	return (new);
 }
 
 void	add_to_string(t_editor *ed, char c)
@@ -67,15 +74,3 @@ void free_string(t_string *s)
 	free(s);
 }
 
-// void	ft_clear_line(t_string *s)
-// {
-// 	char *move_left = tgetstr("le", NULL);
-
-// 	while (s)
-// 	{
-// 		ft_putstr(move_left);
-// 		s = s->next;
-// 	}
-// 	ft_putstr(tgetstr("cr", NULL));
-// 	ft_putstr(tgetstr("ce", NULL));
-// }
