@@ -5,6 +5,8 @@
 # include <libft.h>
 # include <stdbool.h>
 # include "break_input/token.h"
+# include "parse_input/syntax_tree.h"
+# include "variable.h"
 
 /* proposition
 
@@ -27,14 +29,6 @@ typedef struct			s_history
 	struct s_history	*prev;
 }						t_history;
 
-typedef struct			s_variable
-{
-	struct s_variable	*next;
-	char				*name;
-	char				*value;
-	bool				exported;
-}						t_variable;
-
 typedef struct			s_shell_env
 {
 	t_variable			*variables;
@@ -44,6 +38,7 @@ typedef struct			s_shell_env
 	char				*command_string;
 	char				*input_string;
 	t_token				*tokens;
+	t_command_list		*syntax_tree;
 }						t_shell_env;
 
 t_shell_env				*get_shell_env(void);

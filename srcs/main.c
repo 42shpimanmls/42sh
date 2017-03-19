@@ -11,7 +11,7 @@ static void		main_loop()
 {
 	read_input();
 	break_input();
-	//parse_input();
+	parse_input();
 	//execute_tree();
 }
 
