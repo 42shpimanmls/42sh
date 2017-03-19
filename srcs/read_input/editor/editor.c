@@ -79,15 +79,15 @@ void free_string(t_string *s)
 	free(s);
 }
 
-// void	ft_clear_line(t_string *s)
-// {
-// 	char *move_left = tgetstr("le", NULL);
+void	ft_clear_line(t_string *s)
+{
+	char *move_left = tgetstr("le", NULL);
 
-// 	while (s)
-// 	{
-// 		ft_putstr(move_left);
-// 		s = s->next;
-// 	}
-// 	ft_putstr(tgetstr("cr", NULL));
-// 	ft_putstr(tgetstr("ce", NULL));
-// }
+	while (s)
+	{
+		ft_putstr(move_left);
+		s = s->next;
+	}
+	ft_putstr(tgetstr("cr", NULL));
+	ft_putstr(tgetstr("ce", NULL));
+}

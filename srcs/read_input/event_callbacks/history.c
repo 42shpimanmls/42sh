@@ -30,7 +30,7 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 	{
 		ft_clear_line(ed->string);
 		list_free((t_abstract_list **)&ed->string);
-		str_to_list(&ed->string, ed->history->line);
+		str_to_list(ed, ed->history->line);
 		print_string(ed->string);
 		if (ed->history->prev)
 			ed->history = ed->history->prev;
