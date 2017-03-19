@@ -32,7 +32,6 @@ void	add_to_string(t_editor *ed, char c)
 {
 	t_string *new;
 
-	ed->cursor_position++;
 	ed->need_refresh = true;
 	new = memalloc_or_die(sizeof(t_string));
 	new->c = c;
@@ -43,8 +42,9 @@ void	add_to_string(t_editor *ed, char c)
 	}
 	else
 	{
-		list_push_back((t_abstract_list **)ed->string, (t_abstract_list *)new);
+		list_push_back_at_pos(ed->cursor_position, (t_abstract_list **)ed->string, (t_abstract_list *)new);
 	}
+	ed->cursor_position++;
 }
 
 char *get_string_from_list(t_string *s)

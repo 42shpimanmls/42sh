@@ -72,16 +72,9 @@ char *edit_input()
 		def = get_matching_event_callback(buf);
 		if (def)
 		{
+			def->callback(ed);
 			if (def->id == NEWLINE_EVID)
-			{
-				add_to_string(ed, '\n');
-				ft_putchar('\n');
 				break ;
-			}
-			else
-			{
-				def->callback(ed);
-			}
 		}
 		else
 		{
