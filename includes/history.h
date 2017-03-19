@@ -3,19 +3,8 @@
 
 #include "execution/builtins/builtin_def.h"
 
-
-
-/**DELETE*/
-
-// bool	str_is_digits(char const *str);
-
-
-
-
-
-
 #define HISTFILE ".42sh_history"  // exported env variable in shells
-
+// #define HISTORY_DEBUG
 
 typedef	struct s_hist_opt
 {
@@ -59,10 +48,12 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS);
 
 
 /*
-**		history_errors.c
+**		history_tests.c
 */
 
-void	history_error(int code, char *error);
+void	substitution_test(void);
+void	history_test(void);
+
 
 
 #endif

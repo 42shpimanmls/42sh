@@ -10,6 +10,8 @@ typedef enum				e_error_id
 	NEED_NUM,
 	OUT_OF_RANGE,
 	INVALID_OPTION,
+	EV_NOT_FOUND,
+	BAD_WD_SPEC,
 	PERM_DENIED,
 	NO_SUCH_FILE
 }							t_error_id;
@@ -26,7 +28,7 @@ typedef struct s_builtin_usage
 	char	*msg;
 }				t_builtin_usage;
 
-#define TOTAL_ERROR_COUNT 7
+#define TOTAL_ERROR_COUNT 9
 
 t_error const 		*get_error_defs(void);
 void				print_error_msg(t_error_id id);

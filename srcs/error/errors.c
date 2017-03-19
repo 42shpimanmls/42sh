@@ -13,6 +13,8 @@ t_error const *get_error_defs(void)
 		{ NEED_NUM,				"numeric argument required" },
 		{ OUT_OF_RANGE,			"history position out of range" },
 		{ INVALID_OPTION,		"invalid option" },
+		{ EV_NOT_FOUND,			"event not found"},
+		{ BAD_WD_SPEC,			"bad word specifier"},
 		{ PERM_DENIED,			"permission denied" },
 		{ NO_SUCH_FILE,			"no such file or directory" },
 
