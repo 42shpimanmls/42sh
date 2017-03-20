@@ -23,6 +23,9 @@ all:
 	@make -C ./libft $(MAKE_OPTS)
 	@$(MAKE) $(PROG_NAME) $(MAKE_OPTS) $(MAKE_OPTS_THREAD)
 
+test:
+	@make re -C ./tests $(MAKE_OPTS) $(MAKE_OPTS_THREAD)
+
 $(PROG_NAME): $(OBJS_DIRS) $(OBJS)
 	@echo "LINK   " $@
 	@$(LINKER) -o $@ $(OBJS) $(LIB)
@@ -36,10 +39,12 @@ $(OBJS_ROOT)/%.o: $(SRCS_ROOT)/%.c
 
 clean:
 	@make -C ./libft clean $(MAKE_OPTS)
+	@make -C ./tests clean $(MAKE_OPTS)
 	@rm -fr $(OBJS_ROOT)
 
 fclean: clean
 	@make -C ./libft fclean $(MAKE_OPTS)
+	@make -C ./tests fclean $(MAKE_OPTS)
 	@rm -f $(PROG_NAME)
 
 re: fclean all

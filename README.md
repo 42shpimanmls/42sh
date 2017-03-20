@@ -1,5 +1,7 @@
 # 42sh
 
+[![Build Status](https://travis-ci.org/42shpimanmls/42sh.svg?branch=master)](https://travis-ci.org/42shpimanmls/42sh)
+
 Todo
 ---
 
@@ -29,4 +31,3 @@ Todo
 - [ ] execution
 
 - [ ] wait
-
