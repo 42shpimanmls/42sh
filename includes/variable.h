@@ -1,7 +1,7 @@
 #ifndef VARIABLE_H
 # define VARIABLE_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 typedef struct			s_variable
 {
