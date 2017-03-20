@@ -9,10 +9,6 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-/*
-[no bang] ˆstr1ˆstr2[ˆ||\n] last command replacing str1 with str2 (= !!:s/str1/str2)
-*/
-
 char	*get_history_entry(char *designator, t_uint *end)
 {
 	t_history	*history;
@@ -46,9 +42,13 @@ char	*get_history_entry(char *designator, t_uint *end)
 	//!?str[? or \n] most recent command containing str
 	else if (*designator == '?')
 		return (find_in_history(false, history, ++designator, end));
-	// !!! store string search in shell_env !!! for :%
+	/*
+	!!! + store string search in shell_env !!! for :%
+	*/
 
-	// !$ last word from last command
+	// !$ = !!:$ = last word from last command
+	else if (*designator == '$')
+		return (get_nth_entry(history, -1));
 
 	//!str most recent command that starts with str
 	else
@@ -73,7 +73,6 @@ void	find_and_replace(char **str, char *to_find, char *replace)
 	ft_strdel(&tmp);
 	ft_strdel(&tmp2);
 }
- // before word designator ':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’
 
 int	 	start_substitution(char **str, t_uint *start)
 {
@@ -88,7 +87,11 @@ int	 	start_substitution(char **str, t_uint *start)
 		return -1;
 	}
 	end++;
-	get_entry_word(&hist_entry, &(*str)[end], &end);
+	// designators: ':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’ => event is last command (!!)
+	if (start_word_designator((*str)[end]))
+	{
+		get_entry_word(&hist_entry, &(*str)[end], &end);
+	}
 	// modify_hist(&hist_event);
 	to_sub = ft_strsub(*str, *start, end - *start);
 	find_and_replace(str, to_sub, hist_entry);
@@ -107,21 +110,26 @@ int	history_substition(char **str) // ret should determine if command runs or no
 	i = 0;
 	while ((*str)[i])
 	{
+		// '!' starts a history substitution
 		if (is_bang((*str)[i]))
 		{
-			// except if newline, \t, space, '=' or '('
 			if ((*str)[i + 1] && (*str)[i + 1] != '\n' && (*str)[i + 1] != '\t' \
 				 && (*str)[i + 1] != ' ' && (*str)[i + 1] != '=')
 				start_substitution(str, &i);
 			// go to end of substituted
 			// free modifiers
 		}
+		// case [no bang] ˆstr1ˆstr2[ˆ||\n] same as !!:s/str1/str2
 		else if (is_circumflex((*str)[i]))
 		{
 			; // quick_substitution
 		}
+		// designators: ':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’ => event is last command (!!)
 		else if (start_word_designator((*str)[i]))
-			;
+		{
+			;//get_entry_word(get_history_entry("!", &i), &(*str)[i], &i);
+			// modifiers
+		}
 		i++;
 	}
 	return (0);

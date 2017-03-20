@@ -22,7 +22,7 @@ char	*find_in_history(bool must_start, t_history *history, char *str, t_uint *en
 
 char	*get_nth_entry(t_history *history, int n);
 char	*get_nth_word(char *line, t_uint n);
-char	*get_entry_word(char **entry, char *str, t_uint *end);
+void	get_entry_word(char **entry, char *str, t_uint *end);
 bool	start_word_designator(char c);
 
 
