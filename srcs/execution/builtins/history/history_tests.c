@@ -9,7 +9,7 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-#define NB_SUB_TESTS 19
+#define NB_SUB_TESTS 25
 
 void	substitution_test()
 {
@@ -17,7 +17,7 @@ void	substitution_test()
 	int	i = 0;
 	char *tests[] = {"!", "!!", "!!!!", "echo !!", "!2", "!-2", "echo !0", \
 					"!-0", "!6534", "!-6", "!fi grj", "exho !?ou", "!?on?:0", "!fi", "!!:0-2", "!!:-2sijf", \
-					"!!:2-", "!!:1-3", "!!:1-*"};// "!#"
+					"!!:2-", "!!:1-3", "!!:1-*", "!!:2*", "!!:40", "!!:^", "!!*", "!!$", "!$"};// "!#"
 	char	**str;
 
 	// ft_putendl(get_nth_word("echo coucou \"re test\"", 2));
@@ -36,10 +36,12 @@ void	substitution_test()
 		ft_putstr("\n---- line = \"");
 		ft_putstr(str[i]);
 		ft_putendl("\" ----\n");
-		history_substition(&str[i]);
-		ft_putstr("after sub = \"");
-		ft_putstr(str[i]);
-		ft_putendl("\"");
+		if (history_substition(&str[i]) >= 0)
+		{
+			ft_putstr("after sub = \"");
+			ft_putstr(str[i]);
+			ft_putendl("\"");
+		}
 		i++;
 	}
 }

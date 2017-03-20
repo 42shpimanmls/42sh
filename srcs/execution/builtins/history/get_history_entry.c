@@ -10,7 +10,7 @@
 #include "history_substitutions.h"
 
 
-char	*get_nth_entry(t_history *history, int n)
+static char		*get_nth_entry(t_history *history, int n)
 {
 	if (n == 0)
 		return (NULL);
@@ -36,7 +36,7 @@ char	*get_nth_entry(t_history *history, int n)
 	return (ft_strdup(history->line));
 }
 
-char	*find_in_history(bool must_start, t_history *history, char *str, t_uint *end)
+static char		*find_in_history(bool must_start, t_history *history, char *str, t_uint *end)
 {
 	char	*find;
 	int 	i;
@@ -68,5 +68,51 @@ char	*find_in_history(bool must_start, t_history *history, char *str, t_uint *en
 		}
 		history = history->prev;
 	}
+	return (NULL);
+}
+
+char	*get_history_entry(char *designator, t_uint *end)
+{
+	t_history	*history;
+	int 		n;
+
+	history = get_shell_env()->history;
+
+	// !! or word designator (':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’)  => previous command
+	if (is_bang(*designator) || start_word_designator(*designator))
+	{
+		if (is_bang(*designator))
+			(*end)++;
+		return (get_nth_entry(history, -1));
+	}
+	// !n command line n   / !-n command n lines back
+	else if (ft_isdigit(*designator) || *designator == '-')
+	{
+		/* separate function */
+		 (*end)++;
+		if (!ft_isdigit(designator[*end]))
+		{
+			while (designator[*end] && !start_word_designator(designator[*end]) \
+					&& !is_posix_blank(designator[*end]))
+				(*end)++;
+		}
+		n = ft_atoi(designator);
+		while (ft_isdigit(designator[*end]) && !start_word_designator(designator[*end]) \
+				&& !is_posix_blank(designator[*end]))
+			(*end)++;
+		return (get_nth_entry(history, n));
+		/**********************/
+	}
+
+	//!?str[? or \n] most recent command containing str
+	else if (*designator == '?')
+		return (find_in_history(false, history, ++designator, end));
+	/*
+	!!! + store string search in shell_env !!! for :%
+	*/
+
+	//!str most recent command that starts with str
+	else
+		return (find_in_history(true, history, designator, end));
 	return (NULL);
 }

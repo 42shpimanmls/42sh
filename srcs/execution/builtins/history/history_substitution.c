@@ -9,52 +9,7 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-char	*get_history_entry(char *designator, t_uint *end)
-{
-	t_history	*history;
-	int 		n;
 
-	history = get_shell_env()->history;
-	// (*end)++;
-	// !! previous command
-	if (is_bang(*designator))
-	{
-		(*end)++;
-		return (get_nth_entry(history, -1));
-	}
-	// !n command line n   / !-n command n lines back
-	else if (ft_isdigit(*designator) || *designator == '-')
-	{
-		 (*end)++;
-		if (!ft_isdigit(designator[*end]))
-		{
-			while (designator[*end] && !start_word_designator(designator[*end]) \
-					&& !is_posix_blank(designator[*end]))
-				(*end)++;
-		}
-		n = ft_atoi(designator);
-		while (ft_isdigit(designator[*end]) && !start_word_designator(designator[*end]) \
-				&& !is_posix_blank(designator[*end]))
-			(*end)++;
-		return (get_nth_entry(history, n));
-	}
-
-	//!?str[? or \n] most recent command containing str
-	else if (*designator == '?')
-		return (find_in_history(false, history, ++designator, end));
-	/*
-	!!! + store string search in shell_env !!! for :%
-	*/
-
-	// !$ = !!:$ = last word from last command
-	else if (*designator == '$')
-		return (get_nth_entry(history, -1));
-
-	//!str most recent command that starts with str
-	else
-		return (find_in_history(true, history, designator, end));
-	return (NULL);
-}
 
 void	find_and_replace(char **str, char *to_find, char *replace)
 {
@@ -87,15 +42,19 @@ int	 	start_substitution(char **str, t_uint *start)
 		return -1;
 	}
 	end++;
-
-	// designators: ':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’ => event is last command (!!)
+	ft_putstr("matched event = \"");
+	ft_putstr(hist_entry);
+	ft_putendl("\"");
 	if (start_word_designator((*str)[end]))
 	{
-		get_entry_word(&hist_entry, &(*str)[end], &end);
+		if (get_entry_word(&hist_entry, &(*str)[end], &end) < 0)
+			return (-1); // error
+		// if (start_word_designator((*str)[end]))
+			// ;// modify_hist(&hist_event);
 	}
-	// modify_hist(&hist_event);
 	to_sub = ft_strsub(*str, *start, end - *start);
 	find_and_replace(str, to_sub, hist_entry);
+	// ft_strdel(&to_sub);
 	*start = end;
 	return (0);
 }
@@ -114,25 +73,31 @@ int	history_substition(char **str) // ret should determine if command runs or no
 		// '!' starts a history substitution
 		if (is_bang((*str)[i]))
 		{
+			// !# line typed so far
+			if ((*str)[i + 1] && (*str)[i + 1] == '#')
+			{
+				; // dup + join str
+			}
 			if ((*str)[i + 1] && (*str)[i + 1] != '\n' && (*str)[i + 1] != '\t' \
 				 && (*str)[i + 1] != ' ' && (*str)[i + 1] != '=')
-				start_substitution(str, &i);
+				if (start_substitution(str, &i) < 0)
+					return (-1);
 			// go to end of substituted
-			// free modifiers
 		}
+
 		// case [no bang] ˆstr1ˆstr2[ˆ||\n] same as !!:s/str1/str2
 		else if (is_circumflex((*str)[i]))
 		{
 			; // quick_substitution
 		}
-		// designators: ':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’ => event is last command (!!)
+
 		else if (start_word_designator((*str)[i]))
 		{
-			;//get_entry_word(get_history_entry("!", &i), &(*str)[i], &i);
+			;//start_substitution("!", &i));
+			// get_entry_word(get_history_entry("!", &i), &(*str)[i], &i);
 			// modifiers
 		}
 		i++;
 	}
 	return (0);
 }
-
