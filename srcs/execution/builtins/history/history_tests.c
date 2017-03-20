@@ -9,14 +9,14 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-#define NB_SUB_TESTS 15
+#define NB_SUB_TESTS 16
 
 void	substitution_test()
 {
 
 	int	i = 0;
 	char *tests[] = {"!", "!!", "!!!!", "echo !!", "!2", "!-2", "echo !0", \
-					"!-0", "!6534", "!-6", "!fi grj", "exho !?ou", "!?on?:0", "!fi", "!!:0-2"};// "!#"
+					"!-0", "!6534", "!-6", "!fi grj", "exho !?ou", "!?on?:0", "!fi", "!!:0-2", "!!:-2sijf"};// "!#"
 	char	**str;
 
 	// ft_putendl(get_nth_word("echo coucou \"re test\"", 2));

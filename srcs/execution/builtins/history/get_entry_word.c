@@ -1,4 +1,3 @@
-// #include <stdbool.h>
 #include "abstract_list.h"
 #include "utils.h"
 #include "uint.h"
@@ -18,8 +17,6 @@ char	*get_last_word(char *line)
 	return (words->str);
 }
 
-
-
 char	*get_word_range(char *line, t_uint start, t_uint end, bool empty_ok)
 {
 	t_token *words;
@@ -31,6 +28,7 @@ char	*get_word_range(char *line, t_uint start, t_uint end, bool empty_ok)
 	if (!list_goto_n((t_abstract_list **)&words, start))
 		return (NULL);
 	word_range = ft_strdup(words->str);
+	ft_putendl(line);
 	while (range > 0)
 	{
 		words = words->next;
@@ -64,30 +62,36 @@ int		get_entry_word(char **entry, char *str, t_uint *end)
 {
 	int 	i;
 	char	*words;
-	char	*tmp;
+	// char	*tmp;
 
 	i = 0;
-	ft_putendl(get_word_range("one two three", 0, 2, false));
 	if (*str == ':')
 	{
 		i++;
 		if (ft_isdigit(str[i]) || str[i] == '-')
 		{
 		//  x-y A range of words; ‘-y’ abbreviates ‘0-y’. ; 'x-' and 'x*' abbreviate 'x-$' ;
-			if ((tmp = ft_strchr(str, '-')) && tmp[1] && ft_isdigit(tmp[1]))
+			if (ft_strchr(str, '-'))
 			{
 				// ‘-y’ abbreviates ‘0-y’
-				if (tmp == str)
+				if (str[i] == '-')
 				{
-					;
+					if (ft_isdigit(str[++i]))
+					{
+						words = get_word_range(*entry, 0, ft_atoi(&str[i]) ,false);
+						*end += number_len(&str[i]);
+					}
+					else
+						words = ft_strnew(1);
 				}
 				else
 				{
 					;
 				}
+
 			}
 		// designator = n => nth word
-
+/*
 			if (!(words = get_nth_word(*entry, ft_atoi(&str[i]))))
 			{
 				//error_builtin();
@@ -95,7 +99,7 @@ int		get_entry_word(char **entry, char *str, t_uint *end)
 			}
 			while (ft_isdigit(str[i]))
 				i++;
-		}
+		}*/
 		// ^ word 1 (first argument)
 		// $ last argument/word
 		// % The word matched by the most recent ‘?string?’ search.
@@ -103,6 +107,9 @@ int		get_entry_word(char **entry, char *str, t_uint *end)
 			It is not an error to use ‘*’ if there is just one word in the event;
 			the empty string is returned in that case. */
 		(*end) += i;
+	}
+	ft_strdel(entry);
+	*entry = ft_strdup(words);
 	}
 	return (0);
 }

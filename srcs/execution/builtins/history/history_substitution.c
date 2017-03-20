@@ -87,6 +87,7 @@ int	 	start_substitution(char **str, t_uint *start)
 		return -1;
 	}
 	end++;
+
 	// designators: ':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’ => event is last command (!!)
 	if (start_word_designator((*str)[end]))
 	{
