@@ -1,7 +1,9 @@
+#include "shell_env.h"
+
 #include "abstract_list.h"
 #include "utils.h"
 #include "uint.h"
-#include "shell_env.h"
+#include "range.h"
 
 #include "break_input/tokenizer.h"
 
@@ -17,19 +19,22 @@ char	*get_last_word(char *line)
 	return (words->str);
 }
 
-char	*get_word_range(char *line, t_uint start, t_uint end, bool empty_ok)
+char	*get_word_range(char *line, t_range *range, bool empty_ok)
 {
 	t_token *words;
-	t_uint	range;
+	t_uint	nb_wds;
 	char	*word_range;
 
-	range = end - start;
 	words = tokenize(line);
-	if (!list_goto_n((t_abstract_list **)&words, start))
+	if (range->end < 0)
+	{
+		range->end = list_count((t_abstract_list *)words) + range->end;
+	}
+	nb_wds = range->end - range->start;
+	if (!list_goto_n((t_abstract_list **)&words, range->start))
 		return (NULL);
 	word_range = ft_strdup(words->str);
-	ft_putendl(line);
-	while (range > 0)
+	while (nb_wds > 0)
 	{
 		words = words->next;
 		if (!words)
@@ -40,7 +45,7 @@ char	*get_word_range(char *line, t_uint start, t_uint end, bool empty_ok)
 			return (NULL);
 		}
 		str_join_with_space(&word_range, words->str);
-		range--;
+		nb_wds--;
 
 	}
 	return (word_range);
@@ -48,7 +53,11 @@ char	*get_word_range(char *line, t_uint start, t_uint end, bool empty_ok)
 
 char	*get_nth_word(char *line, t_uint n)
 {
-	return (get_word_range(line, n, n, false));
+	t_range range;
+
+	range.start = n;
+	range.end = n;
+	return (get_word_range(line, &range, false));
 }
 
 bool	start_word_designator(char c)
@@ -58,37 +67,90 @@ bool	start_word_designator(char c)
 	return (false);
 }
 
+t_range	*parse_range(char *str, int *i)
+{
+	t_range	*range;
+
+	range = memalloc_or_die(sizeof(t_range));
+	// ‘-y’ abbreviates ‘0-y’
+	if (str[*i] == '-')
+	{
+		if (ft_isdigit(str[++(*i)]))
+		{
+			range->start = 0;
+			range->end = ft_atoi(&str[*i]);
+			*i += number_len(&str[*i]);
+		}
+		else
+			return (NULL);
+	}
+	else
+	{
+		range->start = ft_atoi(&str[*i]);
+		*i += number_len(&str[*i]);
+		if (str[*i] && str[*i] == '-')
+		{
+			(*i)++;
+			if (str[*i] && ft_isdigit(str[*i]))
+			{
+				range->end = ft_atoi(&str[*i]);
+				*i += number_len(&str[*i]);
+			}
+		// 'x-' and 'x*' abbreviate 'x-$' ; 'x-' omits the last word
+			else if (str[*i] && str[*i] == '*')
+			{
+				(*i)++;
+				range->end = -1;
+			}
+			else
+				range->end = -2;
+		}
+	}
+	return (range);
+}
+
+void	print_range(t_range *range)
+{
+	ft_putendl("<range>");
+	ft_putendl("start: ");
+	ft_putnbr(range->start);
+	ft_putchar('\n');
+	ft_putendl("end: ");
+	ft_putnbr(range->end);
+	ft_putchar('\n');
+	ft_putendl("</range>");
+
+}
+
 int		get_entry_word(char **entry, char *str, t_uint *end)
 {
 	int 	i;
 	char	*words;
-	// char	*tmp;
+	// t_uint	start;
+	t_range	*range;
 
 	i = 0;
-	if (*str == ':')
+	if (start_word_designator(*str))
 	{
-		i++;
+		if (*str == ':')
+			i++;
 		if (ft_isdigit(str[i]) || str[i] == '-')
 		{
-		//  x-y A range of words; ‘-y’ abbreviates ‘0-y’. ; 'x-' and 'x*' abbreviate 'x-$' ;
+
+			/*
+			func parse_range
+			*/
+
+		//  x-y ; x- ; x* ; -y  A range of words
 			if (ft_strchr(str, '-'))
 			{
-				// ‘-y’ abbreviates ‘0-y’
-				if (str[i] == '-')
-				{
-					if (ft_isdigit(str[++i]))
-					{
-						words = get_word_range(*entry, 0, ft_atoi(&str[i]) ,false);
-						*end += number_len(&str[i]);
-					}
-					else
-						words = ft_strnew(1);
-				}
+				if (!(range = parse_range(str, &i)))
+					words = ft_strnew(1);
 				else
 				{
-					;
+					print_range(range);
+					words = get_word_range(*entry, range ,false);
 				}
-
 			}
 		// designator = n => nth word
 /*
@@ -106,10 +168,10 @@ int		get_entry_word(char **entry, char *str, t_uint *end)
 		/*  '*' all the words except 0 (1-$)
 			It is not an error to use ‘*’ if there is just one word in the event;
 			the empty string is returned in that case. */
-		(*end) += i;
-	}
-	ft_strdel(entry);
-	*entry = ft_strdup(words);
+			(*end) += i;
+		}
+		ft_strdel(entry);
+		*entry = ft_strdup(words);
 	}
 	return (0);
 }

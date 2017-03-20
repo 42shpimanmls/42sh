@@ -104,7 +104,7 @@ int	 	start_substitution(char **str, t_uint *start)
 	unless ! is simple-quoted or quoted with backslash
 */
 
-int	history_substition(char **str) // ret should determine if command runs or not
+int	history_substition(char **str) // ret should determine if command runs or not (p modifier)
 {
 	t_uint		i;
 
