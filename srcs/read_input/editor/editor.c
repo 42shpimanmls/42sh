@@ -42,7 +42,7 @@ void	add_to_string(t_editor *ed, char c)
 	}
 	else
 	{
-		list_push_back_at_pos(ed->cursor_position, (t_abstract_list **)ed->string, (t_abstract_list *)new);
+		list_push_at_pos(ed->cursor_position, (t_abstract_list **)ed->string, (t_abstract_list *)new);
 	}
 	ed->cursor_position++;
 }
@@ -73,4 +73,3 @@ void free_string(t_string *s)
 	}
 	free(s);
 }
-

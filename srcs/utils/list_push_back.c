@@ -16,28 +16,23 @@ void list_push_back(t_abstract_list **list, t_abstract_list *new)
 	}
 }
 
-void list_push_back_at_pos(size_t pos, t_abstract_list **list, t_abstract_list *new)
+void list_push_at_pos(size_t pos, t_abstract_list **list, t_abstract_list *new)
 {
 	(void)pos;
 	t_abstract_list	*lst;
 	// t_abstract_list	**addr;
 	size_t			i;
 
-	ft_dprintf(2, "pos   : %d\n", pos);
-	ft_dprintf(2, "---------------------------------\n");
-
-
 	if (*list == NULL)
 		*list = new;
 	else
 	{
-		// lst = *list;
-		// addr = list;
+		lst = *list;
 		if (pos == 0)
 		{
-			// addr = &(*addr)->next;
-			// lst = new;
-			// // lst = lst->next;
+			// insert at first position !!!!!!!!!!!!!!!!!!!!!!!!!!
+			// new->next = *list;
+			// *list = new;
 		}
 		else if (pos == 1)
 		{
@@ -47,7 +42,6 @@ void list_push_back_at_pos(size_t pos, t_abstract_list **list, t_abstract_list *
 		else if (pos > 1)
 		{
 			i = 3;
-			lst = *list;
 			while (lst->next && i <= pos)
 			{
 				i++;
