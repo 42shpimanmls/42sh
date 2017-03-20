@@ -1,6 +1,7 @@
 #include "shell_env.h"
 #include "init/init.h"
 // #include "execution/builtins/builtins.h"  //remove
+#include "read_input/editor/editor.h"
 #include "abstract_list.h"
 #include "history.h"
 
@@ -32,6 +33,9 @@ void	init(int ac, char **av)
 
 	shell_env = get_shell_env();
 	ft_bzero(shell_env, sizeof(t_shell_env));
+
+	init_editor();
+
 	parse_options(ac, av, shell_env);
 	init_variables_list(shell_env);
 

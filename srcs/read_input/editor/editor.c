@@ -12,12 +12,20 @@
 # include "read_input/termcap/init_deinit.h"
 
 #include "history.h"
+t_editor *get_editor()
+{
+	static t_editor ed;
+	return (&ed);
+}
+
 t_editor *init_editor()
 {
 	t_editor *new;
 
-	new = memalloc_or_die(sizeof(t_editor));
+	new = get_editor();
+	ft_start_termcaps();
 	new->term = init_term();
+	ft_close_termcaps();
 	new->history = get_shell_env()->history;
 	list_goto_last((t_abstract_list **)&new->history);
 	return (new);
@@ -27,7 +35,6 @@ void	add_to_string(t_editor *ed, char c)
 {
 	t_string *new;
 
-	ed->cursor_position++;
 	ed->need_refresh = true;
 	new = memalloc_or_die(sizeof(t_string));
 		new->c = c;
@@ -38,8 +45,9 @@ void	add_to_string(t_editor *ed, char c)
 	}
 	else
 	{
-		list_push_back((t_abstract_list **)ed->string, (t_abstract_list *)new);
+		list_push_at_pos(ed->cursor_position, (t_abstract_list **)ed->string, (t_abstract_list *)new);
 	}
+	ed->cursor_position++;
 }
 
 void print_string(t_string *s)
@@ -79,6 +87,13 @@ void free_string(t_string *s)
 	free(s);
 }
 
+/////// OBSOLETTE FUNCTION //////////////
+/////////////////////////////////////////
+/////////////////////////////////////////
+//USE THIS 
+//t_editor *ed;
+//ed->need_refresh == true;
+/////////////////////////////////////////
 void	ft_clear_line(t_string *s)
 {
 	char *move_left = tgetstr("le", NULL);
@@ -91,3 +106,5 @@ void	ft_clear_line(t_string *s)
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("ce", NULL));
 }
+/////////////////////////////////////////
+/////////////////////////////////////////
