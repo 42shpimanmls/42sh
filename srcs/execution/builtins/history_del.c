@@ -1,5 +1,7 @@
 #include "shell_env.h"
 #include "history.h"
+#include "errors.h"
+#include "utils.h"
 
 void		free_history(t_history **history)
 {
@@ -8,28 +10,35 @@ void		free_history(t_history **history)
 	*history = NULL;
 }
 
-void		delete_history_entry(t_history **history, int offset) // change entirely
+void		delete_history_entry(t_history **history, char *offset) // change entirely
 {
 	t_history *tmp;
+	int		n_offset;
 
 	tmp = *history;
-	while (offset > 1 && tmp)
+	if (str_is_digits(offset))
 	{
-		tmp = tmp->next;
-		offset--;
-	}
-	if (!tmp || offset <= 0)
-		ft_putendl("insert history error (offset: history position out of range)");
-	else
-	{
-		if (tmp->next)
-			tmp->next->prev = tmp->prev;
-		if (tmp->prev)
-			tmp->prev->next = tmp->next;
+		n_offset = ft_atoi(offset);
+		while (n_offset > 1 && tmp)
+		{
+			tmp = tmp->next;
+			n_offset--;
+		}
+			if (!tmp || n_offset <= 0)
+				error_builtin("history", offset, OUT_OF_RANGE);
 		else
-			*history = tmp->next;
-		free_history(&tmp);
+		{
+			if (tmp->next)
+				tmp->next->prev = tmp->prev;
+			if (tmp->prev)
+				tmp->prev->next = tmp->next;
+			else
+				*history = tmp->next;
+			free_history(&tmp);
+		}
 	}
+	else
+		error_builtin("history", offset, OUT_OF_RANGE);
 }
 
 void		clear_history_list(t_history **history)

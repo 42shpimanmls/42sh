@@ -1,4 +1,5 @@
 #include "shell_env.h"
+#include "errors.h"
 #include "history.h"
 #include "abstract_list.h"
 #include "utils.h"
@@ -26,12 +27,16 @@ void		history_test()
 	char 	*print[] = {"history"};
 	char	*print_offset[] = {"history", "3"};
 	char	*clear_hist[] = {"history", "-c"};
-	char	*delete_entry[] = {"history", "-d3"};
-	// char	*delete_entry2[] = {"history", "-d", "3"};
-	char	*hist_to_file[] = {"history", "-w", "file", NULL};
+	// char	*delete_entry[] = {"history", "-d3"};
+	char	*delete_entry2[] = {"history", "-d", "3", NULL};
+	// char	*hist_to_file[] = {"history", "-w", "file", NULL};
+	// char	*hist_append_file[] = {"history", "-a", "file", NULL};
 	// char	*hist_to_histfile[] = {"history", "-w"};
-	char	*error1[] = {"history", "l"}; // numeric argument required
-	char	*error2[] = {"history", "3", "coucou"}; // too many args
+	char	*error1[] = {"history", "l"};
+	char	*error2[] = {"history", "3", "coucou"};
+	char	*error3[] = {"history", "-d", "slijg", NULL};
+	char	*error4[] = {"history", "-d", "8797", NULL};
+
 	// char	*error3[] = {"history", "-ar"}; // more than one option from anrw
 
 	ft_putendl("----- HISTORY TESTS ------");
@@ -41,13 +46,14 @@ void		history_test()
 	ft_putendl("PRINT_last_3: ");
 	builtin_history(2, print_offset);
 	ft_putendl("HIST_TO_FILE");
-	builtin_history(3, hist_to_file);
+	// builtin_history(3, hist_to_file);
+	// builtin_history(3, hist_append_file);
 	// builtin_history(2, hist_to_histfile);
 	ft_putendl("PRINT AFTER DEL_ENTRY 3");
-	builtin_history(2, delete_entry);
-	builtin_history(1, print);
-	// builtin_history(3, delete_entry2);
-	// // builtin_history(2, print_offset);
+	// builtin_history(2, delete_entry);
+	// builtin_history(1, print);
+	builtin_history(3, delete_entry2);
+	builtin_history(2, print_offset);
 	ft_putendl("CLEAR_HISTORY");
 	builtin_history(2, clear_hist);
 	ft_putendl("PRINT: ");
@@ -56,6 +62,10 @@ void		history_test()
 	builtin_history(2, error1);
 	ft_putendl("ERROR_2MANY_ARGS: ");
 	builtin_history(3, error2);
+	ft_putendl("ERROR_OUT_OF_RANGE: ");
+	builtin_history(3, error3);
+	builtin_history(3, error4);
+
 
 
 
@@ -83,42 +93,43 @@ void		print_history(t_history *history, int start)
 void		print_history_n(bool more_args, char *n, t_history *history)
 {
 	if (more_args)
-		ft_putendl_fd("history: too many arguments", 2); //return error_func
+		error_builtin("history", NULL, TOO_MANY_ARGS);
 	else
 		print_history(history, list_count((t_abstract_list *)history) - ft_atoi(n));
 }
-/*
-
-
-history [-c] [-d offset] [n] or history -awrn [filename] or history -ps arg [arg...]
-
-	errors
-	sh: history: cannot use more than one of -anrw
-*/
 
 void		get_hist_option(char *c, t_hist_opt *options)
 {
-	if (*c == 'c') // clean before append but after substitutions
-		options->c = 1;
-	else if (*c == 'd')
+	while (c && *c)
 	{
-		options->d = 1;
-		if (str_is_digits(++c))
-			options->offset = ft_atoi(c);
+		if (*c == 'c') // clean before append but after substitutions
+			options->c = 1;
+		else if (*c == 'd')
+		{
+			options->d = 1;
+			if (*(++c))
+				options->offset = ft_strdup(c);
+		}
+		else if (*c == 'a') // append
+			options->a = 1;
+		else if (*c == 'w') // ignored if -d // write(on t_hist_opt)
+			options->w = 1;
+		else if (*c == 'r')
+			options->r = 1;
+		else if (*c == 'n') // unnecessary?
+			options->n = 1;
+		// substitutions before clean
+		else if (*c == 'p') // make substitutions but don't execute or save in history
+			options->p = 1;
+		else if (*c == 's')
+			options->s = 1;
+		// else
+		// {
+		// 	error_builtin("history", c, INVALID_OPTION);//ft_putendl("usage: history [-c] [-d offset] [n] or history -awrn [filename] or history -ps arg [arg...]"); // error
+		// 	return;
+		// }
+		c++;
 	}
-	else if (*c == 'a') // append
-		options->a = 1;
-	else if (*c == 'w') // ignored if -d // write(on t_hist_opt)
-		options->w = 1;
-	else if (*c == 'r')
-		options->r = 1;
-	else if (*c == 'n') // ?
-		options->n = 1;
-	// substitutions before clean
-	else if (*c == 'p') // make substitutions but don't execute or save in history
-		options->p = 1;
-	else if (*c == 's')
-		options->s = 1;
 }
 
 void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
@@ -131,7 +142,7 @@ void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 		if (*argv[i] != '-')
 		{
 			options->args = &argv[i];
-			return;
+			break;
 		}
 		while (*argv[i])
 		{
@@ -139,6 +150,19 @@ void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 			argv[i]++;
 		}
 		i++;
+	}
+	if (options->d && !options->offset)
+	{
+		if (options->args && options->args[0])
+		{
+
+			// if (str_is_digits(options->args[0]))
+			// {
+				options->offset = ft_strdup(options->args[0]);
+			// }
+		}
+		else
+			error_builtin("history", NULL, NEED_NUM);
 	}
 }
 
@@ -182,8 +206,9 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 		else if (str_is_digits(argv[i]))
 			print_history_n(i + 1 < argc, argv[i], history);
 		else
-			ft_putendl_fd("history: numeric argument required", 2); // ret err_func
+			error_builtin(argv[0], NULL, NEED_NUM); // ret
 	}
 	//check_options(options); // check if more than one of awnr
 	execute_options(&get_shell_env()->history, options);
+	// free_options(&options);
 }
