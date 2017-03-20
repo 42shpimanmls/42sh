@@ -4,16 +4,16 @@ Todo
 ---
 
 - [ ] init
-	- [ ] history 
+	- [x] history
 
 - [ ] edit input
 	- [ ] affichage prompt
 	- [ ] lecture
-	- [ ] history (up/down)
-	- [ ] gauche/dte/insertion
+	- [x] history (up/down)
+	- [ ] gauche/droite/insertion
 	- [ ] copier/coller
 	- [ ] deplacement mot droite/gauche
-	- [ ] edition sur plusieurs lignes
+	- [ ] édition sur plusieurs lignes
 	- [ ] home/end
 	- [ ] ctrl-c
 	- [ ] ctrl-d
