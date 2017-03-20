@@ -1,5 +1,5 @@
-#ifndef GLOBAL_H
-# define GLOBAL_H
+#ifndef SHELL_ENV_H
+# define SHELL_ENV_H
 
 # include <stdlib.h>
 # include <libft.h>
