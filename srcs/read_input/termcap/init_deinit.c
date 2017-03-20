@@ -4,22 +4,27 @@
 # include <curses.h>
 
 # include "utils.h"
+# include "shell_env.h"
 # include "abstract_list.h"
 # include "read_input/editor/editor.h"
 # include "read_input/event_callbacks/event_callback_def.h"
 
-# define SHNAME "sh"
-
-t_term *init_term()
+t_term	*init_term()
 {
 	t_term *new;
 
 	new = memalloc_or_die(sizeof(t_term));
 	new->width = tgetnum("co");
+	new->move_cursor_begining = tgetstr("cr", NULL);
 	new->move_left = tgetstr("le", NULL);
 	new->move_right = tgetstr("nd", NULL);
+	new->move_up = tgetstr("up", NULL);
+	new->move_down = tgetstr("down", NULL);
 	new->hide_cursor = tgetstr("vi", NULL);
 	new->show_cursor = tgetstr("ve", NULL);
+	new->clear_line = tgetstr("cd", NULL);
+	// new->save_cursor_pos = tgetstr("sc", NULL);
+	// new->restore_cursor_pos = tgetstr("rc", NULL);
 	return (new);
 }
 

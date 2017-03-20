@@ -1,6 +1,7 @@
 #include "token.h"
 #include <stdlib.h>
 #include <libft.h>
+#include "utils.h"
 
 static bool	lex_operator(t_token *token)
 {
@@ -13,17 +14,6 @@ static bool	lex_operator(t_token *token)
 		return (true);
 	}
 	return (false);
-}
-
-static bool	str_is_digits(char const *str)
-{
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (false);
-		str += 1;
-	}
-	return (true);
 }
 
 static bool	is_io_number(char c)
