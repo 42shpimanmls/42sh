@@ -21,22 +21,15 @@ bool			unmatched_error()
 t_token			*tokenize(char const *input)
 {
 	t_token						*result;
-	t_tokenizer_state			state = {
-		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
-	};
-	char						*str;
+	t_tokenizer_state			state;
 
+	set_error(NO_ERROR);
 	result = NULL;
 	if (input != NULL)
 	{
-		str = state.input;
-		state.input = ft_strjoin(state.input, input);
-		/*if (str != state.input && str != input)
-			free(str);*/
-		if (state.input == NULL)
-			return (NULL);
+		ft_bzero(&state, sizeof(t_tokenizer_state));
+		state.input = ft_strdup(input);
 		state.current_char = state.input;
-		set_error(NO_ERROR);
 		while (*state.current_char != '\0')
 		{
 			apply_rules(&state);
