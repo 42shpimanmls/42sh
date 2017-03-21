@@ -78,8 +78,10 @@ char	*get_history_entry(char *designator, t_uint *end)
 
 	history = get_shell_env()->history;
 
-	// !! or word designator (':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’)  => previous command
-	if (is_bang(*designator) || start_word_designator(*designator))
+	/* !! or word designator (':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’)  => previous command \
+		 (take '-' out of the list?)
+	*/
+	if (is_bang(*designator) || (start_word_designator(*designator) && *designator != '-'))
 	{
 		if (is_bang(*designator))
 			(*end)++;
@@ -89,8 +91,8 @@ char	*get_history_entry(char *designator, t_uint *end)
 	else if (ft_isdigit(*designator) || *designator == '-')
 	{
 		/* separate function */
-		 (*end)++;
-		if (!ft_isdigit(designator[*end]))
+		(*end)++;
+		if (!ft_isdigit(designator[*end]) && designator[*end + 1] && ft_isdigit(designator[*end + 1]))
 		{
 			while (designator[*end] && !start_word_designator(designator[*end]) \
 					&& !is_posix_blank(designator[*end]))

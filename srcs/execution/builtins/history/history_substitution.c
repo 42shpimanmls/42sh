@@ -54,7 +54,6 @@ int	 	start_substitution(char **str, t_uint *start)
 	}
 	to_sub = ft_strsub(*str, *start, end - *start);
 	find_and_replace(str, to_sub, hist_entry);
-	// ft_strdel(&to_sub);
 	*start = end;
 	return (0);
 }
