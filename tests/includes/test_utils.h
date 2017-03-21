@@ -4,7 +4,11 @@
 # include <CUnit/CUnit.h>
 # include <libft.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
-int	call_42sh(char const *args);
+int			call_42sh(char const *args);
+
+bool		dummy_func_called;
+void		dummy_func(void);
 
 #endif

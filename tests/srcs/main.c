@@ -5,6 +5,7 @@
 #include "tests.h"
 #include <CUnit/Console.h>
 #include <libft.h>
+#include "test_utils.h"
 
 static void print_error(void)
 {
@@ -21,16 +22,21 @@ int main(int argc, char **argv)
 	  { "Check that an empty command string returns no error", empty_command_string },
 	  { "Check that an unclosed single quote returns an error", unclosed_quote },
 	  { "Check that an unclosed double quote returns an error", unclosed_double_quote },
-	  CU_TEST_INFO_NULL,
+	  CU_TEST_INFO_NULL
 	};
 	CU_TestInfo		tokenizer_tests[] = {
 		{ "Check that io numbers are lexed", construct_io_number_token },
 	  	{ "Check that construct_token copies the string", construct_token_copy_string },
-	  CU_TEST_INFO_NULL,
+	  CU_TEST_INFO_NULL
+	};
+	CU_TestInfo		init_tests[] = {
+		{ "Check that init() sets the error ptr and exits without error", init_sets_error_ptr },
+		CU_TEST_INFO_NULL
 	};
 	CU_SuiteInfo	suites[] = {
-		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
+		{ "Init", NULL, NULL, NULL, NULL, init_tests },
 		{ "Tokenizer", NULL, NULL, NULL, NULL, tokenizer_tests },
+		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
 		CU_SUITE_INFO_NULL
 	};
 

@@ -5,13 +5,14 @@
 
 typedef enum				e_error_id
 {
-	TOO_MANY_ARGS = 0,
+	NO_ERROR = 0,
+	TOO_MANY_ARGS,
 	NEED_ARG,
 	NEED_NUM,
 	OUT_OF_RANGE,
 	INVALID_OPTION,
 	PERM_DENIED,
-	NO_SUCH_FILE
+	NO_SUCH_FILE,
 }							t_error_id;
 
 typedef struct 			s_error
@@ -31,6 +32,11 @@ typedef struct s_builtin_usage
 t_error const 		*get_error_defs(void);
 void				print_error_msg(t_error_id id);
 void				print_usage_msg(t_builtin_id id);
+
+
+t_error_id			get_error(void);
+void				set_error(t_error_id error);
+void				init_error_ptr(void);
 
 void				error_builtin(char *builtin, char *error, t_error_id id);
 
