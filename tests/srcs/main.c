@@ -33,9 +33,8 @@ int main(int argc, char **argv)
 		{ "Double bang returns last entry", bang_bang },
 		{ "!n returns nth entry, !-n returns (last - n)th entry", bang_n },
 		{ "Most recent entry starting with str (\"!str\"), or containing str (\"!?str[?\\n]\")", bang_search },
+		{ "Word selection", bang_word_selection },
 		{ "Misc bang errors return -1", bang_errors },
-
-
 	  CU_TEST_INFO_NULL,
 	};
 	CU_SuiteInfo	suites[] = {

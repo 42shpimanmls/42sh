@@ -6,5 +6,6 @@ void	bang_bang();
 void	bang_n();
 void	bang_errors();
 void	bang_search();
+void	bang_word_selection();
 
 #endif

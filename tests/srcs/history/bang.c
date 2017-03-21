@@ -15,6 +15,7 @@
 	to test your own strings:
 	- add the string in get_bang_tests
 	- add the expected result at the same index in get_bang_results
+	- change the NB_SUB_TEST define
 	- optionnally modify the history_test_file but remember it changes all the results!
 		(history is printed out at the beginning of test suite)
 	- copy one of the bang_ functions (not the error one), change value and condition of i
@@ -143,7 +144,27 @@ void	bang_search()
 	i = 7;
 	tests = get_bang_tests();
 	results = get_bang_results();
-	while (i <= 10)
+	while (i < 10)
+	{
+		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+		history_substitution(&tests[i]);
+		ft_printf(", result: \"%s\"", tests[i]);
+		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
+		i++;
+	}
+	ft_putstr(" ..........");
+}
+
+void	bang_word_selection()
+{
+	char **tests;
+	char **results;
+	int i;
+
+	i = 10;
+	tests = get_bang_tests();
+	results = get_bang_results();
+	while (i < NB_SUB_TESTS)
 	{
 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
 		history_substitution(&tests[i]);
