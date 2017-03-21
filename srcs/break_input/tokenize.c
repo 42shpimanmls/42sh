@@ -4,24 +4,79 @@
 #include <libft.h>
 #include "abstract_list.h"
 #include "tokenizer.h"
+#include "errors.h"
+
+bool			unmatched_error()
+{
+	t_error_id	error;
+
+	error = get_error();
+	if (error == UNMATCHED_SINGLE_QUOTE
+		|| error == UNMATCHED_DOUBLE_QUOTE
+		|| error == UNMATCHED_BACKQUOTE)
+		return (true);
+	return (false);
+}
+
+char			*strdup_or_die(char const *str)
+{
+	char	*dup;
+	char	*it;
+
+	dup = memalloc_or_die(sizeof(char) * (ft_strlen(str) + 1));
+	it = dup;
+	while (*str)
+	{
+		*it = *str;
+		str++;
+		it++;
+	}
+	*it = '\0';
+	return (dup);
+}
+
+void			reset_tokenizer_input(t_tokenizer_state *state, char const *input)
+{
+	free(state->input);
+	ft_bzero(state, sizeof(t_tokenizer_state));
+	state->input = strdup_or_die(input);
+}
 
 t_token			*tokenize(char const *input)
 {
-	t_tokenizer_state state;
+	t_token						*result;
+	static t_tokenizer_state	state = {
+		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+	};
+	char						*str;
 
-	ft_bzero(&state, sizeof(t_tokenizer_state));
-	state.input = input;
-	if (state.input != NULL)
+	result = NULL;
+	if (input != NULL)
 	{
+		str = state.input;
+		state.input = ft_strjoin(state.input, input);
+		free(str);
 		state.current_char = state.input;
+		set_error(NO_ERROR);
 		while (*state.current_char != '\0')
+		{
 			apply_rules(&state);
+			if (get_error() != NO_ERROR)
+			{
+				str = state.input;
+				state.input = strdup_or_die(state.current_char);
+				free(str);
+				return (NULL);
+			}
+		}
 		// rule 1
 #ifdef TOKENIZER_DEBUG
 		print_tokenizer_state(&state);
 		ft_putstr("rule 1 aka I'M DONE MOTHERF***ERZ\n");
 #endif
 		delimit_token(&state);
+		result = state.result;
+		reset_tokenizer_input(&state, "");
 	}
-	return (state.result);
+	return (result);
 }

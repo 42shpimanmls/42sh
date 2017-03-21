@@ -13,6 +13,9 @@ typedef enum				e_error_id
 	INVALID_OPTION,
 	PERM_DENIED,
 	NO_SUCH_FILE,
+	UNMATCHED_SINGLE_QUOTE,
+	UNMATCHED_DOUBLE_QUOTE,
+	UNMATCHED_BACKQUOTE
 }							t_error_id;
 
 typedef struct 			s_error

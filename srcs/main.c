@@ -1,17 +1,20 @@
 #include <stdlib.h>
-#include "shell_env.h"
 #include "ftsh.h"
 #include "init/init.h"
 #include <stdio.h>
-#include "utils.h"
-#include "abstract_list.h"
-#include "break_input/token.h"
+#include "errors.h"
 
 static void		main_loop()
 {
 	read_input();
+	/*if (get_error() != NO_ERROR)
+		return ;*/
 	break_input();
+	if (get_error() != NO_ERROR)
+		return ;
 	parse_input();
+	/*if (get_error() != NO_ERROR)
+		return ;*/
 	//execute_tree();
 }
 

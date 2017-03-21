@@ -11,7 +11,7 @@ static void handle_command_string(t_shell_env *shell_env)
 static void handle_stdin(t_shell_env *shell_env)
 {
 	shell_env->input_string = edit_input();
-	shell_env->should_run = false;
+	shell_env->should_run = true;
 }
 
 void	read_input()
