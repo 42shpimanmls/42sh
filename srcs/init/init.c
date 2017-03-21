@@ -5,7 +5,7 @@
 #include "history.h"
 #include "errors.h"
 
-static void	init_variables_list(t_shell_env	*shell_env)
+static void	init_variables_list(t_shell_env *shell_env)
 {
 	extern char	**environ;
 	char		**line;

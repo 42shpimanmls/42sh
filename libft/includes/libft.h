@@ -26,6 +26,13 @@
 
 # define BUFF_SIZE 4095
 
+
+//42SH
+
+void		*memalloc_or_die(size_t size);
+
+//42SH
+
 void		ft_putchar(char c);
 void		ft_putcharc(int color, int background, char str);
 void		ft_putnchar(int x, char c);

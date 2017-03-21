@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "errors.h"
 
-static void		main_loop()
+static void		main_loop(void)
 {
 	set_error(NO_ERROR);
 	read_input();

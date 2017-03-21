@@ -17,5 +17,6 @@ t_error const			*get_error_defs(void)
 		{ NO_SUCH_FILE,			"no such file or directory" },
 
 	};
+
 	return (errors);
 }

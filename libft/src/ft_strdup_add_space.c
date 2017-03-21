@@ -23,7 +23,7 @@ char	*ft_strdup_add_space(char *s)
 	if (s)
 	{
 		i = ft_strlen(s);
-		str = (char *)malloc(sizeof(char) * ((i * 2) + 3));
+		str = (char *)memalloc_or_die(sizeof(char) * ((i * 2) + 3));
 		i = -1;
 		j = -1;
 		while (s[++i])
