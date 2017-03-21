@@ -31,7 +31,7 @@ static int	ft_suit(int fd, char *tmp, char **tmp3, char **line)
 		tmp3[fd] = ft_keep_just_line(tmp);
 	else
 	{
-		buff = (char *)malloc(BUFF_SIZE + 1);
+		buff = (char *)memalloc_or_die(BUFF_SIZE + 1);
 		while (ret > 0)
 		{
 			ret = read(fd, buff, BUFF_SIZE);

@@ -16,7 +16,7 @@ void	*ft_memalloc(size_t size)
 {
 	void *mem;
 
-	if ((mem = malloc(size)))
+	if ((mem = memalloc_or_die(size)))
 		return (mem);
 	return (NULL);
 }
