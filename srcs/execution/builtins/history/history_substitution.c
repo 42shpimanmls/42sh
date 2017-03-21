@@ -58,6 +58,13 @@ int	 	start_substitution(char **str, t_uint *start)
 	return (0);
 }
 
+static bool is_blank_equal_ret(char c)
+{
+	if (is_posix_blank(c) || c == '\n' || c == '=')
+		return (1);
+	return (0);
+}
+
 /*
 	unless ! is simple-quoted or quoted with backslash
 */
@@ -77,8 +84,7 @@ int	history_substitution(char **str) // ret should determine if command runs or 
 			{
 				; // dup + join str
 			}
-			if ((*str)[i + 1] && (*str)[i + 1] != '\n' && (*str)[i + 1] != '\t' \
-				 && (*str)[i + 1] != ' ' && (*str)[i + 1] != '=')
+			if (!is_blank_equal_ret((*str)[i + 1]))
 				if (start_substitution(str, &i) < 0)
 					return (-1);
 			// go to end of substituted

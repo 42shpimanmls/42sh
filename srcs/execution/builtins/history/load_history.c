@@ -29,5 +29,4 @@ void	load_history(t_shell_env *shell_env, char *filename)
 		ft_strdel(&line);
 	}
 	close(fd);
-	history_test();
 }
