@@ -39,7 +39,6 @@ void				print_usage_msg(t_builtin_id id);
 
 t_error_id			get_error(void);
 void				set_error(t_error_id error);
-void				init_error_ptr(void);
 
 void				error_builtin(char *builtin, char *error, t_error_id id);
 

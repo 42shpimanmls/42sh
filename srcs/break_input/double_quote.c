@@ -2,6 +2,7 @@
 #include "substitution.h"
 #include <libft.h>
 #include "errors.h"
+#include "shell_env.h"
 
 char const	*find_double_quote_end(t_tokenizer_state *state)
 {
@@ -20,8 +21,9 @@ char const	*find_double_quote_end(t_tokenizer_state *state)
 			return (it);
 		it++;
 	}
-	ft_putendl_fd("42sh: syntax error: missing double quote end\n", 2);
+	ft_putendl_fd("42sh: syntax error: missing double quote end", 2);
 	set_error(UNMATCHED_DOUBLE_QUOTE);
+	get_shell_env()->last_unmatched = UNMATCHED_DOUBLE_QUOTE;
 	return (NULL);
 }
 

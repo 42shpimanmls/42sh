@@ -12,7 +12,7 @@ static void print_simple_command(t_simple_command const *cmd, size_t lvl)
 	{
 		if (it != cmd->argv)
 			ft_putchar(' ');
-		ft_putendl(*it);
+		print_non_ascii_str(*it);
 		it++;
 	}
 	ft_putchar('\n');

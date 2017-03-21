@@ -40,8 +40,6 @@ t_command_list	*parse_command_list(t_token const *tokens)
 		it = &result;
 		while (u < splited_len)
 		{
-			ft_putnbr(u);
-			ft_putchar('\n');
 			if (splited[u] == NULL)
 			{
 				ft_putendl_fd("42sh: syntax error near unexpected token ';'", 2);

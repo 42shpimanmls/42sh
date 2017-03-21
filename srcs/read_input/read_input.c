@@ -1,6 +1,7 @@
 #include "shell_env.h"
 #include "edit_input.h"
 #include "ftsh.h"
+#include "utils.h"
 
 static void handle_command_string(t_shell_env *shell_env)
 {
@@ -24,6 +25,8 @@ void	read_input()
 	else
 		handle_stdin(shell_env);
 #ifdef FTSH_DEBUG
-	ft_printf("<input_string>\n\"%s\"\n</input_string>\n", shell_env->input_string);
+	ft_printf("<input_string>\n\"");
+	print_non_ascii_str(shell_env->input_string);
+	ft_printf("\"\n</input_string>\n");
 #endif
 }

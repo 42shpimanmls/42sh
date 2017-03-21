@@ -15,8 +15,3 @@ void					set_error(t_error_id error)
 {
 	*(get_error_ptr()) = error;
 }
-
-void					init_error_ptr(void)
-{
-	set_error(NO_ERROR);
-}
