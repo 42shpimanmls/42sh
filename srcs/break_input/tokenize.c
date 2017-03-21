@@ -18,19 +18,10 @@ bool			unmatched_error()
 	return (false);
 }
 
-void			reset_tokenizer_input(t_tokenizer_state *state, char const *input)
-{
-	free(state->input);
-	ft_bzero(state, sizeof(t_tokenizer_state));
-	state->input = ft_strdup(input);
-}
-
-#include <stdio.h>
-
 t_token			*tokenize(char const *input)
 {
 	t_token						*result;
-	static t_tokenizer_state	state = {
+	t_tokenizer_state			state = {
 		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 	};
 	char						*str;
@@ -40,7 +31,8 @@ t_token			*tokenize(char const *input)
 	{
 		str = state.input;
 		state.input = ft_strjoin(state.input, input);
-		free(str);
+		/*if (str != state.input && str != input)
+			free(str);*/
 		if (state.input == NULL)
 			return (NULL);
 		state.current_char = state.input;
@@ -50,6 +42,7 @@ t_token			*tokenize(char const *input)
 			apply_rules(&state);
 			if (get_error() != NO_ERROR)
 			{
+				free(state.input);
 				delete_all_tokens(&state.result);
 				return (NULL);
 			}
@@ -61,7 +54,7 @@ t_token			*tokenize(char const *input)
 #endif
 		delimit_token(&state);
 		result = state.result;
-		reset_tokenizer_input(&state, "");
+		free(state.input);
 	}
 	return (result);
 }

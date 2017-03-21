@@ -53,6 +53,7 @@ void	break_input(void)
 #ifdef FTSH_DEBUG
 	if (get_error() == NO_ERROR)
 	{
+		ft_strdel(&shell_env->input);
 		ft_putendl("<tokens>");
 		print_tokens(shell_env->tokens);
 		ft_putendl("</tokens>");
