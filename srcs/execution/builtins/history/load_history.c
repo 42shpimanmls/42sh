@@ -39,9 +39,8 @@ void	load_history(t_shell_env *shell_env, char *filename)
 		ft_strdel(&line);
 	}
 	close(fd);
-
 	#ifdef HISTORY_DEBUG
 	// history_test();
-	substitution_test();
+	// substitution_test();
 	#endif
 }

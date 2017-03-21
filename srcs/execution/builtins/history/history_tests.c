@@ -20,7 +20,6 @@ void	substitution_test()
 					"!!:2-", "!!:1-3", "!!:1-*", "!!:2*", "!!:40", "!!:^", "!!*", "!!$", "!$"};// "!#"
 	char	**str;
 
-	// ft_putendl(get_nth_word("echo coucou \"re test\"", 2));
 	str = malloc(sizeof(char *) * NB_SUB_TESTS);
 	while (i < NB_SUB_TESTS)
 	{
@@ -36,7 +35,7 @@ void	substitution_test()
 		ft_putstr("\n---- line = \"");
 		ft_putstr(str[i]);
 		ft_putendl("\" ----\n");
-		if (history_substition(&str[i]) >= 0)
+		if (history_substitution(&str[i]) >= 0)
 		{
 			ft_putstr("after sub = \"");
 			ft_putstr(str[i]);

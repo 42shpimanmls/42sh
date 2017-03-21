@@ -28,9 +28,14 @@ int main(int argc, char **argv)
 	  	{ "Check that construct_token copies the string", construct_token_copy_string },
 	  CU_TEST_INFO_NULL,
 	};
+	CU_TestInfo		history_tests[] = {
+		{ "Check all bang substitutions", bang_substitutions },
+	  CU_TEST_INFO_NULL,
+	};
 	CU_SuiteInfo	suites[] = {
 		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
 		{ "Tokenizer", NULL, NULL, NULL, NULL, tokenizer_tests },
+		{ "History", NULL, NULL, NULL, NULL, history_tests },
 		CU_SUITE_INFO_NULL
 	};
 

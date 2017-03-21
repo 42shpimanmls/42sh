@@ -37,7 +37,6 @@ void	init(int ac, char **av)
 
 	load_history(shell_env, HISTFILE);
 
-
 	// ////////////TEST SETENV UNSETENV /////////////
 	// ft_printf("Before env---------\n");
 	// print_variable(shell_env->variables);

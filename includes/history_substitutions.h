@@ -7,7 +7,7 @@
 **			history_substitutions.c
 */
 
-int		history_substition(char **str);
+int		history_substitution(char **str);
 
 
 /*
