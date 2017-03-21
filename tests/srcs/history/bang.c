@@ -155,25 +155,25 @@ void	bang_search()
 	ft_putstr(" ..........");
 }
 
-void	bang_word_selection()
-{
-	char **tests;
-	char **results;
-	int i;
+// void	bang_word_selection()
+// {
+// 	char **tests;
+// 	char **results;
+// 	int i;
 
-	i = 10;
-	tests = get_bang_tests();
-	results = get_bang_results();
-	while (i < NB_SUB_TESTS)
-	{
-		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
-		history_substitution(&tests[i]);
-		ft_printf(", result: \"%s\"", tests[i]);
-		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
-		i++;
-	}
-	ft_putstr(" ..........");
-}
+// 	i = 10;
+// 	tests = get_bang_tests();
+// 	results = get_bang_results();
+// 	while (i < NB_SUB_TESTS)
+// 	{
+// 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+// 		history_substitution(&tests[i]);
+// 		ft_printf(", result: \"%s\"", tests[i]);
+// 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
+// 		i++;
+// 	}
+// 	ft_putstr(" ..........");
+// }
 
 void	bang_errors()
 {
