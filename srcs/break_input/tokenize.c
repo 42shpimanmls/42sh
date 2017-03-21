@@ -42,6 +42,8 @@ void			reset_tokenizer_input(t_tokenizer_state *state, char const *input)
 	state->input = strdup_or_die(input);
 }
 
+#include <stdio.h>
+
 t_token			*tokenize(char const *input)
 {
 	t_token						*result;
@@ -56,6 +58,8 @@ t_token			*tokenize(char const *input)
 		str = state.input;
 		state.input = ft_strjoin(state.input, input);
 		free(str);
+		if (state.input == NULL)
+			return (NULL);
 		state.current_char = state.input;
 		set_error(NO_ERROR);
 		while (*state.current_char != '\0')

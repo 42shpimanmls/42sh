@@ -6,6 +6,7 @@
 
 static void		main_loop()
 {
+	set_error(NO_ERROR);
 	read_input();
 	/*if (get_error() != NO_ERROR)
 		return ;*/
@@ -24,5 +25,8 @@ int				main(int ac, char **av)
 	init(ac, av);
 	while (get_shell_env()->should_run)
 		main_loop();
-	return (EXIT_SUCCESS);
+	if (get_error() == NO_ERROR)
+		return (EXIT_SUCCESS);
+	else
+		return (EXIT_FAILURE);
 }
