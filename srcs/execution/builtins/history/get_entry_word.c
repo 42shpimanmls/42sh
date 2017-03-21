@@ -20,27 +20,17 @@ char	*get_last_word(char *line)
 	return (words->str);
 }
 
-char	*get_word_range(char *line, t_range *range)
+char	*word_range_collapse(t_token *words, t_uint nb_wds, bool empty_ok)
 {
-	t_token *words;
-	t_uint	nb_wds;
 	char	*word_range;
 
-	words = tokenize(line);
-	if (range->end < 0)
-	{
-		range->end = list_count((t_abstract_list *)words) + range->end;
-	}
-	nb_wds = range->end - range->start;
-	if (!list_goto_n((t_abstract_list **)&words, range->start))
-		return (NULL);
 	word_range = ft_strdup(words->str);
 	while (nb_wds > 0)
 	{
 		words = words->next;
 		if (!words)
 		{
-			if (range->empty_ok)
+			if (empty_ok)
 				return (ft_strnew(1));
 			ft_strdel(&word_range);
 			return (NULL);
@@ -50,6 +40,22 @@ char	*get_word_range(char *line, t_range *range)
 
 	}
 	return (word_range);
+}
+
+char	*get_word_range(char *line, t_range *range)
+{
+	t_token *words;
+	t_uint	nb_wds;
+
+	words = tokenize(line);
+	if (range->end < 0)
+	{
+		range->end = list_count((t_abstract_list *)words) + range->end;
+	}
+	nb_wds = range->end - range->start;
+	if (!list_goto_n((t_abstract_list **)&words, range->start))
+		return (NULL);
+	return (word_range_collapse(words, nb_wds, range->empty_ok));
 }
 
 char	*get_nth_word(char *line, t_uint n)
