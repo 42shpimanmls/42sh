@@ -12,7 +12,7 @@
 
 static char		*get_nth_entry(t_history *history, int n)
 {
-	if (n == 0)
+	if (n == 0 || !history)
 		return (NULL);
 	else if (n < 0)
 	{

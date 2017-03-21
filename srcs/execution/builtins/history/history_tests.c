@@ -9,42 +9,6 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-#define NB_SUB_TESTS 25
-
-void	substitution_test()
-{
-
-	int	i = 0;
-	char *tests[] = {"!", "!!", "!!!!", "echo !!", "!2", "!-2", "echo !0", \
-					"!-0", "!6534", "!-6", "!fi grj", "exho !?ou", "!?on?:0", "!fi", "!!:0-2", "!!:-2sijf", \
-					"!!:2-", "!!:1-3", "!!:1-*", "!!:2*", "!!:40", "!!:^", "!!*", "!!$", "!$"};// "!#"
-	char	**str;
-
-	str = malloc(sizeof(char *) * NB_SUB_TESTS);
-	while (i < NB_SUB_TESTS)
-	{
-		str[i] = ft_strdup(tests[i]);
-		i++;
-	}
-	i = 0;
-	ft_putendl("\n---- HISTORY SUBSTITUTION TESTS --------\n");
-	ft_putendl("Current history list: ");
-	print_history(get_shell_env()->history, 0);
-	while (i < NB_SUB_TESTS)
-	{
-		ft_putstr("\n---- line = \"");
-		ft_putstr(str[i]);
-		ft_putendl("\" ----\n");
-		if (history_substitution(&str[i]) >= 0)
-		{
-			ft_putstr("after sub = \"");
-			ft_putstr(str[i]);
-			ft_putendl("\"");
-		}
-		i++;
-	}
-}
-
 void		history_test()
 {
 	char 	*print[] = {"history"};

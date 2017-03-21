@@ -1,6 +1,8 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
+// #define BANG_TEST_VERBOSE
+
 void	initialize_history();
 void	bang_bang();
 void	bang_n();

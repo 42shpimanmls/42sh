@@ -3,16 +3,6 @@
 #include "abstract_list.h"
 #include "utils.h"
 
-
-/*
-**	tests
-*/
-
-void		history_test();
-void	substitution_test();
-
-/*****/
-
 void list_double_push_back(t_history **list, t_history *new);
 
 t_history	*create_history_entry(char *line)
@@ -39,8 +29,5 @@ void	load_history(t_shell_env *shell_env, char *filename)
 		ft_strdel(&line);
 	}
 	close(fd);
-	#ifdef HISTORY_DEBUG
-	// history_test();
-	// substitution_test();
-	#endif
+	history_test();
 }

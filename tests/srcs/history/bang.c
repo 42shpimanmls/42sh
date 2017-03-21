@@ -3,7 +3,6 @@
 
 #include "shell_env.h"
 #include "history_substitutions.h"
-// #include "init/init.h"
 #include "ftsh.h"
 
 
@@ -106,13 +105,19 @@ void	bang_bang()
 	results = get_bang_results();
 	while (i <= 2)
 	{
+		#ifdef BANG_TEST_VERBOSE
 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+		#endif
+
 		history_substitution(&tests[i]);
+
+		#ifdef BANG_TEST_VERBOSE
 		ft_printf(", result: \"%s\"", tests[i]);
+		#endif
+
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}
-	ft_putstr(" ..........");
 }
 
 void	bang_n()
@@ -126,13 +131,19 @@ void	bang_n()
 	results = get_bang_results();
 	while (i <= 5)
 	{
+		#ifdef BANG_TEST_VERBOSE
 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+		#endif
+
 		history_substitution(&tests[i]);
+
+		#ifdef BANG_TEST_VERBOSE
 		ft_printf(", result: \"%s\"", tests[i]);
+		#endif
+
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}
-	ft_putstr(" ..........");
 }
 
 void	bang_search()
@@ -146,13 +157,19 @@ void	bang_search()
 	results = get_bang_results();
 	while (i < 10)
 	{
+		#ifdef BANG_TEST_VERBOSE
 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+		#endif
+
 		history_substitution(&tests[i]);
+
+		#ifdef BANG_TEST_VERBOSE
 		ft_printf(", result: \"%s\"", tests[i]);
+		#endif
+
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}
-	ft_putstr(" ..........");
 }
 
 // void	bang_word_selection()
@@ -166,9 +183,13 @@ void	bang_search()
 // 	results = get_bang_results();
 // 	while (i < NB_SUB_TESTS)
 // 	{
-// 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+// #ifdef BANG_TEST_VERBOSE
+// 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], resu
+// #endiflts[i]);
 // 		history_substitution(&tests[i]);
+// #ifdef BANG_TEST_VERBOSE
 // 		ft_printf(", result: \"%s\"", tests[i]);
+// #endif
 // 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 // 		i++;
 // 	}
@@ -184,9 +205,11 @@ void	bang_errors()
 	tests = get_bang_error_tests();
 	while (i < NB_ERR_TESTS)
 	{
+		#ifdef BANG_TEST_VERBOSE
 		ft_printf("\nstr: \"%s\"", tests[i]);
+		#endif
+
 		CU_ASSERT_EQUAL(history_substitution(&tests[i]), -1);
 		i++;
 	}
-	ft_putstr(" ..........");
 }

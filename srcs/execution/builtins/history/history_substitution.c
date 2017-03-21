@@ -9,8 +9,6 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-
-
 void	find_and_replace(char **str, char *to_find, char *replace)
 {
 	char	*tmp;
@@ -42,9 +40,11 @@ int	 	start_substitution(char **str, t_uint *start)
 		return -1;
 	}
 	end++;
-	// ft_putstr("matched event = \"");
-	// ft_putstr(hist_entry);
-	// ft_putendl("\"");
+	/* debug
+	 ft_putstr("matched event = \"");
+	 ft_putstr(hist_entry);
+	 ft_putendl("\"");
+	 */
 	if (start_word_designator((*str)[end]))
 	{
 		if (get_entry_word(&hist_entry, &(*str)[end], &end) < 0)
