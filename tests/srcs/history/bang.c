@@ -5,6 +5,9 @@
 #include "init/init.h"
 #include "ftsh.h"
 
+#define HIST_TESTFILE "history_test_file"
+
+
 void	bang_substitutions()
 {
 	char *av[] = {"./42sh"};
