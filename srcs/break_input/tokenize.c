@@ -50,9 +50,7 @@ t_token			*tokenize(char const *input)
 			apply_rules(&state);
 			if (get_error() != NO_ERROR)
 			{
-				str = state.input;
-				state.input = ft_strdup(state.current_char);
-				free(str);
+				delete_all_tokens(&state.result);
 				return (NULL);
 			}
 		}
