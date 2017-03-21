@@ -1,22 +1,7 @@
 #include "token.h"
-#include <stdlib.h>
-#include "utils.h"
 #include <libft.h>
-#include "abstract_list.h"
 #include "tokenizer.h"
 #include "errors.h"
-
-bool			unmatched_error()
-{
-	t_error_id	error;
-
-	error = get_error();
-	if (error == UNMATCHED_SINGLE_QUOTE
-		|| error == UNMATCHED_DOUBLE_QUOTE
-		|| error == UNMATCHED_BACKQUOTE)
-		return (true);
-	return (false);
-}
 
 t_token			*tokenize(char const *input)
 {
