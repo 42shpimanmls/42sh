@@ -7,7 +7,7 @@ static void		ft_putstr_colon(char *str)
 	ft_putstr(": ");
 }
 
-void		error_builtin(char *builtin, char *error, t_error_id id)
+void			error_builtin(char *builtin, char *error, t_error_id id)
 {
 	ft_putstr_colon("42sh");
 	ft_putstr_colon(builtin);
