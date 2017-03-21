@@ -7,7 +7,7 @@ void	hist_to_file(t_history *history, char *filename)
 	char	*line;
 
 	fd = open(filename, O_RDWR | O_CREAT, 0666);
-	while(ft_get_next_line(fd, &line))
+	while (ft_get_next_line(fd, &line))
 		ft_strdel(&line);
 	while (history)
 	{

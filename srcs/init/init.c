@@ -4,7 +4,7 @@
 #include "abstract_list.h"
 #include "history.h"
 
-static void	init_variables_list(t_shell_env	*shell_env)
+static void	init_variables_list(t_shell_env *shell_env)
 {
 	extern char	**environ;
 	char		**line;

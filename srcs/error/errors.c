@@ -17,16 +17,18 @@ t_error const *get_error_defs(void)
 		{ NO_SUCH_FILE,			"no such file or directory" },
 
 	};
+
 	return (errors);
 }
 
-t_builtin_usage const *get_builtin_usages()
+t_builtin_usage const *get_builtin_usages(void)
 {
 	static t_builtin_usage const usages[BUILTIN_DEF_COUNT] =
 	{
 			// ID 					// MSG
 		{ HISTORY_BUID, 		"history [-c] [-d offset] [n] or history -awrn [filename] or history -ps arg [arg...]"}
 	};
+
 	return (usages);
 }
 
@@ -42,7 +44,7 @@ void	print_error_msg(t_error_id id)
 		if (id == errors[u].id)
 		{
 			ft_putendl(errors[u].msg);
-			return;
+			return ;
 		}
 		u++;
 	}
@@ -60,7 +62,7 @@ void	print_usage_msg(t_builtin_id id)
 		if (id == usages[u].id)
 		{
 			ft_putendl(usages[u].msg);
-			return;
+			return ;
 		}
 		u++;
 	}

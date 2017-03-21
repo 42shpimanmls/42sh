@@ -1,6 +1,6 @@
 #include "abstract_list.h"
 
-void list_push_back(t_abstract_list **list, t_abstract_list *new)
+void	list_push_back(t_abstract_list **list, t_abstract_list *new)
 {
 	t_abstract_list *tmp;
 

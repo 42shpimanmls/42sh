@@ -22,7 +22,7 @@ static void	termios_init(void)
 		ft_putendl_fd("42sh: tcsetattr failed", STDERR_FILENO);
 }
 
-void	event_callback_test(void)
+void		event_callback_test(void)
 {
 	char						buf[EVENT_STR_MAX_LEN + 1];
 	ssize_t						ret;

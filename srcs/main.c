@@ -7,7 +7,7 @@
 #include "abstract_list.h"
 #include "break_input/token.h"
 
-static void		main_loop()
+static void		main_loop(void)
 {
 	read_input();
 	break_input();
