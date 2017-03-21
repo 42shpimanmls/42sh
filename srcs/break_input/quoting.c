@@ -7,6 +7,7 @@ static char const *find_simple_quote_end(t_tokenizer_state *state)
 {
 	char const *it;
 
+	set_error(NO_ERROR);
 	it = state->current_char + 1;
 	while (*it != '\0')
 	{
@@ -14,7 +15,6 @@ static char const *find_simple_quote_end(t_tokenizer_state *state)
 			return (it);
 		it++;
 	}
-	ft_putendl_fd("42sh: syntax error: missing simple quote end", 2);
 	set_error(UNMATCHED_SINGLE_QUOTE);
 	get_shell_env()->last_unmatched = UNMATCHED_SINGLE_QUOTE;
 	return (NULL);

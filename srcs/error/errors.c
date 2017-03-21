@@ -15,7 +15,9 @@ t_error const			*get_error_defs(void)
 		{ INVALID_OPTION,		"invalid option" },
 		{ PERM_DENIED,			"permission denied" },
 		{ NO_SUCH_FILE,			"no such file or directory" },
-
+		{ UNMATCHED_SINGLE_QUOTE,	"syntax error: unmatched '"},
+		{ UNMATCHED_DOUBLE_QUOTE,	"syntax error: unmatched \""},
+		{ UNMATCHED_BACKQUOTE,		"syntax error: unmatched `"},
 	};
 
 	return (errors);

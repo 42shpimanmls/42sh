@@ -24,6 +24,7 @@ void					print_error_msg(t_error_id id)
 	{
 		if (id == errors[u].id)
 		{
+			ft_putstr("42sh: ");
 			ft_putendl(errors[u].msg);
 			return;
 		}

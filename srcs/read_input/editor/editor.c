@@ -15,18 +15,6 @@
 
 #include "variable.h"
 
-
-static char		*gen_prompt(void)
-{
-	char	*result;
-	char	*tmp;
-
-	tmp = ft_strjoin(get_variable("PWD"), "]$ ");
-	result = ft_strjoin("[", tmp);
-	free(tmp);
-	return (result);
-}
-
 t_editor	*init_editor()
 {
 	t_editor	*new;

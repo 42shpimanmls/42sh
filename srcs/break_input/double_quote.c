@@ -15,15 +15,17 @@ char const	*find_double_quote_end(t_tokenizer_state *state)
 		nc = *(it + 1);
 		if (*it == '`')
 			it = find_substitution_end(it + 1);
+		if (get_error())
+			break ;
 		if (*it == '\\' && (nc == '`' || nc == '"' || nc == '\\' || nc == '\n'))
 			it++;
 		else if (*it == '"')
 			return (it);
 		it++;
 	}
-	ft_putendl_fd("42sh: syntax error: missing double quote end", 2);
-	set_error(UNMATCHED_DOUBLE_QUOTE);
-	get_shell_env()->last_unmatched = UNMATCHED_DOUBLE_QUOTE;
+	if (get_error() != UNMATCHED_BACKQUOTE)
+		set_error(UNMATCHED_DOUBLE_QUOTE);
+	get_shell_env()->last_unmatched = get_error();
 	return (NULL);
 }
 

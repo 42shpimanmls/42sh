@@ -25,6 +25,7 @@ int				main(int ac, char **av)
 	init(ac, av);
 	while (get_shell_env()->should_run)
 		main_loop();
+	print_error_msg(get_error());
 	if (get_error() == NO_ERROR)
 		return (EXIT_SUCCESS);
 	else

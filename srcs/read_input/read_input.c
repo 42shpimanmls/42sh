@@ -29,4 +29,5 @@ void	read_input()
 	print_non_ascii_str(shell_env->input_string);
 	ft_printf("\"\n</input_string>\n");
 #endif
+	shell_env->last_unmatched = NO_ERROR;
 }
