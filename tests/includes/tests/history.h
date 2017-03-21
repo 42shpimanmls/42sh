@@ -1,8 +1,10 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
-
-
-void	bang_substitutions();
+void	initialize_history();
+void	bang_bang();
+void	bang_n();
+void	bang_errors();
+void	bang_search();
 
 #endif

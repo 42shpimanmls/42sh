@@ -61,7 +61,7 @@ static char		*find_in_history(bool must_start, t_history *history, char *str, t_
 	while (history)
 	{
 		if ((must_start && str_in_str(find, history->line, true)) \
-			|| str_in_str(find, history->line, false))
+			|| (!must_start && str_in_str(find, history->line, false)))
 		{
 			ft_strdel(&find);
 			return (ft_strdup(history->line));
@@ -81,6 +81,7 @@ char	*get_history_entry(char *designator, t_uint *end)
 	/* !! or word designator (':', ‘^’, ‘$’, ‘*’, ‘-’, or ‘%’)  => previous command \
 		 (take '-' out of the list?)
 	*/
+
 	if (is_bang(*designator) || (start_word_designator(*designator) && *designator != '-'))
 	{
 		if (is_bang(*designator))

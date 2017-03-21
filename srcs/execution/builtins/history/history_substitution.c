@@ -42,9 +42,9 @@ int	 	start_substitution(char **str, t_uint *start)
 		return -1;
 	}
 	end++;
-	ft_putstr("matched event = \"");
-	ft_putstr(hist_entry);
-	ft_putendl("\"");
+	// ft_putstr("matched event = \"");
+	// ft_putstr(hist_entry);
+	// ft_putendl("\"");
 	if (start_word_designator((*str)[end]))
 	{
 		if (get_entry_word(&hist_entry, &(*str)[end], &end) < 0)

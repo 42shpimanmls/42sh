@@ -29,7 +29,13 @@ int main(int argc, char **argv)
 	  CU_TEST_INFO_NULL,
 	};
 	CU_TestInfo		history_tests[] = {
-		{ "Check all bang substitutions", bang_substitutions },
+		{ "History initialization", initialize_history },
+		{ "Double bang returns last entry", bang_bang },
+		{ "!n returns nth entry, !-n returns (last - n)th entry", bang_n },
+		{ "Most recent entry starting with str (\"!str\"), or containing str (\"!?str[?\\n]\")", bang_search },
+		{ "Misc bang errors return -1", bang_errors },
+
+
 	  CU_TEST_INFO_NULL,
 	};
 	CU_SuiteInfo	suites[] = {
