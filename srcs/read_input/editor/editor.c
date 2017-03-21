@@ -12,13 +12,30 @@
 # include "read_input/termcap/init_deinit.h"
 
 #include "history.h"
-t_editor *init_editor()
+
+#include "variable.h"
+
+
+static char		*gen_prompt(void)
 {
-	t_editor *new;
+	char	*result;
+	char	*tmp;
+
+	tmp = ft_strjoin(get_variable("PWD"), "]$ ");
+	result = ft_strjoin("[", tmp);
+	free(tmp);
+	return (result);
+}
+
+t_editor	*init_editor()
+{
+	t_editor	*new;
 
 	new = memalloc_or_die(sizeof(t_editor));
 	new->term = init_term();
 	new->history = get_shell_env()->history;
+	new->prompt = gen_prompt();
+	new->prompt_size = ft_strlen(new->prompt);
 	list_goto_last((t_abstract_list **)&new->history);
 	return (new);
 }

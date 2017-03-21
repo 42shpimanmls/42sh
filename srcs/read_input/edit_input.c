@@ -8,7 +8,6 @@
 void move_start(t_editor *ed)
 {
 	ed->string_size = list_count((t_abstract_list*)ed->string);
-	ed->prompt_size = ft_strlen(PROMPT);
 	int size = ed->prompt_size + ed->cursor_position;
 
 	while (size > ed->term->width + 1)
@@ -47,7 +46,7 @@ void refresh_line(t_editor *ed)
 		ft_putstr(ed->term->clear_line);
 
 		line = get_string_from_list(ed->string);
-		ft_putstr(PROMPT);
+		ft_putstr(ed->prompt);
 		ft_putstr(line);
 		free(line);
 		restore_old_cursor_position(ed, ed->cursor_position);
