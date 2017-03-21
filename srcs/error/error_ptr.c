@@ -1,5 +1,4 @@
 #include "errors.h"
-#include "mock.h"
 
 static t_error_id		*get_error_ptr(void)
 {
@@ -17,7 +16,7 @@ void					set_error(t_error_id error)
 	*(get_error_ptr()) = error;
 }
 
-void					init_error_ptr(void) MOCKABLE
+void					init_error_ptr(void)
 {
 	set_error(NO_ERROR);
 }

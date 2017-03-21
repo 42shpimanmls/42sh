@@ -8,7 +8,4 @@
 
 int			call_42sh(char const *args);
 
-bool		dummy_func_called;
-void		dummy_func(void);
-
 #endif
