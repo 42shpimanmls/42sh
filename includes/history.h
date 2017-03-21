@@ -46,14 +46,4 @@ void	hist_to_file(t_history *history, char *filename);
 void	print_history(t_history *history, int start);
 BUILTIN_RET	builtin_history(BUILTIN_ARGS);
 
-
-/*
-**		history_tests.c
-*/
-
-void	substitution_test(void);
-void	history_test(void);
-
-
-
 #endif

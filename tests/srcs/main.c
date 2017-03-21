@@ -30,6 +30,15 @@ int main(int argc, char **argv)
 	};
 	CU_TestInfo		history_tests[] = {
 		{ "History initialization", initialize_history },
+		{ "Print history\n", history_print},
+		{ "Print last 3 history\n", history_print_offset},
+		{ "Clear history", history_clear},
+		{ "History reinitialization", initialize_history },
+		{ "Error handling", history_errors },
+
+	  CU_TEST_INFO_NULL,
+	};
+	CU_TestInfo		bang_tests[] = {
 		{ "Double bang returns last entry", bang_bang },
 		{ "!n returns nth entry, !-n returns (last - n)th entry", bang_n },
 		{ "Most recent entry starting with str (\"!str\"), or containing str (\"!?str[?\\n]\")", bang_search },
@@ -41,6 +50,7 @@ int main(int argc, char **argv)
 		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
 		{ "Tokenizer", NULL, NULL, NULL, NULL, tokenizer_tests },
 		{ "History", NULL, NULL, NULL, NULL, history_tests },
+		{ "Bang", NULL, NULL, NULL, NULL, bang_tests },
 		CU_SUITE_INFO_NULL
 	};
 

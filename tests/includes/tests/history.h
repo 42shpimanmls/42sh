@@ -1,13 +1,12 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
-// #define BANG_TEST_VERBOSE
-
 void	initialize_history();
-void	bang_bang();
-void	bang_n();
-void	bang_errors();
-void	bang_search();
-// void	bang_word_selection();
+void	history_print();
+void	history_print_offset();
+void	history_delete();
+void	history_clear();
+void	history_to_file();
+void	history_errors();
 
 #endif
