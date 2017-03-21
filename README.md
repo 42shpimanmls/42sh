@@ -1,19 +1,21 @@
 # 42sh
 
+[![Build Status](https://travis-ci.org/42shpimanmls/42sh.svg?branch=master)](https://travis-ci.org/42shpimanmls/42sh)
+
 Todo
 ---
 
 - [ ] init
-	- [ ] history 
+	- [x] history
 
 - [ ] edit input
 	- [ ] affichage prompt
 	- [ ] lecture
-	- [ ] history (up/down)
-	- [ ] gauche/dte/insertion
+	- [x] history (up/down)
+	- [ ] gauche/droite/insertion
 	- [ ] copier/coller
 	- [ ] deplacement mot droite/gauche
-	- [ ] edition sur plusieurs lignes
+	- [ ] édition sur plusieurs lignes
 	- [ ] home/end
 	- [ ] ctrl-c
 	- [ ] ctrl-d
@@ -29,4 +31,3 @@ Todo
 - [ ] execution
 
 - [ ] wait
-
