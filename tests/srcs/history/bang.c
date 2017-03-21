@@ -11,7 +11,7 @@ void	bang_substitutions()
 	char *str = ft_strdup("!!");
 
 	init(1, av);
-	load_history(get_shell_env(), "../.42sh_history");
+	load_history(get_shell_env(), HIST_TESTFILE);
 
 	history_substitution(&str);
 
