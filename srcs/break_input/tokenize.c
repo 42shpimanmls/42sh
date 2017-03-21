@@ -18,28 +18,11 @@ bool			unmatched_error()
 	return (false);
 }
 
-char			*strdup_or_die(char const *str)
-{
-	char	*dup;
-	char	*it;
-
-	dup = memalloc_or_die(sizeof(char) * (ft_strlen(str) + 1));
-	it = dup;
-	while (*str)
-	{
-		*it = *str;
-		str++;
-		it++;
-	}
-	*it = '\0';
-	return (dup);
-}
-
 void			reset_tokenizer_input(t_tokenizer_state *state, char const *input)
 {
 	free(state->input);
 	ft_bzero(state, sizeof(t_tokenizer_state));
-	state->input = strdup_or_die(input);
+	state->input = ft_strdup(input);
 }
 
 #include <stdio.h>
@@ -68,7 +51,7 @@ t_token			*tokenize(char const *input)
 			if (get_error() != NO_ERROR)
 			{
 				str = state.input;
-				state.input = strdup_or_die(state.current_char);
+				state.input = ft_strdup(state.current_char);
 				free(str);
 				return (NULL);
 			}
