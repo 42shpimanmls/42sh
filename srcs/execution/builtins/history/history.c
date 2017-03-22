@@ -1,101 +1,25 @@
-#include "shell_env.h"
-#include "errors.h"
 #include "history.h"
+#include "execution/builtins/history_options.h"
+#include "errors.h"
 #include "abstract_list.h"
 #include "utils.h"
 
-void list_double_push_back(t_history **list, t_history *new) // make a double abstract list
-{
-	t_history *tmp;
-
-	if (*list == NULL)
-		*list = new;
-	else
-	{
-		tmp = *list;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-		new->prev = tmp;
-	}
-}
-
-void		print_history(t_history *history, int start)
-{
-	int		i;
-
-	i = 1;
-	while (history)
-	{
-		if (i > start)
-		{
-			ft_putnbr(i);
-			ft_putstr("  "); // alignment // most digits
-			ft_putendl(history->line);
-		}
-		i++;
-		history = history->next;
-	}
-}
-
-void		print_history_n(bool more_args, char *n, t_history *history)
-{
-	if (more_args)
-		error_builtin("history", NULL, TOO_MANY_ARGS);
-	else
-		print_history(history, list_count((t_abstract_list *)history) - ft_atoi(n));
-}
-
-void		get_hist_option(char *c, t_hist_opt *options)
-{
-	while (c && *c)
-	{
-		if (*c == 'c') // clean before append but after substitutions
-			options->c = 1;
-		else if (*c == 'd')
-		{
-			options->d = 1;
-			if (*(++c))
-				options->offset = ft_strdup(c);
-		}
-		else if (*c == 'a') // append
-			options->a = 1;
-		else if (*c == 'w') // ignored if -d // write(on t_hist_opt)
-			options->w = 1;
-		else if (*c == 'r')
-			options->r = 1;
-		else if (*c == 'n') // unnecessary?
-			options->n = 1;
-		// substitutions before clean
-		else if (*c == 'p') // make substitutions but don't execute or save in history
-			options->p = 1;
-		else if (*c == 's')
-			options->s = 1;
-		// else
-		// {
-		// 	error_builtin("history", c, INVALID_OPTION);//ft_putendl("usage: history [-c] [-d offset] [n] or history -awrn [filename] or history -ps arg [arg...]"); // error
-		// 	return;
-		// }
-		c++;
-	}
-}
-
-void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
+static int		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 {
 	int			i;
 
 	i  = 1;
 	while (i < argc)
 	{
-		if (*argv[i] != '-')
+		if (argv[i][0] == '-')
+		{
+			if (get_hist_options(argv[i], options) < 0)
+				return (-1);
+		}
+		else
 		{
 			options->args = &argv[i];
-			break;
-		}
-		while (*argv[i])
-		{
-			get_hist_option(&*argv[i], options);
-			argv[i]++;
+			return (0);
 		}
 		i++;
 	}
@@ -112,9 +36,10 @@ void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 		else
 			error_builtin("history", NULL, NEED_NUM);
 	}
+	return (0);
 }
 
-void		execute_options(t_history **history, t_hist_opt options)
+static void		execute_options(t_history **history, t_hist_opt options)
 {
 	if (options.s || options.p)
 	{;}
@@ -124,6 +49,8 @@ void		execute_options(t_history **history, t_hist_opt options)
 			clear_history_list(history);
 		else
 		{
+			if (!options.offset)
+				options.offset = ft_strdup(options.args[0]);
 			delete_history_entry(history, options.offset);
 		}
 	}

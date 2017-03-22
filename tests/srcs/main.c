@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 		{ "Print last 3 history\n", history_print_offset},
 		{ "Clear history", history_clear},
 		{ "History reinitialization", initialize_history },
-		{ "Error handling", history_errors },
+		{ "History error handling", history_errors },
 
 	  CU_TEST_INFO_NULL,
 	};

@@ -10,13 +10,13 @@ void		free_history(t_history **history)
 	*history = NULL;
 }
 
-void		delete_history_entry(t_history **history, char *offset) // change entirely
+void		delete_history_entry(t_history **history, char *offset)
 {
 	t_history *tmp;
 	int		n_offset;
 
 	tmp = *history;
-	if (str_is_digits(offset))
+	if (offset && str_is_digits(offset))
 	{
 		n_offset = ft_atoi(offset);
 		while (n_offset > 1 && tmp)
@@ -24,8 +24,8 @@ void		delete_history_entry(t_history **history, char *offset) // change entirely
 			tmp = tmp->next;
 			n_offset--;
 		}
-			if (!tmp || n_offset <= 0)
-				error_builtin("history", offset, OUT_OF_RANGE);
+		if (!tmp || n_offset <= 0)
+			error_builtin("history", offset, OUT_OF_RANGE);
 		else
 		{
 			if (tmp->next)
