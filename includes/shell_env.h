@@ -23,7 +23,6 @@ OR liste circulaire
 */
 
 # define SHNAME "42sh"
-# define PROMPT "SUprompt> "
 
 typedef struct			s_history
 {
