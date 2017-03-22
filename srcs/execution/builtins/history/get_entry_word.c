@@ -14,6 +14,10 @@ char	*get_last_word(char *line)
 {
 	t_token *words;
 
+	/*
+		!! bla bli blu ' => tokenizer returns null => create flag?
+	*/
+	
 	words = tokenize(line);
 	while (words->next)
 		words = words->next;

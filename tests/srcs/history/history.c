@@ -5,6 +5,8 @@
 #include "history.h"
 #include "ftsh.h"
 
+#include "abstract_list.h"
+
 #define HIST_TESTFILE "history_test_file"
 
 void	initialize_history()
@@ -50,30 +52,33 @@ void	history_print_offset()
 
 void	history_delete()
 {
-	t_history *saved;
+	size_t nb;
 
 	char	*av[][3] = {
-						{"history", "d3", NULL},
-						{"history", "d", "3"}
+						{"history", "-d3", NULL},
+						{"history", "-d", "3"}
 					};
 
-	saved = get_shell_env()->history->next->next;
+	nb = list_count((t_abstract_list *)get_shell_env()->history) - 1;
+	// printf("nb: %zu\n", nb);
 	builtin_history(2, av[0]);
-	CU_ASSERT_PTR_NOT_EQUAL(get_shell_env()->history->next->next, saved);
+	CU_ASSERT_EQUAL(nb, list_count((t_abstract_list *)get_shell_env()->history));
+	nb--;
 	builtin_history(3, av[1]);
+	CU_ASSERT_EQUAL(nb, list_count((t_abstract_list *)get_shell_env()->history));
+
 }
 
 void	history_to_file()
 {
-	/*
-		still don't get the difference between options a & w
-	*/
 	char	*av[][3] = {
-						{"history", "-w", NULL},
-						{"history", "-a", NULL},
-						{"history", "-a", "test"}
+						{"history", "-w", NULL}, // should overwrite hist_file
+						{"history", "-a", "test"}, // shoud do nothing
+						{"history", "-a", NULL} // should append not already appended lines
 					};
+	/*
 
+	*/
 	builtin_history(2, av[0]);
 	builtin_history(2, av[1]);
 }

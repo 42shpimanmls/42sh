@@ -1,17 +1,24 @@
 #include "shell_env.h"
 #include "history.h"
 
-void	hist_to_file(t_history *history, char *filename)
+void	hist_to_file(t_history *history, char *filename, bool append)
 {
 	int		fd;
-	char	*line;
 
-	fd = open(filename, O_RDWR | O_CREAT, 0666);
-	while(ft_get_next_line(fd, &line))
-		ft_strdel(&line);
+	/*	
+		difference btwn -w and -a : -a appends if file exists, -w overwrites or creates file 
+		if filename is specified, -w writes to file but -a does NOTHING
+	*/
+
+	if (append)
+		fd = open(filename, O_APPEND); // protect
+	else
+	{
+		fd = open(filename, O_TRUNC |  O_WRONLY | O_CREAT, 0666); // does that overwrite the whole file?
+	}
 	while (history)
 	{
-		if (!history->appended) // || option is -w not -a
+		if (!history->appended)
 		{
 			history->appended = true;
 			ft_putendl_fd(history->line, fd);

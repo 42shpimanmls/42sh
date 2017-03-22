@@ -2,6 +2,41 @@
 #include "execution/builtins/history_options.h"
 #include "errors.h"
 
+void			print_history_options(t_hist_opt *options)
+{
+	// int i = 0;
+
+	ft_putstr("selected options are the following: ");
+	if (options->c)
+		ft_putstr("c, ");
+	if (options->d)
+		ft_putstr("d, ");
+	if (options->a)
+		ft_putstr("a, ");
+	if (options->n)
+		ft_putstr("n, ");
+	if (options->w)
+		ft_putstr("w, ");
+	if (options->r)
+		ft_putstr("r, ");
+	if (options->p)
+		ft_putstr("p, ");
+	if (options->s)
+		ft_putstr("s, ");
+	if (options->offset)
+		ft_printf("offset: %s, ", options->offset);
+	// if (options->args)
+	// {
+	// 	while (options->args[i])
+	// 	{
+	// 		ft_printf("arg%d: %s, ", i, options->args[i]);
+	// 		i++;
+	// 	}
+	// }
+	ft_putchar('\n');
+
+}
+
 static bool 	no_other_anrw(t_hist_opt *options)
 {
 	if (options->a)
@@ -53,7 +88,7 @@ int		get_hist_options(char *arg, t_hist_opt *options)
 		{
 			options->d = 1;
 			if (*(arg + 1))
-				options->offset = ft_strdup(arg + 1);
+				options->offset = ft_strdup(++arg); // ++arg
 		}
 		else if (ft_strchr("anrw", *arg))
 		{

@@ -31,7 +31,7 @@ void			delete_history_entry(t_history **history, char *offset);
 **		history_to_file.c
 */
 
-void			hist_to_file(t_history *history, char *filename);
+void			hist_to_file(t_history *history, char *filename, bool append);
 
 /*
 **		history.c

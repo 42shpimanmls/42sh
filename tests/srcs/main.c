@@ -32,6 +32,8 @@ int main(int argc, char **argv)
 		{ "History initialization", initialize_history },
 		{ "Print history\n", history_print},
 		{ "Print last 3 history\n", history_print_offset},
+		{ "Delete one specific entry", history_delete},
+		// { "History to file\n", history_to_file},
 		{ "Clear history", history_clear},
 		{ "History reinitialization", initialize_history },
 		{ "History error handling", history_errors },

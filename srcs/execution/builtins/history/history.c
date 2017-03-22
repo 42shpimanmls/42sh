@@ -27,7 +27,6 @@ static int		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 	{
 		if (options->args && options->args[0])
 		{
-
 			// if (str_is_digits(options->args[0]))
 			// {
 				options->offset = ft_strdup(options->args[0]);
@@ -56,10 +55,12 @@ static void		execute_options(t_history **history, t_hist_opt options)
 	}
 	else if (options.w || options.a) // choose append or write over in hist_to_file
 	{
-		if (options.args && options.args[0])
-			hist_to_file(*history, options.args[0]);
-		else
-			hist_to_file(*history, HISTFILE);
+		if (options.w && options.args && options.args[0])
+			hist_to_file(*history, options.args[0], false);
+		else if (options.w)
+			hist_to_file(*history, HISTFILE, false);
+		else if (!options.args)
+			hist_to_file(*history, HISTFILE, true);
 	}
 }
 
@@ -76,14 +77,15 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 		print_history(history, 0);
 	else
 	{
-		if (*argv[1] == '-')
+		if (*(argv[1]) == '-')
 			hist_parse_options(argc, argv, &options);
 		else if (str_is_digits(argv[i]))
 			print_history_n(i + 1 < argc, argv[i], history);
 		else
 			error_builtin(argv[0], NULL, NEED_NUM); // ret
 	}
-	//check_options(options); // check if more than one of awnr
+	print_history_options(&options);
 	execute_options(&get_shell_env()->history, options);
-	// free_options(&options);
+	if (options.offset)
+		ft_strdel(&options.offset);
 }
