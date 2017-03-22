@@ -17,7 +17,10 @@ typedef enum				e_error_id
 	NO_SUCH_FILE,
 	UNMATCHED_SINGLE_QUOTE,
 	UNMATCHED_DOUBLE_QUOTE,
-	UNMATCHED_BACKQUOTE
+	UNMATCHED_BACKQUOTE,
+	UNEXPECTED_SEMI,
+	UNEXPECTED_IF,
+	UNEXPECTED_PIPE,
 }							t_error_id;
 
 typedef struct 			s_error
@@ -32,7 +35,7 @@ typedef struct s_builtin_usage
 	char	*msg;
 }				t_builtin_usage;
 
-#define TOTAL_ERROR_COUNT 13
+#define TOTAL_ERROR_COUNT 16
 
 t_error const 		*get_error_defs(void);
 void				print_error_msg(t_error_id id);

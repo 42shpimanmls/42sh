@@ -3,6 +3,8 @@
 #include "utils.h"
 #include "abstract_list.h"
 #include <libft.h>
+#include "errors.h"
+#include "shell_env.h"
 
 static t_token	**do_the_split(t_token const *tokens, size_t *len_addr)
 {
@@ -55,12 +57,19 @@ t_and_or_list	*parse_and_or_list(t_token const *tokens)
 		trimed = trim_newlines(splited[u]);
 		if (trimed == NULL)
 		{
-			ft_putendl_fd(
-				"42sh: syntax error near unexpected token '&&' or '||'", 2);
-			exit(1);
+			set_error(UNEXPECTED_IF);
+			if (u == splited_len - 1)
+				get_shell_env()->last_unmatched = UNEXPECTED_IF;
+			result = NULL; //delete_command_list(&result);
+			break ;
 		}
 		(*it)->pipeline = parse_pipeline(trimed);
 		delete_all_tokens(&trimed);
+		if (get_error() != NO_ERROR)
+		{
+			result = NULL; //delete_command_list(&result);
+			break ;
+		}
 		it = &(*it)->next;
 		u++;
 	}

@@ -20,6 +20,9 @@ t_error const			*get_error_defs(void)
 		{ UNMATCHED_SINGLE_QUOTE,	"syntax error: unmatched '"},
 		{ UNMATCHED_DOUBLE_QUOTE,	"syntax error: unmatched \""},
 		{ UNMATCHED_BACKQUOTE,		"syntax error: unmatched `"},
+		{ UNEXPECTED_SEMI,		"syntax error: near unexpected ;"},
+		{ UNEXPECTED_IF,		"syntax error: near unexpected && or ||"},
+		{ UNEXPECTED_PIPE,		"syntax error: near unexpected |"},
 	};
 	return (errors);
 }
