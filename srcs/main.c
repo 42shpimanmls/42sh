@@ -13,6 +13,7 @@ static void		main_loop(void)
 	break_input();
 	if (get_error() != NO_ERROR)
 		return ;
+	ft_strdel(&get_shell_env()->input_string);
 	parse_input();
 	/*if (get_error() != NO_ERROR)
 		return ;*/
