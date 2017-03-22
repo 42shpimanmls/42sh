@@ -25,9 +25,8 @@ t_editor	*init_editor()
 	t_editor	*new;
 
 	new = get_editor();
-	ft_start_termcaps();
+	ft_bzero(new, sizeof(t_editor));
 	new->term = init_term();
-	ft_close_termcaps();
 	new->history = get_shell_env()->history;
 	new->prompt = gen_prompt();
 	new->prompt_size = ft_strlen(new->prompt);
@@ -90,25 +89,3 @@ void free_string(t_string *s)
 	}
 	free(s);
 }
-
-/////// OBSOLETTE FUNCTION //////////////
-/////////////////////////////////////////
-/////////////////////////////////////////
-//USE THIS 
-//t_editor *ed;
-//ed->need_refresh == true;
-/////////////////////////////////////////
-void	ft_clear_line(t_string *s)
-{
-	char *move_left = tgetstr("le", NULL);
-
-	while (s)
-	{
-		ft_putstr(move_left);
-		s = s->next;
-	}
-	ft_putstr(tgetstr("cr", NULL));
-	ft_putstr(tgetstr("ce", NULL));
-}
-/////////////////////////////////////////
-/////////////////////////////////////////

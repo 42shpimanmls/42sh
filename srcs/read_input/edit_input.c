@@ -63,6 +63,7 @@ char *edit_input()
 
 	ft_start_termcaps();
 	ed = get_editor();
+	init_editor();
 	ed->need_refresh = true;
 	refresh_line(ed);
 
