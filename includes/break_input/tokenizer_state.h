@@ -5,7 +5,7 @@
 
 typedef struct		s_tokenizer_state
 {
-	char const	*input;
+	char		*input;
 	char const	*current_char;
 	char const	*word_start;
 	char const	*op_start;

@@ -1,10 +1,13 @@
 #include "quoting.h"
 #include <libft.h>
+#include "errors.h"
+#include "shell_env.h"
 
 static char const *find_simple_quote_end(t_tokenizer_state *state)
 {
 	char const *it;
 
+	set_error(NO_ERROR);
 	it = state->current_char + 1;
 	while (*it != '\0')
 	{
@@ -12,8 +15,9 @@ static char const *find_simple_quote_end(t_tokenizer_state *state)
 			return (it);
 		it++;
 	}
-	ft_putendl_fd("42sh: syntax error: missing simple quote end\n", 2);
-	exit(1);
+	set_error(UNMATCHED_SINGLE_QUOTE);
+	get_shell_env()->last_unmatched = UNMATCHED_SINGLE_QUOTE;
+	return (NULL);
 }
 
 void			apply_quoting(t_tokenizer_state *state)

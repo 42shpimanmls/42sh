@@ -7,6 +7,7 @@
 # include "break_input/token.h"
 # include "parse_input/syntax_tree.h"
 # include "variable.h"
+# include "errors.h"
 
 /* proposition
 
@@ -42,6 +43,7 @@ typedef struct			s_shell_env
 	char				*input_string;
 	t_token				*tokens;
 	t_command_list		*syntax_tree;
+	t_error_id			last_unmatched;
 }						t_shell_env;
 
 t_shell_env				*get_shell_env(void);
