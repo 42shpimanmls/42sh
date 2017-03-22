@@ -24,12 +24,17 @@ void					print_error_msg(t_error_id id)
 	{
 		if (id == errors[u].id)
 		{
-			ft_putstr("42sh: ");
 			ft_putendl(errors[u].msg);
 			return;
 		}
 		u++;
 	}
+}
+
+void					print_name_and_error(t_error_id id)
+{
+	ft_putstr("42sh: ");
+	print_error_msg(id);
 }
 
 void					print_usage_msg(t_builtin_id id)
