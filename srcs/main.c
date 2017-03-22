@@ -12,7 +12,11 @@ static void		main_loop(void)
 	read_input();
 	/*if (get_error() != NO_ERROR)
 		return ;*/
-	history_substitution(&get_shell_env()->input_string);
+	if (history_substitution(&get_shell_env()->input_string))
+	{
+		ft_strdel(&get_shell_env()->input_string);
+		return ;
+	}
 	break_input();
 	if (get_error() != NO_ERROR)
 		return ;
@@ -32,7 +36,7 @@ int				main(int ac, char **av)
 	init(ac, av);
 	while (get_shell_env()->should_run)
 		main_loop();
-	print_error_msg(get_error());
+	print_name_and_error(get_error());
 	if (get_error() == NO_ERROR)
 		return (EXIT_SUCCESS);
 	else
