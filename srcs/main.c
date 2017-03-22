@@ -11,7 +11,11 @@ static void		main_loop(void)
 	read_input();
 	/*if (get_error() != NO_ERROR)
 		return ;*/
-	history_substitution(&get_shell_env()->input_string);
+	if (history_substitution(&get_shell_env()->input_string)
+	{
+		ft_strdel(&get_shell_env()->input_string);
+		return ;
+	}
 	break_input();
 	if (get_error() != NO_ERROR)
 		return ;
