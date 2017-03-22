@@ -3,6 +3,9 @@
 
 # include <stdbool.h>
 
+char					*get_variable(char *var);
+void					display_variables(void);
+
 typedef struct			s_variable
 {
 	struct s_variable	*next;

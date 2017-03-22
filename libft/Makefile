@@ -68,6 +68,7 @@ SRCA = ft_strlen.c \
 	ft_ispair.c \
 	ft_isimpair.c \
 	ft_replace_char.c \
+	memalloc_or_die.c \
 
 SRCH	=	libft.h \
 

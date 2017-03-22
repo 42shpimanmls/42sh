@@ -7,6 +7,7 @@
 #include "utils.h"
 #include "quoting.h"
 #include "substitution.h"
+#include "errors.h"
 
 static bool		is_operator_part(t_tokenizer_state *state)
 {
@@ -30,7 +31,6 @@ static bool		is_operator_part(t_tokenizer_state *state)
 void			apply_rules(t_tokenizer_state *state)
 {
 	char c;
-
 
 	c = *state->current_char;
 	print_tokenizer_state(state);

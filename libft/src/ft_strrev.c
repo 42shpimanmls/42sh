@@ -22,7 +22,7 @@ char	*ft_strrev(const char *s1)
 	if (s1 && ft_strlen(s1) > 0)
 	{
 		i = ft_strlen(s1);
-		str = (char *)malloc(sizeof(char) * (i + 1));
+		str = (char *)memalloc_or_die(sizeof(char) * (i + 1));
 		j = i - 1;
 		i = 0;
 		str[j] = '\0';

@@ -1,6 +1,7 @@
 #include "shell_env.h"
 #include "edit_input.h"
 #include "ftsh.h"
+#include "utils.h"
 
 static void handle_command_string(t_shell_env *shell_env)
 {
@@ -10,8 +11,17 @@ static void handle_command_string(t_shell_env *shell_env)
 
 static void handle_stdin(t_shell_env *shell_env)
 {
-	shell_env->input_string = edit_input();
-	shell_env->should_run = false;
+	char	*tmp;
+
+	if (shell_env->input_string != NULL)
+	{
+		tmp = shell_env->input_string;
+		shell_env->input_string = ft_strjoin(shell_env->input_string, edit_input());
+		free(tmp);
+		shell_env->should_run = true;
+	}
+	else
+		shell_env->input_string = edit_input();
 }
 
 void	read_input()
@@ -24,6 +34,9 @@ void	read_input()
 	else
 		handle_stdin(shell_env);
 #ifdef FTSH_DEBUG
-	ft_printf("<input_string>\n\"%s\"\n</input_string>\n", shell_env->input_string);
+	ft_printf("<input_string>\n\"");
+	print_non_ascii_str(shell_env->input_string);
+	ft_printf("\"\n</input_string>\n");
 #endif
+	shell_env->last_unmatched = NO_ERROR;
 }

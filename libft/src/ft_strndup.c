@@ -22,9 +22,9 @@ char	*ft_strndup(const char *s1, int len)
 	{
 		i = ft_strlen(s1);
 		if (i < len)
-			str = (char *)malloc(sizeof(char) * (i + 1));
+			str = (char *)memalloc_or_die(sizeof(char) * (i + 1));
 		else
-			str = (char *)malloc(sizeof(char) * (len + 1));
+			str = (char *)memalloc_or_die(sizeof(char) * (len + 1));
 		i = -1;
 		while (s1[++i] && i < len)
 			str[i] = s1[i];

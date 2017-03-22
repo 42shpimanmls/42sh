@@ -3,7 +3,7 @@
 #include "uint.h"
 #include <stdlib.h>
 
-t_error const *get_error_defs(void)
+t_error const			*get_error_defs(void)
 {
 	static t_error const errors[TOTAL_ERROR_COUNT] =
 	{
@@ -15,53 +15,10 @@ t_error const *get_error_defs(void)
 		{ INVALID_OPTION,		"invalid option" },
 		{ PERM_DENIED,			"permission denied" },
 		{ NO_SUCH_FILE,			"no such file or directory" },
-
+		{ UNMATCHED_SINGLE_QUOTE,	"syntax error: unmatched '"},
+		{ UNMATCHED_DOUBLE_QUOTE,	"syntax error: unmatched \""},
+		{ UNMATCHED_BACKQUOTE,		"syntax error: unmatched `"},
 	};
+
 	return (errors);
-}
-
-t_builtin_usage const *get_builtin_usages()
-{
-	static t_builtin_usage const usages[BUILTIN_DEF_COUNT] =
-	{
-			// ID 					// MSG
-		{ HISTORY_BUID, 		"history [-c] [-d offset] [n] or history -awrn [filename] or history -ps arg [arg...]"}
-	};
-	return (usages);
-}
-
-void	print_error_msg(t_error_id id)
-{
-	t_error		const 	*errors;
-	t_uint				u;
-
-	u = 0;
-	errors = get_error_defs();
-	while (u < TOTAL_ERROR_COUNT)
-	{
-		if (id == errors[u].id)
-		{
-			ft_putendl(errors[u].msg);
-			return;
-		}
-		u++;
-	}
-}
-
-void	print_usage_msg(t_builtin_id id)
-{
-	t_builtin_usage		const 	*usages;
-	t_uint						u;
-
-	u = 0;
-	usages = get_builtin_usages();
-	while (u < BUILTIN_DEF_COUNT)
-	{
-		if (id == usages[u].id)
-		{
-			ft_putendl(usages[u].msg);
-			return;
-		}
-		u++;
-	}
 }

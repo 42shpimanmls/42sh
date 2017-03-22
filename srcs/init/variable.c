@@ -1,7 +1,7 @@
 #include "shell_env.h"
 #include "utils.h"
 
-t_variable *create_variable(char *name, char *value, bool exported)
+t_variable	*create_variable(char *name, char *value, bool exported)
 {
 	t_variable *v;
 
@@ -13,7 +13,7 @@ t_variable *create_variable(char *name, char *value, bool exported)
 	return (v);
 }
 
-void print_variable(t_variable *v)
+void		print_variable(t_variable *v)
 {
 	while (v)
 	{
@@ -25,7 +25,7 @@ void print_variable(t_variable *v)
 	}
 }
 
-bool check_if_variable_exist(t_variable *v, char *name)
+bool		check_if_variable_exist(t_variable *v, char *name)
 {
 	while (v)
 	{
@@ -38,7 +38,7 @@ bool check_if_variable_exist(t_variable *v, char *name)
 	return (false);
 }
 
-void free_variable(t_variable *list)
+void		free_variable(t_variable *list)
 {
 	if (list)
 	{
@@ -48,7 +48,7 @@ void free_variable(t_variable *list)
 	}
 }
 
-void pop_variable_by_name(t_variable **list, char *name)
+void		pop_variable_by_name(t_variable **list, char *name)
 {
 	t_variable *lst;
 	t_variable **addr;

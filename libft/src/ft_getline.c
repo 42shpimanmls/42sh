@@ -52,7 +52,7 @@ char		*ft_getline(int const fd)
 	tmp2 = ft_parse(stk, tmp, fd);
 	if (!tmp2)
 	{
-		buff = (char *)malloc(BUFF_SIZE + 1);
+		buff = (char *)memalloc_or_die(BUFF_SIZE + 1);
 		while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 		{
 			buff[ret] = '\0';

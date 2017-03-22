@@ -12,21 +12,25 @@
 # include "read_input/termcap/init_deinit.h"
 
 #include "history.h"
+#include "variable.h"
+
 t_editor *get_editor()
 {
 	static t_editor ed;
 	return (&ed);
 }
 
-t_editor *init_editor()
+t_editor	*init_editor()
 {
-	t_editor *new;
+	t_editor	*new;
 
 	new = get_editor();
 	ft_start_termcaps();
 	new->term = init_term();
 	ft_close_termcaps();
 	new->history = get_shell_env()->history;
+	new->prompt = gen_prompt();
+	new->prompt_size = ft_strlen(new->prompt);
 	list_goto_last((t_abstract_list **)&new->history);
 	return (new);
 }

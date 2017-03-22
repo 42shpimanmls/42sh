@@ -10,5 +10,6 @@ void		add_to_string(t_editor *ed, char c);
 char		*get_string_from_list(t_string *s);
 void		free_string(t_string *s);
 void		ft_clear_line(t_string *s);
+char		*gen_prompt(void);
 
 #endif

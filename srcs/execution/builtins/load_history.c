@@ -15,7 +15,7 @@ t_history	*create_history_entry(char *line)
 	new->appended = false;
 	new->next = NULL;
 	new->prev = NULL;
-	return(new);
+	return (new);
 }
 
 void	load_history(t_shell_env *shell_env, char *filename)
@@ -23,7 +23,7 @@ void	load_history(t_shell_env *shell_env, char *filename)
 	char	*line;
 	int		fd;
 
-	fd = open(filename, O_RDWR	| O_CREAT, 0666);
+	fd = open(filename, O_RDWR | O_CREAT, 0666);
 	while (ft_get_next_line(fd, &line) > 0)
 	{
 		list_double_push_back(&shell_env->history, create_history_entry(line));

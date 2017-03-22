@@ -4,9 +4,9 @@
 
 void print_token(t_token const *token)
 {
-	ft_printf("%s: s=\"", token->type->name);
+	ft_printf("%s: s=", token->type->name);
 	print_non_ascii_str(token->str);
-	ft_putendl("\"");
+	ft_putchar('\n');
 }
 
 void print_tokens(t_token const *tokens)
