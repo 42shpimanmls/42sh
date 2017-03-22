@@ -33,9 +33,29 @@ int main(int argc, char **argv)
 		{ "Check that init() sets the error ptr and exits without error", init_sets_error_ptr },
 		CU_TEST_INFO_NULL
 	};
+	CU_TestInfo		history_tests[] = {
+		{ "History initialization", initialize_history },
+		{ "Print history\n", history_print},
+		{ "Print last 3 history\n", history_print_offset},
+		{ "Clear history", history_clear},
+		{ "History reinitialization", initialize_history },
+		{ "History error handling", history_errors },
+
+	  CU_TEST_INFO_NULL,
+	};
+	CU_TestInfo		bang_tests[] = {
+		{ "Double bang returns last entry", bang_bang },
+		{ "!n returns nth entry, !-n returns (last - n)th entry", bang_n },
+		{ "Most recent entry starting with str (\"!str\"), or containing str (\"!?str[?\\n]\")", bang_search },
+		// { "Word selection", bang_word_selection },
+		{ "Misc bang errors return -1", bang_errors },
+	  CU_TEST_INFO_NULL,
+	};
 	CU_SuiteInfo	suites[] = {
 		{ "Init", NULL, NULL, NULL, NULL, init_tests },
 		{ "Tokenizer", NULL, NULL, NULL, NULL, tokenizer_tests },
+		{ "History", NULL, NULL, NULL, NULL, history_tests },
+		{ "Bang", NULL, NULL, NULL, NULL, bang_tests },
 		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
 		CU_SUITE_INFO_NULL
 	};

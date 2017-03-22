@@ -1,10 +1,22 @@
-#include "shell_env.h"
 #include "history.h"
 #include "abstract_list.h"
 #include "utils.h"
 
-void		history_test();
-void list_double_push_back(t_history **list, t_history *new);
+void add_to_history_list(t_history **list, t_history *new)
+{
+	t_history *tmp;
+
+	if (*list == NULL)
+		*list = new;
+	else
+	{
+		tmp = *list;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->prev = tmp;
+	}
+}
 
 t_history	*create_history_entry(char *line)
 {
@@ -27,9 +39,8 @@ void	load_history(t_shell_env *shell_env, char *filename)
 	while ((line = ft_getline(fd)))
 	// while (ft_get_next_line(fd, &line) > 0)
 	{
-		list_double_push_back(&shell_env->history, create_history_entry(line));
+		add_to_history_list(&shell_env->history, create_history_entry(line));
 		ft_strdel(&line);
 	}
 	close(fd);
-	//history_test();
 }

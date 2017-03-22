@@ -1,58 +1,47 @@
 #ifndef HISTORY_H
 # define HISTORY_H
 
-# include "execution/builtins/builtin_def.h"
+#include "execution/builtins/builtin_def.h"
+#include "shell_env.h"
+
 
 /*
 **exported env variable in shells
 */
 # define HISTFILE ".42sh_history"
 
-typedef	struct		s_hist_opt
-{
-
-	bool			c;
-	bool			d;
-	bool			a;
-	bool			n;
-	bool			r;
-	bool			w;
-	bool			p;
-	bool			s;
-	char			*offset;
-	char			*filename;
-	char			**args;
-}					t_hist_opt;
-
 /*
 **		load_history.c
 */
 void				load_history(t_shell_env *shell_env, char *filename);
 
+
+/*
+**		print_history.c
+*/
+
+void			print_history(t_history *history, int start);
+void			print_history_n(bool more_args, char *n, t_history *history);
+
 /*
 **		history_del.c
 */
 
-void				clear_history_list(t_history **history);
-void				delete_history_entry(t_history **history, char *offset);
+void			clear_history_list(t_history **history);
+void			delete_history_entry(t_history **history, char *offset);
+
 
 /*
 **		history_to_file.c
 */
 
-void				hist_to_file(t_history *history, char *filename);
+void			hist_to_file(t_history *history, char *filename);
 
 /*
 **		history.c
 */
 
-void	      print_history(t_history *history, int start);
-BUILTIN_RET	builtin_history(BUILTIN_ARGS);
-
-/*
-**		history_errors.c
-*/
-
+BUILTIN_RET		builtin_history(BUILTIN_ARGS);
 void	history_error(int code, char *error);
 
 #endif

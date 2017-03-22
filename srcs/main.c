@@ -3,6 +3,7 @@
 #include "init/init.h"
 #include <stdio.h>
 #include "errors.h"
+#include "history_substitutions.h"
 
 static void		main_loop(void)
 {
@@ -10,6 +11,7 @@ static void		main_loop(void)
 	read_input();
 	/*if (get_error() != NO_ERROR)
 		return ;*/
+	history_substitution(&get_shell_env()->input_string);
 	break_input();
 	if (get_error() != NO_ERROR)
 		return ;
