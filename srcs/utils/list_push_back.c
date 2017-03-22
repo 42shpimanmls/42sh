@@ -1,5 +1,4 @@
-#include "abstract_list.h"
-# include <libft.h> //remove
+# include "abstract_list.h"
 
 void	list_push_back(t_abstract_list **list, t_abstract_list *new)
 {
@@ -18,9 +17,7 @@ void	list_push_back(t_abstract_list **list, t_abstract_list *new)
 
 void list_push_at_pos(size_t pos, t_abstract_list **list, t_abstract_list *new)
 {
-	(void)pos;
 	t_abstract_list	*lst;
-	// t_abstract_list	**addr;
 	size_t			i;
 
 	if (*list == NULL)
@@ -30,19 +27,13 @@ void list_push_at_pos(size_t pos, t_abstract_list **list, t_abstract_list *new)
 		lst = *list;
 		if (pos == 0)
 		{
-			// insert at first position !!!!!!!!!!!!!!!!!!!!!!!!!!
-			// new->next = *list;
-			// *list = new;
-		}
-		else if (pos == 1)
-		{
 			new->next = *list;
 			*list = new;
 		}
-		else if (pos > 1)
+		else if (pos > 0)
 		{
-			i = 3;
-			while (lst->next && i <= pos)
+			i = 0;
+			while (lst->next && i < pos - 1)
 			{
 				i++;
 				lst = lst->next;

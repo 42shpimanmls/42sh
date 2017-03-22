@@ -40,7 +40,7 @@ void	add_to_string(t_editor *ed, char c)
 
 	ed->need_refresh = true;
 	new = memalloc_or_die(sizeof(t_string));
-		new->c = c;
+	new->c = c;
 
 	if (!ed->string)
 	{
@@ -48,7 +48,7 @@ void	add_to_string(t_editor *ed, char c)
 	}
 	else
 	{
-		list_push_at_pos(ed->cursor_position, (t_abstract_list **)ed->string, (t_abstract_list *)new);
+		list_push_at_pos(ed->cursor_position, (t_abstract_list **)&ed->string, (t_abstract_list *)new);
 	}
 	ed->cursor_position++;
 }
@@ -83,9 +83,12 @@ char *get_string_from_list(t_string *s)
 
 void free_string(t_string *s)
 {
+	t_string *tmp;
+
 	while (s)
 	{
-		s = s->next;  //remove
+		tmp = s->next;
+		free(s);
+		s = tmp;
 	}
-	free(s);
 }
