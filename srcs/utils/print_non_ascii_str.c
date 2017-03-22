@@ -16,6 +16,8 @@ void						print_non_ascii_char(char c)
 		else
 			printf("\\x%x", c);
 	}
+	else if (c == '\\')
+		ft_putstr("\\\\");
 	else
 		ft_putchar(c);
 }

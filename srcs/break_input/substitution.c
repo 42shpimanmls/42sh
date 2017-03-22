@@ -15,11 +15,15 @@ char const	*find_substitution_end(char const *str)
 	set_error(NO_ERROR);
 	while (*str)
 	{
-		if (*str == '`')
+		/* <backslash> shall retain its literal meaning, except when
+			followed by: '$', '`', or <backslash> */
+		if (*str == '\\' && (*(str + 1) == '`' || *(str + 1) == '\\'))
+			str++;
+		else if (*str == '`')
 			return (str);
 		str++;
 	}
 	set_error(UNMATCHED_BACKQUOTE);
 	get_shell_env()->last_unmatched = UNMATCHED_BACKQUOTE;
-	return (str);
+	return (NULL);
 }
