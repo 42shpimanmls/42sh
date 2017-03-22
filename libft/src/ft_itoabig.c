@@ -18,7 +18,7 @@ static char			*ft_retourne(char *src, long long lon)
 	long long	i;
 	long long	j;
 
-	dest = (char *)malloc(lon + 1);
+	dest = (char *)memalloc_or_die(lon + 1);
 	j = lon;
 	i = 0;
 	dest[lon] = '\0';
@@ -63,7 +63,7 @@ char				*ft_itoabig(long long c)
 		return (ft_strdup("-9223372036854775808"));
 	cc = c;
 	lon = ft_compte_la_longueur(c);
-	str = (char *)malloc(lon + 1);
+	str = (char *)memalloc_or_die(lon + 1);
 	if (c < 0)
 		c = -c;
 	i = 0;

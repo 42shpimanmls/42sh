@@ -1,6 +1,8 @@
 #include "quoting.h"
 #include "substitution.h"
 #include <libft.h>
+#include "errors.h"
+#include "shell_env.h"
 
 char const	*find_double_quote_end(t_tokenizer_state *state)
 {
@@ -13,14 +15,18 @@ char const	*find_double_quote_end(t_tokenizer_state *state)
 		nc = *(it + 1);
 		if (*it == '`')
 			it = find_substitution_end(it + 1);
+		if (get_error())
+			break ;
 		if (*it == '\\' && (nc == '`' || nc == '"' || nc == '\\' || nc == '\n'))
 			it++;
 		else if (*it == '"')
 			return (it);
 		it++;
 	}
-	ft_putendl_fd("42sh: syntax error: missing double quote end\n", 2);
-	exit(1);
+	if (get_error() != UNMATCHED_BACKQUOTE)
+		set_error(UNMATCHED_DOUBLE_QUOTE);
+	get_shell_env()->last_unmatched = get_error();
+	return (NULL);
 }
 
 bool		is_double_quoted(t_tokenizer_state *state)
