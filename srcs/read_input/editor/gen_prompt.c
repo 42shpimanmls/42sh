@@ -49,7 +49,7 @@ char				*gen_prompt(void)
 	shell_env = get_shell_env();
 	if (!shell_env->last_unmatched)
 	{
-		tmp = ft_strjoin(get_variable("PWD"), "]$ ");
+		tmp = ft_strjoinf(get_variable("PWD"), "]$ ", 1);
 		result = ft_strjoin("[", tmp);
 		free(tmp);
 	}

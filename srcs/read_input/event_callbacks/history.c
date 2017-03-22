@@ -16,10 +16,10 @@ void	list_free(t_abstract_list **list)
 void	str_to_list(t_editor *ed, char *str)
 {
 	while (*str)
-		{
-			add_to_string(ed, *str);
-			str++;
-		}
+	{
+		add_to_string(ed, *str);
+		str++;
+	}
 }
 
 /***************************************/
@@ -28,7 +28,7 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 {
 	if (ed->history)
 	{
-		ft_clear_line(ed->string);
+		ed->need_refresh = true;
 		list_free((t_abstract_list **)&ed->string);
 		str_to_list(ed, ed->history->line);
 		print_string(ed->string);
@@ -39,7 +39,7 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 
 EV_CB_RET 	event_history_down(EV_CB_ARGS)
 {
-	ft_clear_line(ed->string);
+	ed->need_refresh = true;
 	list_free((t_abstract_list **)&ed->string);
 	if (ed->history && ed->history->next)
 	{

@@ -24,7 +24,8 @@ void	load_history(t_shell_env *shell_env, char *filename)
 	int		fd;
 
 	fd = open(filename, O_RDWR | O_CREAT, 0666);
-	while (ft_get_next_line(fd, &line) > 0)
+	while ((line = ft_getline(fd)))
+	// while (ft_get_next_line(fd, &line) > 0)
 	{
 		list_double_push_back(&shell_env->history, create_history_entry(line));
 		ft_strdel(&line);
