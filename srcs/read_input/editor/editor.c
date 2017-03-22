@@ -12,13 +12,24 @@
 # include "read_input/termcap/init_deinit.h"
 
 #include "history.h"
-t_editor *init_editor()
-{
-	t_editor *new;
+#include "variable.h"
 
-	new = memalloc_or_die(sizeof(t_editor));
+t_editor *get_editor()
+{
+	static t_editor ed;
+	return (&ed);
+}
+
+t_editor	*init_editor()
+{
+	t_editor	*new;
+
+	new = get_editor();
+	ft_bzero(new, sizeof(t_editor));
 	new->term = init_term();
 	new->history = get_shell_env()->history;
+	new->prompt = gen_prompt();
+	new->prompt_size = ft_strlen(new->prompt);
 	list_goto_last((t_abstract_list **)&new->history);
 	return (new);
 }
@@ -27,10 +38,9 @@ void	add_to_string(t_editor *ed, char c)
 {
 	t_string *new;
 
-	ed->cursor_position++;
 	ed->need_refresh = true;
 	new = memalloc_or_die(sizeof(t_string));
-		new->c = c;
+	new->c = c;
 
 	if (!ed->string)
 	{
@@ -38,8 +48,9 @@ void	add_to_string(t_editor *ed, char c)
 	}
 	else
 	{
-		list_push_back((t_abstract_list **)ed->string, (t_abstract_list *)new);
+		list_push_at_pos(ed->cursor_position, (t_abstract_list **)&ed->string, (t_abstract_list *)new);
 	}
+	ed->cursor_position++;
 }
 
 void print_string(t_string *s)
@@ -72,22 +83,12 @@ char *get_string_from_list(t_string *s)
 
 void free_string(t_string *s)
 {
-	while (s)
-	{
-		s = s->next;  //remove
-	}
-	free(s);
-}
-
-void	ft_clear_line(t_string *s)
-{
-	char *move_left = tgetstr("le", NULL);
+	t_string *tmp;
 
 	while (s)
 	{
-		ft_putstr(move_left);
-		s = s->next;
+		tmp = s->next;
+		free(s);
+		s = tmp;
 	}
-	ft_putstr(tgetstr("cr", NULL));
-	ft_putstr(tgetstr("ce", NULL));
 }

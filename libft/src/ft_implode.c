@@ -17,7 +17,7 @@ char	*ft_implode(char **tab)
 	int		i;
 	char	*str;
 
-	str = (char *)malloc(sizeof(char) * (ft_tablen(tab) + 1));
+	str = (char *)memalloc_or_die(sizeof(char) * (ft_tablen(tab) + 1));
 	i = -1;
 	if (!str)
 		return (NULL);

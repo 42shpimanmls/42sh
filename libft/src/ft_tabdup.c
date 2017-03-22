@@ -20,7 +20,7 @@ char	**ft_tabdup(char **s1)
 	if (s1)
 	{
 		i = ft_tablen((char **)s1);
-		tab = (char **)malloc(sizeof(char *) * (i + 1));
+		tab = (char **)memalloc_or_die(sizeof(char *) * (i + 1));
 		i = -1;
 		while (s1[++i])
 			tab[i] = ft_strdup(s1[i]);

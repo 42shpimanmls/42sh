@@ -1,10 +1,11 @@
 #include "shell_env.h"
 #include "init/init.h"
-// #include "execution/builtins/builtins.h"  //remove
+#include "read_input/editor/editor.h"
 #include "abstract_list.h"
 #include "history.h"
+#include "errors.h"
 
-static void	init_variables_list(t_shell_env	*shell_env)
+static void	init_variables_list(t_shell_env *shell_env)
 {
 	extern char	**environ;
 	char		**line;
@@ -30,30 +31,11 @@ void	init(int ac, char **av)
 {
 	t_shell_env		*shell_env;
 
+	set_error(NO_ERROR);
 	shell_env = get_shell_env();
 	ft_bzero(shell_env, sizeof(t_shell_env));
-	parse_options(ac, av, shell_env);
 	init_variables_list(shell_env);
-
+	parse_options(ac, av, shell_env);
 	load_history(shell_env, HISTFILE);
-
-	// ////////////TEST SETENV UNSETENV /////////////
-	// ft_printf("Before env---------\n");
-	// print_variable(shell_env->variables);
-	// ft_printf("-------------------\n");
-
-	// char* argv[] = {"PROGNAME", "TEST", "testvar", NULL};
-	// builtin_setenv(ft_tablen(argv), argv);
-
-	// char* argv2[] = {"PROGNAME", "PATH", NULL};
-	// builtin_unsetenv(ft_tablen(argv), argv2);
-
-	// ft_printf("After env---------\n");
-	// print_variable(shell_env->variables);
-	// ft_printf("-------------------\n");
-	// ////////////     ///////////     /////////////
-
-	//init_history(shell_env);
-	//READ HISTORY
 	shell_env->should_run = true;
 }

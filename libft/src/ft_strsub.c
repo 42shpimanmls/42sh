@@ -19,7 +19,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 
 	if (len <= 0 || (s == NULL) || start >= ft_strlen(s))
 		return (NULL);
-	res = malloc((sizeof(char *)) * (len + 1));
+	res = memalloc_or_die((sizeof(char *)) * (len + 1));
 	if (res == NULL)
 		return (NULL);
 	i = 0;

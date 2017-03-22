@@ -1,7 +1,10 @@
 #ifndef VARIABLE_H
 # define VARIABLE_H
 
-#include <stdbool.h>
+# include <stdbool.h>
+
+char					*get_variable(char *var);
+void					display_variables(void);
 
 typedef struct			s_variable
 {

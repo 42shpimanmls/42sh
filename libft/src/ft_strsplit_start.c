@@ -21,7 +21,7 @@ char		**ft_strsplit_start(char const *s, char c, int start)
 	if ((s == 0) || (c == 0))
 		return (NULL);
 	tab = ft_strsplit(s, c);
-	tab2 = (char **)malloc(sizeof(char *) * ft_tablen(tab) + 1);
+	tab2 = (char **)memalloc_or_die(sizeof(char *) * ft_tablen(tab) + 1);
 	i = -1;
 	while (tab[++i])
 		tab2[i] = ft_strdup(tab[start++]);
