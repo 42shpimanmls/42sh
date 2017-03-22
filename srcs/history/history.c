@@ -1,5 +1,5 @@
 #include "history.h"
-#include "execution/builtins/history_options.h"
+#include "history_options.h"
 #include "errors.h"
 #include "abstract_list.h"
 #include "utils.h"

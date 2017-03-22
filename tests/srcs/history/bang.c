@@ -2,7 +2,7 @@
 #include <libft.h>
 
 #include "shell_env.h"
-#include "history_substitutions.h"
+#include "history/history_substitutions.h"
 #include "ftsh.h"
 
 

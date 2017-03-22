@@ -1,5 +1,5 @@
 #include <libft.h>
-#include "execution/builtins/history_options.h"
+#include "history_options.h"
 #include "errors.h"
 
 void			print_history_options(t_hist_opt *options)

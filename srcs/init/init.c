@@ -2,7 +2,7 @@
 #include "init/init.h"
 #include "read_input/editor/editor.h"
 #include "abstract_list.h"
-#include "history.h"
+#include "history/history.h"
 #include "errors.h"
 
 static void	init_variables_list(t_shell_env *shell_env)
