@@ -14,7 +14,7 @@ void			parse_input(void)
 	if (get_error() != NO_ERROR && get_error() != sh_env->last_unmatched)
 	{
 		ft_strdel(&get_shell_env()->input_string);
-		print_error_msg(get_error());
+		print_name_and_error(get_error());
 	}
 	delete_all_tokens(&sh_env->tokens);
 #ifdef FTSH_DEBUG
