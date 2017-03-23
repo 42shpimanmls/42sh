@@ -14,4 +14,7 @@ typedef struct			s_variable
 	bool				exported;
 }						t_variable;
 
+t_variable				*create_variable(char *name, char *value
+															, bool exported);
+
 #endif

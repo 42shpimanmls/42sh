@@ -78,3 +78,29 @@ void		delete_tokens_array(t_token **tokens_array, size_t len)
 	}
 	free (tokens_array);
 }
+
+t_token			*copy_token(t_token const *src)
+{
+	t_token	*dst;
+
+	dst = memalloc_or_die(sizeof(t_token));
+	dst->str = ft_strdup(src->str);
+	dst->type = src->type;
+	return (dst);
+}
+
+t_token			*copy_all_tokens(t_token const *src)
+{
+	t_token	*dst;
+	t_token	**next_addr;
+
+	dst = NULL;
+	next_addr = &dst;
+	while (src)
+	{
+		*next_addr = copy_token(src);
+		src = src->next;
+		next_addr = &((*next_addr)->next);
+	}
+	return (dst);
+}
