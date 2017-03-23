@@ -106,8 +106,6 @@ void	bang_bang()
 	while (i <= 2)
 	{
 		#ifdef BANG_TEST_VERBOSE
-	ft_putendl("COUCOU");
-
 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
 		#endif
 
