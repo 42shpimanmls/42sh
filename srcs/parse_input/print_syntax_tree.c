@@ -7,15 +7,18 @@ static void print_assignments(t_variable const *a, size_t lvl)
 	if (a == NULL)
 		return ;
 	print_n_char(' ', (lvl) * 2);
-	ft_putendl("assignment(s): ");
+	ft_putstr("assignment(s):");
 	while (a != NULL)
 	{
-		print_n_char(' ', (lvl + 1) * 2);
+		ft_putchar(' ');
 		ft_putstr(a->name);
 		ft_putchar('=');
-		ft_putendl(a->value);
+		ft_putstr(a->value);
+		if (a->next != NULL)
+			ft_putstr(",");
 		a = a->next;
 	}
+	ft_putchar('\n');
 }
 
 static int 	get_default_fd(t_redir_type type)
@@ -32,10 +35,10 @@ static void print_redirections(t_redirection const *r, size_t lvl)
 	if (r == NULL)
 		return ;
 	print_n_char(' ', (lvl) * 2);
-	ft_putendl("redirection(s): ");
+	ft_putstr("redirection(s):");
 	while (r != NULL)
 	{
-		print_n_char(' ', (lvl + 1) * 2);
+		ft_putchar(' ');
 		if (r->n >= 0)
 			ft_putnbr(r->n);
 		else
@@ -43,9 +46,12 @@ static void print_redirections(t_redirection const *r, size_t lvl)
 		ft_putchar(' ');
 		ft_putstr(get_token_def((t_token_id)r->type)->str);
 		ft_putchar(' ');
-		ft_putendl(r->word);
+		ft_putstr(r->word);
+		if (r->next != NULL)
+			ft_putstr(",");
 		r = r->next;
 	}
+	ft_putchar('\n');
 }
 
 static void print_simple_command(t_simple_command const *cmd, size_t lvl)
