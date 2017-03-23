@@ -27,11 +27,13 @@ static char const	*get_unmatched_str(t_error_id id)
 		{ UNMATCHED_SINGLE_QUOTE, "quote" },
 		{ UNMATCHED_DOUBLE_QUOTE, "dquote" },
 		{ UNMATCHED_BACKQUOTE, "bquote" },
+		{ UNEXPECTED_IF, "cmdif" },
+		{ UNEXPECTED_PIPE, "pipe" },
 	};
 	size_t							u;
 
 	u = 0;
-	while (u < 3)
+	while (u < 6)
 	{
 		if (defs[u].id == id)
 			return (defs[u].str);

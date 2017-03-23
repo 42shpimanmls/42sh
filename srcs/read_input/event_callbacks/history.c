@@ -15,6 +15,8 @@ void	list_free(t_abstract_list **list)
 
 void	str_to_list(t_editor *ed, char *str)
 {
+	if (str == NULL)
+		return;
 	while (*str)
 	{
 		add_to_string(ed, *str);

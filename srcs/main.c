@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "errors.h"
 #include "history_substitutions.h"
+#include "parse_input/print_syntax_tree.h"
 
 static void		main_loop(void)
 {
@@ -23,8 +24,11 @@ static void		main_loop(void)
 	break_input();
 	if (get_error() != NO_ERROR)
 		return ;
-	ft_strdel(&shell_env->input_string);
 	parse_input();
+	if (get_error() != NO_ERROR)
+		return ;
+	ft_strdel(&get_shell_env()->input_string);
+	print_command_list(get_shell_env()->syntax_tree, 0);
 	/*if (get_error() != NO_ERROR)
 		return ;*/
 	//execute_tree();
