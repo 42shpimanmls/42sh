@@ -94,6 +94,5 @@ char *edit_input()
 	ft_close_termcaps();
 	line = get_string_from_list(ed->string);
 	free_editor(ed);
-	// free_string(ed->string);
 	return (line);
 }

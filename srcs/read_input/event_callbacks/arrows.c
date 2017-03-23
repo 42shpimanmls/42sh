@@ -11,7 +11,6 @@ bool check_cursor_if_margin(EV_CB_ARGS)
 
 EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 {
-	(void)ed;
 	if (ed->cursor_position > 0)
 	{
 		if (check_cursor_if_margin(ed))
@@ -31,7 +30,6 @@ EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 
 EV_CB_RET 	event_cursor_right(EV_CB_ARGS)
 {
-	(void)ed;
 	if (ed->cursor_position < ed->string_size)
 	{
 		ed->cursor_position++;
@@ -45,7 +43,23 @@ EV_CB_RET 	event_cursor_right(EV_CB_ARGS)
 }
 
 EV_CB_RET 	event_cursor_up(EV_CB_ARGS)
-{(void)ed;}
+{
+	int i;
+
+	i = -1;
+	while (++i < ed->term->width)
+	{
+		event_cursor_left(ed);
+	}
+}
 
 EV_CB_RET 	event_cursor_down(EV_CB_ARGS)
-{(void)ed;}
+{
+	int i;
+
+	i = -1;
+	while (++i < ed->term->width)
+	{
+		event_cursor_right(ed);
+	}
+}
