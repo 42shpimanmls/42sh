@@ -15,25 +15,6 @@ t_token	*construct_token(char const *str, char delim)
 	return (token);
 }
 
-t_token	*tokens_dup_until(t_token const *tokens, t_token const *stop)
-{
-	t_token	*result;
-	t_token	**it;
-
-	result = NULL;
-	it = &result;
-	while (tokens != NULL && tokens != stop)
-	{
-		*it = memalloc_or_die(sizeof(t_token));
-		(*it)->str = ft_strdup(tokens->str);
-		(*it)->type = tokens->type;
-		it = &(*it)->next;
-		tokens = tokens->next;
-	}
-	*it = NULL;
-	return (result);
-}
-
 size_t		count_token_type(t_token const *tokens, t_token_id type)
 {
 	if (tokens == NULL)
@@ -77,30 +58,4 @@ void		delete_tokens_array(t_token **tokens_array, size_t len)
 		delete_all_tokens(tokens_array + len);
 	}
 	free (tokens_array);
-}
-
-t_token			*copy_token(t_token const *src)
-{
-	t_token	*dst;
-
-	dst = memalloc_or_die(sizeof(t_token));
-	dst->str = ft_strdup(src->str);
-	dst->type = src->type;
-	return (dst);
-}
-
-t_token			*copy_all_tokens(t_token const *src)
-{
-	t_token	*dst;
-	t_token	**next_addr;
-
-	dst = NULL;
-	next_addr = &dst;
-	while (src)
-	{
-		*next_addr = copy_token(src);
-		src = src->next;
-		next_addr = &((*next_addr)->next);
-	}
-	return (dst);
 }
