@@ -41,6 +41,7 @@ int main(int argc, char **argv)
 		{ "History error handling", history_errors },
 		{ "Clear history", history_clear},
 		{ "Read history from file", history_from_file},
+		{ "History s option appends args to history list as one entry", history_s_option},
 	  CU_TEST_INFO_NULL,
 	};
 	CU_TestInfo		bang_tests[] = {

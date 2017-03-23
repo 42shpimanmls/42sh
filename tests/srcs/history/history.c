@@ -7,7 +7,7 @@
 #include "abstract_list.h"
 
 
-#define HISTORY_TEST_VERBOSE
+// #define HISTORY_TEST_VERBOSE
 
 void	initialize_history()
 {
@@ -157,6 +157,24 @@ void	history_clear()
 	CU_ASSERT_PTR_NULL(get_shell_env()->history);
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_putendl("State of history after clearing all (should be empty!):");
+		print_history(get_shell_env()->history, 0);
+	#endif
+}
+
+void 	history_s_option()
+{
+	char	*av[][6] = {
+						{"history", "-s", "one", "two", "three", NULL}
+					};
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_printf("State of history before -s\n: ");
+		print_history(get_shell_env()->history, 0);
+	#endif
+
+	builtin_history(5, av[0]);
+
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_printf("State of history after -s\n: ");
 		print_history(get_shell_env()->history, 0);
 	#endif
 }
