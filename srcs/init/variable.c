@@ -48,6 +48,27 @@ void		free_variable(t_variable *list)
 	}
 }
 
+void		delete_variable(t_variable **var)
+{
+	free_variable(*var);
+	*var = NULL;
+}
+
+void		delete_all_variables(t_variable **var)
+{
+	t_variable	*it;
+	t_variable	*tmp;
+
+	it = *var;
+	while (it)
+	{
+		tmp = it->next;
+		free_variable(it);
+		it = tmp;
+	}
+	*var = NULL;
+}
+
 void		pop_variable_by_name(t_variable **list, char *name)
 {
 	t_variable *lst;
