@@ -21,15 +21,6 @@ static void print_assignments(t_variable const *a, size_t lvl)
 	ft_putchar('\n');
 }
 
-static int 	get_default_fd(t_redir_type type)
-{
-	if (type == REDIR_OUTPUT || type == APPEND_OUTPUT)
-		return (1);
-	else if (type == REDIR_INPUT)
-		return (0);
-	return (-1);
-}
-
 static void print_redirections(t_redirection const *r, size_t lvl)
 {
 	if (r == NULL)
@@ -39,10 +30,7 @@ static void print_redirections(t_redirection const *r, size_t lvl)
 	while (r != NULL)
 	{
 		ft_putchar(' ');
-		if (r->n >= 0)
-			ft_putnbr(r->n);
-		else
-			ft_putnbr(get_default_fd(r->type));
+		ft_putnbr(r->n);
 		ft_putchar(' ');
 		ft_putstr(get_token_def((t_token_id)r->type)->str);
 		ft_putchar(' ');
