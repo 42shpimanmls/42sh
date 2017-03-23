@@ -40,8 +40,7 @@ int main(int argc, char **argv)
 		{ "History to file\n", history_to_file},
 		{ "History error handling", history_errors },
 		{ "Clear history", history_clear},
-		// { "History reinitialization", initialize_history },
-
+		{ "Read history from file", history_from_file},
 	  CU_TEST_INFO_NULL,
 	};
 	CU_TestInfo		bang_tests[] = {

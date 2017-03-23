@@ -30,13 +30,17 @@ t_history	*create_history_entry(char *line)
 	return (new);
 }
 
-void	load_history(t_shell_env *shell_env, char *filename)
+void	load_history(t_shell_env *shell_env, char *filename, int position)
 {
 	char	*line;
 	char	*tmp;
 	int		fd;
 
-	fd = open(filename, O_RDWR | O_CREAT, 0666);
+	(void)position; // should determine where to start in file
+	if (filename)
+		fd = open(filename, O_RDWR | O_CREAT, 0666); // protect in case no rights, etc + set_error
+	else
+		fd = open(HISTFILE, O_RDWR | O_CREAT, 0666);
 	while ((line = ft_getline(fd)))
 	{
 		tmp = ft_strjoin(line, "\n");

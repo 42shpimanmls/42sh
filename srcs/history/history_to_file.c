@@ -10,11 +10,14 @@ void	hist_to_file(t_history *history, char *filename, bool append)
 		if filename is specified, -w writes to file but -a does NOTHING
 	*/
 	if (append)
-		fd = open(filename, O_WRONLY | O_APPEND); // protect
+		fd = open(HISTFILE, O_WRONLY | O_APPEND); // protect
 	else
-		fd = open(filename, O_TRUNC |  O_WRONLY | O_CREAT, 0666); // does that overwrite the whole file?
+		fd = open(filename, O_TRUNC |  O_WRONLY | O_CREAT, 0666);
 	while (history)
 	{
+		/*
+			check what -w does -> writes anyway or check if already appended?
+		*/
 		if (!history->appended)
 		{
 			history->appended = true;

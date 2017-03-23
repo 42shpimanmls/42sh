@@ -36,6 +36,6 @@ void	init(int ac, char **av)
 	ft_bzero(shell_env, sizeof(t_shell_env));
 	init_variables_list(shell_env);
 	parse_options(ac, av, shell_env);
-	load_history(shell_env, HISTFILE);
+	load_history(shell_env, HISTFILE, 0);
 	shell_env->should_run = true;
 }

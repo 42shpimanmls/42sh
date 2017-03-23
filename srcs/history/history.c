@@ -4,6 +4,8 @@
 #include "abstract_list.h"
 #include "utils.h"
 
+#include "history_debug.h"
+
 static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 {
 	int			i;
@@ -26,6 +28,34 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 	}
 }
 
+static void		file_manipulation(t_hist_opt options, t_history *history)
+{
+	char		*filename;
+
+	if (options.args)
+			filename = options.args[0];
+	else
+		filename = NULL;
+
+	// writing in file
+	if (options.w || options.a)
+	{
+		if (options.w)
+			hist_to_file(history, filename, false);
+		else if (!filename)
+			hist_to_file(history, HISTFILE, true);
+	}
+
+	//reading file
+	else if (options.r || options.n)
+	{
+		if (options.r)
+			load_history(get_shell_env(), filename, 0);
+		else
+			load_history(get_shell_env(), filename, 0); // saved position in file
+	}
+}
+
 static void		execute_options(t_history **history, t_hist_opt options)
 {
 	if (options.s || options.p)
@@ -41,15 +71,8 @@ static void		execute_options(t_history **history, t_hist_opt options)
 			delete_history_entry(history, options.offset);
 		}
 	}
-	else if (options.w || options.a)
-	{
-		if (options.w && options.args)
-			hist_to_file(*history, options.args[0], false);
-		else if (options.w)
-			hist_to_file(*history, HISTFILE, false);
-		else if (!options.args)
-			hist_to_file(*history, HISTFILE, true);
-	}
+	else
+		file_manipulation(options, *history);
 }
 
 BUILTIN_RET	builtin_history(BUILTIN_ARGS)
@@ -73,20 +96,16 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 		else
 			error_builtin(argv[0], NULL, NEED_NUM);
 	}
-	#ifdef HISTORY_DEBUG
-	print_history_options(&options);
-	ft_putstr("ERROR STATE: ");
-	ft_putnbr(get_error());
-	ft_putchar('\n');
-	#endif
 	if (get_error() == NO_ERROR)
 	{
 		#ifdef HISTORY_DEBUG
-		ft_putendl("EXECUTING HISTORY BUILTIN");
+			ft_putendl("EXECUTING HISTORY BUILTIN");
+			print_history_options(&options);
 		#endif
 
 		execute_options(&get_shell_env()->history, options);
 	}
 	free_history_options(&options);
+
 	// return must_run or must_print_out or must not add to history (already added so in fact delete)
 }

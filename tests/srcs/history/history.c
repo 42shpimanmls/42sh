@@ -7,13 +7,13 @@
 #include "abstract_list.h"
 
 
-// #define HISTORY_TEST_VERBOSE
+#define HISTORY_TEST_VERBOSE
 
 void	initialize_history()
 {
 	char *av[] = {"42sh"};
 	init(1, av);
-	load_history(get_shell_env(), HISTFILE);
+	load_history(get_shell_env(), HISTFILE, 0);
 
 	#ifdef HISTORY_TEST_VERBOSE
 	ft_printf("\nHistory list has been initialized from %s: \n", HISTFILE);
@@ -48,8 +48,6 @@ void	history_print()
 	// int ret;
 
 	builtin_history(1, av);
-	// CU_ASSERT_EQUAL(ret, 0)
-
 }
 
 void	history_print_offset()
@@ -63,7 +61,7 @@ void	history_print_offset()
 	builtin_history(2, av[0]);
 	// CU_ASSERT_EQUAL(ret, 0)
 	builtin_history(2, av[1]);
-	// CU_ASSERT_EQUAL(ret, 0)
+	// CU_ASSERT_NOT_EQUAL(get_error(), 0);
 
 }
 
@@ -107,14 +105,47 @@ void	history_to_file()
 
 	builtin_history(3, av[0]);
 	CU_ASSERT_NOT_EQUAL(open("test", O_RDONLY), -1);
+
 	#ifdef HISTORY_TEST_VERBOSE
-		ft_printf("This history should have been appended to %s once only:\n", HISTFILE);
+		ft_printf("This history should have been appended to %s once only \
+					and added to %s:\n", HISTFILE, "test");
 		print_history(get_shell_env()->history, 0);
 	#endif
-	// builtin_history(2, av[1]);
 
 	builtin_history(3, av[1]);
 	builtin_history(2, av[2]);
+}
+
+void	history_from_file()
+{
+	t_history *history;
+	char *av[][4] = {
+		{"history", "-r", NULL, NULL},
+		{"history", "-r", "test", NULL},
+	};
+
+	history = get_shell_env()->history;
+
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_putendl("State of history list before reading: ");
+		print_history(history, 0);
+	#endif
+
+	builtin_history(2, av[0]);
+
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_printf("State of history list after reading %s\n: ", HISTFILE);
+		print_history(get_shell_env()->history, 0);
+	#endif
+	CU_ASSERT_PTR_NOT_NULL(get_shell_env()->history);
+	history = get_shell_env()->history;
+	builtin_history(3, av[1]);
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_printf("State of history list after reading %s\n: ", "test");
+		print_history(get_shell_env()->history, 0);
+	#endif
+	if (history)
+		CU_ASSERT_PTR_NOT_NULL(history->next);
 }
 
 void	history_clear()
