@@ -5,8 +5,8 @@ void	hist_to_file(t_history *history, char *filename, bool append)
 {
 	int		fd;
 
-	/*	
-		difference btwn -w and -a : -a appends if file exists, -w overwrites or creates file 
+	/*
+		difference btwn -w and -a : -a appends if file exists, -w overwrites or creates file
 		if filename is specified, -w writes to file but -a does NOTHING
 	*/
 
@@ -21,7 +21,7 @@ void	hist_to_file(t_history *history, char *filename, bool append)
 		if (!history->appended)
 		{
 			history->appended = true;
-			ft_putendl_fd(history->line, fd);
+			ft_putstr_fd(history->line, fd);
 		}
 		history = history->next;
 	}

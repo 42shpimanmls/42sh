@@ -4,7 +4,6 @@
 #include "shell_env.h"
 #include "history/history.h"
 #include "ftsh.h"
-
 #include "abstract_list.h"
 
 #define HIST_TESTFILE "history_test_file"
@@ -24,6 +23,18 @@ void	initialize_history()
 /*
 	no ret value for builtins for the moment
 */
+
+void	history_add_one()
+{
+	t_history *history;
+	char	str[] = "added\n";
+	size_t 	nb;
+
+	history = get_shell_env()->history;
+	nb = list_count((t_abstract_list *)history);
+	add_to_history_list(&history, create_history_entry(str));
+	CU_ASSERT_EQUAL(nb + 1, list_count((t_abstract_list *)history));
+}
 
 void	history_print()
 {
@@ -55,12 +66,12 @@ void	history_delete()
 	size_t nb;
 
 	char	*av[][3] = {
-						{"history", "-d3", NULL},
-						{"history", "-d", "3"}
+						{"history", "-d7", NULL},
+						{"history", "-d", "1"}
 					};
 
 	nb = list_count((t_abstract_list *)get_shell_env()->history) - 1;
-	// printf("nb: %zu\n", nb);
+	//printf("nb: %zu\n", nb);
 	builtin_history(2, av[0]);
 	CU_ASSERT_EQUAL(nb, list_count((t_abstract_list *)get_shell_env()->history));
 	nb--;
