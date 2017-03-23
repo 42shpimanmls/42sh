@@ -13,7 +13,7 @@ void		print_history(t_history *history, int start)
 		{
 			ft_putnbr(i);
 			ft_putstr("  "); // alignment // most digits
-			ft_putendl(history->line);
+			ft_putstr(history->line);
 		}
 		i++;
 		history = history->next;

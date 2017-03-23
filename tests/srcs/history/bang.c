@@ -8,7 +8,7 @@
 
 #define NB_SUB_TESTS 20
 #define NB_ERR_TESTS 4
-
+// #define BANG_TEST_VERBOSE
 
 /*
 	to test your own strings:
@@ -106,6 +106,8 @@ void	bang_bang()
 	while (i <= 2)
 	{
 		#ifdef BANG_TEST_VERBOSE
+	ft_putendl("COUCOU");
+
 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
 		#endif
 
