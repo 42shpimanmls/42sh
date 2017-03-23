@@ -14,7 +14,7 @@ void	hist_to_file(t_history *history, char *filename)
 		if (!history->appended) // || option is -w not -a
 		{
 			history->appended = true;
-			ft_putendl_fd(history->line, fd);
+			ft_putstr_fd(history->line, fd);
 		}
 		history = history->next;
 	}
