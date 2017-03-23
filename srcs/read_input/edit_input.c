@@ -18,7 +18,7 @@ void move_start(t_editor *ed)
 	ft_putstr(ed->term->move_cursor_begining);
 }
 
-void restore_old_cursor_position(t_editor *ed, int old_position)
+void restore_old_cursor_position(t_editor *ed, size_t old_position)
 {
 	ed->cursor_position = ed->string_size;
 	while (ed->cursor_position > old_position)
