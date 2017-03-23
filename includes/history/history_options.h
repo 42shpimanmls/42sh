@@ -19,7 +19,6 @@ typedef	struct 	s_hist_opt
 }				t_hist_opt;
 
 int				get_hist_options(char *c, t_hist_opt *options);
-void			print_history_options(t_hist_opt *options);
 void			free_history_options(t_hist_opt *options);
 
 #endif

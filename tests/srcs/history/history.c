@@ -7,7 +7,7 @@
 #include "abstract_list.h"
 
 
-#define HISTORY_TEST_VERBOSE
+// #define HISTORY_TEST_VERBOSE
 
 void	initialize_history()
 {
@@ -113,7 +113,7 @@ void	history_to_file()
 	#endif
 	// builtin_history(2, av[1]);
 
-	builtin_history(3, av[2]);
+	builtin_history(3, av[1]);
 	builtin_history(2, av[2]);
 }
 

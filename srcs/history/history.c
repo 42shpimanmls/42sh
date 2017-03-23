@@ -4,39 +4,26 @@
 #include "abstract_list.h"
 #include "utils.h"
 
-static int		hist_parse_options(int argc, char **argv, t_hist_opt *options)
+static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 {
 	int			i;
 
 	i  = 1;
 	while (i < argc)
 	{
-		ft_putendl(argv[i]);
 		if (argv[i][0] == '-')
-		{
-			if (get_hist_options(argv[i], options) < 0)
-				return (-1);
-		}
+			get_hist_options(argv[i], options);
 		else
-		{
 			options->args = copy_array(argv, i, argc);
-			return (0);
-		}
 		i++;
 	}
-	if (options->d && !options->offset)
+	if (get_error() == NO_ERROR && options->d && !options->offset)
 	{
 		if (options->args && options->args[0])
-		{
-			// if (str_is_digits(options->args[0]))
-			// {
 				options->offset = ft_strdup(options->args[0]);
-			// }
-		}
 		else
 			error_builtin("history", NULL, NEED_NUM);
 	}
-	return (0);
 }
 
 static void		execute_options(t_history **history, t_hist_opt options)
@@ -57,9 +44,7 @@ static void		execute_options(t_history **history, t_hist_opt options)
 	else if (options.w || options.a)
 	{
 		if (options.w && options.args)
-		{
 			hist_to_file(*history, options.args[0], false);
-		}
 		else if (options.w)
 			hist_to_file(*history, HISTFILE, false);
 		else if (!options.args)

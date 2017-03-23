@@ -2,48 +2,10 @@
 #include "history_options.h"
 #include "errors.h"
 
-void			print_history_options(t_hist_opt *options)
-{
-	int i = 0;
-
-	ft_putstr("selected options are the following: ");
-	if (options->c)
-		ft_putstr("c, ");
-	if (options->d)
-		ft_putstr("d, ");
-	if (options->a)
-		ft_putstr("a, ");
-	if (options->n)
-		ft_putstr("n, ");
-	if (options->w)
-		ft_putstr("w, ");
-	if (options->r)
-		ft_putstr("r, ");
-	if (options->p)
-		ft_putstr("p, ");
-	if (options->s)
-		ft_putstr("s, ");
-	if (options->offset)
-		ft_printf("offset: %s, ", options->offset);
-		if (options->args && options->args[0])
-		{
-			while (options->args[i] && options->args[i][0])
-			{
-				ft_printf("arg%d: %s, ", i, options->args[i]);
-				i++;
-			}
-		}
-	ft_putchar('\n');
-
-}
-
 void			free_history_options(t_hist_opt *options)
 {
 	if (options->offset)
-	{
-		ft_putendl(options->offset);
 		ft_strdel(&(options->offset));
-	}
 	if (options->args && options->args[0])
 		ft_freetabchar(options->args);
 }
@@ -84,8 +46,8 @@ static int 	get_anrw_options(char c, t_hist_opt *options)
 	else if (c == 'n') // unnecessary?
 		options->n = 1;
 	if (no_other_anrw(options))
-		return (-1);
-	return (0);
+		return (0);
+	return (-1);
 }
 
 int		get_hist_options(char *arg, t_hist_opt *options)
@@ -99,7 +61,7 @@ int		get_hist_options(char *arg, t_hist_opt *options)
 		{
 			options->d = 1;
 			if (*(arg + 1))
-				options->offset = ft_strdup(++arg); // ++arg
+				options->offset = ft_strdup(++arg);
 		}
 		else if (ft_strchr("anrw", *arg))
 		{

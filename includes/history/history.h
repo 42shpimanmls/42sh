@@ -6,7 +6,6 @@
 
 # include "execution/builtins/builtin_def.h"
 
-// #define HISTORY_DEBUG
 
 /*
 **exported env variable in shells - need absolute path !
