@@ -4,7 +4,7 @@
 
 void			print_history_options(t_hist_opt *options)
 {
-	// int i = 0;
+	int i = 0;
 
 	ft_putstr("selected options are the following: ");
 	if (options->c)
@@ -25,16 +25,24 @@ void			print_history_options(t_hist_opt *options)
 		ft_putstr("s, ");
 	if (options->offset)
 		ft_printf("offset: %s, ", options->offset);
-	// if (options->args)
-	// {
-	// 	while (options->args[i])
-	// 	{
-	// 		ft_printf("arg%d: %s, ", i, options->args[i]);
-	// 		i++;
-	// 	}
-	// }
+		if (options->args)
+		{
+			while (options->args[i] && options->args[i][0])
+			{
+				ft_printf("arg%d: %s, ", i, options->args[i]);
+				i++;
+			}
+		}
 	ft_putchar('\n');
 
+}
+
+void			free_history_options(t_hist_opt *options)
+{
+	if (options->offset)
+		ft_strdel(&options->offset);
+	if (options->args)
+		ft_freetabchar(options->args);
 }
 
 static bool 	no_other_anrw(t_hist_opt *options)

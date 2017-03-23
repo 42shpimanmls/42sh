@@ -82,10 +82,10 @@ void	history_delete()
 
 void	history_to_file()
 {
-	char	*av[][3] = {
-						{"history", "-w", NULL}, // should overwrite hist_file
-						{"history", "-a", "test"}, // shoud do nothing
-						{"history", "-a", NULL} // should append not already appended lines
+	char	*av[][4 ] = {
+						{"history", "-w", NULL, NULL}, // should overwrite hist_file
+						{"history", "-a", "test", NULL}, // shoud do nothing
+						{"history", "-a", NULL, NULL} // should append not already appended lines
 					};
 	/*
 

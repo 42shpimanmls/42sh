@@ -44,6 +44,8 @@ int main(int argc, char **argv)
 		// { "History to file\n", history_to_file},
 		{ "History error handling", history_errors },
 		{ "Clear history", history_clear},
+		{ "Print history\n", history_print},
+
 		{ "History reinitialization", initialize_history },
 
 	  CU_TEST_INFO_NULL,

@@ -1,6 +1,7 @@
 #ifndef HISTORY_H
 # define HISTORY_H
 
+#define HISTORY_DEBUG
 
 #include "execution/builtins/builtin_def.h"
 #include "shell_env.h"
