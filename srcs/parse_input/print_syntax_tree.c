@@ -52,16 +52,14 @@ static void print_simple_command(t_simple_command const *cmd, size_t lvl)
 {
 	char **it;
 
-	print_n_char(' ', (lvl) * 2);
-	ft_putendl("command: ");
 	if (cmd->argv[0] != NULL)
 	{
-		print_n_char(' ', (lvl + 1) * 2);
-		ft_putstr("name: ");
+		print_n_char(' ', (lvl) * 2);
+		ft_putstr("command: ");
 		ft_putendl(*cmd->argv);
 		if (cmd->argv[1] != NULL)
 		{
-			print_n_char(' ', (lvl + 1) * 2);
+			print_n_char(' ', (lvl) * 2);
 			ft_putstr("argument(s): ");
 			it = cmd->argv + 1;
 			while ((*it) != NULL)
@@ -74,8 +72,8 @@ static void print_simple_command(t_simple_command const *cmd, size_t lvl)
 			ft_putchar('\n');
 		}
 	}
-	print_assignments(cmd->assignments, lvl + 1);
-	print_redirections(cmd->redirections, lvl + 1);
+	print_assignments(cmd->assignments, lvl);
+	print_redirections(cmd->redirections, lvl);
 }
 
 static void print_pipeline(t_simple_command const *pip, size_t lvl)
