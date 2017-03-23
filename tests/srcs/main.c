@@ -37,8 +37,12 @@ int main(int argc, char **argv)
 		{ "History initialization", initialize_history },
 		{ "Print history\n", history_print},
 		{ "Print last 3 history\n", history_print_offset},
+		{ "Add one element to history",	history_add_one},
+		{ "Print history\n", history_print},
 		{ "Clear history", history_clear},
 		{ "History reinitialization", initialize_history },
+		{ "Print history\n", history_print},
+
 		{ "History error handling", history_errors },
 
 	  CU_TEST_INFO_NULL,

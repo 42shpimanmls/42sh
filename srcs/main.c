@@ -8,15 +8,19 @@
 
 static void		main_loop(void)
 {
+	t_shell_env *shell_env;
+
+	shell_env = get_shell_env();
 	set_error(NO_ERROR);
 	read_input();
 	/*if (get_error() != NO_ERROR)
 		return ;*/
-	if (history_substitution(&get_shell_env()->input_string))
+	if (history_substitution(&shell_env->input_string))
 	{
-		ft_strdel(&get_shell_env()->input_string);
+		ft_strdel(&shell_env->input_string);
 		return ;
 	}
+	add_to_history_list(&shell_env->history, create_history_entry(shell_env->input_string));
 	break_input();
 	if (get_error() != NO_ERROR)
 		return ;

@@ -26,11 +26,15 @@ void	str_to_list(t_editor *ed, char *str)
 
 EV_CB_RET 	event_history_up(EV_CB_ARGS)
 {
+	char	*trimed;
+
 	if (ed->history)
 	{
 		ed->need_refresh = true;
 		list_free((t_abstract_list **)&ed->string);
-		str_to_list(ed, ed->history->line);
+		trimed = ft_strtrim(ed->history->line);
+		str_to_list(ed, trimed);
+		free(trimed);
 		if (ed->history->prev)
 			ed->history = ed->history->prev;
 	}
@@ -38,11 +42,15 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 
 EV_CB_RET 	event_history_down(EV_CB_ARGS)
 {
+	char	*trimed;
+
 	ed->need_refresh = true;
 	list_free((t_abstract_list **)&ed->string);
 	if (ed->history && ed->history->next)
 	{
 		ed->history = ed->history->next;
-		str_to_list(ed, ed->history->line);
+		trimed = ft_strtrim(ed->history->line);
+		str_to_list(ed, trimed);
+		free(trimed);
 	}
 }
