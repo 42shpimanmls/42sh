@@ -4,25 +4,6 @@
 #include "abstract_list.h"
 #include "utils.h"
 
-char			**copy_array(char **array, t_uint start, int end)
-{
-	char	**copy;
-	size_t	i;
-	size_t size;
-
-	i = 0;
-	size = end - start;
-	copy = (char **)memalloc_or_die(sizeof(char *) * (size + 1));
-	copy[size] = NULL;
-	while (i < size)
-	{
-		copy[i] = ft_strdup(array[start]);
-		i++;
-		start++;
-	}
-	return (copy);
-}
-
 static int		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 {
 	int			i;
@@ -30,6 +11,7 @@ static int		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 	i  = 1;
 	while (i < argc)
 	{
+		ft_putendl(argv[i]);
 		if (argv[i][0] == '-')
 		{
 			if (get_hist_options(argv[i], options) < 0)
@@ -75,7 +57,9 @@ static void		execute_options(t_history **history, t_hist_opt options)
 	else if (options.w || options.a)
 	{
 		if (options.w && options.args)
+		{
 			hist_to_file(*history, options.args[0], false);
+		}
 		else if (options.w)
 			hist_to_file(*history, HISTFILE, false);
 		else if (!options.args)

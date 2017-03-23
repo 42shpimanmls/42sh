@@ -6,6 +6,7 @@
 #include "ftsh.h"
 #include "abstract_list.h"
 
+
 #define HISTORY_TEST_VERBOSE
 
 void	initialize_history()
@@ -98,20 +99,21 @@ void	history_delete()
 
 void	history_to_file()
 {
-	char	*av[][4 ] = {
+	char	*av[][4] = {
 						{"history", "-w", "test", NULL}, // should overwrite or create test
 						{"history", "-a", "test", NULL}, // shoud do nothing
 						{"history", "-a", NULL, NULL} // should append not already appended lines
 					};
 
-	// builtin_history(3, av[0]);
+	builtin_history(3, av[0]);
+	CU_ASSERT_NOT_EQUAL(open("test", O_RDONLY), -1);
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("This history should have been appended to %s once only:\n", HISTFILE);
 		print_history(get_shell_env()->history, 0);
 	#endif
 	// builtin_history(2, av[1]);
 
-	builtin_history(2, av[2]);
+	builtin_history(3, av[2]);
 	builtin_history(2, av[2]);
 }
 

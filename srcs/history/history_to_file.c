@@ -9,7 +9,6 @@ void	hist_to_file(t_history *history, char *filename, bool append)
 		difference btwn -w and -a : -a appends if file exists, -w overwrites or creates file
 		if filename is specified, -w writes to file but -a does NOTHING
 	*/
-
 	if (append)
 		fd = open(filename, O_WRONLY | O_APPEND); // protect
 	else
