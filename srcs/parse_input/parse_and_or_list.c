@@ -44,6 +44,7 @@ t_and_or_list	*parse_and_or_list(t_token const *tokens)
 	size_t			u;
 	t_token			*trimed;
 
+	set_error(NO_ERROR);
 	if (tokens == NULL)
 		return (NULL);
 	splited = do_the_split(tokens, &splited_len);

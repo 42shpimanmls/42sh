@@ -2,6 +2,7 @@
 #include "abstract_list.h"
 #include "utils.h"
 #include <libft.h>
+#include "errors.h"
 
 static char			**parse_argv(t_token const *tokens)
 {
@@ -26,6 +27,7 @@ t_simple_command	*parse_simple_command(t_token const *tokens)
 {
 	t_simple_command *result;
 
+	set_error(NO_ERROR);
 	if (tokens == NULL)
 		return (NULL);
 	result = memalloc_or_die(sizeof(t_simple_command));

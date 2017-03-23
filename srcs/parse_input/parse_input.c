@@ -11,7 +11,8 @@ void			parse_input(void)
 	set_error(NO_ERROR);
 	sh_env = get_shell_env();
 	sh_env->syntax_tree = parse_command_list(sh_env->tokens);
-	if (get_error() != NO_ERROR && get_error() != sh_env->last_unmatched)
+	if (get_error() != NO_ERROR && get_error() != sh_env->last_unmatched
+		&& sh_env->command_string == NULL)
 	{
 		ft_strdel(&get_shell_env()->input_string);
 		print_name_and_error(get_error());
