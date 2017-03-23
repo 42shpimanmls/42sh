@@ -74,7 +74,7 @@ static void		execute_options(t_history **history, t_hist_opt options)
 	}
 	else if (options.w || options.a)
 	{
-		if (options.w && options.args && options.args[0])
+		if (options.w && options.args)
 			hist_to_file(*history, options.args[0], false);
 		else if (options.w)
 			hist_to_file(*history, HISTFILE, false);
@@ -106,9 +106,18 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 	}
 	#ifdef HISTORY_DEBUG
 	print_history_options(&options);
+	ft_putstr("ERROR STATE: ");
+	ft_putnbr(get_error());
+	ft_putchar('\n');
 	#endif
 	if (get_error() == NO_ERROR)
+	{
+		#ifdef HISTORY_DEBUG
+		ft_putendl("EXECUTING HISTORY BUILTIN");
+		#endif
+
 		execute_options(&get_shell_env()->history, options);
+	}
 	free_history_options(&options);
 	// return must_run or must_print_out or must not add to history (already added so in fact delete)
 }

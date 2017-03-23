@@ -36,7 +36,6 @@ void	load_history(t_shell_env *shell_env, char *filename)
 	char	*tmp;
 	int		fd;
 
-
 	fd = open(filename, O_RDWR | O_CREAT, 0666);
 	while ((line = ft_getline(fd)))
 	{

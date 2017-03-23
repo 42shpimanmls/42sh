@@ -25,7 +25,7 @@ void			print_history_options(t_hist_opt *options)
 		ft_putstr("s, ");
 	if (options->offset)
 		ft_printf("offset: %s, ", options->offset);
-		if (options->args)
+		if (options->args && options->args[0])
 		{
 			while (options->args[i] && options->args[i][0])
 			{
@@ -40,8 +40,11 @@ void			print_history_options(t_hist_opt *options)
 void			free_history_options(t_hist_opt *options)
 {
 	if (options->offset)
-		ft_strdel(&options->offset);
-	if (options->args)
+	{
+		ft_putendl(options->offset);
+		ft_strdel(&(options->offset));
+	}
+	if (options->args && options->args[0])
 		ft_freetabchar(options->args);
 }
 

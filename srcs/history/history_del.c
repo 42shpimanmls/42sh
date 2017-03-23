@@ -25,7 +25,7 @@ void		delete_history_entry(t_history **history, char *offset)
 			n_offset--;
 		}
 		if (!tmp || n_offset <= 0)
-			error_builtin("history", offset, OUT_OF_RANGE);
+			error_builtin("history", ft_strdup(offset), OUT_OF_RANGE);
 		else
 		{
 			if (tmp->next)
@@ -38,7 +38,7 @@ void		delete_history_entry(t_history **history, char *offset)
 		}
 	}
 	else
-		error_builtin("history", offset, OUT_OF_RANGE);
+		error_builtin("history", ft_strdup(offset), OUT_OF_RANGE);
 }
 
 void		clear_history_list(t_history **history)

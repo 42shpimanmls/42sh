@@ -11,11 +11,9 @@ void	hist_to_file(t_history *history, char *filename, bool append)
 	*/
 
 	if (append)
-		fd = open(filename, O_APPEND); // protect
+		fd = open(filename, O_WRONLY | O_APPEND); // protect
 	else
-	{
 		fd = open(filename, O_TRUNC |  O_WRONLY | O_CREAT, 0666); // does that overwrite the whole file?
-	}
 	while (history)
 	{
 		if (!history->appended)

@@ -6,16 +6,16 @@
 #include "ftsh.h"
 #include "abstract_list.h"
 
-#define HIST_TESTFILE "history_test_file"
+#define HISTORY_TEST_VERBOSE
 
 void	initialize_history()
 {
 	char *av[] = {"42sh"};
 	init(1, av);
-	load_history(get_shell_env(), HIST_TESTFILE);
+	load_history(get_shell_env(), HISTFILE);
 
-	#ifdef BANG_TEST_VERBOSE
-	ft_putendl("\nCurrent history list: ");
+	#ifdef HISTORY_TEST_VERBOSE
+	ft_printf("\nHistory list has been initialized from %s: \n", HISTFILE);
 	print_history(get_shell_env()->history, 0);
 	#endif
 }
@@ -34,6 +34,11 @@ void	history_add_one()
 	nb = list_count((t_abstract_list *)history);
 	add_to_history_list(&history, create_history_entry(str));
 	CU_ASSERT_EQUAL(nb + 1, list_count((t_abstract_list *)history));
+
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_putendl("State of history after adding entry \"added\":");
+		print_history(history, 0);
+	#endif
 }
 
 void	history_print()
@@ -75,31 +80,52 @@ void	history_delete()
 	builtin_history(2, av[0]);
 	CU_ASSERT_EQUAL(nb, list_count((t_abstract_list *)get_shell_env()->history));
 	nb--;
+
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_putendl("State of history after deleting entry 7:");
+		print_history(get_shell_env()->history, 0);
+	#endif
+
 	builtin_history(3, av[1]);
 	CU_ASSERT_EQUAL(nb, list_count((t_abstract_list *)get_shell_env()->history));
+
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_putendl("State of history after deleting entry 1:");
+		print_history(get_shell_env()->history, 0);
+	#endif
 
 }
 
 void	history_to_file()
 {
 	char	*av[][4 ] = {
-						{"history", "-w", NULL, NULL}, // should overwrite hist_file
+						{"history", "-w", "test", NULL}, // should overwrite or create test
 						{"history", "-a", "test", NULL}, // shoud do nothing
 						{"history", "-a", NULL, NULL} // should append not already appended lines
 					};
-	/*
 
-	*/
-	builtin_history(2, av[0]);
-	builtin_history(2, av[1]);
+	// builtin_history(3, av[0]);
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_printf("This history should have been appended to %s once only:\n", HISTFILE);
+		print_history(get_shell_env()->history, 0);
+	#endif
+	// builtin_history(2, av[1]);
+
+	builtin_history(2, av[2]);
+	builtin_history(2, av[2]);
 }
 
 void	history_clear()
 {
 	char *av[] = {"history", "-c"};
 
+
 	builtin_history(2, av);
 	CU_ASSERT_PTR_NULL(get_shell_env()->history);
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_putendl("State of history after clearing all (should be empty!):");
+		print_history(get_shell_env()->history, 0);
+	#endif
 }
 
 void	history_errors()
@@ -117,7 +143,5 @@ void	history_errors()
 	// builtin_history(3, av[2]);
 	builtin_history(3, av[3]);
 	builtin_history(3, av[4]);
-
-
 }
 

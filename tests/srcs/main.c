@@ -34,19 +34,13 @@ int main(int argc, char **argv)
 		CU_TEST_INFO_NULL
 	};
 	CU_TestInfo		history_tests[] = {
-		{ "History initialization", initialize_history },
-		{ "Print history\n", history_print},
 		{ "Print last 3 history\n", history_print_offset},
 		{ "Add one element to history",	history_add_one},
-		{ "Print history\n", history_print},
 		{ "Delete one specific entry", history_delete},
-		{ "Print history\n", history_print},
-		// { "History to file\n", history_to_file},
+		{ "History to file\n", history_to_file},
 		{ "History error handling", history_errors },
 		{ "Clear history", history_clear},
-		{ "Print history\n", history_print},
-
-		{ "History reinitialization", initialize_history },
+		// { "History reinitialization", initialize_history },
 
 	  CU_TEST_INFO_NULL,
 	};
@@ -61,8 +55,8 @@ int main(int argc, char **argv)
 	CU_SuiteInfo	suites[] = {
 		{ "Init", NULL, NULL, NULL, NULL, init_tests },
 		{ "Tokenizer", NULL, NULL, NULL, NULL, tokenizer_tests },
-		{ "History", NULL, NULL, NULL, NULL, history_tests },
 		{ "Bang", NULL, NULL, NULL, NULL, bang_tests },
+		{ "History", NULL, NULL, NULL, NULL, history_tests },
 		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
 		CU_SUITE_INFO_NULL
 	};
