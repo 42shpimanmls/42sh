@@ -59,36 +59,6 @@ static void		file_manipulation(t_hist_opt options, t_history *history)
 	}
 }
 
-char	*array_to_str(char **array)
-{
-	char	*str;
-	char	*tmp;
-	size_t	i;
-
-	i = 0;
-	str = NULL;
-	if (array)
-	{
-		while (array[i])
-		{
-			if (str)
-			{
-				tmp = ft_strdup(str);
-				ft_strdel(&str);
-				str_add_space(&tmp);
-			}
-			else
-				tmp = ft_strnew(1);
-			str = ft_strjoin(tmp, array[i]);
-			ft_strdel(&tmp);
-			i++;
-		}
-		return (str);
-	}
-	else
-		return (NULL);
-}
-
 static void		execute_options(t_history **history, t_hist_opt options)
 {
 	 /*
@@ -105,7 +75,6 @@ char	*args;
 	{
 		if (options.s)
 		{
-			// ft_puttab(options.args);
 			if ((args = array_to_str(options.args)))
 				add_to_history_list(&get_shell_env()->history, \
 					create_history_entry(args));
@@ -132,7 +101,7 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 	t_history	*history;
 	t_hist_opt	options;
 
-	set_error(NO_ERROR); // just for unit test purposes, expected to be set before in loop
+	set_error(NO_ERROR); // set before?
 	ft_bzero(&options, sizeof(options));
 	history = get_shell_env()->history;
 	i = 1;

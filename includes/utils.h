@@ -18,5 +18,6 @@ void						str_join_with_space(char **str, char *to_join);
 void						str_add_space(char **str);
 size_t						number_len(char *str);
 char						**copy_array(char **array, size_t start, int end);
+char						*array_to_str(char **array);
 
 #endif
