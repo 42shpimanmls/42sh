@@ -8,7 +8,7 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 	t_variable	**env;
 	size_t		i;
 
-	env = &get_shell_env()->variables;	
+	env = &get_shell_env()->variables;
 	if (argc > 1)
 	{
 		i = 0;
@@ -21,4 +21,5 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 	{
 		ft_printf("Usage: unsetenv <key> ...\n");
 	}
+	return (STATUS_SUCCESS);
 }

@@ -23,7 +23,7 @@ BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS)
 			{
 				builtin_unsetenv(2, (char *[]){argv[0], argv[1], NULL});
 			}
-			list_push_back((t_abstract_list**)env, 
+			list_push_back((t_abstract_list**)env,
 				(t_abstract_list*)create_variable(argv[1], argv[2], true));
 		}
 	}
@@ -31,4 +31,5 @@ BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS)
 	{
 		ft_printf("Usage: setenv <key> <value>\n");
 	}
+	return (STATUS_SUCCESS);
 }

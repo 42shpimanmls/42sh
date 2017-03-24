@@ -34,6 +34,8 @@ void					print_error_msg(t_error_id id)
 
 void					print_name_and_error(t_error_id id)
 {
+	if (id == NO_ERROR)
+		return ;
 	ft_putstr(SHNAME);
 	ft_putstr(": ");
 	print_error_msg(id);

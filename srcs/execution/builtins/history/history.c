@@ -86,4 +86,5 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 	//check_options(options); // check if more than one of awnr
 	execute_options(&get_shell_env()->history, options);
 	// free_options(&options);
+	return (STATUS_SUCCESS);
 }
