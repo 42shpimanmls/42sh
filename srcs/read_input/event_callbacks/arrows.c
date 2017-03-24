@@ -64,16 +64,6 @@ t_vec2i		vec2i_sub(t_vec2i a, t_vec2i b)
 
 void		move_cursor(t_vec2i	vec, t_term *term)
 {
-	if (vec.y > 0)
-	{
-		while (vec.y-- > 0)
-			ft_putstr(term->move_up);
-	}
-	else if (vec.y < 0)
-	{
-		while (vec.y++ < 0)
-			ft_putstr(term->move_down);
-	}
 	if (vec.x > 0)
 	{
 		while (vec.x-- > 0)
@@ -83,6 +73,16 @@ void		move_cursor(t_vec2i	vec, t_term *term)
 	{
 		while (vec.x++ < 0)
 			ft_putstr(term->move_right);
+	}
+	if (vec.y > 0)
+	{
+		while (vec.y-- > 0)
+			ft_putstr(term->move_up);
+	}
+	else if (vec.y < 0)
+	{
+		while (vec.y++ < 0)
+			ft_putstr(term->move_down);
 	}
 }
 
