@@ -1,0 +1,912 @@
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x28, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x29, y0
+cursor_pos
+vec2i: x29, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x30, y0
+cursor_pos
+vec2i: x30, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x31, y0
+cursor_pos
+vec2i: x31, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x32, y0
+cursor_pos
+vec2i: x32, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x33, y0
+cursor_pos
+vec2i: x33, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x34, y0
+cursor_pos
+vec2i: x34, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x35, y0
+cursor_pos
+vec2i: x35, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x36, y0
+cursor_pos
+vec2i: x36, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x37, y0
+cursor_pos
+vec2i: x37, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x38, y0
+cursor_pos
+vec2i: x38, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x39, y0
+cursor_pos
+vec2i: x39, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x40, y0
+cursor_pos
+vec2i: x40, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x41, y0
+cursor_pos
+vec2i: x41, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x42, y0
+cursor_pos
+vec2i: x42, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x43, y0
+cursor_pos
+vec2i: x43, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x44, y0
+cursor_pos
+vec2i: x44, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x45, y0
+cursor_pos
+vec2i: x45, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x46, y0
+cursor_pos
+vec2i: x46, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+before cursor_left
+vec2i: x47, y0
+after cursor_left
+vec2i: x46, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x46, y0
+cursor_pos
+vec2i: x46, y0
+before cursor_left
+vec2i: x46, y0
+after cursor_left
+vec2i: x45, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x45, y0
+cursor_pos
+vec2i: x45, y0
+before cursor_left
+vec2i: x45, y0
+after cursor_left
+vec2i: x44, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x44, y0
+cursor_pos
+vec2i: x44, y0
+before cursor_left
+vec2i: x44, y0
+after cursor_left
+vec2i: x43, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x43, y0
+cursor_pos
+vec2i: x43, y0
+before cursor_left
+vec2i: x43, y0
+after cursor_left
+vec2i: x42, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x42, y0
+cursor_pos
+vec2i: x42, y0
+before cursor_left
+vec2i: x42, y0
+after cursor_left
+vec2i: x41, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x41, y0
+cursor_pos
+vec2i: x41, y0
+before cursor_left
+vec2i: x41, y0
+after cursor_left
+vec2i: x40, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x40, y0
+cursor_pos
+vec2i: x40, y0
+before cursor_left
+vec2i: x40, y0
+after cursor_left
+vec2i: x39, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x39, y0
+cursor_pos
+vec2i: x39, y0
+before cursor_left
+vec2i: x39, y0
+after cursor_left
+vec2i: x38, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x38, y0
+cursor_pos
+vec2i: x38, y0
+before cursor_left
+vec2i: x38, y0
+after cursor_left
+vec2i: x37, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x37, y0
+cursor_pos
+vec2i: x37, y0
+before cursor_left
+vec2i: x37, y0
+after cursor_left
+vec2i: x36, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x36, y0
+cursor_pos
+vec2i: x36, y0
+before cursor_left
+vec2i: x36, y0
+after cursor_left
+vec2i: x35, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x35, y0
+cursor_pos
+vec2i: x35, y0
+before cursor_left
+vec2i: x35, y0
+after cursor_left
+vec2i: x34, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x34, y0
+cursor_pos
+vec2i: x34, y0
+before cursor_left
+vec2i: x34, y0
+after cursor_left
+vec2i: x33, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x33, y0
+cursor_pos
+vec2i: x33, y0
+before cursor_left
+vec2i: x33, y0
+after cursor_left
+vec2i: x32, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x32, y0
+cursor_pos
+vec2i: x32, y0
+before cursor_left
+vec2i: x32, y0
+after cursor_left
+vec2i: x31, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x31, y0
+cursor_pos
+vec2i: x31, y0
+before cursor_left
+vec2i: x31, y0
+after cursor_left
+vec2i: x30, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x30, y0
+cursor_pos
+vec2i: x30, y0
+before cursor_left
+vec2i: x30, y0
+after cursor_left
+vec2i: x29, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x29, y0
+cursor_pos
+vec2i: x29, y0
+before cursor_left
+vec2i: x29, y0
+after cursor_left
+vec2i: x28, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+before cursor_right
+vec2i: x28, y0
+after cursor_right
+vec2i: x29, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x29, y0
+cursor_pos
+vec2i: x29, y0
+before cursor_right
+vec2i: x29, y0
+after cursor_right
+vec2i: x30, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x30, y0
+cursor_pos
+vec2i: x30, y0
+before cursor_right
+vec2i: x30, y0
+after cursor_right
+vec2i: x31, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x31, y0
+cursor_pos
+vec2i: x31, y0
+before cursor_right
+vec2i: x31, y0
+after cursor_right
+vec2i: x32, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x32, y0
+cursor_pos
+vec2i: x32, y0
+before cursor_right
+vec2i: x32, y0
+after cursor_right
+vec2i: x33, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x33, y0
+cursor_pos
+vec2i: x33, y0
+before cursor_right
+vec2i: x33, y0
+after cursor_right
+vec2i: x34, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x34, y0
+cursor_pos
+vec2i: x34, y0
+before cursor_right
+vec2i: x34, y0
+after cursor_right
+vec2i: x35, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x35, y0
+cursor_pos
+vec2i: x35, y0
+before cursor_right
+vec2i: x35, y0
+after cursor_right
+vec2i: x36, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x36, y0
+cursor_pos
+vec2i: x36, y0
+before cursor_right
+vec2i: x36, y0
+after cursor_right
+vec2i: x37, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x37, y0
+cursor_pos
+vec2i: x37, y0
+before cursor_right
+vec2i: x37, y0
+after cursor_right
+vec2i: x38, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x38, y0
+cursor_pos
+vec2i: x38, y0
+before cursor_right
+vec2i: x38, y0
+after cursor_right
+vec2i: x39, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x39, y0
+cursor_pos
+vec2i: x39, y0
+before cursor_right
+vec2i: x39, y0
+after cursor_right
+vec2i: x40, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x40, y0
+cursor_pos
+vec2i: x40, y0
+before cursor_right
+vec2i: x40, y0
+after cursor_right
+vec2i: x41, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x41, y0
+cursor_pos
+vec2i: x41, y0
+before cursor_right
+vec2i: x41, y0
+after cursor_right
+vec2i: x42, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x42, y0
+cursor_pos
+vec2i: x42, y0
+before cursor_right
+vec2i: x42, y0
+after cursor_right
+vec2i: x43, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x43, y0
+cursor_pos
+vec2i: x43, y0
+before cursor_right
+vec2i: x43, y0
+after cursor_right
+vec2i: x44, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x44, y0
+cursor_pos
+vec2i: x44, y0
+before cursor_right
+vec2i: x44, y0
+after cursor_right
+vec2i: x45, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x45, y0
+cursor_pos
+vec2i: x45, y0
+before cursor_right
+vec2i: x45, y0
+after cursor_right
+vec2i: x46, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x46, y0
+cursor_pos
+vec2i: x46, y0
+before cursor_right
+vec2i: x46, y0
+after cursor_right
+vec2i: x47, y0
+moving
+vec2i: x-1, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x48, y0
+cursor_pos
+vec2i: x48, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x7, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x8, y0
+cursor_pos
+vec2i: x8, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x7, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x8, y0
+cursor_pos
+vec2i: x8, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x7, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x8, y0
+cursor_pos
+vec2i: x8, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x7, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x8, y0
+cursor_pos
+vec2i: x8, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x28, y0
+moving
+vec2i: x0, y0
+cursor_pos
+vec2i: x1, y4
+cursor_pos
+vec2i: x1, y4
+before cursor_left
+vec2i: x1, y4
+after cursor_left
+vec2i: x0, y4
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x0, y4
+cursor_pos
+vec2i: x0, y4
+before cursor_left
+vec2i: x0, y4
+after cursor_left
+vec2i: x1, y3
+moving
+vec2i: x-1, y1
+cursor_pos
+vec2i: x1, y3
+cursor_pos
+vec2i: x1, y3
+before cursor_left
+vec2i: x1, y3
+after cursor_left
+vec2i: x0, y3
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x0, y3
+cursor_pos
+vec2i: x0, y3
+before cursor_left
+vec2i: x0, y3
+after cursor_left
+vec2i: x1, y2
+moving
+vec2i: x-1, y1
+cursor_pos
+vec2i: x1, y2
+cursor_pos
+vec2i: x1, y2
+before cursor_left
+vec2i: x1, y2
+after cursor_left
+vec2i: x0, y2
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x0, y2
+cursor_pos
+vec2i: x0, y2
+before cursor_left
+vec2i: x0, y2
+after cursor_left
+vec2i: x1, y1
+moving
+vec2i: x-1, y1
+cursor_pos
+vec2i: x1, y1
+cursor_pos
+vec2i: x1, y1
+before cursor_left
+vec2i: x1, y1
+after cursor_left
+vec2i: x0, y1
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x0, y1
+cursor_pos
+vec2i: x0, y1
+before cursor_left
+vec2i: x0, y1
+after cursor_left
+vec2i: x48, y0
+moving
+vec2i: x-48, y1
+cursor_pos
+vec2i: x48, y0
+cursor_pos
+vec2i: x48, y0
+before cursor_left
+vec2i: x48, y0
+after cursor_left
+vec2i: x47, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x47, y0
+cursor_pos
+vec2i: x47, y0
+before cursor_left
+vec2i: x47, y0
+after cursor_left
+vec2i: x46, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x46, y0
+cursor_pos
+vec2i: x46, y0
+before cursor_left
+vec2i: x46, y0
+after cursor_left
+vec2i: x45, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x45, y0
+cursor_pos
+vec2i: x45, y0
+before cursor_left
+vec2i: x45, y0
+after cursor_left
+vec2i: x44, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x44, y0
+cursor_pos
+vec2i: x44, y0
+before cursor_left
+vec2i: x44, y0
+after cursor_left
+vec2i: x43, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x43, y0
+cursor_pos
+vec2i: x43, y0
+before cursor_left
+vec2i: x43, y0
+after cursor_left
+vec2i: x42, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x42, y0
+cursor_pos
+vec2i: x42, y0
+before cursor_left
+vec2i: x42, y0
+after cursor_left
+vec2i: x41, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x41, y0
+cursor_pos
+vec2i: x41, y0
+before cursor_left
+vec2i: x41, y0
+after cursor_left
+vec2i: x40, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x40, y0
+cursor_pos
+vec2i: x40, y0
+before cursor_left
+vec2i: x40, y0
+after cursor_left
+vec2i: x39, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x39, y0
+cursor_pos
+vec2i: x39, y0
+before cursor_left
+vec2i: x39, y0
+after cursor_left
+vec2i: x38, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x38, y0
+cursor_pos
+vec2i: x38, y0
+before cursor_left
+vec2i: x38, y0
+after cursor_left
+vec2i: x37, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x37, y0
+cursor_pos
+vec2i: x37, y0
+before cursor_left
+vec2i: x37, y0
+after cursor_left
+vec2i: x36, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x36, y0
+cursor_pos
+vec2i: x36, y0
+before cursor_left
+vec2i: x36, y0
+after cursor_left
+vec2i: x35, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x35, y0
+cursor_pos
+vec2i: x35, y0
+before cursor_left
+vec2i: x35, y0
+after cursor_left
+vec2i: x34, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x34, y0
+cursor_pos
+vec2i: x34, y0
+before cursor_left
+vec2i: x34, y0
+after cursor_left
+vec2i: x33, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x33, y0
+cursor_pos
+vec2i: x33, y0
+before cursor_left
+vec2i: x33, y0
+after cursor_left
+vec2i: x32, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x32, y0
+cursor_pos
+vec2i: x32, y0
+before cursor_left
+vec2i: x32, y0
+after cursor_left
+vec2i: x31, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x31, y0
+cursor_pos
+vec2i: x31, y0
+before cursor_left
+vec2i: x31, y0
+after cursor_left
+vec2i: x30, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x30, y0
+cursor_pos
+vec2i: x30, y0
+before cursor_left
+vec2i: x30, y0
+after cursor_left
+vec2i: x29, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x29, y0
+cursor_pos
+vec2i: x29, y0
+before cursor_left
+vec2i: x29, y0
+after cursor_left
+vec2i: x28, y0
+moving
+vec2i: x1, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0
+cursor_pos
+vec2i: x28, y0

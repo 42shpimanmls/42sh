@@ -51,6 +51,7 @@ void	add_to_string(t_editor *ed, char c)
 		list_push_at_pos(ed->cursor_position, (t_abstract_list **)&ed->string, (t_abstract_list *)new);
 	}
 	ed->cursor_position++;
+	ed->string_size++;
 }
 
 char *get_string_from_list(t_string *s)
