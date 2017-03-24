@@ -11,5 +11,6 @@ void	history_to_file();
 void	history_from_file();
 void	history_errors();
 void 	history_s_option();
+void 	history_p_option();
 
 #endif

@@ -163,20 +163,71 @@ void	history_clear()
 
 void 	history_s_option()
 {
+	t_history *history;
+	t_history *new;
 	char	*av[][6] = {
-						{"history", "-s", "one", "two", "three", NULL}
+						{"history", "-s", "one", "two", "three", NULL},
+						{"history", "-s", "-a", NULL}
 					};
 	#ifdef HISTORY_TEST_VERBOSE
-		ft_printf("State of history before -s\n: ");
+		ft_printf("State of history before -s: \n");
 		print_history(get_shell_env()->history, 0);
 	#endif
 
 	builtin_history(5, av[0]);
+	history = get_shell_env()->history;
+
+	while (history->next)
+		history = history->next;
+	CU_ASSERT_STRING_EQUAL(history->line, "one two three");
 
 	#ifdef HISTORY_TEST_VERBOSE
-		ft_printf("State of history after -s\n: ");
+		ft_printf("State of history after -s: \n");
 		print_history(get_shell_env()->history, 0);
 	#endif
+
+	builtin_history(3, av[1]);
+	new = get_shell_env()->history;
+	list_goto_last((t_abstract_list **)&new);
+	CU_ASSERT_PTR_EQUAL(history, new);
+
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_printf("State of history after -s without args: \n");
+		print_history(get_shell_env()->history, 0);
+	#endif
+}
+
+void 	history_p_option()
+{
+	t_history *history;
+	t_history *new;
+	char	*av[][6] = {
+						{"history", "-p", "!!", "!2", NULL},
+						{"history", "-p", NULL}
+					};
+
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_printf("State of history before -p: \n");
+		print_history(get_shell_env()->history, 0);
+	#endif
+
+	history = get_shell_env()->history;
+	while (history->next)
+		history = history->next;
+	builtin_history(4, av[0]);
+	new = get_shell_env()->history;
+	list_goto_last((t_abstract_list **)&new);
+	CU_ASSERT_PTR_EQUAL(history, new);
+
+	#ifdef HISTORY_TEST_VERBOSE
+		ft_printf("State of history after -p (should be the same): \n");
+		print_history(get_shell_env()->history, 0);
+	#endif
+
+	/*
+		builtin_history(2, av[1]);
+	 	CU_ASSERT_STRING_EQUAL(history->next->line, "history -p");
+	 */
 }
 
 void	history_errors()
@@ -195,4 +246,6 @@ void	history_errors()
 	builtin_history(3, av[3]);
 	builtin_history(3, av[4]);
 }
+
+
 

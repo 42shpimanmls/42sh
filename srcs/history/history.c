@@ -1,4 +1,5 @@
 #include "history.h"
+#include "history_substitutions.h"
 #include "history_options.h"
 #include "errors.h"
 #include "abstract_list.h"
@@ -18,7 +19,7 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 		else
 		{
 			options->args = copy_array(argv, i, argc);
-			return;
+			break;
 		}
 		i++;
 	}
@@ -29,6 +30,61 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 		else
 			error_builtin("history", NULL, NEED_NUM);
 	}
+}
+
+static bool		args_manipulation(t_history **history, t_hist_opt options)
+{
+	char	*args;
+	int		i;
+
+ /*
+		 -p  Perform history substitution on the args and display the result
+        on the standard output, without storing the results in the history list.
+
+    	-s   The args are added to the end of the history list as a single entry.
+
+
+    	DON'T SAVE IN HISTORY LIST
+    */
+    i = 0;
+    if (options.s)
+    {
+		// todo: add a \n at end of str
+    	if ((args = array_to_str(options.args)))
+    	{
+    		add_to_history_list(history, \
+    			create_history_entry(args));
+			ft_strdel(&args);
+    	}
+    	else
+		// if no args the line IS SAVED AS IS e.g. 'history -s', 'history -s -a'
+    		return (true);
+    }
+    else if (options.args)
+    {
+    	while (options.args[i])
+    	{
+			/*
+				quotes should already have been removed
+				+ normal substitution made
+				(test with quotes etc when execution loop)
+			*/
+			history_substitution(&options.args[i]);
+			i++;
+		}
+		/*
+			sh-3.2$ history -p "!!"
+			history -p "last_command"
+			last_command
+		*/
+		//ft_putstr(\args_before_args\);
+		if ((args = array_to_str(options.args)))
+		{
+			ft_putendl(args);
+			ft_strdel(&args);
+		}
+	}
+	return (false);
 }
 
 static void		file_manipulation(t_hist_opt options, t_history *history)
@@ -59,27 +115,10 @@ static void		file_manipulation(t_hist_opt options, t_history *history)
 	}
 }
 
-static void		execute_options(t_history **history, t_hist_opt options)
+static bool		execute_options(t_history **history, t_hist_opt options)
 {
-	 /*
-		 -p  Perform history substitution on the args and display the result
-        on the standard output, without storing the results in the history list.
-
-    	-s   The args are added to the end of the history list as a single entry.
-
-
-    	DON'T SAVE IN HISTORY LIST
-    */
-char	*args;
 	if (options.s || options.p)
-	{
-		if (options.s)
-		{
-			if ((args = array_to_str(options.args)))
-				add_to_history_list(&get_shell_env()->history, \
-					create_history_entry(args));
-		}
-	}
+		return (args_manipulation(history, options));
 	else if (options.d || options.c)
 	{
 		if (options.c)
@@ -93,6 +132,7 @@ char	*args;
 	}
 	else
 		file_manipulation(options, *history);
+	return (true);
 }
 
 BUILTIN_RET	builtin_history(BUILTIN_ARGS)
@@ -100,6 +140,7 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 	int			i;
 	t_history	*history;
 	t_hist_opt	options;
+	bool		should_save;
 
 	set_error(NO_ERROR); // set before?
 	ft_bzero(&options, sizeof(options));
@@ -123,9 +164,8 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 			print_history_options(&options);
 		#endif
 
-		execute_options(&get_shell_env()->history, options);
+		if (!(should_save = execute_options(&get_shell_env()->history, options)))
+			; // delete from list if already added, or return dont_save
 	}
 	free_history_options(&options);
-
-	// return must_save or not (actually delete  - if has already been added?)
 }
