@@ -24,7 +24,7 @@ static char const		*find_assignment_equal(char const *str)
 	{
 		if (!is_xbd_name_char(c, u))
 		{
-			if (c == '=')
+			if (c == '=' && u != 0)
 				return (str + u);
 			else
 				return (NULL);

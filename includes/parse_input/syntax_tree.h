@@ -22,7 +22,7 @@ typedef enum	e_redir_type
 typedef struct		s_redirection
 {
 	struct s_redirection	*next;
-	ssize_t					n;
+	int						n;
 	t_redir_type			type;
 	char					*word;
 }					t_redirection;
