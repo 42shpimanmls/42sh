@@ -44,7 +44,7 @@ static bool		args_manipulation(t_history **history, t_hist_opt options)
     	-s   The args are added to the end of the history list as a single entry.
 
 
-    	DON'T SAVE IN HISTORY LIST
+    	DON'T SAVE IN HISTORY LIST!!!! => bool returned
     */
     i = 0;
     if (options.s)
@@ -77,12 +77,13 @@ static bool		args_manipulation(t_history **history, t_hist_opt options)
 			history -p "last_command"
 			last_command
 		*/
-		//ft_putstr(\args_before_args\);
+		//ft_putstr(\command_name_and_options\);
 		if ((args = array_to_str(options.args)))
 		{
 			ft_putendl(args);
 			ft_strdel(&args);
 		}
+		// print line with substitutions without quotes
 	}
 	return (false);
 }
