@@ -22,10 +22,12 @@ typedef enum	e_redir_type
 typedef struct		s_redirection
 {
 	struct s_redirection	*next;
-	t_uint					n;
+	int						n;
 	t_redir_type			type;
-	char const				*word;
+	char					*word;
 }					t_redirection;
+
+void				delete_redirections(t_redirection **redirs);
 
 typedef struct		s_simple_command
 {
@@ -35,6 +37,8 @@ typedef struct		s_simple_command
 	char					**argv;
 }					t_simple_command;
 
+void				delete_pipeline(t_simple_command **cmds);
+
 typedef struct		s_and_or_list
 {
 	struct s_and_or_list	*next;
@@ -42,10 +46,14 @@ typedef struct		s_and_or_list
 	t_ao_type				separation_type;
 }					t_and_or_list;
 
+void				delete_and_or_list(t_and_or_list **ao_list);
+
 typedef struct		s_command_list
 {
 	struct s_command_list	*next;
 	t_and_or_list			*and_or_list;
 }					t_command_list;
+
+void				delete_command_list(t_command_list **cmd_list);
 
 #endif

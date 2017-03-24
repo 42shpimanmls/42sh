@@ -2,6 +2,7 @@
 #include "libft.h"
 #include "uint.h"
 #include <stdlib.h>
+#include "shell_env.h"
 
 t_builtin_usage const	*get_builtin_usages()
 {
@@ -24,12 +25,18 @@ void					print_error_msg(t_error_id id)
 	{
 		if (id == errors[u].id)
 		{
-			ft_putstr("42sh: ");
 			ft_putendl(errors[u].msg);
 			return;
 		}
 		u++;
 	}
+}
+
+void					print_name_and_error(t_error_id id)
+{
+	ft_putstr(SHNAME);
+	ft_putstr(": ");
+	print_error_msg(id);
 }
 
 void					print_usage_msg(t_builtin_id id)

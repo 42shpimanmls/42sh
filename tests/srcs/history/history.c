@@ -35,7 +35,6 @@ void	history_add_one()
 	nb = list_count((t_abstract_list *)history);
 	add_to_history_list(&history, create_history_entry(str));
 	CU_ASSERT_EQUAL(nb + 1, list_count((t_abstract_list *)history));
-
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_putendl("State of history after adding entry \"added\":");
 		print_history(history, 0);
@@ -246,6 +245,3 @@ void	history_errors()
 	builtin_history(3, av[3]);
 	builtin_history(3, av[4]);
 }
-
-
-

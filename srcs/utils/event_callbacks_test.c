@@ -25,7 +25,7 @@ static void	termios_init(void)
 void		event_callback_test(void)
 {
 	char						buf[EVENT_STR_MAX_LEN + 1];
-	ssize_t						ret;
+	int							ret;
 	t_event_callback_def const	*def;
 
 	setbuf(stdout, NULL);

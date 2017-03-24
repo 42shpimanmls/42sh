@@ -53,16 +53,17 @@ void refresh_line(t_editor *ed)
 	}
 }
 
-void free_editor(t_editor *ed) 
+void free_editor(t_editor *ed)
 {
 	free_string(ed->string);
 	free(ed->prompt);
+	free(ed->term);
 }
 
 char *edit_input()
 {
 	char						buf[EVENT_STR_MAX_LEN + 1];
-	ssize_t						ret;
+	int							ret;
 	t_event_callback_def const	*def;
 	t_editor					*ed;
 	char						*line;
@@ -94,6 +95,5 @@ char *edit_input()
 	ft_close_termcaps();
 	line = get_string_from_list(ed->string);
 	free_editor(ed);
-	// free_string(ed->string);
 	return (line);
 }

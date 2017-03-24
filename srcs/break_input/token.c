@@ -15,25 +15,6 @@ t_token	*construct_token(char const *str, char delim)
 	return (token);
 }
 
-t_token	*tokens_dup_until(t_token const *tokens, t_token const *stop)
-{
-	t_token	*result;
-	t_token	**it;
-
-	result = NULL;
-	it = &result;
-	while (tokens != NULL && tokens != stop)
-	{
-		*it = memalloc_or_die(sizeof(t_token));
-		(*it)->str = ft_strdup(tokens->str);
-		(*it)->type = tokens->type;
-		it = &(*it)->next;
-		tokens = tokens->next;
-	}
-	*it = NULL;
-	return (result);
-}
-
 size_t		count_token_type(t_token const *tokens, t_token_id type)
 {
 	if (tokens == NULL)

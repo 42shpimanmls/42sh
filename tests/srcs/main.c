@@ -38,8 +38,10 @@ int main(int argc, char **argv)
 		{ "Add one element to history",	history_add_one},
 		{ "Delete one specific entry", history_delete},
 		{ "History to file\n", history_to_file},
-		{ "History error handling", history_errors },
+		{ "Print history\n", history_print},
 		{ "Clear history", history_clear},
+		{ "History reinitialization", initialize_history },
+		{ "History error handling", history_errors },
 		{ "Read history from file", history_from_file},
 		{ "History s option appends args to history list as one entry + doesn't save", history_s_option},
 		{ "History p option displays args with substitution + doesn't save", history_p_option},
@@ -56,8 +58,8 @@ int main(int argc, char **argv)
 	CU_SuiteInfo	suites[] = {
 		{ "Init", NULL, NULL, NULL, NULL, init_tests },
 		{ "Tokenizer", NULL, NULL, NULL, NULL, tokenizer_tests },
-		{ "Bang", NULL, NULL, NULL, NULL, bang_tests },
 		{ "History", NULL, NULL, NULL, NULL, history_tests },
+		{ "Bang", NULL, NULL, NULL, NULL, bang_tests },
 		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
 		CU_SUITE_INFO_NULL
 	};

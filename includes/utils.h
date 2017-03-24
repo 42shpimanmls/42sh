@@ -19,5 +19,6 @@ void						str_add_space(char **str);
 size_t						number_len(char *str);
 char						**copy_array(char **array, size_t start, int end);
 char						*array_to_str(char **array);
+void						free_ptr_array(void *ptr_array);
 
 #endif
