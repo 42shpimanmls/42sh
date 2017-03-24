@@ -26,7 +26,7 @@ void restore_old_cursor_position(t_vec2i old_pos, t_vec2i new_pos, t_term *term)
 #include <stdio.h>
 
 void print_command_string(char const *prompt, t_string *cmd_str
-							, size_t term_width)
+	, size_t term_width)
 {
 	char	**lines;
 	char	*str;
@@ -49,25 +49,34 @@ void print_command_string(char const *prompt, t_string *cmd_str
 	}
 }
 
+void clear_line(EV_CB_ARGS)
+{
+	move_start(ed);
+	ft_putstr(ed->term->clear_line);
+	ed->tmp = get_cursor_vector(ed);
+	// ed->old_position = ed->cursor_position;
+}
+
+void put_line(EV_CB_ARGS)
+{
+	char		*line;
+
+	print_command_string(ed->prompt, ed->string, ed->term->width);
+	line = get_string_from_list(ed->string);
+	ed->old_position = ed->cursor_position;
+	ed->cursor_position = ft_strlen(line);
+	free(line);
+}
+
 void refresh_line(t_editor *ed)
 {
-	t_vec2i	tmp;
-	int		save;
-	char	*line;
-
 	if (ed->need_refresh == true)
 	{
 		ed->need_refresh = false;
-		move_start(ed);
-		ft_putstr(ed->term->clear_line);
-		tmp = get_cursor_vector(ed);
-		print_command_string(ed->prompt, ed->string, ed->term->width);
-		line = get_string_from_list(ed->string);
-		save = ed->cursor_position;
-		ed->cursor_position = ft_strlen(line);
-		free(line);
-		restore_old_cursor_position(get_cursor_vector(ed), tmp, ed->term);
-		ed->cursor_position = save;
+		clear_line(ed);
+		put_line(ed);
+		restore_old_cursor_position(get_cursor_vector(ed), ed->tmp, ed->term);
+		ed->cursor_position = ed->old_position;
 	}
 }
 

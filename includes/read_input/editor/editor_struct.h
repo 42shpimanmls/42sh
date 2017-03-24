@@ -4,6 +4,12 @@
 # include "shell_env.h"
 # include <stdbool.h>
 
+typedef struct			s_vec2i
+{
+	int					x;
+	int					y;
+}						t_vec2i;
+
 typedef struct			s_string
 {
 	struct s_string		*next;
@@ -37,6 +43,8 @@ typedef struct			s_editor
 	t_term				*term;
 	t_history			*history;
 	int					cursor_position;
+	int					old_position;
+	t_vec2i				tmp;
 	int					string_size;
 	int					prompt_size;
 	char				*prompt;

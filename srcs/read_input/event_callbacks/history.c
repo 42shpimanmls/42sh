@@ -32,13 +32,15 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 
 	if (ed->history)
 	{
-		ed->need_refresh = true;
+		clear_line(ed);
 		list_free((t_abstract_list **)&ed->string);
 		trimed = ft_strtrim(ed->history->line);
 		str_to_list(ed, trimed);
 		free(trimed);
 		if (ed->history->prev)
 			ed->history = ed->history->prev;
+		put_line(ed);
+
 	}
 }
 
@@ -46,7 +48,7 @@ EV_CB_RET 	event_history_down(EV_CB_ARGS)
 {
 	char	*trimed;
 
-	ed->need_refresh = true;
+	clear_line(ed);
 	list_free((t_abstract_list **)&ed->string);
 	if (ed->history && ed->history->next)
 	{
@@ -55,4 +57,5 @@ EV_CB_RET 	event_history_down(EV_CB_ARGS)
 		str_to_list(ed, trimed);
 		free(trimed);
 	}
+	put_line(ed);
 }
