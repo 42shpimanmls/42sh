@@ -53,7 +53,7 @@ void refresh_line(t_editor *ed)
 	}
 }
 
-void free_editor(t_editor *ed) 
+void free_editor(t_editor *ed)
 {
 	free_string(ed->string);
 	free(ed->prompt);
@@ -62,7 +62,7 @@ void free_editor(t_editor *ed)
 char *edit_input()
 {
 	char						buf[EVENT_STR_MAX_LEN + 1];
-	ssize_t						ret;
+	int							ret;
 	t_event_callback_def const	*def;
 	t_editor					*ed;
 	char						*line;
