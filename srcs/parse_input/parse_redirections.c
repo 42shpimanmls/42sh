@@ -32,7 +32,7 @@ static t_redirection	*create_redirection(t_token const *tokens, t_token const **
 					&& tokens->type->id != (t_token_id)REDIR_INPUT
 					&& tokens->type->id != (t_token_id)APPEND_OUTPUT))
 	{
-		free(result)
+		free(result);
 		return (NULL);
 	}
 	if (result->n == -1)
