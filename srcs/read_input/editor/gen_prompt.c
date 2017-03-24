@@ -61,12 +61,15 @@ static char			*mangle_home(char *str)
 {
 	char	*result;
 	char	*home_str;
+	size_t	home_str_len;
 
 	home_str = get_variable("HOME");
 	result = ft_strstr(str, home_str);
+	home_str_len = ft_strlen(home_str);
+	free(home_str);
 	if (result == NULL)
 		return (str);
-	result = ft_strjoin("~", result + ft_strlen(home_str));
+	result = ft_strjoin("~", result + home_str_len);
 	free(str);
 		return(result);
 }
@@ -84,9 +87,9 @@ char				*gen_prompt(void)
 		result = ft_strjoin(" ", tmp);
 		free(tmp);
 		tmp = ft_strjoinf(get_variable("USER"), "@", 1);
-		tmp = ft_strjoinf(tmp, get_hostname(), 2);
-		tmp = ft_strjoinf(ft_strdup("["), tmp, 2);
-		result = ft_strjoinf(tmp, result, 2);
+		tmp = ft_strjoinf(tmp, get_hostname(), 3);
+		tmp = ft_strjoinf("[", tmp, 2);
+		result = ft_strjoinf(tmp, result, 3);
 	}
 	else
 	 	result = ft_strjoin(get_unmatched_str(shell_env->last_unmatched), "> ");

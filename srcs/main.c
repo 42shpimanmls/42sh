@@ -32,6 +32,7 @@ static void		main_loop(void)
 	/*if (get_error() != NO_ERROR)
 		return ;*/
 	//execute_tree();
+	delete_command_list(&get_shell_env()->syntax_tree);
 }
 
 int				main(int ac, char **av)
