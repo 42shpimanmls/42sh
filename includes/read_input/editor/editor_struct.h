@@ -20,10 +20,6 @@ typedef struct			s_string
 typedef struct			s_term
 {
 	int					width;
-
-	// bool				margin_left;
-	// bool				margin_right;
-
 	char				*move_cursor_begining;
 	char				*move_left;
 	char				*move_right;
@@ -32,9 +28,6 @@ typedef struct			s_term
 	char				*hide_cursor;
 	char				*show_cursor;
 	char				*clear_line;
-
-	// char				*save_cursor_pos;
-	// char				*restore_cursor_pos;
 }						t_term;
 
 typedef struct			s_editor
@@ -44,7 +37,7 @@ typedef struct			s_editor
 	t_history			*history;
 	int					cursor_position;
 	int					old_position;
-	t_vec2i				tmp;
+	t_vec2i				pos;
 	int					string_size;
 	int					prompt_size;
 	char				*prompt;

@@ -1,7 +1,7 @@
 #include "event_callback_def.h"
 #include <libft.h>
 
-size_t		find_index_at_vector(t_editor *ed, int ox, int oy)
+size_t		find_index_at_vector(EV_CB_ARGS, int ox, int oy)
 {
 	char	*str;
 	int		i;
@@ -27,7 +27,7 @@ size_t		find_index_at_vector(t_editor *ed, int ox, int oy)
 	return (i);
 }
 
-t_vec2i		get_cursor_vector(t_editor *ed)
+t_vec2i		get_cursor_vector(EV_CB_ARGS)
 {
 	char	*str;
 	int		i;

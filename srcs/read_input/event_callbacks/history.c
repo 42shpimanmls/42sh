@@ -13,7 +13,7 @@ void	list_free(t_abstract_list **list)
 	*list = NULL;
 }
 
-void	str_to_list(t_editor *ed, char *str)
+void	str_to_list(EV_CB_ARGS, char *str)
 {
 	if (str == NULL)
 		return;
@@ -40,7 +40,6 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 		if (ed->history->prev)
 			ed->history = ed->history->prev;
 		put_line(ed);
-
 	}
 }
 
