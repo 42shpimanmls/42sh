@@ -39,13 +39,17 @@ static t_variable		*create_assignment(t_token const *token)
 	char const	*equal_pos;
 	char		*name;
 	char		*value;
+	t_variable	*result;
 
 	equal_pos = find_assignment_equal(token->str);
 	if (equal_pos == NULL)
 		return (NULL);
 	name = strdup_until(token->str, equal_pos);
 	value = ft_strdup(equal_pos + 1);
-	return (create_variable(name, value, false));
+	result = create_variable(name, value, false);
+	free(name);
+	free(value);
+	return (result);
 }
 
 t_variable				*parse_assignments(t_token const *tokens\
