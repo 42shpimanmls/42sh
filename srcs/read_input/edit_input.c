@@ -23,8 +23,6 @@ void restore_old_cursor_position(t_vec2i old_pos, t_vec2i new_pos, t_term *term)
 	move_cursor(vec2i_sub(old_pos, new_pos), term);
 }
 
-#include <stdio.h>
-
 void print_command_string(char const *prompt, t_string *cmd_str
 	, size_t term_width)
 {
@@ -54,7 +52,6 @@ void clear_line(EV_CB_ARGS)
 	move_start(ed);
 	ft_putstr(ed->term->clear_line);
 	ed->tmp = get_cursor_vector(ed);
-	// ed->old_position = ed->cursor_position;
 }
 
 void put_line(EV_CB_ARGS)
@@ -102,8 +99,6 @@ char *edit_input()
 
 	while ((ret = read(0, buf, EVENT_STR_MAX_LEN)) > 0)
 	{
-		dprintf(2, "cursor_pos\n");
-		print_vec2i(get_cursor_vector(ed), 2);
 		buf[ret] = '\0';
 		def = get_matching_event_callback(buf);
 		if (def)
@@ -118,8 +113,6 @@ char *edit_input()
 				add_to_string(ed, buf[0]);
 		}
 		refresh_line(ed);
-		dprintf(2, "cursor_pos\n");
-		print_vec2i(get_cursor_vector(ed), 2);
 	}
 
 	ft_close_termcaps();

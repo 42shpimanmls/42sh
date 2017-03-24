@@ -62,17 +62,8 @@ t_vec2i		vec2i_sub(t_vec2i a, t_vec2i b)
 	return (result);
 }
 
-#include <stdio.h>
-
-void print_vec2i(t_vec2i vec, int fd)
-{
-	dprintf(fd, "vec2i: x%d, y%d\n", vec.x, vec.y);
-}
-
 void		move_cursor(t_vec2i	vec, t_term *term)
 {
-	dprintf(2, "moving\n");
-	print_vec2i(vec, 2);
 	if (vec.y > 0)
 	{
 		while (vec.y-- > 0)
@@ -103,11 +94,7 @@ EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 	if (ed->cursor_position > 0)
 	{
 		cursor_vec = get_cursor_vector(ed);
-		dprintf(2, "before cursor_left\n");
-		print_vec2i(cursor_vec, 2);
 		ed->cursor_position--;
-		dprintf(2, "after cursor_left\n");
-		print_vec2i(get_cursor_vector(ed), 2);
 		mov_vec = vec2i_sub(cursor_vec, get_cursor_vector(ed));
 		move_cursor(mov_vec, ed->term);
 	}
@@ -121,11 +108,7 @@ EV_CB_RET 	event_cursor_right(EV_CB_ARGS)
 	if (ed->cursor_position < ed->string_size)
 	{
 		cursor_vec = get_cursor_vector(ed);
-		dprintf(2, "before cursor_right\n");
-		print_vec2i(cursor_vec, 2);
 		ed->cursor_position++;
-		dprintf(2, "after cursor_right\n");
-		print_vec2i(get_cursor_vector(ed), 2);
 		mov_vec = vec2i_sub(cursor_vec, get_cursor_vector(ed));
 		move_cursor(mov_vec, ed->term);
 	}
