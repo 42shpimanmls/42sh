@@ -13,17 +13,20 @@ void	hist_to_file(t_history *history, char *filename, bool append)
 		fd = open(HISTFILE, O_WRONLY | O_APPEND); // protect
 	else
 		fd = open(filename, O_TRUNC |  O_WRONLY | O_CREAT, 0666);
-	while (history)
+	if (fd > 0)
 	{
-		/*
-			check what -w does -> writes anyway or check if already appended?
-		*/
-		if (!history->appended)
+		while (history)
 		{
-			history->appended = true;
-			ft_putstr_fd(history->line, fd);
+			/*
+				check what -w does -> writes anyway or check if already appended?
+			*/
+			if (!history->appended)
+			{
+				history->appended = true;
+				ft_putstr_fd(history->line, fd);
+			}
+			history = history->next;
 		}
-		history = history->next;
+		close(fd);
 	}
-	close(fd);
 }

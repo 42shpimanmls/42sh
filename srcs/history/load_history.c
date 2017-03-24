@@ -41,12 +41,15 @@ void	load_history(t_shell_env *shell_env, char *filename, int position)
 		fd = open(filename, O_RDWR | O_CREAT, 0666); // protect in case no rights, etc + set_error
 	else
 		fd = open(HISTFILE, O_RDWR | O_CREAT, 0666);
-	while ((line = ft_getline(fd)))
+	if (fd > 0)
 	{
-		tmp = ft_strjoin(line, "\n");
-		add_to_history_list(&shell_env->history, create_history_entry(tmp));
-		ft_strdel(&line);
-		ft_strdel(&tmp);
+		while ((line = ft_getline(fd)))
+		{
+			tmp = ft_strjoin(line, "\n");
+			add_to_history_list(&shell_env->history, create_history_entry(tmp));
+			ft_strdel(&line);
+			ft_strdel(&tmp);
+		}
+		close(fd);
 	}
-	close(fd);
 }
