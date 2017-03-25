@@ -13,5 +13,6 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS);
 BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS);
 BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS);
 BUILTIN_RET 		builtin_exit(BUILTIN_ARGS);
+BUILTIN_RET			builtin_history(BUILTIN_ARGS);
 
 #endif

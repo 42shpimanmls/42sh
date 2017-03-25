@@ -42,10 +42,4 @@ void			delete_history_entry(t_history **history, char *offset);
 
 void			hist_to_file(t_history *history, char *filename, bool append);
 
-/*
-**		history.c
-*/
-
-BUILTIN_RET		builtin_history(BUILTIN_ARGS);
-
 #endif

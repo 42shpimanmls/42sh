@@ -15,7 +15,7 @@ t_builtin_def const			*get_builtin_defs(void)
 		{ UNSETENV_BUID, 			"unsetenv",				builtin_unsetenv },
 		//{ UNSET_BUID, 				"unset",				NULL },
 		//{ EXPORT_BUID,				"export",				NULL },
-		//{ HISTORY_BUID,				"history",				NULL },
+		{ HISTORY_BUID,				"history",				builtin_history },
 		//{ ENV_BUID,					"env",					NULL }
 	};
 	return (defs);
