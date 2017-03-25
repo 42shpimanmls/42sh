@@ -3,7 +3,7 @@
 #include "init/init.h"
 #include <stdio.h>
 #include "errors.h"
-#include "history_substitutions.h"
+#include "history/history_substitutions.h"
 #include "parse_input/print_syntax_tree.h"
 
 static void		main_loop(void)

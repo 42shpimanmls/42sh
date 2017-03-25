@@ -2,12 +2,13 @@
 #include <libft.h>
 
 #include "shell_env.h"
-#include "history_substitutions.h"
+#include "history/history_substitutions.h"
 #include "ftsh.h"
 
 
 #define NB_SUB_TESTS 20
 #define NB_ERR_TESTS 4
+
 // #define BANG_TEST_VERBOSE
 
 /*

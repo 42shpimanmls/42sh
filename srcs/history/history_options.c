@@ -1,6 +1,14 @@
 #include <libft.h>
-#include "execution/builtins/history_options.h"
+#include "history_options.h"
 #include "errors.h"
+
+void			free_history_options(t_hist_opt *options)
+{
+	if (options->offset)
+		ft_strdel(&(options->offset));
+	if (options->args && options->args[0])
+		ft_freetabchar(options->args);
+}
 
 static bool 	no_other_anrw(t_hist_opt *options)
 {
@@ -38,8 +46,8 @@ static int 	get_anrw_options(char c, t_hist_opt *options)
 	else if (c == 'n') // unnecessary?
 		options->n = 1;
 	if (no_other_anrw(options))
-		return (-1);
-	return (0);
+		return (0);
+	return (-1);
 }
 
 int		get_hist_options(char *arg, t_hist_opt *options)
@@ -53,7 +61,7 @@ int		get_hist_options(char *arg, t_hist_opt *options)
 		{
 			options->d = 1;
 			if (*(arg + 1))
-				options->offset = ft_strdup(arg + 1);
+				options->offset = ft_strdup(++arg);
 		}
 		else if (ft_strchr("anrw", *arg))
 		{
