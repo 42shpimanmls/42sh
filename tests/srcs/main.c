@@ -6,11 +6,21 @@
 #include <CUnit/Console.h>
 #include <libft.h>
 #include "test_utils.h"
+#include "ftsh.h"
 
 static void print_error(void)
 {
 	if (CU_get_error() != CUE_SUCCESS)
 		printf("Error: %s\n",CU_get_error_msg());
+}
+
+static int init_ftsh(void) {
+	char *ftsh_argv[] = {
+		"42sh",
+		NULL
+	};
+	init(1, ftsh_argv);
+	return (0);
 }
 
 int main(int argc, char **argv)
@@ -59,7 +69,7 @@ int main(int argc, char **argv)
 		{ "Init", NULL, NULL, NULL, NULL, init_tests },
 		{ "Tokenizer", NULL, NULL, NULL, NULL, tokenizer_tests },
 		{ "History", NULL, NULL, NULL, NULL, history_tests },
-		{ "Bang", NULL, NULL, NULL, NULL, bang_tests },
+		{ "Bang", init_ftsh, NULL, NULL, NULL, bang_tests },
 		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
 		CU_SUITE_INFO_NULL
 	};
