@@ -41,18 +41,13 @@ static void	get_position(EV_CB_ARGS)
 	}
 }
 
-static void clear_selected_pos(EV_CB_ARGS)
-{
-	ed->selected_string_start = 0;
-	ed->selected_string_end = 0;
-}
-
 EV_CB_RET	event_copy(EV_CB_ARGS)
 {
 	get_position(ed);
 	if (ed->selected)
 	{
 		get_sub_string(ed);
+		clear_selected_pos(ed);
 	}
 }
 

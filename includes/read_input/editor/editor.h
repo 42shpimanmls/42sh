@@ -11,5 +11,6 @@ void		free_string(t_string *s);
 char		*gen_prompt(void);
 void		put_highlighted_line(t_editor *ed, char* line);
 void		swap_position_if_needed(t_editor *ed);
+void		clear_selected_pos(t_editor *ed);
 
 #endif

@@ -1,5 +1,5 @@
-#include "read_input/event_callbacks/event_callback_def.h"
-#include <libft.h>
+# include "read_input/event_callbacks/event_callback_def.h"
+# include <libft.h>
 
 void 	swap_position_if_needed(EV_CB_ARGS)
 {
