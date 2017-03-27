@@ -11,6 +11,7 @@ bool check_cursor_if_margin(EV_CB_ARGS)
 
 EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 {
+	ed->need_refresh = true;
 	if (ed->cursor_position > 0)
 	{
 		if (check_cursor_if_margin(ed))
@@ -30,6 +31,7 @@ EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 
 EV_CB_RET 	event_cursor_right(EV_CB_ARGS)
 {
+	ed->need_refresh = true;
 	if (ed->cursor_position < ed->string_size)
 	{
 		ed->cursor_position++;

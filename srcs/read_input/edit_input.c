@@ -18,7 +18,7 @@ void move_start(t_editor *ed)
 	ft_putstr(ed->term->move_cursor_begining);
 }
 
-void restore_old_cursor_position(t_editor *ed, int old_position)
+void restore_old_cursor_position(t_editor *ed, size_t old_position)
 {
 	ed->cursor_position = ed->string_size;
 	while (ed->cursor_position > old_position)
@@ -41,8 +41,10 @@ void refresh_line(t_editor *ed)
 		line = get_string_from_list(ed->string);
 		ft_putstr(ed->prompt);
 		tmp = ed->cursor_position;
+		if (ed->in_selection == true)
+			ed->selected_string_end = ed->cursor_position;
+		put_highlighted_line(ed, line);
 		ed->cursor_position = ft_strlen(line);
-		ft_putstr(line);
 		free(line);
 		if (check_cursor_if_margin(ed))
 		{
@@ -58,6 +60,18 @@ void free_editor(t_editor *ed)
 	free_string(ed->string);
 	free(ed->prompt);
 	free(ed->term);
+}
+
+void add_buffer_to_string(t_editor *ed, char buf[])
+{
+	size_t	i;
+
+	i = -1;
+	while (buf[++i])
+	{
+		if (ft_isprint(buf[i]) || buf[i] == '\t')
+			add_to_string(ed, buf[i]);
+	}
 }
 
 char *edit_input()
@@ -86,8 +100,7 @@ char *edit_input()
 		}
 		else
 		{
-			if (ft_isprint(buf[0]))
-				add_to_string(ed, buf[0]);
+			add_buffer_to_string(ed, buf);
 		}
 		refresh_line(ed);
 	}
