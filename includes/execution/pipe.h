@@ -32,7 +32,6 @@ int					pipe_get_read_fd(t_pipe const *p);
 int					pipe_get_write_fd(t_pipe const *p);
 void				create_next_pipe(t_pipeline_state *state);
 void				overwrite_fd(int src, int overwrited);
-void				wait_for_pipeline();
 int					pipe_me_in(t_pipeline_state *state);
 
 #endif

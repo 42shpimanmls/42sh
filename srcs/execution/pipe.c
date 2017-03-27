@@ -79,14 +79,6 @@ void				overwrite_fd(int src, int overwrited)
 	}
 }
 
-void				wait_for_pipeline()
-{
-	while(wait(NULL) != -1 && errno != ECHILD)
-	{
-		
-	}
-}
-
 int					pipe_me_in(t_pipeline_state *state)
 {
 	pid_t	fork_ret;

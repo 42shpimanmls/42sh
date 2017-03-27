@@ -22,7 +22,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 	}
 	else
 	{
-		wait_for_pipeline();
+		wait_for_childs();
 		return (NO_ERROR);
 	}
 }
@@ -72,7 +72,7 @@ t_error_id	execute_pipeline(t_simple_command *pipeline, size_t lvl)
 		}
 		pipeline = pipeline->next;
 	}
-	wait_for_pipeline();
+	wait_for_childs();
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "done executing pipeline, %s\n", pipeline_state.last_ret == NO_ERROR ? "ok" : "error");
 	return (ret);
