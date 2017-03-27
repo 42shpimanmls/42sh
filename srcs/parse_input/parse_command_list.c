@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "abstract_list.h"
 #include <libft.h>
+#include "errors.h"
 
 static bool		last_is_semi(t_token const *tokens)
 {
@@ -27,6 +28,7 @@ t_command_list	*parse_command_list(t_token const *tokens)
 	size_t			u;
 	t_token			*trimed;
 
+	set_error(NO_ERROR);
 	if (tokens == NULL)
 		return (NULL);
 	trimed = trim_newlines(tokens);
@@ -42,11 +44,17 @@ t_command_list	*parse_command_list(t_token const *tokens)
 		{
 			if (splited[u] == NULL)
 			{
-				ft_putendl_fd("42sh: syntax error near unexpected token ';'", 2);
-				exit(1);
+				set_error(UNEXPECTED_SEMI);
+				result = NULL; //delete_command_list(&result);
+				break ;
 			}
 			(*it) = memalloc_or_die(sizeof(t_command_list));
 			(*it)->and_or_list = parse_and_or_list(splited[u]);
+			if (get_error() != NO_ERROR)
+			{
+				result = NULL; //delete_command_list(&result);
+				break ;
+			}
 			it = &(*it)->next;
 			u++;
 		}

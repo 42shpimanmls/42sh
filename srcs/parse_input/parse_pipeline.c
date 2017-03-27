@@ -3,6 +3,8 @@
 #include "utils.h"
 #include "abstract_list.h"
 #include <libft.h>
+#include "errors.h"
+#include "shell_env.h"
 
 t_simple_command	*parse_pipeline(t_token const *tokens)
 {
@@ -13,6 +15,7 @@ t_simple_command	*parse_pipeline(t_token const *tokens)
 	size_t				splited_len;
 	size_t				u;
 
+	set_error(NO_ERROR);
 	if (tokens == NULL)
 		return (NULL);
 	splited = split_tokens_at(tokens, OR_TOKID, &splited_len);
@@ -24,12 +27,19 @@ t_simple_command	*parse_pipeline(t_token const *tokens)
 		trimed = trim_newlines(splited[u]);
 		if (trimed == NULL)
 		{
-			ft_putendl_fd(
-				"42sh: syntax error near unexpected token '|'", 2);
-			exit(1);
+			set_error(UNEXPECTED_PIPE);
+			if (u == splited_len - 1)
+				get_shell_env()->last_unmatched = UNEXPECTED_PIPE;
+			result = NULL; //delete_command_list(&result);
+			break ;
 		}
 		(*it) = parse_simple_command(trimed);
 		delete_all_tokens(&trimed);
+		if (get_error() != NO_ERROR)
+		{
+			result = NULL; //delete_command_list(&result);
+			break ;
+		}
 		it = &(*it)->next;
 		u++;
 	}

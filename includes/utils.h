@@ -15,7 +15,10 @@ bool						is_circumflex(char c);
 bool						is_bang(char c);
 char						*str_in_str(char *find, char *str, bool must_start);
 void						str_join_with_space(char **str, char *to_join);
+void						str_add_space(char **str);
 size_t						number_len(char *str);
-
+char						**copy_array(char **array, size_t start, int end);
+char						*array_to_str(char **array);
+void						free_ptr_array(void *ptr_array);
 
 #endif

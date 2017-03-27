@@ -1,6 +1,6 @@
 #include <libft.h>
 
-static void	str_add_space(char **str)
+void	str_add_space(char **str)
 {
 	char	*tmp;
 

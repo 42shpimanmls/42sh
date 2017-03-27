@@ -2,6 +2,8 @@
 #include "abstract_list.h"
 #include "utils.h"
 #include <libft.h>
+#include "errors.h"
+#include "variable.h"
 
 static char			**parse_argv(t_token const *tokens)
 {
@@ -24,11 +26,24 @@ static char			**parse_argv(t_token const *tokens)
 
 t_simple_command	*parse_simple_command(t_token const *tokens)
 {
-	t_simple_command *result;
+	t_simple_command	*result;
+	t_token				*remains;
+	t_token				*remains2;
 
+	set_error(NO_ERROR);
 	if (tokens == NULL)
 		return (NULL);
 	result = memalloc_or_die(sizeof(t_simple_command));
-	result->argv = parse_argv(tokens);
+	result->redirections = parse_redirections(tokens, &remains);
+	if (get_error() == NO_ERROR)
+	{
+		result->assignments = parse_assignments(remains, &remains2);
+		if (get_error() == NO_ERROR)
+			result->argv = parse_argv(remains2);
+		delete_all_tokens(&remains2);
+	}
+	delete_all_tokens(&remains);
+	if (get_error() != NO_ERROR)
+		result = NULL; // delete_simple_command(&result);
 	return (result);
 }

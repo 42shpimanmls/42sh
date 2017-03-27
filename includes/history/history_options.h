@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-typedef	struct s_hist_opt
+typedef	struct 	s_hist_opt
 {
 	bool		c;
 	bool		d;
@@ -18,6 +18,7 @@ typedef	struct s_hist_opt
 	char		**args;
 }				t_hist_opt;
 
-int		get_hist_options(char *c, t_hist_opt *options);
+int				get_hist_options(char *c, t_hist_opt *options);
+void			free_history_options(t_hist_opt *options);
 
 #endif

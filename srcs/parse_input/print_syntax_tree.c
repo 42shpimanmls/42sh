@@ -2,20 +2,72 @@
 #include "utils.h"
 #include <libft.h>
 
+static void print_assignments(t_variable const *a, size_t lvl)
+{
+	if (a == NULL)
+		return ;
+	print_n_char(' ', (lvl) * 2);
+	ft_putstr("assignment(s):");
+	while (a != NULL)
+	{
+		ft_putchar(' ');
+		ft_putstr(a->name);
+		ft_putchar('=');
+		ft_putstr(a->value);
+		if (a->next != NULL)
+			ft_putstr(",");
+		a = a->next;
+	}
+	ft_putchar('\n');
+}
+
+static void print_redirections(t_redirection const *r, size_t lvl)
+{
+	if (r == NULL)
+		return ;
+	print_n_char(' ', (lvl) * 2);
+	ft_putstr("redirection(s):");
+	while (r != NULL)
+	{
+		ft_putchar(' ');
+		ft_putnbr(r->n);
+		ft_putchar(' ');
+		ft_putstr(get_token_def((t_token_id)r->type)->str);
+		ft_putchar(' ');
+		ft_putstr(r->word);
+		if (r->next != NULL)
+			ft_putstr(",");
+		r = r->next;
+	}
+	ft_putchar('\n');
+}
+
 static void print_simple_command(t_simple_command const *cmd, size_t lvl)
 {
 	char **it;
-	print_n_char(' ', (lvl) * 2);
-	ft_putstr("command: ");
-	it = cmd->argv;
-	while ((*it) != NULL)
+
+	if (cmd->argv[0] != NULL)
 	{
-		if (it != cmd->argv)
-			ft_putchar(' ');
-		print_non_ascii_str(*it);
-		it++;
+		print_n_char(' ', (lvl) * 2);
+		ft_putstr("command: ");
+		ft_putendl(*cmd->argv);
+		if (cmd->argv[1] != NULL)
+		{
+			print_n_char(' ', (lvl) * 2);
+			ft_putstr("argument(s): ");
+			it = cmd->argv + 1;
+			while ((*it) != NULL)
+			{
+				if (it != cmd->argv + 1)
+					ft_putchar(' ');
+				print_non_ascii_str(*it);
+				it++;
+			}
+			ft_putchar('\n');
+		}
 	}
-	ft_putchar('\n');
+	print_assignments(cmd->assignments, lvl);
+	print_redirections(cmd->redirections, lvl);
 }
 
 static void print_pipeline(t_simple_command const *pip, size_t lvl)

@@ -14,4 +14,9 @@ typedef struct			s_variable
 	bool				exported;
 }						t_variable;
 
+t_variable				*create_variable(char *name, char *value
+															, bool exported);
+void					delete_variable(t_variable **var);
+void					delete_all_variables(t_variable **var);	
+
 #endif

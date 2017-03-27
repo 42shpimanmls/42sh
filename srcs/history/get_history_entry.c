@@ -33,7 +33,7 @@ static char		*get_nth_entry(t_history *history, int n)
 			n--;
 		}
 	}
-	return (ft_strdup(history->line));
+	return (ft_strtrim(history->line)); // trim \n
 }
 
 static char		*find_in_history(bool must_start, t_history *history, char *str, t_uint *end)
@@ -64,7 +64,7 @@ static char		*find_in_history(bool must_start, t_history *history, char *str, t_
 			|| (!must_start && str_in_str(find, history->line, false)))
 		{
 			ft_strdel(&find);
-			return (ft_strdup(history->line));
+			return (ft_strtrim(history->line)); // \n
 		}
 		history = history->prev;
 	}
