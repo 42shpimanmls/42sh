@@ -10,6 +10,7 @@ void						event_callback_test(void);
 char						*strdup_until(char const *src, char const *stop);
 bool						is_posix_blank(char c);
 void						print_n_char(char c, size_t n);
+void						print_n_char_fd(char c, size_t n, int fd);
 bool						str_is_digits(char const *str);
 bool						is_circumflex(char c);
 bool						is_bang(char c);
@@ -20,5 +21,6 @@ size_t						number_len(char *str);
 char						**copy_array(char **array, size_t start, int end);
 char						*array_to_str(char **array);
 void						free_ptr_array(void *ptr_array);
+void						wait_for_childs();
 
 #endif

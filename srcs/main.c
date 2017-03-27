@@ -29,7 +29,6 @@ static void		main_loop(void)
 	if (get_error() != NO_ERROR)
 		return ;
 	ft_strdel(&get_shell_env()->input_string);
-	print_command_list(get_shell_env()->syntax_tree, 0);
 	if (get_error() != NO_ERROR)
 		return ;
 	execute_command_list(get_shell_env()->syntax_tree);
@@ -39,6 +38,7 @@ static void		main_loop(void)
 int				main(int ac, char **av)
 {
 	setbuf(stdout, NULL);
+	setbuf(stderr, NULL);
 	init(ac, av);
 	while (get_shell_env()->should_run)
 		main_loop();

@@ -15,17 +15,17 @@ t_error_id	execute_builtin(t_simple_command *cmd, size_t lvl)
 		builtin = get_matching_builtin(cmd->argv[0]);
 		if (builtin == NULL)
 			return (NO_SUCH_BUILTIN);
-		print_n_char(' ', (lvl) * 2);
-		dprintf(1, "executing builtin %s\n", builtin->name);
+		print_n_char_fd(' ', (lvl) * 2, 2);
+		dprintf(2, "executing builtin %s\n", builtin->name);
 		if (builtin->builtin == NULL)
 		{
-			print_n_char(' ', (lvl + 1) * 2);
-			dprintf(1, "%s is undefined\n", builtin->name);
+			print_n_char_fd(' ', (lvl + 1) * 2, 2);
+			dprintf(2, "%s is undefined\n", builtin->name);
 			return (NO_SUCH_BUILTIN);
 		}
 		ret = builtin->builtin(ft_tablen(cmd->argv), cmd->argv);
-		print_n_char(' ', (lvl) * 2);
-		dprintf(1, "done executing builtin %s, %s\n", builtin->name, ret == NO_ERROR ? "ok" : "error");
+		print_n_char_fd(' ', (lvl) * 2, 2);
+		dprintf(2, "done executing builtin %s, %s\n", builtin->name, ret == NO_ERROR ? "ok" : "error");
 	}
 	return (ret);
 }
