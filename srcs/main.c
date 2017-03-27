@@ -5,6 +5,7 @@
 #include "errors.h"
 #include "history/history_substitutions.h"
 #include "parse_input/print_syntax_tree.h"
+#include "execution/execute_syntax_tree.h"
 
 static void		main_loop(void)
 {
@@ -29,9 +30,9 @@ static void		main_loop(void)
 		return ;
 	ft_strdel(&get_shell_env()->input_string);
 	print_command_list(get_shell_env()->syntax_tree, 0);
-	/*if (get_error() != NO_ERROR)
-		return ;*/
-	//execute_tree();
+	if (get_error() != NO_ERROR)
+		return ;
+	execute_command_list(get_shell_env()->syntax_tree);
 	delete_command_list(&get_shell_env()->syntax_tree);
 }
 
