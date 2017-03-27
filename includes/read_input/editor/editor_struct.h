@@ -33,11 +33,16 @@ typedef struct			s_term
 
 typedef struct			s_editor
 {
+	bool				in_selection;
+	bool				selected;
+	size_t				selected_string_start;
+	size_t				selected_string_end;
+	char				*selected_string;
 	t_string			*string;
 	t_term				*term;
 	t_history			*history;
-	int					cursor_position;
-	int					string_size;
+	size_t				cursor_position;
+	size_t				string_size;
 	int					prompt_size;
 	char				*prompt;
 	bool				need_refresh;
