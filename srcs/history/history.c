@@ -169,4 +169,5 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 			; // delete from list if already added, or return dont_save
 	}
 	free_history_options(&options);
+	return (STATUS_SUCCESS);
 }
