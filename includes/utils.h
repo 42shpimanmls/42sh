@@ -10,6 +10,7 @@ void						event_callback_test(void);
 char						*strdup_until(char const *src, char const *stop);
 bool						is_posix_blank(char c);
 void						print_n_char(char c, size_t n);
+void						print_n_char_fd(char c, size_t n, int fd);
 bool						str_is_digits(char const *str);
 bool						is_circumflex(char c);
 bool						is_bang(char c);

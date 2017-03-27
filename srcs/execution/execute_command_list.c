@@ -10,14 +10,14 @@ static void print_ao_sep(t_ao_type sep_type, size_t lvl)
 {
 	if (sep_type == AO_END)
 		return ;
-	print_n_char(' ', lvl * 2);
+	print_n_char_fd(' ', lvl * 2, 2);
 	if (sep_type == AO_AND)
-		ft_putstr("&&");
+		ft_putstr_fd("&&", 2);
 	else if (sep_type == AO_OR)
-		ft_putstr("||");
+		ft_putstr_fd("||", 2);
 	else
-		ft_putstr("BUG");
-	ft_putchar('\n');
+		ft_putstr_fd("BUG", 2);
+	ft_putchar_fd('\n', 2);
 }
 
 t_error_id	execute_and_or_list(t_and_or_list *ao_list, size_t lvl)
@@ -28,8 +28,8 @@ t_error_id	execute_and_or_list(t_and_or_list *ao_list, size_t lvl)
 		return (NO_ERROR);
 	if (ao_list->next == NULL)
 		return (execute_pipeline(ao_list->pipeline, lvl));
-	print_n_char(' ', (lvl) * 2);
-	dprintf(1, "executing and_or_list\n");
+	print_n_char_fd(' ', (lvl) * 2, 2);
+	dprintf(2, "executing and_or_list\n");
 	while (ao_list != NULL)
 	{
 		ret = execute_pipeline(ao_list->pipeline, lvl + 1);
@@ -37,13 +37,13 @@ t_error_id	execute_and_or_list(t_and_or_list *ao_list, size_t lvl)
 		if ((ret == NO_ERROR && ao_list->separation_type == AO_OR)
 			|| (ret != NO_ERROR && ao_list->separation_type == AO_AND))
 		{
-			print_n_char(' ', (lvl) * 2);
+			print_n_char_fd(' ', (lvl) * 2, 2);
 			dprintf(2, "shortcuting and_or_list\n");
 			break ;
 		}
 		ao_list = ao_list->next;
 	}
-	print_n_char(' ', (lvl) * 2);
+	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "done executing and_or_list, %s\n", ret == NO_ERROR ? "ok" : "error");
 	return (ret);
 }
@@ -52,17 +52,17 @@ t_error_id	execute_command_list(t_command_list *cmd_list)
 {
 	t_error_id		ret;
 
-	dprintf(1, "EXECUTION:\n");
+	dprintf(2, "EXECUTION:\n");
 	if (cmd_list == NULL)
 		return (NO_ERROR);
 	if (cmd_list->next == NULL)
 		return (execute_and_or_list(cmd_list->and_or_list, 0));
-	dprintf(1, "executing command_list\n");
+	dprintf(2, "executing command_list\n");
 	while (cmd_list != NULL)
 	{
 		ret = execute_and_or_list(cmd_list->and_or_list, 1);
 		cmd_list = cmd_list->next;
 	}
-	dprintf(1, "done executing command_list, %s\n", ret == NO_ERROR ? "ok" : "error");
+	dprintf(2, "done executing command_list, %s\n", ret == NO_ERROR ? "ok" : "error");
 	return (ret);
 }
