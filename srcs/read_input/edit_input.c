@@ -34,7 +34,6 @@ void refresh_line(t_editor *ed)
 
 	if (ed->need_refresh == true)
 	{
-		// ft_dprintf(2, "REFRESH LINE\n");
 		ed->need_refresh = false;
 		move_start(ed);
 		ft_putstr(ed->term->clear_line);
@@ -45,7 +44,6 @@ void refresh_line(t_editor *ed)
 		if (ed->in_selection == true)
 			ed->selected_string_end = ed->cursor_position;
 		put_highlighted_line(ed, line);
-		// ft_putstr(line);
 		ed->cursor_position = ft_strlen(line);
 		free(line);
 		if (check_cursor_if_margin(ed))
@@ -93,7 +91,6 @@ char *edit_input()
 	while ((ret = read(0, buf, EVENT_STR_MAX_LEN)) > 0)
 	{
 		buf[ret] = '\0';
-		ft_dprintf(2, "STR BUF: \"%s\"\n", buf);
 		def = get_matching_event_callback(buf);
 		if (def)
 		{
