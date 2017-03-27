@@ -9,5 +9,7 @@ void		add_to_string(t_editor *ed, char c);
 char		*get_string_from_list(t_string *s);
 void		free_string(t_string *s);
 char		*gen_prompt(void);
+void		put_highlighted_line(t_editor *ed, char* line);
+void		swap_position_if_needed(t_editor *ed);
 
 #endif

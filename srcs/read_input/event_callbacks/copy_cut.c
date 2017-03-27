@@ -26,8 +26,6 @@ static void delete_selected(EV_CB_ARGS)
 
 static void	get_position(EV_CB_ARGS)
 {
-	size_t tmp;
-
 	if (!ed->in_selection)
 	{
 		ed->selected = false;
@@ -38,14 +36,15 @@ static void	get_position(EV_CB_ARGS)
 	{
 		ed->in_selection = false;
 		ed->selected_string_end = ed->cursor_position;
-		if (ed->selected_string_start > ed->selected_string_end)
-		{
-			ed->selected = true;
-			tmp = ed->selected_string_start;
-			ed->selected_string_start = ed->selected_string_end;
-			ed->selected_string_end = tmp;
-		}
+		ed->selected = true;
+		swap_position_if_needed(ed);
 	}
+}
+
+static void clear_selected_pos(EV_CB_ARGS)
+{
+	ed->selected_string_start = 0;
+	ed->selected_string_end = 0;
 }
 
 EV_CB_RET	event_copy(EV_CB_ARGS)
@@ -65,5 +64,6 @@ EV_CB_RET	event_cut(EV_CB_ARGS)
 	{
 		get_sub_string(ed);
 		delete_selected(ed);
+		clear_selected_pos(ed);
 	}
 }
