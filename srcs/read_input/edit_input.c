@@ -64,6 +64,18 @@ void free_editor(t_editor *ed)
 	free(ed->term);
 }
 
+void add_buffer_to_string(t_editor *ed, char buf[])
+{
+	size_t	i;
+
+	i = -1;
+	while (buf[++i])
+	{
+		if (ft_isprint(buf[i]) || buf[i] == '\t')
+			add_to_string(ed, buf[i]);
+	}
+}
+
 char *edit_input()
 {
 	char						buf[EVENT_STR_MAX_LEN + 1];
@@ -81,6 +93,7 @@ char *edit_input()
 	while ((ret = read(0, buf, EVENT_STR_MAX_LEN)) > 0)
 	{
 		buf[ret] = '\0';
+		ft_dprintf(2, "STR BUF: \"%s\"\n", buf);
 		def = get_matching_event_callback(buf);
 		if (def)
 		{
@@ -90,8 +103,7 @@ char *edit_input()
 		}
 		else
 		{
-			if (ft_isprint(buf[0]))
-				add_to_string(ed, buf[0]);
+			add_buffer_to_string(ed, buf);
 		}
 		refresh_line(ed);
 	}
