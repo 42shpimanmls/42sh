@@ -1,5 +1,6 @@
 #include <libft.h>
 #include "shell_env.h"
+#include "abstract_list.h"
 
 char	*get_variable(char *var)
 {
@@ -44,19 +45,10 @@ static size_t	get_number_of_exported()
 	return (size);
 }
 
-char	**get_variables_for_execution(void)
+static size_t	add_to_tab(t_variable *e, char **envp, size_t i)
 {
-	t_variable	*e;
-	char		**envp;
-	size_t		size;
-	size_t		i;
-
-	size = get_number_of_exported();
-	if (!size)
-		return (NULL);
-	e = get_shell_env()->variables;
-	envp = memalloc_or_die(sizeof(char *) * (size + 1));
-	i = 0;
+	if (!e || !envp)
+		return (i);
 	while (e->next)
 	{
 		if (e->exported == true)
@@ -67,5 +59,25 @@ char	**get_variables_for_execution(void)
 		}
 		e = e->next;
 	}
+	return (i);
+}
+
+char	**get_variables_for_execution(t_variable *assignments)
+{
+	t_variable	*e;
+	char		**envp;
+	size_t		size;
+	size_t		i;
+
+	size = get_number_of_exported();
+	if (assignments)
+		size += list_count((t_abstract_list *)assignments);
+	if (!size)
+		return (NULL);
+	e = get_shell_env()->variables;
+	envp = memalloc_or_die(sizeof(char *) * (size + 1));
+	i = 0;
+	i = add_to_tab(e, envp, i);
+	i = add_to_tab(assignments, envp, i);
 	return (envp);
 }
