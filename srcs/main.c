@@ -7,8 +7,6 @@
 #include "parse_input/print_syntax_tree.h"
 #include "execution/execute_syntax_tree.h"
 
-#include "variable.h" //remove
-
 static void		main_loop(void)
 {
 	t_shell_env *shell_env;
@@ -42,11 +40,6 @@ int				main(int ac, char **av)
 	setbuf(stdout, NULL);
 	setbuf(stderr, NULL);
 	init(ac, av);
-	// display_variables();
-	char**tmp;
-	tmp = get_variables_for_execution();
-	ft_puttab(tmp);
-	// ft_freetabchar(tmp);
 	while (get_shell_env()->should_run)
 		main_loop();
 	print_name_and_error(get_error());
