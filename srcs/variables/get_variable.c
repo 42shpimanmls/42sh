@@ -51,14 +51,6 @@ char	**get_variables_for_execution(void)
 	size_t		size;
 	size_t		i;
 
-	// e = get_shell_env()->variables;
-	// size = 0;
-	// while (e->next)
-	// {
-	// 	if (e->exported == true)
-	// 		size++;
-	// 	e = e->next;
-	// }
 	size = get_number_of_exported();
 	if (!size)
 		return (NULL);
