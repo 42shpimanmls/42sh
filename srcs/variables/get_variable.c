@@ -27,3 +27,53 @@ void	display_variables(void)
 		env = env->next;
 	}
 }
+
+static size_t	get_number_of_exported()
+{
+	t_variable	*e;
+	size_t		size;
+
+	e = get_shell_env()->variables;
+	size = 0;
+	while (e->next)
+	{
+		if (e->exported == true)
+			size++;
+		e = e->next;
+	}
+	return (size);
+}
+
+char	**get_variables_for_execution(void)
+{
+	t_variable	*e;
+	char		**envp;
+	size_t		size;
+	size_t		i;
+
+	// e = get_shell_env()->variables;
+	// size = 0;
+	// while (e->next)
+	// {
+	// 	if (e->exported == true)
+	// 		size++;
+	// 	e = e->next;
+	// }
+	size = get_number_of_exported();
+	if (!size)
+		return (NULL);
+	e = get_shell_env()->variables;
+	envp = memalloc_or_die(sizeof(char *) * (size + 1));
+	i = 0;
+	while (e->next)
+	{
+		if (e->exported == true)
+		{
+			envp[i] = ft_strjoinf(e->name, ft_strjoin("=", e->value), 2);
+			i++;
+			envp[i] = NULL;
+		}
+		e = e->next;
+	}
+	return (envp);
+}

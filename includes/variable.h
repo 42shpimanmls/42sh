@@ -6,6 +6,7 @@
 char					*get_variable(char *var);
 void					set_variable(char const *var, char const *val);
 void					display_variables(void);
+char					**get_variables_for_execution(void);
 
 typedef struct			s_variable
 {
