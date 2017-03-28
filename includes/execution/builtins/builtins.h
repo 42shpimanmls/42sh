@@ -1,6 +1,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
+#include "variable.h"
 /*# include "builtin_args.h"*/
 
 # define STATUS_SUCCESS 0
@@ -14,5 +15,14 @@ BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS);
 BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS);
 BUILTIN_RET 		builtin_exit(BUILTIN_ARGS);
 BUILTIN_RET			builtin_history(BUILTIN_ARGS);
+
+/*
+**
+**	SUB BUILTIN
+**	
+*/
+
+BUILTIN_RET 		builtin_setenv_as(t_variable **env, BUILTIN_ARGS);
+BUILTIN_RET 		builtin_unsetenv_as(t_variable **env, BUILTIN_ARGS);
 
 #endif

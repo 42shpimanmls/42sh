@@ -7,6 +7,8 @@
 #include "parse_input/print_syntax_tree.h"
 #include "execution/execute_syntax_tree.h"
 
+#include "variable.h" //remove
+
 static void		main_loop(void)
 {
 	t_shell_env *shell_env;
@@ -40,6 +42,15 @@ int				main(int ac, char **av)
 	setbuf(stdout, NULL);
 	setbuf(stderr, NULL);
 	init(ac, av);
+
+	////////TEST GET FOR EXEC ///////////////////
+	// t_variable	*e = create_variable("PWD", "VALUE1", false);
+	// t_variable	*e1 = create_variable("FCK", "VALUEF", false);
+	// e->next = e1;
+	// char**tmp;
+	// tmp = get_variables_for_execution(e);
+	// ft_puttab(tmp);
+	///////////////////////////////////////////////
 	while (get_shell_env()->should_run)
 		main_loop();
 	print_name_and_error(get_error());

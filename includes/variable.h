@@ -9,10 +9,11 @@ typedef struct			s_variable
 	char				*name;
 	char				*value;
 	bool				exported;
-}
-						t_variable;
+}						t_variable;
+
 char					*get_variable(char *var);
 void					set_variable(char const *var, char const *val);
+// void					set_variable_as(t_variable *env, char const *var, char const *val);
 void					display_variables(void);
 char					**get_variables_for_execution(t_variable *assignments);
 

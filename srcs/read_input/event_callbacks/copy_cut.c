@@ -17,9 +17,7 @@ static void	get_sub_string(EV_CB_ARGS)
 
 static void delete_selected(EV_CB_ARGS)
 {
-	size_t	i;
 	ed->cursor_position = ed->selected_string_end;
-	i = -1;
 	while (ed->cursor_position > ed->selected_string_start)
 		event_delete(ed);
 }
