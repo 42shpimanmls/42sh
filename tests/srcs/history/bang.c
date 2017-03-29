@@ -6,10 +6,10 @@
 #include "ftsh.h"
 
 
-#define NB_SUB_TESTS 20
+#define NB_SUB_TESTS 23
 #define NB_ERR_TESTS 4
 
-// #define BANG_TEST_VERBOSE
+#define BANG_TEST_VERBOSE
 
 /*
 	to test your own strings:
@@ -46,7 +46,10 @@ static char	**get_bang_tests()
 		"!!:^",
 		"!!*",
 		"!!$",
-		"!$"};// "!#"
+		"!$",
+		"!!^",
+		"!!-",
+		"!!-2"};// "!#" "!!-" "!!%"
 
 	i = 0;
 	malloced_tests = malloc(sizeof(char *) * NB_SUB_TESTS);
@@ -73,14 +76,17 @@ static char **get_bang_results()
 		"one",
 		"un deux trois",
 		"un deux troissijf",
-		"trois",
-		"deux trois quatre",
-		"deux trois*",
 		"trois quatre",
-		"deux",
 		"deux trois quatre",
-		"quatre",
-		"quatre"};
+		"deux trois quatre*",
+		"trois quatre cinq",
+		"deux",
+		"deux trois quatre cinq",
+		"cinq",
+		"cinq",
+		"deux",
+		"un deux trois quatre",
+		"un deux trois"};
 	return (results);
 }
 
@@ -173,29 +179,28 @@ void	bang_search()
 	}
 }
 
-// void	bang_word_selection()
-// {
-// 	char **tests;
-// 	char **results;
-// 	int i;
+void	bang_word_selection()
+{
+	char **tests;
+	char **results;
+	int i;
 
-// 	i = 10;
-// 	tests = get_bang_tests();
-// 	results = get_bang_results();
-// 	while (i < NB_SUB_TESTS)
-// 	{
-// #ifdef BANG_TEST_VERBOSE
-// 		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], resu
-// #endiflts[i]);
-// 		history_substitution(&tests[i]);
-// #ifdef BANG_TEST_VERBOSE
-// 		ft_printf(", result: \"%s\"", tests[i]);
-// #endif
-// 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
-// 		i++;
-// 	}
-// 	ft_putstr(" ..........");
-// }
+	i = 10;
+	tests = get_bang_tests();
+	results = get_bang_results();
+	while (i < NB_SUB_TESTS)
+	{
+#ifdef BANG_TEST_VERBOSE
+		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+#endif
+		history_substitution(&tests[i]);
+#ifdef BANG_TEST_VERBOSE
+		ft_printf(", result: \"%s\"", tests[i]);
+#endif
+		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
+		i++;
+	}
+}
 
 void	bang_errors()
 {

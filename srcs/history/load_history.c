@@ -36,7 +36,7 @@ void	load_history(t_shell_env *shell_env, char *filename, int position)
 	char	*tmp;
 	int		fd;
 
-	(void)position; // should determine where to start in file
+	(void)position; // should determine where to start in file (-n option)
 	if (filename)
 		fd = open(filename, O_RDWR | O_CREAT, 0666); // protect in case no rights, etc + set_error
 	else

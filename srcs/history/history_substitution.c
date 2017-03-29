@@ -95,13 +95,13 @@ int	history_substitution(char **str) // ret should determine if command runs or 
 		{
 			; // quick_substitution
 		}
-
+		/*
 		else if (start_word_designator((*str)[i]))
 		{
 			;//start_substitution("!", &i));
 			// get_entry_word(get_history_entry("!", &i), &(*str)[i], &i);
 			// modifiers
-		}
+		}*/
 		i++;
 	}
 	return (0);
