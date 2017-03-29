@@ -1,6 +1,6 @@
-#include <libft.h>
-#include "shell_env.h"
-#include "abstract_list.h"
+# include <libft.h>
+# include "shell_env.h"
+# include "abstract_list.h"
 
 static size_t	get_number_of_exported()
 {
@@ -74,14 +74,14 @@ static char		**create_envp(t_variable *e, size_t size)
 
 char	**get_variables_for_execution(t_variable *assignments)
 {
-	size_t	size;
-	size_t	reassigned;
+	size_t		size;
+	size_t		reassigned;
+	char		**envp;
+	t_variable	*e;
 
-	t_variable	*e = get_shell_env()->variables;
-	t_variable	*ee = (t_variable *)list_dup_until((t_abstract_list*)e, NULL, sizeof(t_variable));
-
+	e = copy_variable(get_shell_env()->variables);
 	size = get_number_of_exported();
-	reassigned = number_in_assignment(ee, assignments);
+	reassigned = number_in_assignment(e, assignments);
 	if (assignments)
 		size += list_count((t_abstract_list *)assignments) - reassigned;
 	if (!size)
@@ -89,8 +89,10 @@ char	**get_variables_for_execution(t_variable *assignments)
 
 	while (assignments)
 	{
-		setenv_as(&ee, assignments->name, assignments->value);
+		setenv_as(&e, assignments->name, assignments->value);
 		assignments = assignments->next;
 	}
-	return (create_envp(ee, size));
+	envp = create_envp(e, size);
+	delete_all_variables(&e);
+	return (envp);
 }
