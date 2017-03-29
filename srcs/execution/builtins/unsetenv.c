@@ -10,7 +10,7 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 	env = &get_shell_env()->variables;
 	if (argc > 1)
 	{
-		builtin_unsetenv_as(env, argc, argv);
+		unsetenv_as(env, argc, argv);
 	}
 	else
 	{
@@ -19,7 +19,7 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 	return (STATUS_SUCCESS);
 }
 
-BUILTIN_RET 		builtin_unsetenv_as(t_variable **env, BUILTIN_ARGS)
+BUILTIN_RET 		unsetenv_as(t_variable **env, BUILTIN_ARGS)
 {
 	size_t		i;
 

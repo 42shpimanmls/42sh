@@ -22,7 +22,7 @@ BUILTIN_RET			builtin_history(BUILTIN_ARGS);
 **	
 */
 
-BUILTIN_RET 		builtin_setenv_as(t_variable **env, BUILTIN_ARGS);
-BUILTIN_RET 		builtin_unsetenv_as(t_variable **env, BUILTIN_ARGS);
+BUILTIN_RET 		setenv_as(t_variable **env, char *name, char*value);
+BUILTIN_RET 		unsetenv_as(t_variable **env, BUILTIN_ARGS);
 
 #endif

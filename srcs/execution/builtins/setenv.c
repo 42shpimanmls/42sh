@@ -5,7 +5,7 @@
 
 #include "init/init.h"  // replace by envHelper
 
-BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS)
+BUILTIN_RET		builtin_setenv(BUILTIN_ARGS)
 {
 	t_variable	**env;
 
@@ -13,7 +13,7 @@ BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS)
 
 	if (argc == 3)
 	{
-		builtin_setenv_as(env, 3, (char *[]){argv[0], argv[1], argv[2], NULL});
+		setenv_as(env, argv[1], argv[2]);
 	}
 	else
 	{
@@ -22,16 +22,16 @@ BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS)
 	return (STATUS_SUCCESS);
 }
 
-BUILTIN_RET 		builtin_setenv_as(t_variable **env, BUILTIN_ARGS)
+BUILTIN_RET 	setenv_as(t_variable **env, char *name, char*value)
 {
-	if (argc == 3 && ft_strlen(argv[1]) > 0)
+	if (env && ft_strlen(name) > 0)
 	{
-		if (check_if_variable_exist(*env, argv[1]))
+		if (check_if_variable_exist(*env, name))
 		{
-			builtin_unsetenv_as(env, 2,(char *[]){argv[0], argv[1], NULL});
+			unsetenv_as(env, 2,(char *[]){"unsetenv", name, NULL});
 		}
 		list_push_back((t_abstract_list**)&env,
-			(t_abstract_list*)create_variable(argv[1], argv[2], true));
+			(t_abstract_list*)create_variable(name, value, true));
 	}
 	return (STATUS_SUCCESS);
 }
