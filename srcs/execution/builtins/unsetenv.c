@@ -6,11 +6,16 @@
 BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 {
 	t_variable	**env;
+	size_t		i;
 
 	env = &get_shell_env()->variables;
 	if (argc > 1)
 	{
-		unsetenv_as(env, argc, argv);
+		i = 0;
+		while (argv[++i])
+		{
+			unsetenv_as(env, argv[i]);
+		}
 	}
 	else
 	{
@@ -19,17 +24,8 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 	return (STATUS_SUCCESS);
 }
 
-BUILTIN_RET 		unsetenv_as(t_variable **env, BUILTIN_ARGS)
+void	unsetenv_as(t_variable **env, char *name)
 {
-	size_t		i;
-
-	if (argc > 1)
-	{
-		i = 0;
-		while (argv[++i])
-		{
-			pop_variable_by_name(env, argv[i]);
-		}
-	}
-	return (STATUS_SUCCESS);
+	if (env && ft_strlen(name) > 0)
+		pop_variable_by_name(env, name);
 }
