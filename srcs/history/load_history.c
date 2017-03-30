@@ -25,9 +25,8 @@ t_history	*create_history_entry(char *line)
 {
 	t_history *new;
 
-	if (line && *line)
+	if (line && ft_strcmp(line, "\n"))
 	{
-		ft_putendl("test");
 		new = (t_history *)memalloc_or_die(sizeof(t_history));
 		new->line = ft_strdup(line);
 		new->appended = false;
