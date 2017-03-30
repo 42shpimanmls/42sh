@@ -88,6 +88,7 @@ char	*get_history_entry(char *designator, t_uint *end)
 			(*end)++;
 		return (get_nth_entry(history, -1));
 	}
+
 	// !n command line n   / !-n command n lines back
 	else if (ft_isdigit(*designator) || *designator == '-')
 	{

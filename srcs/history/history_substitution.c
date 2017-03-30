@@ -27,35 +27,37 @@ void	find_and_replace(char **str, char *to_find, char *replace)
 	ft_strdel(&tmp2);
 }
 
-int	 	start_substitution(char **str, t_uint *start)
+int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 {
-	char	*hist_entry;
+	// char	*hist_entry;
 	char	*to_sub;
 	t_uint	end;
 
 	end = *start;
-	if (!(hist_entry = get_history_entry(&(*str)[*start + 1], &end)))
+	if (!hist_entry)
 	{
-		error_builtin(NULL, ft_strsub(*str, *start, end - *start + 1), EV_NOT_FOUND); // RET
-		return -1;
+		if (!(hist_entry = get_history_entry(&(*str)[*start + 1], &end)))
+		{
+			error_builtin(NULL, ft_strsub(*str, *start, end - *start + 1), EV_NOT_FOUND); // RET
+			// return -1;
+		}
+		end++;
 	}
-	end++;
-	/* debug
-	 ft_putstr("matched event = \"");
-	 ft_putstr(hist_entry);
-	 ft_putendl("\"");
-	 */
+	else
+		end = *start + 2;
 	if (start_word_designator((*str)[end]))
 	{
 		if (get_entry_word(&hist_entry, &(*str)[end], &end) < 0)
-			return (-1); // error
-		// if (start_word_designator((*str)[end]))
-			// ;// modify_hist(&hist_event);
+			return (-1); // error set
 	}
-	to_sub = ft_strsub(*str, *start, end - *start);
-	find_and_replace(str, to_sub, hist_entry);
-	*start = end;
-	return (0);
+	if (get_error() == NO_ERROR)
+	{
+		to_sub = ft_strsub(*str, *start, end - *start);
+		find_and_replace(str, to_sub, hist_entry);
+		*start = end;
+		return (0);
+	}
+	return (-1);
 }
 
 static bool is_blank_equal_ret(char c)
@@ -82,10 +84,16 @@ int	history_substitution(char **str) // ret should determine if command runs or 
 			// !# line typed so far
 			if ((*str)[i + 1] && (*str)[i + 1] == '#')
 			{
-				; // dup + join str
+				if (i > 0)
+					start_substitution(str, &i, ft_strsub(*str, 0, i));
+				else
+				{
+					ft_strdel(str);
+					*str = ft_strdup("\n");
+				}
 			}
-			if (!is_blank_equal_ret((*str)[i + 1]))
-				if (start_substitution(str, &i) < 0)
+			else if (!is_blank_equal_ret((*str)[i + 1]))
+				if (start_substitution(str, &i, NULL) < 0) // use errno
 					return (-1);
 			// go to end of substituted
 		}
@@ -95,13 +103,6 @@ int	history_substitution(char **str) // ret should determine if command runs or 
 		{
 			; // quick_substitution
 		}
-		/*
-		else if (start_word_designator((*str)[i]))
-		{
-			;//start_substitution("!", &i));
-			// get_entry_word(get_history_entry("!", &i), &(*str)[i], &i);
-			// modifiers
-		}*/
 		i++;
 	}
 	return (0);
