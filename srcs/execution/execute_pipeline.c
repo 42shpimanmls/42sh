@@ -29,7 +29,9 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 
 t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 {
-	t_error_id ret;
+	t_error_id	ret;
+	extern char	**environ;
+	char		**environ_backup;
 
 	ret = NO_ERROR;
 	if (cmd != NULL)
@@ -38,9 +40,13 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 		//expand_words(&cmd->argv);
 		//redirect(cmd->redirections);
 		//expand_assignments_values(cmd->assignments);
+		environ_backup = environ;
+		environ = get_variables_for_execution(cmd->assignments);
 		ret = execute_builtin(cmd, lvl);
 		if (ret == NO_SUCH_BUILTIN)
 			ret = execute_file(cmd, lvl);
+		ft_freetabchar(environ);
+		environ = environ_backup;
 	}
 	return (ret);
 }
