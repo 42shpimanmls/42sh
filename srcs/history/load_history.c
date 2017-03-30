@@ -16,6 +16,7 @@ void add_to_history_list(t_history **list, t_history *new)
 		tmp->next = new;
 		new->prev = tmp;
 	}
+	ft_putendl("ADDED");
 }
 
 t_history	*create_history_entry(char *line)

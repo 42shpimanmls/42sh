@@ -21,13 +21,13 @@ static void		main_loop(void)
 		ft_strdel(&shell_env->input_string);
 		return ;
 	}
-	add_to_history_list(&shell_env->history, create_history_entry(shell_env->input_string));
 	break_input();
 	if (get_error() != NO_ERROR)
 		return ;
 	parse_input();
 	if (get_error() != NO_ERROR)
 		return ;
+	add_to_history_list(&shell_env->history, create_history_entry(shell_env->input_string));
 	ft_strdel(&get_shell_env()->input_string);
 	if (get_error() != NO_ERROR)
 		return ;

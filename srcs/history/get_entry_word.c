@@ -18,10 +18,13 @@ char	*get_last_word(char *line)
 		!! bla bli blu ' => tokenizer returns null => create flag?
 	*/
 
-	words = tokenize(line);
-	while (words->next)
-		words = words->next;
-	return (words->str);
+	if ((words = tokenize(line)))
+	{
+		while (words->next)
+			words = words->next;
+		return (words->str);
+	}
+	return (NULL);
 }
 
 char	*word_range_collapse(t_token *words, t_uint nb_wds, bool empty_ok)
@@ -51,13 +54,16 @@ char	*get_word_range(char *line, t_range *range)
 	t_token *words;
 	t_uint	nb_wds;
 
-	words = tokenize(line);
-	if (range->end < 0)
-		range->end += list_count((t_abstract_list *)words);
-	nb_wds = range->end - range->start;
-	if (!list_goto_n((t_abstract_list **)&words, range->start))
-		return (NULL);
-	return (word_range_collapse(words, nb_wds, range->empty_ok));
+	if ((words = tokenize(line)))
+	{
+		if (range->end < 0)
+			range->end += list_count((t_abstract_list *)words);
+		nb_wds = range->end - range->start;
+		if (!list_goto_n((t_abstract_list **)&words, range->start))
+			return (NULL);
+		return (word_range_collapse(words, nb_wds, range->empty_ok));
+	}
+	return (NULL);
 }
 
 char	*get_nth_word(char *line, t_uint n)
@@ -165,7 +171,7 @@ void	parse_word_designators(char *str, int *i, char **words, t_range *range, cha
 	(*i)++;
 }
 
-int		get_entry_word(char **entry, char *str, t_uint *end)
+int		get_entry_word(char **entry, char *str, t_uint *end) // ret void
 {
 	int 	i;
 	char	*words;
@@ -212,6 +218,9 @@ int		get_entry_word(char **entry, char *str, t_uint *end)
 		else
 			parse_word_designators(str, &i, &words, &range, entry);
 	}
+	/*
+		other function
+	*/
 		(*end) += i;
 		if (!words)
 		{
