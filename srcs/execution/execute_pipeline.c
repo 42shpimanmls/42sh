@@ -6,25 +6,30 @@
 #include "pipe.h"
 #include "errno.h"
 #include <stdio.h>
+#include "expansion/expansion.h"
 
 
 t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 {
+	t_error_id	ret;
+
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "executing file %s\n", cmd->argv[0]);
 	if (enter_subshell() == FORKED_IN_CHILD)
 	{
 		execvp(cmd->argv[0], cmd->argv);
-		print_n_char_fd(' ', (lvl) * 2, 2);
-		dprintf(2, "error while executing file: ");
+		print_n_char_fd(' ', (lvl + 1) * 2, 2);
 		perror("");
-		return (errno);
+		ret = errno;
 	}
 	else
 	{
 		wait_for_childs();
-		return (NO_ERROR);
+		ret = NO_ERROR;
 	}
+	print_n_char_fd(' ', (lvl) * 2, 2);
+	dprintf(2, "done executing file %s, %s\n", cmd->argv[0], ret == NO_ERROR ? "ok" : "error");
+	return (ret);
 }
 
 t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
@@ -36,17 +41,25 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 	ret = NO_ERROR;
 	if (cmd != NULL)
 	{
+		print_n_char_fd(' ', (lvl) * 2, 2);
+		dprintf(2, "executing simple command %s\n", cmd->argv[0]);
 		// EXECUTION CORE
-		//expand_words(&cmd->argv);
+		print_n_char_fd(' ', (lvl + 1) * 2, 2);
+		dprintf(2, "expanding simple command %s\n", cmd->argv[0]);
+		expand_cmd_words(&cmd->argv);
+		print_n_char_fd(' ', (lvl + 1) * 2, 2);
+		dprintf(2, "done expanding simple command %s\n", cmd->argv[0]);
 		//redirect(cmd->redirections);
 		//expand_assignments_values(cmd->assignments);
 		environ_backup = environ;
 		environ = get_variables_for_execution(cmd->assignments);
-		ret = execute_builtin(cmd, lvl);
+		ret = execute_builtin(cmd, lvl + 1);
 		if (ret == NO_SUCH_BUILTIN)
-			ret = execute_file(cmd, lvl);
+			ret = execute_file(cmd, lvl + 1);
 		ft_freetabchar(environ);
 		environ = environ_backup;
+		print_n_char_fd(' ', (lvl) * 2, 2);
+		dprintf(2, "done executing simple command %s, %s\n", cmd->argv[0], ret == NO_ERROR ? "ok" : "error");
 	}
 	return (ret);
 }
