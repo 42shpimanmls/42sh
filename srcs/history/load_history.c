@@ -6,29 +6,36 @@ void add_to_history_list(t_history **list, t_history *new)
 {
 	t_history *tmp;
 
-	if (*list == NULL)
-		*list = new;
-	else
+	if (new)
 	{
-		tmp = *list;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-		new->prev = tmp;
+		if (*list == NULL)
+			*list = new;
+		else
+		{
+			tmp = *list;
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+			new->prev = tmp;
+		}
 	}
-	ft_putendl("ADDED");
 }
 
 t_history	*create_history_entry(char *line)
 {
 	t_history *new;
 
-	new = (t_history *)memalloc_or_die(sizeof(t_history));
-	new->line = ft_strdup(line);
-	new->appended = false;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
+	if (line && *line)
+	{
+		ft_putendl("test");
+		new = (t_history *)memalloc_or_die(sizeof(t_history));
+		new->line = ft_strdup(line);
+		new->appended = false;
+		new->next = NULL;
+		new->prev = NULL;
+		return (new);
+	}
+	return (NULL);
 }
 
 void	load_history(t_shell_env *shell_env, char *filename, int position)
