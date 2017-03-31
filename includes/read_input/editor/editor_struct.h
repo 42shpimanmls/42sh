@@ -39,7 +39,7 @@ typedef struct			s_editor
 	t_vec2i				pos;
 	size_t				cursor_position;
 	size_t				string_size;
-	int					prompt_size;
+	size_t				prompt_size;
 	char				*prompt;
 	bool				need_refresh;
 }						t_editor;

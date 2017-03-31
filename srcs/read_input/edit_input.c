@@ -16,6 +16,16 @@ static void	add_buffer_to_string(t_editor *ed, char buf[])
 	}
 }
 
+#include <stdio.h>
+
+void		print_cursor_vector(t_editor *ed)
+{
+	t_vec2i						vec;
+
+	vec = get_cursor_vector(ed);
+	dprintf(2, "cx: %d, cy: %d\n", vec.x, vec.y);
+}
+
 char 		*edit_input()
 {
 	char						buf[EVENT_STR_MAX_LEN + 1];
@@ -29,7 +39,7 @@ char 		*edit_input()
 	init_editor();
 	ed->need_refresh = true;
 	refresh_line(ed);
-
+	print_cursor_vector(ed);
 	while ((ret = read(0, buf, EVENT_STR_MAX_LEN)) > 0)
 	{
 		buf[ret] = '\0';
@@ -45,6 +55,7 @@ char 		*edit_input()
 			add_buffer_to_string(ed, buf);
 		}
 		refresh_line(ed);
+		print_cursor_vector(ed);
 	}
 
 	ft_close_termcaps();
