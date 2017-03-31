@@ -19,4 +19,8 @@ void		move_start(t_editor *ed);
 void		refresh_line(t_editor *ed);
 void		free_editor(t_editor *ed);
 
+void		put_highlighted_line(t_editor *ed, char* line);
+void		swap_position_if_needed(t_editor *ed);
+void		clear_selected_pos(t_editor *ed);
+
 #endif

@@ -30,7 +30,7 @@ size_t		find_index_at_vector(EV_CB_ARGS, int ox, int oy)
 t_vec2i		get_cursor_vector(EV_CB_ARGS)
 {
 	char	*str;
-	int		i;
+	size_t	i;
 	t_vec2i	vec;
 
 	str = get_string_from_list(ed->string);
@@ -132,6 +132,7 @@ EV_CB_RET 	event_cursor_down(EV_CB_ARGS)
 {
 	t_vec2i pos;
 
+	// ed->need_refresh = true;
 	pos = get_cursor_vector(ed);
 	ed->cursor_position = find_index_at_vector(ed, pos.x, pos.y + 1);
 	move_cursor_to(pos, get_cursor_vector(ed), ed->term);

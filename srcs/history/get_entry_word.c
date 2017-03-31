@@ -14,6 +14,10 @@ char	*get_last_word(char *line)
 {
 	t_token *words;
 
+	/*
+		!! bla bli blu ' => tokenizer returns null => create flag?
+	*/
+
 	words = tokenize(line);
 	while (words->next)
 		words = words->next;
@@ -116,18 +120,6 @@ int 	parse_range(char *str, int *i, t_range *range)
 		}
 	}
 	return (0);
-}
-
-void	print_range(t_range *range)
-{
-	ft_putendl("<range>");
-	ft_putendl("start: ");
-	ft_putnbr(range->start);
-	ft_putchar('\n');
-	ft_putendl("end: ");
-	ft_putnbr(range->end);
-	ft_putchar('\n');
-	ft_putendl("</range>");
 }
 
 int		get_entry_word(char **entry, char *str, t_uint *end)

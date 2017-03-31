@@ -31,5 +31,7 @@ size_t			count_token_types(t_token const *tokens
 bool			token_is_one_of_types(t_token const *token
 	, t_token_id const *types, size_t nbr_types);
 t_token			*trim_newlines(t_token const *tokens);
+t_token			*copy_token(t_token const *src);
+t_token			*copy_all_tokens(t_token const *src);
 
 #endif

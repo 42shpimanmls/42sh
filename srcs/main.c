@@ -3,8 +3,11 @@
 #include "init/init.h"
 #include <stdio.h>
 #include "errors.h"
-#include "history_substitutions.h"
+#include "history/history_substitutions.h"
 #include "parse_input/print_syntax_tree.h"
+#include "execution/execute_syntax_tree.h"
+
+#include "variable.h" //remove
 
 static void		main_loop(void)
 {
@@ -28,16 +31,26 @@ static void		main_loop(void)
 	if (get_error() != NO_ERROR)
 		return ;
 	ft_strdel(&get_shell_env()->input_string);
-	print_command_list(get_shell_env()->syntax_tree, 0);
-	/*if (get_error() != NO_ERROR)
-		return ;*/
-	//execute_tree();
+	if (get_error() != NO_ERROR)
+		return ;
+	execute_command_list(get_shell_env()->syntax_tree);
+	delete_command_list(&get_shell_env()->syntax_tree);
 }
 
 int				main(int ac, char **av)
 {
 	setbuf(stdout, NULL);
+	setbuf(stderr, NULL);
 	init(ac, av);
+
+	////////TEST GET FOR EXEC ///////////////////
+	// t_variable	*e = create_variable("PWD", "VALUE1", false);
+	// t_variable	*e1 = create_variable("FCK", "VALUEF", false);
+	// e->next = e1;
+	// char**tmp;
+	// tmp = get_variables_for_execution(e);
+	// ft_puttab(tmp);
+	///////////////////////////////////////////////
 	while (get_shell_env()->should_run)
 		main_loop();
 	print_name_and_error(get_error());

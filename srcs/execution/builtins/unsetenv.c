@@ -8,17 +8,24 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 	t_variable	**env;
 	size_t		i;
 
-	env = &get_shell_env()->variables;	
+	env = &get_shell_env()->variables;
 	if (argc > 1)
 	{
 		i = 0;
 		while (argv[++i])
 		{
-			pop_variable_by_name(env, argv[i]);
+			unsetenv_as(env, argv[i]);
 		}
 	}
 	else
 	{
 		ft_printf("Usage: unsetenv <key> ...\n");
 	}
+	return (STATUS_SUCCESS);
+}
+
+void	unsetenv_as(t_variable **env, char *name)
+{
+	if (env && ft_strlen(name) > 0)
+		pop_variable_by_name(env, name);
 }

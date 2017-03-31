@@ -14,7 +14,7 @@ void move_start(EV_CB_ARGS)
 	ft_putstr(ed->term->move_cursor_begining);
 }
 
-static void print_command_string(char const *prompt, t_string *cmd_str
+static void print_command_string(EV_CB_ARGS, char const *prompt, t_string *cmd_str
 	, size_t term_width)
 {
 	char	**lines;
@@ -29,7 +29,8 @@ static void print_command_string(char const *prompt, t_string *cmd_str
 	u = 0;
 	while (lines[u] != NULL)
 	{
-		ft_putstr(lines[u]);
+		// ft_putstr(lines[u]);
+		put_highlighted_line(ed, lines[u]);
 		if (ft_strlen(lines[u]) % term_width == 0)
 			ft_putchar('\n');
 		if (lines[u + 1] != NULL)
@@ -42,7 +43,7 @@ void put_line(EV_CB_ARGS)
 {
 	char		*line;
 
-	print_command_string(ed->prompt, ed->string, ed->term->width);
+	print_command_string(ed, ed->prompt, ed->string, ed->term->width);
 	line = get_string_from_list(ed->string);
 	ed->old_position = ed->cursor_position;
 	ed->cursor_position = ft_strlen(line);

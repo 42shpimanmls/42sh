@@ -2,11 +2,24 @@
 # include "read_input/editor/editor.h"
 # include "read_input/event_callbacks/event_callback_def.h"
 # include "read_input/termcap/init_deinit.h"
+# include "abstract_list.h"
 
-char *edit_input()
+static void	add_buffer_to_string(t_editor *ed, char buf[])
+{
+	size_t	i;
+
+	i = -1;
+	while (buf[++i])
+	{
+		if (ft_isprint(buf[i]) || buf[i] == '\t')
+			add_to_string(ed, buf[i]);
+	}
+}
+
+char 		*edit_input()
 {
 	char						buf[EVENT_STR_MAX_LEN + 1];
-	ssize_t						ret;
+	int							ret;
 	t_event_callback_def const	*def;
 	t_editor					*ed;
 	char						*line;
@@ -29,8 +42,7 @@ char *edit_input()
 		}
 		else
 		{
-			if (ft_isprint(buf[0]))
-				add_to_string(ed, buf[0]);
+			add_buffer_to_string(ed, buf);
 		}
 		refresh_line(ed);
 	}
