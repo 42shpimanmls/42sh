@@ -92,20 +92,10 @@ char	*get_history_entry(char *designator, t_uint *end)
 	// !n command line n   / !-n command n lines back
 	else if (ft_isdigit(*designator) || *designator == '-')
 	{
-		/* separate function */
 		(*end)++;
-		if (!ft_isdigit(designator[*end]) && designator[*end + 1] && ft_isdigit(designator[*end + 1]))
-		{
-			while (designator[*end] && !start_word_designator(designator[*end]) \
-					&& !is_posix_blank(designator[*end]))
-				(*end)++;
-		}
 		n = ft_atoi(designator);
-		while (ft_isdigit(designator[*end]) && !start_word_designator(designator[*end]) \
-				&& !is_posix_blank(designator[*end]))
-			(*end)++;
+		*end += number_len(designator);
 		return (get_nth_entry(history, n));
-		/**********************/
 	}
 
 	//!?str[? or \n] most recent command containing str

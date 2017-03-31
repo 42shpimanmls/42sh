@@ -5,7 +5,9 @@ size_t	number_len(char *str)
 	size_t i;
 
 	i = 0;
-	while (ft_isdigit(str[i]))
+	if (str[i] == '-')
+		i++;
+	while (str[i] && ft_isdigit(str[i]))
 		i++;
 	return (i);
 }

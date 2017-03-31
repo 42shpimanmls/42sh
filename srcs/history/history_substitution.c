@@ -29,7 +29,6 @@ void	find_and_replace(char **str, char *to_find, char *replace)
 
 int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 {
-	// char	*hist_entry;
 	char	*to_sub;
 	t_uint	end;
 
@@ -38,18 +37,15 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 	{
 		if (!(hist_entry = get_history_entry(&(*str)[*start + 1], &end)))
 		{
-			error_builtin(NULL, ft_strsub(*str, *start, end - *start + 1), EV_NOT_FOUND); // RET
-			// return -1;
+			error_builtin(NULL, ft_strsub(*str, *start, end - *start), EV_NOT_FOUND);
+			// + 1
 		}
 		end++;
 	}
 	else
 		end = *start + 2;
 	if (start_word_designator((*str)[end]))
-	{
-		if (get_entry_word(&hist_entry, &(*str)[end], &end) < 0)
-			return (-1); // error set
-	}
+		get_entry_word(&hist_entry, &(*str)[end], &end);
 	if (get_error() == NO_ERROR)
 	{
 		to_sub = ft_strsub(*str, *start, end - *start);
@@ -93,8 +89,11 @@ int	history_substitution(char **str) // ret should determine if command runs or 
 				}
 			}
 			else if (!is_blank_equal_ret((*str)[i + 1]))
+			{
+				// i++;
 				if (start_substitution(str, &i, NULL) < 0) // use errno
 					return (-1);
+			}
 			// go to end of substituted
 		}
 
@@ -105,5 +104,5 @@ int	history_substitution(char **str) // ret should determine if command runs or 
 		}
 		i++;
 	}
-	return (0);
+	return (get_error());
 }

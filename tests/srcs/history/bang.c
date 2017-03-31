@@ -7,7 +7,7 @@
 
 
 #define NB_SUB_TESTS 28
-#define NB_ERR_TESTS 4
+#define NB_ERR_TESTS 5
 
 #define BANG_TEST_VERBOSE
 
@@ -106,7 +106,8 @@ static char	**get_bang_error_tests()
 		"echo !0",
 		"!-0",
 		"!6534",
-		"!!:40"
+		"!!:40",
+		"test !45"
 	};
 	return (error_tests);
 }
