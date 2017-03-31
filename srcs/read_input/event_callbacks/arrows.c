@@ -1,67 +1,6 @@
 #include "event_callback_def.h"
 #include <libft.h>
 
-size_t		find_index_at_vector(EV_CB_ARGS, int ox, int oy)
-{
-	char	*str;
-	int		i;
-	t_vec2i	vec;
-
-	str = get_string_from_list(ed->string);
-	vec.x = ed->prompt_size;
-	vec.y = 0;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if ((vec.y >= oy && vec.x >= ox))
-			break ;
-		if (vec.x == ed->term->width - 1 || str[i] == '\n')
-		{
-			vec.x = 0;
-			vec.y++;
-		}
-		else
-			vec.x++;
-		i++;
-	}
-	return (i);
-}
-
-t_vec2i		get_cursor_vector(EV_CB_ARGS)
-{
-	char	*str;
-	size_t	i;
-	t_vec2i	vec;
-
-	str = get_string_from_list(ed->string);
-	vec.x = ed->prompt_size;
-	vec.y = 0;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (i == ed->cursor_position)
-			break ;
-		if (vec.x == ed->term->width - 1 || str[i] == '\n')
-		{
-			vec.x = 0;
-			vec.y++;
-		}
-		else
-			vec.x++;
-		i++;
-	}
-	return (vec);
-}
-
-t_vec2i		vec2i_sub(t_vec2i a, t_vec2i b)
-{
-	t_vec2i	result;
-
-	result.x = a.x - b.x;
-	result.y = a.y - b.y;
-	return (result);
-}
-
 void		move_cursor(t_vec2i	vec, t_term *term)
 {
 	if (vec.x > 0)

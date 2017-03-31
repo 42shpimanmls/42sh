@@ -3,12 +3,7 @@
 
 # include "shell_env.h"
 # include <stdbool.h>
-
-typedef struct			s_vec2i
-{
-	int					x;
-	int					y;
-}						t_vec2i;
+# include "vec2i.h"
 
 typedef struct			s_string
 {

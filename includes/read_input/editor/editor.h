@@ -2,6 +2,7 @@
 # define EDITOR_H
 
 # include "read_input/editor/editor_struct.h"
+# include "vec2i.h"
 
 t_editor	*init_editor();
 t_editor 	*get_editor();
@@ -22,5 +23,8 @@ void		free_editor(t_editor *ed);
 void		put_highlighted_line(t_editor *ed, char* line);
 void		swap_position_if_needed(t_editor *ed);
 void		clear_selected_pos(t_editor *ed);
+
+size_t		find_index_at_vector(t_editor *ed, int ox, int oy);
+t_vec2i		get_cursor_vector(t_editor *ed);
 
 #endif
