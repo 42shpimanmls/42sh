@@ -31,6 +31,7 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 {
 	char	*to_sub;
 	t_uint	end;
+	bool	should_run;
 
 	end = *start;
 	if (!hist_entry)
@@ -46,12 +47,14 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 		end = *start + 2;
 	if (start_word_designator((*str)[end]))
 		get_entry_word(&hist_entry, &(*str)[end], &end);
+	if ((*str)[end] == ':')
+		should_run = apply_modifiers(&(*str)[end], &hist_entry, &end);
 	if (get_error() == NO_ERROR)
 	{
 		to_sub = ft_strsub(*str, *start, end - *start);
 		find_and_replace(str, to_sub, hist_entry);
 		*start = end;
-		return (0);
+		return (should_run);
 	}
 	return (-1);
 }
@@ -67,7 +70,7 @@ static bool is_blank_equal_ret(char c)
 	unless ! is simple-quoted or quoted with backslash
 */
 
-int	history_substitution(char **str) // ret should determine if command runs or not (p modifier)
+int	history_substitution(char **str) // ret should be bool -> determine if command runs or not (p modifier)
 {
 	t_uint		i;
 
@@ -90,7 +93,6 @@ int	history_substitution(char **str) // ret should determine if command runs or 
 			}
 			else if (!is_blank_equal_ret((*str)[i + 1]))
 			{
-				// i++;
 				if (start_substitution(str, &i, NULL) < 0) // use errno
 					return (-1);
 			}

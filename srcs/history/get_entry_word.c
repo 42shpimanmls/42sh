@@ -213,7 +213,7 @@ int		get_entry_word(char **entry, char *str, t_uint *end) // ret void
 			else if (start_word_designator(str[i]))
 				parse_word_designators(str, &i, &words, &range, entry);
 			else
-				; // error unrecognized hist mod
+				return (0);
 		}
 		else
 			parse_word_designators(str, &i, &words, &range, entry);

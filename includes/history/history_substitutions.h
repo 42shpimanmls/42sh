@@ -24,6 +24,10 @@ char	*get_nth_word(char *line, t_uint n);
 int 	get_entry_word(char **entry, char *str, t_uint *end);
 bool	start_word_designator(char c);
 
+/*
+**			history_modifiers.c
+*/
 
+bool	apply_modifiers(char *modifiers, char **str, t_uint *end);
 
 #endif
