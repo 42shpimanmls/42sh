@@ -9,13 +9,13 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-void	find_and_replace(char **str, char *to_find, char *replace)
+void	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
 {
 	char	*tmp;
 	char	*tmp2;
 	t_uint	i;
 
-	tmp = str_in_str(to_find, *str, false);
+	tmp = str_in_str(to_find, *str, start, false);
 	i = tmp - *str;
 	tmp2 = ft_strsub(*str, 0, i);
 	tmp = ft_strjoin(tmp2, replace);
@@ -44,7 +44,7 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 		end++;
 	}
 	else
-		end = *start + 2;
+		end += 2;
 	if (start_word_designator((*str)[end]))
 		get_entry_word(&hist_entry, &(*str)[end], &end);
 	if ((*str)[end] == ':')
@@ -52,7 +52,7 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 	if (get_error() == NO_ERROR)
 	{
 		to_sub = ft_strsub(*str, *start, end - *start);
-		find_and_replace(str, to_sub, hist_entry);
+		find_and_replace(str, to_sub, hist_entry, *start);
 		*start = end;
 		return (should_run);
 	}
@@ -73,18 +73,34 @@ static bool is_blank_equal_ret(char c)
 int	history_substitution(char **str) // ret should be bool -> determine if command runs or not (p modifier)
 {
 	t_uint		i;
+	char		*tmp;
+	bool 		quoted;
 
 	i = 0;
+	quoted = 0;
+	set_error(NO_ERROR);
 	while ((*str)[i])
 	{
+		if ((*str)[i] == '\\')
+			i++;
+		else if ((*str)[i] == '\'')
+		{
+			quoted = !quoted;
+		}
 		// '!' starts a history substitution
-		if (is_bang((*str)[i]))
+		else if (is_bang((*str)[i]) && !quoted)
 		{
 			// !# line typed so far
 			if ((*str)[i + 1] && (*str)[i + 1] == '#')
 			{
 				if (i > 0)
 					start_substitution(str, &i, ft_strsub(*str, 0, i));
+				else if (ft_strlen(*str) > 2)
+				{
+					tmp = ft_strsub(*str, 2, ft_strlen(*str) - 2);
+					ft_strdel(str);
+					*str = ft_strdup(tmp);
+				}
 				else
 				{
 					ft_strdel(str);
@@ -93,10 +109,10 @@ int	history_substitution(char **str) // ret should be bool -> determine if comma
 			}
 			else if (!is_blank_equal_ret((*str)[i + 1]))
 			{
+				ft_putnbr(i);
 				if (start_substitution(str, &i, NULL) < 0) // use errno
 					return (-1);
 			}
-			// go to end of substituted
 		}
 
 		// case [no bang] ˆstr1ˆstr2[ˆ||\n] same as !!:s/str1/str2

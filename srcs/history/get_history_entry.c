@@ -60,8 +60,8 @@ static char		*find_in_history(bool must_start, t_history *history, char *str, t_
 	find = ft_strsub(str, 0, i);
 	while (history)
 	{
-		if ((must_start && str_in_str(find, history->line, true)) \
-			|| (!must_start && str_in_str(find, history->line, false)))
+		if ((must_start && str_in_str(find, history->line, 0, true)) \
+			|| (!must_start && str_in_str(find, history->line, 0, false)))
 		{
 			ft_strdel(&find);
 			return (ft_strtrim(history->line)); // \n

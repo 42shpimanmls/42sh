@@ -6,10 +6,10 @@
 #include "ftsh.h"
 
 
-#define NB_SUB_TESTS 28
+#define NB_SUB_TESTS 34
 #define NB_ERR_TESTS 5
 
-#define BANG_TEST_VERBOSE
+// #define BANG_TEST_VERBOSE
 
 /*
 	to test your own strings:
@@ -54,7 +54,13 @@ static char	**get_bang_tests()
 		"!!:$",
 		"!*",
 		"!^",
-		"!-"};// "!#" !!%"
+		"!-",
+		"un deux \"!#",
+		"!#",
+		"!#test",
+		"\\!#",
+		"test '!4'",
+		"test '!#cocou' !2"};// !!%"
 
 	i = 0;
 	malloced_tests = malloc(sizeof(char *) * NB_SUB_TESTS);
@@ -96,7 +102,13 @@ static char **get_bang_results()
 		"cinq",
 		"deux trois quatre cinq",
 		"deux",
-		"!-"};
+		"!-",
+		"un deux \"un deux \"",
+		"\n",
+		"test",
+		"\\!#",
+		"test '!4'",
+		"test '!#cocou' two"};
 	return (results);
 }
 
