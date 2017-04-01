@@ -10,15 +10,59 @@
 
 #include "history.h"
 
+
+/*
+	slightly modified tokenizer to handle 'bli bla "!!' case
+	(bang isn't quoted with double quotes, so substitution IS made)
+*/
+
+t_token			*tokenize_for_substitution(char const *input)
+{
+	t_token						*result;
+	t_tokenizer_state			state;
+
+	set_error(NO_ERROR);
+	result = NULL;
+	if (input != NULL)
+	{
+		ft_bzero(&state, sizeof(t_tokenizer_state));
+		state.input = ft_strdup(input);
+		state.current_char = state.input;
+		while (*state.current_char != '\0')
+		{
+			apply_rules(&state);
+			if (get_error() != NO_ERROR)
+			{
+				if (get_error() == UNMATCHED_DOUBLE_QUOTE)
+				{
+					set_error(NO_ERROR);
+					break;
+				}
+				else
+				{
+					free(state.input);
+					delete_all_tokens(&state.result);
+					return (NULL);
+				}
+			}
+		}
+		// rule 1
+#ifdef TOKENIZER_DEBUG
+		print_tokenizer_state(&state);
+		ft_putstr("rule 1 aka I'M DONE MOTHERF***ERZ\n");
+#endif
+		delimit_token(&state);
+		result = state.result;
+		free(state.input);
+	}
+	return (result);
+}
+
 char	*get_last_word(char *line)
 {
 	t_token *words;
 
-	/*
-		!! bla bli blu ' => tokenizer returns null => create flag?
-	*/
-
-	if ((words = tokenize(line)))
+	if ((words = tokenize_for_substitution(line)))
 	{
 		while (words->next)
 			words = words->next;
@@ -54,8 +98,9 @@ char	*get_word_range(char *line, t_range *range)
 	t_token *words;
 	t_uint	nb_wds;
 
-	if ((words = tokenize(line)))
+	if ((words = tokenize_for_substitution(line)))
 	{
+		print_tokens(words);
 		if (range->end < 0)
 			range->end += list_count((t_abstract_list *)words);
 		nb_wds = range->end - range->start;

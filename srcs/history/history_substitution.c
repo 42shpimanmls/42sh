@@ -109,7 +109,6 @@ int	history_substitution(char **str) // ret should be bool -> determine if comma
 			}
 			else if (!is_blank_equal_ret((*str)[i + 1]))
 			{
-				ft_putnbr(i);
 				if (start_substitution(str, &i, NULL) < 0) // use errno
 					return (-1);
 			}
