@@ -32,6 +32,7 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 
 	if (ed->history)
 	{
+		clear_selected_pos(ed);
 		clear_line(ed);
 		list_free((t_abstract_list **)&ed->string);
 		trimed = ft_strtrim(ed->history->line);
@@ -47,6 +48,7 @@ EV_CB_RET 	event_history_down(EV_CB_ARGS)
 {
 	char	*trimed;
 
+	clear_selected_pos(ed);
 	clear_line(ed);
 	list_free((t_abstract_list **)&ed->string);
 	if (ed->history && ed->history->next)

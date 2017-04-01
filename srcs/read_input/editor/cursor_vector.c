@@ -54,5 +54,6 @@ t_vec2i		get_cursor_vector(t_editor *ed)
 			vec.x++;
 		i++;
 	}
+	free(str);
 	return (vec);
 }

@@ -17,6 +17,7 @@ void move_start(EV_CB_ARGS)
 static void print_command_string(EV_CB_ARGS, char const *prompt, t_string *cmd_str
 	, size_t term_width)
 {
+	(void)term_width;
 	char	**lines;
 	char	*str;
 	char	*tmp;
@@ -26,10 +27,10 @@ static void print_command_string(EV_CB_ARGS, char const *prompt, t_string *cmd_s
 	str = ft_strjoin(prompt, tmp);
 	free(tmp);
 	lines = ft_strsplit(str, '\n');
+	free(str);
 	u = 0;
 	while (lines[u] != NULL)
 	{
-		// ft_putstr(lines[u]);
 		put_highlighted_line(ed, lines[u]);
 		if (ft_strlen(lines[u]) % term_width == 0)
 			ft_putchar('\n');
@@ -37,6 +38,7 @@ static void print_command_string(EV_CB_ARGS, char const *prompt, t_string *cmd_s
 			ft_putchar('\n');
 		u++;
 	}
+	ft_freetabchar(lines);
 }
 
 void put_line(EV_CB_ARGS)

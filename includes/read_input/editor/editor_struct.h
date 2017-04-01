@@ -8,7 +8,6 @@
 typedef struct			s_string
 {
 	struct s_string		*next;
-	struct s_string		*prev;  // not link !!!!!!!!!!!!!!!
 	char				c;
 }						t_string;
 
