@@ -6,69 +6,27 @@
 #include "range.h"
 #include "errors.h"
 
-#include "break_input/tokenizer.h"
-
 #include "history.h"
+#include "history_substitutions.h"
 
 
-/*
-	slightly modified tokenizer to handle 'bli bla "!!' case
-	(bang isn't quoted with double quotes, so substitution IS made)
-*/
-
-t_token			*tokenize_for_substitution(char const *input)
-{
-	t_token						*result;
-	t_tokenizer_state			state;
-
-	set_error(NO_ERROR);
-	result = NULL;
-	if (input != NULL)
-	{
-		ft_bzero(&state, sizeof(t_tokenizer_state));
-		state.input = ft_strdup(input);
-		state.current_char = state.input;
-		while (*state.current_char != '\0')
-		{
-			apply_rules(&state);
-			if (get_error() != NO_ERROR)
-			{
-				if (get_error() == UNMATCHED_DOUBLE_QUOTE)
-				{
-					set_error(NO_ERROR);
-					break;
-				}
-				else
-				{
-					free(state.input);
-					delete_all_tokens(&state.result);
-					return (NULL);
-				}
-			}
-		}
-		// rule 1
-#ifdef TOKENIZER_DEBUG
-		print_tokenizer_state(&state);
-		ft_putstr("rule 1 aka I'M DONE MOTHERF***ERZ\n");
-#endif
-		delimit_token(&state);
-		result = state.result;
-		free(state.input);
-	}
-	return (result);
-}
 
 char	*get_last_word(char *line)
 {
 	t_token *words;
+	t_token *tmp;
+	char 	*word;
 
+	word = NULL;
 	if ((words = tokenize_for_substitution(line)))
 	{
-		while (words->next)
-			words = words->next;
-		return (words->str);
+		tmp = words;
+		while (tmp->next)
+			tmp = tmp->next;
+		word = ft_strdup(tmp->str);
+		delete_all_tokens(&words);
 	}
-	return (NULL);
+	return (word);
 }
 
 char	*word_range_collapse(t_token *words, t_uint nb_wds, bool empty_ok)
@@ -90,6 +48,7 @@ char	*word_range_collapse(t_token *words, t_uint nb_wds, bool empty_ok)
 		nb_wds--;
 
 	}
+	// free words
 	return (word_range);
 }
 
@@ -97,7 +56,9 @@ char	*get_word_range(char *line, t_range *range)
 {
 	t_token *words;
 	t_uint	nb_wds;
+	char 	*str;
 
+	str = NULL;
 	if ((words = tokenize_for_substitution(line)))
 	{
 		print_tokens(words);
@@ -106,9 +67,10 @@ char	*get_word_range(char *line, t_range *range)
 		nb_wds = range->end - range->start;
 		if (!list_goto_n((t_abstract_list **)&words, range->start))
 			return (NULL);
-		return (word_range_collapse(words, nb_wds, range->empty_ok));
+		str = word_range_collapse(words, nb_wds, range->empty_ok);
+		delete_all_tokens(&words);
 	}
-	return (NULL);
+	return (str);
 }
 
 char	*get_nth_word(char *line, t_uint n)

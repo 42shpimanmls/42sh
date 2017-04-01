@@ -54,6 +54,8 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 		to_sub = ft_strsub(*str, *start, end - *start);
 		find_and_replace(str, to_sub, hist_entry, *start);
 		*start = end;
+		ft_strdel(&hist_entry);
+		ft_strdel(&to_sub);
 		return (should_run);
 	}
 	return (-1);
@@ -109,8 +111,9 @@ int	history_substitution(char **str) // ret should be bool -> determine if comma
 			}
 			else if (!is_blank_equal_ret((*str)[i + 1]))
 			{
-				if (start_substitution(str, &i, NULL) < 0) // use errno
-					return (-1);
+				// if (
+				start_substitution(str, &i, NULL);// < 0) // use errno
+					// return (-1);
 			}
 		}
 

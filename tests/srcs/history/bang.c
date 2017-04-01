@@ -6,7 +6,7 @@
 #include "ftsh.h"
 
 
-#define NB_SUB_TESTS 35
+#define NB_SUB_TESTS 36
 #define NB_ERR_TESTS 5
 
 #define BANG_TEST_VERBOSE
@@ -61,7 +61,8 @@ static char	**get_bang_tests()
 		"\\!#",
 		"test '!4'",
 		"test '!#cocou' !2",
-		"bli bla \"!#:0"};// !!%"
+		"bli bla \"!#:2",
+		"bli bla \"test !#:2"};// !!%"
 
 	i = 0;
 	malloced_tests = malloc(sizeof(char *) * NB_SUB_TESTS);
@@ -110,7 +111,8 @@ static char **get_bang_results()
 		"\\!#",
 		"test '!4'",
 		"test '!#cocou' two",
-		"bli bla \"bli"};
+		"bli bla \"\"",
+		"bli bla \"test \"test"};
 	return (results);
 }
 

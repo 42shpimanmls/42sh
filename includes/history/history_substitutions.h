@@ -25,6 +25,12 @@ int 	get_entry_word(char **entry, char *str, t_uint *end);
 bool	start_word_designator(char c);
 
 /*
+**			history_tokenizer.c
+*/
+
+t_token			*tokenize_for_substitution(char const *input);
+
+/*
 **			history_modifiers.c
 */
 
