@@ -57,18 +57,22 @@ char	*get_word_range(char *line, t_range *range)
 	t_token *words;
 	t_uint	nb_wds;
 	char 	*str;
+	t_token	*tmp;
 
 	str = NULL;
 	if ((words = tokenize_for_substitution(line)))
 	{
-		print_tokens(words);
+		tmp  = words;
 		if (range->end < 0)
 			range->end += list_count((t_abstract_list *)words);
 		nb_wds = range->end - range->start;
 		if (!list_goto_n((t_abstract_list **)&words, range->start))
+		{
+			delete_all_tokens(&tmp);
 			return (NULL);
+		}
 		str = word_range_collapse(words, nb_wds, range->empty_ok);
-		delete_all_tokens(&words);
+		delete_all_tokens(&tmp);
 	}
 	return (str);
 }

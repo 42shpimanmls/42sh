@@ -68,6 +68,7 @@ static char		*find_in_history(bool must_start, t_history *history, char *str, t_
 		}
 		history = history->prev;
 	}
+	ft_strdel(&find);
 	return (NULL);
 }
 

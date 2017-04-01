@@ -58,6 +58,7 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 		ft_strdel(&to_sub);
 		return (should_run);
 	}
+	ft_strdel(&hist_entry);
 	return (-1);
 }
 
