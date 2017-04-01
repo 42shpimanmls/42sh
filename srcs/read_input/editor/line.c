@@ -1,18 +1,40 @@
 # include <libft.h>
 # include "read_input/event_callbacks/event_callback_def.h"
 
+void		print_cursor_vector(t_editor *ed);
+
 void move_start(EV_CB_ARGS)
 {
 	t_vec2i	vec;
 
 	vec = get_cursor_vector(ed);
-	while (vec.y > 0)
+	print_cursor_vector(ed);
+
+	if (vec.x > 0)
 	{
-		ft_putstr(ed->term->move_up);
-		vec.y--;
+		while (vec.y-- > 0)
+			ft_putstr(ed->term->move_up);
+	}
+	else
+	{
+		while (vec.y-- > 1)
+			ft_putstr(ed->term->move_up);
 	}
 	ft_putstr(ed->term->move_cursor_begining);
 }
+
+// void move_start_arrow(EV_CB_ARGS)
+// {
+// 	t_vec2i	vec;
+
+// 	vec = get_cursor_vector(ed);
+// 	print_cursor_vector(ed);
+
+// 	while (vec.y-- > 1)
+// 		ft_putstr(ed->term->move_up);
+	
+// 	ft_putstr(ed->term->move_cursor_begining);
+// }
 
 static void print_command_string(EV_CB_ARGS, char const *prompt, t_string *cmd_str
 	, size_t term_width)
@@ -61,10 +83,10 @@ void refresh_line(EV_CB_ARGS)
 {
 	if (ed->need_refresh == true)
 	{
-		ed->need_refresh = false;
 		clear_line(ed);
 		put_line(ed);
 		restore_old_cursor_position(ed, get_cursor_vector(ed));
 		ed->cursor_position = ed->old_position;
+		ed->need_refresh = false;
 	}
 }
