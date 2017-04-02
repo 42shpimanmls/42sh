@@ -6,10 +6,12 @@ EV_CB_RET	event_paste(EV_CB_ARGS)
 
 	if (if_on_multiline(ed))
 		return ;
+	clear_line(ed);
 	i = -1;
 	if (ed->selected_string)
 	{
 		while (ed->selected_string[++i])
 			add_to_string(ed, ed->selected_string[i]);
 	}
+	put_line(ed);
 }
