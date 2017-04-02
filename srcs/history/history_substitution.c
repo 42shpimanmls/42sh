@@ -9,22 +9,27 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-void	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
+int 	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
 {
 	char	*tmp;
 	char	*tmp2;
 	t_uint	i;
 
-	tmp = str_in_str(to_find, *str, start, false);
-	i = tmp - *str;
-	tmp2 = ft_strsub(*str, 0, i);
-	tmp = ft_strjoin(tmp2, replace);
-	ft_strdel(&tmp2);
-	tmp2 = ft_strsub(*str, i + ft_strlen(to_find), ft_strlen(*str) - (i + ft_strlen(to_find)));
-	ft_strdel(str);
-	*str = ft_strjoin(tmp, tmp2);
-	ft_strdel(&tmp);
-	ft_strdel(&tmp2);
+	if (!(tmp = str_in_str(to_find, *str, start, false)))
+		return (-1);//set_error()
+	else
+	{
+		i = tmp - *str;
+		tmp2 = ft_strsub(*str, 0, i);
+		tmp = ft_strjoin(tmp2, replace);
+		ft_strdel(&tmp2);
+		tmp2 = ft_strsub(*str, i + ft_strlen(to_find), ft_strlen(*str) - (i + ft_strlen(to_find)));
+		ft_strdel(str);
+		*str = ft_strjoin(tmp, tmp2);
+		ft_strdel(&tmp);
+		ft_strdel(&tmp2);
+		return (i + ft_strlen(replace));
+	}
 }
 
 int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
@@ -69,35 +74,34 @@ static bool is_blank_equal_ret(char c)
 	return (0);
 }
 
-/*
-	unless ! is simple-quoted or quoted with backslash
-*/
-
-int	history_substitution(char **str) // ret should be bool -> determine if command runs or not (p modifier)
+int	history_substitution(char **str)
 {
 	t_uint		i;
 	char		*tmp;
 	bool 		quoted;
+	bool 		should_run;
 
 	i = 0;
 	quoted = 0;
 	set_error(NO_ERROR);
 	while ((*str)[i])
 	{
+		if (get_error() != NO_ERROR)
+			return (-1);
 		if ((*str)[i] == '\\')
 			i++;
 		else if ((*str)[i] == '\'')
-		{
 			quoted = !quoted;
-		}
+
 		// '!' starts a history substitution
 		else if (is_bang((*str)[i]) && !quoted)
 		{
 			// !# line typed so far
 			if ((*str)[i + 1] && (*str)[i + 1] == '#')
 			{
+				// other func
 				if (i > 0)
-					start_substitution(str, &i, ft_strsub(*str, 0, i));
+					should_run = start_substitution(str, &i, ft_strsub(*str, 0, i));
 				else if (ft_strlen(*str) > 2)
 				{
 					tmp = ft_strsub(*str, 2, ft_strlen(*str) - 2);
@@ -111,11 +115,7 @@ int	history_substitution(char **str) // ret should be bool -> determine if comma
 				}
 			}
 			else if (!is_blank_equal_ret((*str)[i + 1]))
-			{
-				// if (
-				start_substitution(str, &i, NULL);// < 0) // use errno
-					// return (-1);
-			}
+				should_run = start_substitution(str, &i, NULL);
 		}
 
 		// case [no bang] ˆstr1ˆstr2[ˆ||\n] same as !!:s/str1/str2
@@ -125,5 +125,5 @@ int	history_substitution(char **str) // ret should be bool -> determine if comma
 		}
 		i++;
 	}
-	return (get_error());
+	return (should_run);
 }

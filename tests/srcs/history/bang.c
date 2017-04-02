@@ -6,7 +6,7 @@
 #include "ftsh.h"
 
 
-#define NB_SUB_TESTS 36
+#define NB_SUB_TESTS 38
 #define NB_ERR_TESTS 5
 
 #define BANG_TEST_VERBOSE
@@ -62,7 +62,9 @@ static char	**get_bang_tests()
 		"test '!4'",
 		"test '!#cocou' !2",
 		"bli bla \"!#:2",
-		"bli bla \"test !#:2"};// !!%"
+		"bli bla \"test !#:2",
+		"!!:s/un/test",
+		"!!:gsptrptestp"};// !!%"
 
 	i = 0;
 	malloced_tests = malloc(sizeof(char *) * NB_SUB_TESTS);
@@ -112,7 +114,9 @@ static char **get_bang_results()
 		"test '!4'",
 		"test '!#cocou' two",
 		"bli bla \"\"",
-		"bli bla \"test \"test"};
+		"bli bla \"test \"test",
+		"test deux trois quatre cinq",
+		"un deux testois quateste cinq"};
 	return (results);
 }
 
@@ -215,15 +219,70 @@ void	bang_word_selection()
 	i = 10;
 	tests = get_bang_tests();
 	results = get_bang_results();
+	while (i < 28)
+	{
+		#ifdef BANG_TEST_VERBOSE
+			ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+		#endif
+
+		history_substitution(&tests[i]);
+
+		#ifdef BANG_TEST_VERBOSE
+			ft_printf(", result: \"%s\"", tests[i]);
+		#endif
+
+		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
+		i++;
+	}
+}
+
+void	bang_sharp_quotes()
+{
+	char **tests;
+	char **results;
+	int i;
+
+	i = 28;
+	tests = get_bang_tests();
+	results = get_bang_results();
+	while (i < 36)
+	{
+		#ifdef BANG_TEST_VERBOSE
+			ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+		#endif
+
+		history_substitution(&tests[i]);
+
+		#ifdef BANG_TEST_VERBOSE
+			ft_printf(", result: \"%s\"", tests[i]);
+		#endif
+
+		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
+		i++;
+	}
+}
+
+void	bang_modifiers()
+{
+	char	**tests;
+	char 	**results;
+	int		i;
+
+	i = 36;
+	tests = get_bang_tests();
+	results = get_bang_results();
 	while (i < NB_SUB_TESTS)
 	{
-#ifdef BANG_TEST_VERBOSE
-		ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
-#endif
+		#ifdef BANG_TEST_VERBOSE
+			ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
+		#endif
+
 		history_substitution(&tests[i]);
-#ifdef BANG_TEST_VERBOSE
-		ft_printf(", result: \"%s\"", tests[i]);
-#endif
+
+		#ifdef BANG_TEST_VERBOSE
+			ft_printf(", result: \"%s\"", tests[i]);
+		#endif
+
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}

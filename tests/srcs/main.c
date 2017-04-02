@@ -62,6 +62,8 @@ int main(int argc, char **argv)
 		{ "!n returns nth entry, !-n returns (last - n)th entry", bang_n },
 		{ "Most recent entry starting with str (\"!str\"), or containing str (\"!?str[?\\n]\")", bang_search },
 		{ "Word selection", bang_word_selection },
+		{ "Typed line selection + quoting", bang_sharp_quotes},
+		{ "Substitution modifiers", bang_modifiers},
 		{ "Misc bang errors return -1", bang_errors },
 	  CU_TEST_INFO_NULL,
 	};

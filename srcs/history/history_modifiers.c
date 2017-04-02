@@ -2,6 +2,8 @@
 #include "shell_env.h"
 #include "errors.h"
 
+#include "history_substitutions.h"
+
 static void	remove_tail(char **str, char c)
 {
 	size_t	i;
@@ -36,17 +38,25 @@ static void 	remove_head(char **str, char c)
 	}
 }
 
+/*
+ 	!!:s/ !!:s// !!:s previous substitution
+ 	if not found substitution failed
+ 	!!:s/kg removes kg
+*/
+
+
 bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 {
-	t_uint 	i;
+	t_uint 		i;
+	bool		should_run;
 
 	i = 0;
-	while (modifiers[i])
+	should_run = 1;
+	while (modifiers[i]) // invalid read - why ? fix = i < ft_strlen()
 	{
 		if (modifiers[i] == ':')
 		{
 			i++;
-			// USE FUNC POINTERS
 
 			// h remove trailing pathname component i.e. what is after last slash
 			if (modifiers[i] == 'h')
@@ -62,46 +72,67 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 
 			// e remove all but the trailing suffix
 			else if (modifiers[i] == 'e')
-			remove_head(str, '.');
+				remove_head(str, '.');
 
 			// p print the command but do not execute it
 			else if (modifiers[i] == 'p')
-				return (0);
-			// cf history -p
+			{
+				i++;
+				should_run = 0;
+			}
 
 			// q quote the substituted word, escaping further substitution
 
-			// Quote the substituted words as with ‘q’, but break into words at spaces, tabs, and newlines.
+			// Quote the substituted words as with ‘q’,
+			//but break into words at spaces, tabs, and newlines.
 
 			/*
 				s/old/new/
 				Substitute new for the first occurrence of old in the event line.
 				Any delimiter may be used in place of ‘/’.
+				The final delimiter is optional if it is the last character on the input line.
+
+				TO DO:
 				The delimiter may be quoted in old and new with a single backslash.
 				If ‘&’ appears in new, it is replaced by old.
 				A single backslash will quote the ‘&’.
-				The final delimiter is optional if it is the last character on the input line.
+
 			*/
+			else if (modifiers[i] == 's')
+				substitute_str(modifiers, str, &i, false);
 
 			// &repeat the previous substitution
 
 			/*
-				g a
+				g
 				Cause changes to be applied over the entire event line.
 				Used in conjunction with ‘s’, as in gs/old/new/, or with ‘&’.
 			*/
+			else if (modifiers[i] == 'g')
+			{
+				// i++;
+				if (modifiers[i + 1] == 's')
+				{
+					i++;
+					substitute_str(modifiers, str, &i, true);
+				}
+			}
 
 			// G Apply the following ‘s’ modifier once to each word in the event.
+			// non conclusive test in sh
+			else if (modifiers[i] == 'G')
+				substitute_words_str(modifiers, str, &i);
+
 			else
-				return (1);
+				return (should_run);
 
 		}
 		else
 		{
 			(*end) += i;
-			return (1);
+			return (should_run);
 		}
-		i++;
 	}
-	return (1);
+	(*end) += i;
+	return (should_run);
 }
