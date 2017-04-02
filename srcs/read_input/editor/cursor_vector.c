@@ -13,7 +13,7 @@ size_t		find_index_at_vector(t_editor *ed, int ox, int oy)
 	vec.x = 0;
 	vec.y = 0;
 	i = 0;
-	while (i < ed->prompt_size || str[i - ed->prompt_size] != '\0')
+	while (str[i] != '\0')
 	{
 		if (vec.y > oy || (vec.y == oy && vec.x >= ox))
 			break ;
@@ -47,7 +47,7 @@ t_vec2i		get_cursor_vector(t_editor *ed)
 	vec.x = 0;
 	vec.y = 0;
 	i = 0;
-	while (i < ed->prompt_size || str[i - ed->prompt_size] != '\0')
+	while (str[i] != '\0')
 	{
 		if (i >= ed->cursor_position + ed->prompt_size)
 			break ;
