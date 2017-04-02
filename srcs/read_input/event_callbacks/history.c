@@ -13,7 +13,7 @@ void	list_free(t_abstract_list **list)
 	*list = NULL;
 }
 
-void	str_to_list(EV_CB_ARGS, char *str)
+static void	str_to_list(EV_CB_ARGS, char *str)
 {
 	if (str == NULL)
 		return;
@@ -37,6 +37,7 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 		list_free((t_abstract_list **)&ed->string);
 		trimed = ft_strtrim(ed->history->line);
 		str_to_list(ed, trimed);
+		ed->string_size = list_count((t_abstract_list *)ed->string);
 		free(trimed);
 		if (ed->history->prev)
 			ed->history = ed->history->prev;
@@ -56,6 +57,7 @@ EV_CB_RET 	event_history_down(EV_CB_ARGS)
 		ed->history = ed->history->next;
 		trimed = ft_strtrim(ed->history->line);
 		str_to_list(ed, trimed);
+		ed->string_size = list_count((t_abstract_list *)ed->string);
 		free(trimed);
 	}
 	put_line(ed);

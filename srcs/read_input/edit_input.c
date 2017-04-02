@@ -2,7 +2,6 @@
 # include "read_input/editor/editor.h"
 # include "read_input/event_callbacks/event_callback_def.h"
 # include "read_input/termcap/init_deinit.h"
-# include "abstract_list.h"
 
 static void	add_buffer_to_string(t_editor *ed, char buf[])
 {
