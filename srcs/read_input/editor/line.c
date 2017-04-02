@@ -1,14 +1,14 @@
 # include <libft.h>
 # include "read_input/event_callbacks/event_callback_def.h"
 
-void		print_cursor_vector(t_editor *ed);
+// void		print_cursor_vector(t_editor *ed);
 
 void move_start(EV_CB_ARGS)
 {
 	t_vec2i	vec;
 
 	vec = get_cursor_vector(ed);
-	print_cursor_vector(ed);
+	// print_cursor_vector(ed);
 
 	if (vec.x > 0)
 	{
