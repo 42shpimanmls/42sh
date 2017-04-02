@@ -26,6 +26,7 @@ size_t		find_index_at_vector(t_editor *ed, int ox, int oy)
 			vec.x++;
 		i++;
 	}
+	free(str);
 	return (i - ed->prompt_size);
 }
 

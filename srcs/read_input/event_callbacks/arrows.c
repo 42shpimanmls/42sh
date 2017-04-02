@@ -41,9 +41,16 @@ static void	cursor_left_core(EV_CB_ARGS)
 
 EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 {
+	cursor_left_core(ed);
+	if (ed->cursor_position == 0)
+	{
+		ed->need_refresh = true;
+	}
+	else
+	{
 		cursor_left_core(ed);
 		event_cursor_right(ed);
-		cursor_left_core(ed);
+	}
 }
 
 EV_CB_RET 	event_cursor_right(EV_CB_ARGS)

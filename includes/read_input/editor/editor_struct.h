@@ -41,6 +41,7 @@ typedef struct			s_editor
 	size_t				prompt_size;
 	char				*prompt;
 	bool				need_refresh;
+	bool				action_move_left;
 }						t_editor;
 
 #endif
