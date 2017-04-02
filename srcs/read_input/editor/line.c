@@ -1,5 +1,6 @@
 # include <libft.h>
 # include "read_input/event_callbacks/event_callback_def.h"
+#include "abstract_list.h"
 
 // void		print_cursor_vector(t_editor *ed);
 
@@ -71,6 +72,7 @@ void refresh_line(EV_CB_ARGS)
 	if (ed->need_refresh == true)
 	{
 		ed->need_refresh = false;
+		ed->string_size = list_count((t_abstract_list *)ed->string);
 		ft_putstr(ed->term->hide_cursor);
 		clear_line(ed);
 		put_line(ed);
