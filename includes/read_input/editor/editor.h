@@ -26,5 +26,6 @@ void		clear_selected_pos(t_editor *ed);
 
 size_t		find_index_at_vector(t_editor *ed, int ox, int oy);
 t_vec2i		get_cursor_vector(t_editor *ed);
+bool		if_on_multiline(t_editor *ed);
 
 #endif
