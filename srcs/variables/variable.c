@@ -1,5 +1,6 @@
 #include "shell_env.h"
 #include "utils.h"
+#include "abstract_list.h"
 
 t_variable	*create_variable(char *name, char *value, bool exported)
 {
@@ -87,4 +88,20 @@ void		pop_variable_by_name(t_variable **list, char *name)
 		addr = &(*addr)->next;
 		lst = *addr;
 	}
+}
+
+t_variable *copy_variable(t_variable *e)
+{
+	t_variable	*tmp;
+	t_variable	**ee = NULL;
+	tmp = e;
+	while (tmp)
+	{
+		t_variable	*var = create_variable(tmp->name, tmp->value, true);
+			list_push_back((t_abstract_list**)&ee \
+				, (t_abstract_list*)var);
+
+		tmp = tmp->next;
+	}
+	return (*ee);
 }

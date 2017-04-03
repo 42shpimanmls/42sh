@@ -14,7 +14,7 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 		i = 0;
 		while (argv[++i])
 		{
-			pop_variable_by_name(env, argv[i]);
+			unsetenv_as(env, argv[i]);
 		}
 	}
 	else
@@ -22,4 +22,10 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 		ft_printf("Usage: unsetenv <key> ...\n");
 	}
 	return (STATUS_SUCCESS);
+}
+
+void	unsetenv_as(t_variable **env, char *name)
+{
+	if (env && ft_strlen(name) > 0)
+		pop_variable_by_name(env, name);
 }
