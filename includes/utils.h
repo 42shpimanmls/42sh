@@ -22,5 +22,6 @@ char						**copy_array(char **array, size_t start, int end);
 char						*array_to_str(char **array);
 void						free_ptr_array(void *ptr_array);
 void						wait_for_childs();
+void						fatal_error(char const *str);
 
 #endif

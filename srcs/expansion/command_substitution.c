@@ -7,6 +7,7 @@
 #include "errors.h"
 #include "execution/pipe.h"
 #include <stdio.h>
+#include "shell_env.h"
 
 static char					*strlist_to_str(t_strlist const *list)
 {
@@ -60,7 +61,7 @@ static void					rm_trailing_newlines(char *str)
 
 static char					*get_ftsh_path(void)
 {
-	return ("./42sh");
+	return (ft_strdup(get_shell_env()->path_to_42sh));
 }
 
 static void					add_substitution(t_strlist **strlist_addr
