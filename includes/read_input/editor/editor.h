@@ -12,6 +12,7 @@ void		free_string(t_string *s);
 char		*gen_prompt(void);
 t_vec2i		get_cursor_vector(t_editor *ed);
 void		move_cursor(t_vec2i	vec, t_term *term);
+void		move_cursor_to(t_vec2i old_pos, t_vec2i new_pos, t_term *term);
 t_vec2i		vec2i_sub(t_vec2i a, t_vec2i b);
 
 void		clear_line(t_editor *ed);

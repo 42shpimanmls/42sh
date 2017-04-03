@@ -1,7 +1,7 @@
 # include <libft.h>
 # include "read_input/event_callbacks/event_callback_def.h"
 
-bool		if_on_multiline(EV_CB_ARGS)
+bool		if_on_multiline(t_editor *ed)
 {
 	char	*str;
 	int		nb;
