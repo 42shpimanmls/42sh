@@ -4,7 +4,7 @@
 
 // void		print_cursor_vector(t_editor *ed);
 
-void move_start(EV_CB_ARGS)
+void move_start(t_editor *ed)
 {
 	t_vec2i	vec;
 
@@ -24,7 +24,7 @@ void move_start(EV_CB_ARGS)
 	ft_putstr(ed->term->move_cursor_begining);
 }
 
-static void print_command_string(EV_CB_ARGS, char const *prompt, t_string *cmd_str
+static void print_command_string(t_editor *ed, char const *prompt, t_string *cmd_str
 	, size_t term_width)
 {
 	char	**lines;
@@ -50,7 +50,7 @@ static void print_command_string(EV_CB_ARGS, char const *prompt, t_string *cmd_s
 	ft_freetabchar(lines);
 }
 
-void put_line(EV_CB_ARGS)
+void put_line(t_editor *ed)
 {
 	char		*line;
 
@@ -62,12 +62,12 @@ void put_line(EV_CB_ARGS)
 	free(line);
 }
 
-static void restore_old_cursor_position(EV_CB_ARGS, t_vec2i old_pos)
+static void restore_old_cursor_position(t_editor *ed, t_vec2i old_pos)
 {
 	move_cursor(vec2i_sub(old_pos, ed->pos), ed->term);
 }
 
-void refresh_line(EV_CB_ARGS)
+void refresh_line(t_editor *ed)
 {
 	if (ed->need_refresh == true)
 	{

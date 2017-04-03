@@ -34,7 +34,7 @@ t_editor	*init_editor()
 	return (new);
 }
 
-void	add_to_string(EV_CB_ARGS, char c)
+void	add_to_string(t_editor *ed, char c)
 {
 	t_string *new;
 

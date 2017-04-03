@@ -10,7 +10,7 @@ static bool		is_white(char c)
 	return (false);
 }
 
-static size_t	get_next_word(EV_CB_ARGS)
+static size_t	get_next_word(t_editor *ed)
 {
 	char	*str;
 	size_t	pos;
@@ -30,7 +30,7 @@ static size_t	get_next_word(EV_CB_ARGS)
 	return (pos);
 }
 
-static size_t	get_previous_word(EV_CB_ARGS)
+static size_t	get_previous_word(t_editor *ed)
 {
 	char	*str;
 	size_t	pos;

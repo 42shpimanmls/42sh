@@ -13,7 +13,7 @@ void	list_free(t_abstract_list **list)
 	*list = NULL;
 }
 
-static void	str_to_list(EV_CB_ARGS, char *str)
+static void	str_to_list(t_editor *ed, char *str)
 {
 	if (str == NULL)
 		return;
