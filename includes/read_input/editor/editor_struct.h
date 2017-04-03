@@ -13,6 +13,7 @@ typedef struct			s_string
 
 typedef struct			s_term
 {
+	bool				rescue_mode;
 	int					width;
 	char				*move_cursor_begining;
 	char				*move_left;

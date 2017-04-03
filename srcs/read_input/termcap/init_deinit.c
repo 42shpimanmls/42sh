@@ -9,20 +9,34 @@
 # include "read_input/editor/editor.h"
 # include "read_input/event_callbacks/event_callback_def.h"
 
+static void set_rescue_mode(t_term *new)
+{
+	new->rescue_mode = true;
+}
+
 t_term	*init_term()
 {
 	t_term *new;
 
 	new = memalloc_or_die(sizeof(t_term));
-	new->width = tgetnum("co");
-	new->move_cursor_begining = tgetstr("cr", NULL);
-	new->move_left = tgetstr("le", NULL);
-	new->move_right = tgetstr("nd", NULL);
-	new->move_up = tgetstr("up", NULL);
-	new->move_down = tgetstr("down", NULL);
-	new->hide_cursor = tgetstr("vi", NULL);
-	new->show_cursor = tgetstr("ve", NULL);
-	new->clear_line = tgetstr("cd", NULL);
+	if ((new->width = tgetnum("co")) == -1)
+		set_rescue_mode(new);
+	if ((new->move_cursor_begining = tgetstr("cr", NULL)) == NULL)
+		set_rescue_mode(new);
+	if ((new->move_left = tgetstr("le", NULL)) == NULL)
+		set_rescue_mode(new);
+	if ((new->move_right = tgetstr("nd", NULL)) == NULL)
+		set_rescue_mode(new);
+	if ((new->move_up = tgetstr("up", NULL)) == NULL)
+		set_rescue_mode(new);
+	if ((new->move_down = tgetstr("down", NULL)) == NULL)
+		set_rescue_mode(new);
+	if ((new->hide_cursor = tgetstr("vi", NULL)) == NULL)
+		set_rescue_mode(new);
+	if ((new->show_cursor = tgetstr("ve", NULL)) == NULL)
+		set_rescue_mode(new);
+	if ((new->clear_line = tgetstr("cd", NULL)) == NULL)
+		set_rescue_mode(new);
 	// new->save_cursor_pos = tgetstr("sc", NULL);
 	// new->restore_cursor_pos = tgetstr("rc", NULL);
 	return (new);
