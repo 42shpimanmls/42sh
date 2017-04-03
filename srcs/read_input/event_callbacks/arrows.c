@@ -25,7 +25,7 @@ void		move_cursor(t_vec2i	vec, t_term *term)
 	}
 }
 
-static void	cursor_left_core(EV_CB_ARGS)
+static void	cursor_left_core(t_editor *ed)
 {
 	t_vec2i		cursor_vec;
 	t_vec2i		mov_vec;
