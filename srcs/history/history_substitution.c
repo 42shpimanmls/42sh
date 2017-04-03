@@ -36,7 +36,7 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 {
 	char	*to_sub;
 	t_uint	end;
-	bool	should_run;
+	int		should_run;
 
 	end = *start;
 	if (!hist_entry)
@@ -79,10 +79,11 @@ int	history_substitution(char **str)
 	t_uint		i;
 	char		*tmp;
 	bool 		quoted;
-	bool 		should_run;
+	int 		should_run;
 
 	i = 0;
 	quoted = 0;
+	should_run = 1;
 	set_error(NO_ERROR);
 	while ((*str)[i])
 	{

@@ -18,7 +18,7 @@ static void		main_loop(void)
 	read_input();
 	/*if (get_error() != NO_ERROR)
 		return ;*/
-	if (history_substitution(&shell_env->input_string))
+	if (history_substitution(&shell_env->input_string) <= 0)
 	{
 		ft_strdel(&shell_env->input_string);
 		return ;
