@@ -27,7 +27,6 @@ void move_start(EV_CB_ARGS)
 static void print_command_string(EV_CB_ARGS, char const *prompt, t_string *cmd_str
 	, size_t term_width)
 {
-	(void)term_width;
 	char	**lines;
 	char	*str;
 	char	*tmp;

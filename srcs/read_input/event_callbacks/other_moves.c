@@ -3,22 +3,85 @@
 
 EV_CB_RET 	event_cursor_home(EV_CB_ARGS)
 {
-	while (ed->cursor_position > 0)
-	{
-		event_cursor_left(ed);
-	}
+	t_vec2i		cursor_vec;
+	t_vec2i		mov_vec;
+
+	cursor_vec = get_cursor_vector(ed);
+	ed->cursor_position = 0;
+	mov_vec = vec2i_sub(cursor_vec, get_cursor_vector(ed));
+	move_cursor(mov_vec, ed->term);
 }
 
 EV_CB_RET 	event_cursor_end(EV_CB_ARGS)
 {
-	while (ed->string_size > ed->cursor_position)
-	{
-		event_cursor_right(ed);
-	}
+	clear_line(ed);
+	ed->cursor_position = ed->string_size;
+	put_line(ed);
+}
+
+static bool		is_white(char c)
+{
+	if (!c)
+		return (false);
+	if (c == ' ' || c == '\t' || c == '\n')
+		return (true);
+	return (false);
+}
+
+static size_t	get_next_word(EV_CB_ARGS)
+{
+	char	*str;
+	size_t	pos;
+
+	str = get_string_from_list(ed->string);
+	pos = ed->cursor_position;
+	if (pos >= ed->string_size)
+		return (pos);
+	pos++;
+	if (pos > ft_strlen(str))
+		return (ed->cursor_position);
+	while (str[pos] && is_white(str[pos]))
+		pos++;
+	while (str[pos] && !is_white(str[pos]))
+		pos++;
+	free(str);
+	return (pos);
+}
+
+static size_t	get_previous_word(EV_CB_ARGS)
+{
+	char	*str;
+	size_t	pos;
+
+	str = get_string_from_list(ed->string);
+	pos = ed->cursor_position;
+	if (pos <= 0)
+		return (0);
+	pos--;
+	while (pos > 0 && str[pos] && !is_white(str[pos]))
+		pos--;
+	while (pos > 0 && str[pos - 1] && is_white(str[pos - 1]))
+		pos--;
+	free(str);
+	return (pos);
 }
 
 EV_CB_RET 	event_cursor_word_right(EV_CB_ARGS)
-{(void)ed;}
+{
+	t_vec2i pos;
+
+	ed->need_refresh = true;
+	pos = get_cursor_vector(ed);
+	ed->cursor_position = get_next_word(ed);
+	move_cursor_to(pos, get_cursor_vector(ed), ed->term);
+
+}
 
 EV_CB_RET 	event_cursor_word_left(EV_CB_ARGS)
-{(void)ed;}
+{
+	t_vec2i pos;
+
+	pos = get_cursor_vector(ed);
+	ed->cursor_position = get_previous_word(ed);
+	move_cursor_to(pos, get_cursor_vector(ed), ed->term);
+}
