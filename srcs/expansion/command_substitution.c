@@ -59,11 +59,6 @@ static void					rm_trailing_newlines(char *str)
 		str[len] = '\0';
 }
 
-static char					*get_ftsh_path(void)
-{
-	return (ft_strdup(get_shell_env()->path_to_42sh));
-}
-
 static void					add_substitution(t_strlist **strlist_addr
 										, char const *start, char const *end)
 {
@@ -73,7 +68,8 @@ static void					add_substitution(t_strlist **strlist_addr
 	char				**environ_backup;
 	char				*tmp;
 
-	argv = (char*[]){get_ftsh_path(), "-c", strdup_until(start, end), NULL};
+	argv = (char*[]){ft_strdup(get_shell_env()->path_to_42sh), "-c"
+											, strdup_until(start, end), NULL};
 	pipe(pipefds);
 	environ_backup = environ;
 	environ = get_variables_for_execution(NULL);
@@ -83,10 +79,7 @@ static void					add_substitution(t_strlist **strlist_addr
 		dup2(pipefds[1], STDOUT_FILENO);
 		close(pipefds[1]);
 		execvp(argv[0], argv);
-		print_n_char_fd(' ', (0) * 2, 2);
-		dprintf(2, "error while executing file: ");
-		perror("");
-		exit(EXIT_FAILURE);
+		fatal_error("failed to execute recursively in add_substitution");
 	}
 	else
 	{
@@ -100,6 +93,7 @@ static void					add_substitution(t_strlist **strlist_addr
 	}
 	ft_freetabchar(environ);
 	environ = environ_backup;
+	free(argv[0]);
 	free(argv[2]);
 }
 
@@ -119,16 +113,10 @@ static t_strlist			*split_subsitutions(char const *word)
 				add_passive_string(&result, passv_str_start, word - 1);
 			subst_end = find_substitution_end(word + 1);
 			if (get_error() != NO_ERROR)
-			{
-				ft_putendl_fd("This shouldn't have happened", 2);
-				exit(-1);
-			}
+				fatal_error("substitution end not found in split_subsitutions(), a substitution hasn't been correctly recognized before being expanded");
 			add_substitution(&result, word + 1, subst_end);
 			if (get_error() != NO_ERROR)
-			{
-				ft_putendl_fd("Error in add_substitution", 2);
-				exit(-1);
-			}
+				fatal_error("error in add_substitution() in split_subsitutions()");
 			word = subst_end + 1;
 		}
 		else

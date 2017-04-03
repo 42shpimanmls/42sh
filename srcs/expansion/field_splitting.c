@@ -12,13 +12,16 @@ t_strlist		*field_splitting(char const *word)
 
 	// UGLY UGLY TEMPORARY
 	result = NULL;
-	array = ft_strsplit(word, ' ');
-	it = array;
-	while (*it != (char *)NULL)
+	if (word != NULL)
 	{
-		strlist_append(&result, *it);
-		it++;
+		array = ft_strsplit(word, ' ');
+		it = array;
+		while (*it != (char *)NULL)
+		{
+			strlist_append(&result, *it);
+			it++;
+		}
+		ft_freetabchar(array);
 	}
-	ft_freetabchar(array);
 	return (result);
 }
