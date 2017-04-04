@@ -6,6 +6,7 @@
 #include "pipe.h"
 #include "errno.h"
 #include <stdio.h>
+#include "redirection.h"
 
 
 t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
@@ -32,14 +33,18 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 	t_error_id	ret;
 	extern char	**environ;
 	char		**environ_backup;
+	int 		*stdin_out_backup;
 
 	ret = NO_ERROR;
 	if (cmd != NULL)
 	{
 		// EXECUTION CORE
 		//expand_words(&cmd->argv);
-		//redirect(cmd->redirections);
+		stdin_out_backup = save_stdin_stdout();
+		ret = redirect(cmd->redirections);
 		//expand_assignments_values(cmd->assignments);
+		if (ret != NO_ERROR)
+			return (ret);
 		environ_backup = environ;
 		environ = get_variables_for_execution(cmd->assignments);
 		ret = execute_builtin(cmd, lvl);
@@ -47,6 +52,7 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 			ret = execute_file(cmd, lvl);
 		ft_freetabchar(environ);
 		environ = environ_backup;
+		restore_stdin_stdout(stdin_out_backup);
 	}
 	return (ret);
 }

@@ -58,3 +58,27 @@ void					print_usage_msg(t_builtin_id id)
 		u++;
 	}
 }
+
+void 					print_file_error(t_error_id id, char *file)
+{
+	t_error		const 	*errors;
+	t_uint				u;
+
+	if (id == NO_ERROR)
+		return ;
+	u = 0;
+	errors = get_error_defs();
+	ft_putstr_fd(SHNAME, 2);
+	ft_putstr_fd(": ", 2);
+	while (u < TOTAL_ERROR_COUNT)
+	{
+		if (id == errors[u].id)
+		{
+			ft_putstr_fd(errors[u].msg, 2);
+			ft_putstr_fd(": ", 2);
+			ft_putendl_fd(file, 2);
+			return;
+		}
+		u++;
+	}
+}
