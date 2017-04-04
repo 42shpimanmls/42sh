@@ -1,7 +1,7 @@
 #include "builtin_def.h"
 #include <libft.h>
 #include "shell_env.h"
-#include "init/init.h"  // replace by envHelper
+#include "init/init.h"
 
 BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 {
@@ -16,12 +16,13 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 		{
 			unsetenv_as(env, argv[i]);
 		}
+		return (STATUS_SUCCESS);
 	}
 	else
 	{
 		ft_printf("Usage: unsetenv <key> ...\n");
 	}
-	return (STATUS_SUCCESS);
+	return (STATUS_FAILURE);
 }
 
 void	unsetenv_as(t_variable **env, char *name)

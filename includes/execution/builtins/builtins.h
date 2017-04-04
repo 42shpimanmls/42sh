@@ -5,6 +5,7 @@
 /*# include "builtin_args.h"*/
 
 # define STATUS_SUCCESS 0
+# define STATUS_FAILURE -1
 # define BUILTIN_RET int
 # define BUILTIN_ARGS int argc, char **argv
 
