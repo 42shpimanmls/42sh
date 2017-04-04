@@ -19,6 +19,16 @@ void				restore_stdin_stdout(int *std)
 	close(std[1]);
 }
 
+int 				choose_open(t_redir_type type, char *file)
+{
+	if (type == REDIR_OUTPUT)
+		return(open(file, O_RDWR | O_CREAT | O_TRUNC, 0666));
+	else if (type == APPEND_OUTPUT)
+		return(open(file, O_RDWR | O_CREAT | O_APPEND, 0666));
+	else
+		return(open(file, O_RDONLY));
+}
+
 t_error_id			redirect(t_redirection *redirections)
 {
 	t_error_id 	ret;
@@ -27,19 +37,12 @@ t_error_id			redirect(t_redirection *redirections)
 	ret = NO_ERROR;
 	while (redirections)
 	{
-		if (redirections->type == REDIR_OUTPUT)
-			file_fd = open(redirections->word, O_RDWR | O_CREAT | O_TRUNC, 0666);
-		else if (redirections->type == APPEND_OUTPUT)
-			file_fd = open(redirections->word, O_RDWR | O_CREAT | O_APPEND, 0666);
-		else
-			file_fd = open(redirections->word, O_RDONLY);
+		file_fd = choose_open(redirections->type, redirections->word);
 		if (file_fd < 0)
 		{
 			set_file_error(redirections->word);
-			// print_error_msg(get_error());
 			ret = get_error();
 			print_file_error(ret, redirections->word);
-			// should also print the file name
 			return (ret);
 		}
 		else
