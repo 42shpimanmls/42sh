@@ -70,7 +70,7 @@ void		delete_all_variables(t_variable **var)
 	*var = NULL;
 }
 
-void		pop_variable_by_name(t_variable **list, char *name)
+int		pop_variable_by_name(t_variable **list, char *name)
 {
 	t_variable *lst;
 	t_variable **addr;
@@ -83,11 +83,12 @@ void		pop_variable_by_name(t_variable **list, char *name)
 		{
 			*addr = lst->next;
 			free_variable(lst);
-			return ;
+			return (STATUS_SUCCESS);
 		}
 		addr = &(*addr)->next;
 		lst = *addr;
 	}
+	return (STATUS_FAILURE);
 }
 
 t_variable *copy_variable(t_variable *e)
@@ -98,8 +99,8 @@ t_variable *copy_variable(t_variable *e)
 	while (tmp)
 	{
 		t_variable	*var = create_variable(tmp->name, tmp->value, true);
-			list_push_back((t_abstract_list**)&ee \
-				, (t_abstract_list*)var);
+		list_push_back((t_abstract_list**)&ee \
+			, (t_abstract_list*)var);
 
 		tmp = tmp->next;
 	}

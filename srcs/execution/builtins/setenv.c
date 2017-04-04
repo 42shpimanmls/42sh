@@ -22,7 +22,7 @@ BUILTIN_RET		builtin_setenv(BUILTIN_ARGS)
 	return (STATUS_FAILURE);
 }
 
-void			setenv_as(t_variable **env, char *name, char*value)
+int			setenv_as(t_variable **env, char *name, char*value)
 {
 	if (env && ft_strlen(name) > 0)
 	{
@@ -32,5 +32,7 @@ void			setenv_as(t_variable **env, char *name, char*value)
 		}
 		list_push_back((t_abstract_list**)&env,
 			(t_abstract_list*)create_variable(name, value, true));
+		return (STATUS_SUCCESS);
 	}
+	return (STATUS_FAILURE);
 }
