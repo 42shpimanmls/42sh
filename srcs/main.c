@@ -18,19 +18,19 @@ static void		main_loop(void)
 	read_input();
 	/*if (get_error() != NO_ERROR)
 		return ;*/
-	if (history_substitution(&shell_env->input_string))
+	if (history_substitution(&shell_env->input_string) <= 0)
 	{
 		ft_strdel(&shell_env->input_string);
 		return ;
 	}
-	add_to_history_list(&shell_env->history, create_history_entry(shell_env->input_string));
 	break_input();
 	if (get_error() != NO_ERROR)
 		return ;
+	add_to_history_list(&shell_env->history, create_history_entry(shell_env->input_string));
+	ft_strdel(&get_shell_env()->input_string);
 	parse_input();
 	if (get_error() != NO_ERROR)
 		return ;
-	ft_strdel(&get_shell_env()->input_string);
 	if (get_error() != NO_ERROR)
 		return ;
 	execute_command_list(get_shell_env()->syntax_tree);

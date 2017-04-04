@@ -60,14 +60,15 @@ static char		*find_in_history(bool must_start, t_history *history, char *str, t_
 	find = ft_strsub(str, 0, i);
 	while (history)
 	{
-		if ((must_start && str_in_str(find, history->line, true)) \
-			|| (!must_start && str_in_str(find, history->line, false)))
+		if ((must_start && str_in_str(find, history->line, 0, true)) \
+			|| (!must_start && str_in_str(find, history->line, 0, false)))
 		{
 			ft_strdel(&find);
 			return (ft_strtrim(history->line)); // \n
 		}
 		history = history->prev;
 	}
+	ft_strdel(&find);
 	return (NULL);
 }
 
@@ -88,23 +89,14 @@ char	*get_history_entry(char *designator, t_uint *end)
 			(*end)++;
 		return (get_nth_entry(history, -1));
 	}
+
 	// !n command line n   / !-n command n lines back
 	else if (ft_isdigit(*designator) || *designator == '-')
 	{
-		/* separate function */
 		(*end)++;
-		if (!ft_isdigit(designator[*end]) && designator[*end + 1] && ft_isdigit(designator[*end + 1]))
-		{
-			while (designator[*end] && !start_word_designator(designator[*end]) \
-					&& !is_posix_blank(designator[*end]))
-				(*end)++;
-		}
 		n = ft_atoi(designator);
-		while (ft_isdigit(designator[*end]) && !start_word_designator(designator[*end]) \
-				&& !is_posix_blank(designator[*end]))
-			(*end)++;
+		*end += number_len(designator);
 		return (get_nth_entry(history, n));
-		/**********************/
 	}
 
 	//!?str[? or \n] most recent command containing str

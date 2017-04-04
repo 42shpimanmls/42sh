@@ -171,5 +171,5 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 		}
 	}
 	free_history_options(&options);
-	return (STATUS_SUCCESS);
+	return (get_error());
 }

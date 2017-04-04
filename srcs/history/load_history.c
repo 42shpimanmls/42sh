@@ -6,15 +6,18 @@ void add_to_history_list(t_history **list, t_history *new)
 {
 	t_history *tmp;
 
-	if (*list == NULL)
-		*list = new;
-	else
+	if (new)
 	{
-		tmp = *list;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-		new->prev = tmp;
+		if (*list == NULL)
+			*list = new;
+		else
+		{
+			tmp = *list;
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+			new->prev = tmp;
+		}
 	}
 }
 
@@ -22,12 +25,16 @@ t_history	*create_history_entry(char *line)
 {
 	t_history *new;
 
-	new = (t_history *)memalloc_or_die(sizeof(t_history));
-	new->line = ft_strdup(line);
-	new->appended = false;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
+	if (line && ft_strcmp(line, "\n"))
+	{
+		new = (t_history *)memalloc_or_die(sizeof(t_history));
+		new->line = ft_strdup(line);
+		new->appended = false;
+		new->next = NULL;
+		new->prev = NULL;
+		return (new);
+	}
+	return (NULL);
 }
 
 void	load_history(t_shell_env *shell_env, char *filename, int position)
@@ -36,7 +43,7 @@ void	load_history(t_shell_env *shell_env, char *filename, int position)
 	char	*tmp;
 	int		fd;
 
-	(void)position; // should determine where to start in file
+	(void)position; // should determine where to start in file (-n option)
 	if (filename)
 		fd = open(filename, O_RDWR | O_CREAT, 0666); // protect in case no rights, etc + set_error
 	else

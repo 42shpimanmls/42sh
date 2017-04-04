@@ -61,15 +61,17 @@ int main(int argc, char **argv)
 		{ "Double bang returns last entry", bang_bang },
 		{ "!n returns nth entry, !-n returns (last - n)th entry", bang_n },
 		{ "Most recent entry starting with str (\"!str\"), or containing str (\"!?str[?\\n]\")", bang_search },
-		// { "Word selection", bang_word_selection },
+		{ "Word selection", bang_word_selection },
+		{ "Typed line selection + quoting", bang_sharp_quotes},
+		{ "Substitution modifiers", bang_modifiers},
 		{ "Misc bang errors return -1", bang_errors },
 	  CU_TEST_INFO_NULL,
 	};
 	CU_SuiteInfo	suites[] = {
 		{ "Init", NULL, NULL, NULL, NULL, init_tests },
 		{ "Tokenizer", NULL, NULL, NULL, NULL, tokenizer_tests },
-		{ "History", NULL, NULL, NULL, NULL, history_tests },
 		{ "Bang", init_ftsh, NULL, NULL, NULL, bang_tests },
+		{ "History", NULL, NULL, NULL, NULL, history_tests },
 		{ "Binary", NULL, NULL, NULL, NULL, binary_tests },
 		CU_SUITE_INFO_NULL
 	};
