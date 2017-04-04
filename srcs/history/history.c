@@ -166,9 +166,7 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 		#endif
 
 		if (!(should_save = execute_options(&get_shell_env()->history, options)))
-		{
-			; // delete from list if already added, or return dont_save
-		}
+ 			delete_last_entry(&history);
 	}
 	free_history_options(&options);
 	return (get_error());

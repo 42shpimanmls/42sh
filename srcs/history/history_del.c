@@ -2,12 +2,19 @@
 #include "history.h"
 #include "errors.h"
 #include "utils.h"
+#include "abstract_list.h"
 
 void		free_history(t_history **history)
 {
 	ft_strdel(&(*history)->line);
 	free(*history);
 	*history = NULL;
+}
+
+void 		delete_last_entry(t_history **history)
+{
+	list_goto_last((t_abstract_list **)history);
+
 }
 
 void		delete_history_entry(t_history **history, char *offset)

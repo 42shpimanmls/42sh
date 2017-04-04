@@ -34,6 +34,7 @@ void			print_history_n(bool more_args, char *n, t_history *history);
 
 void			clear_history_list(t_history **history);
 void			delete_history_entry(t_history **history, char *offset);
+void 			delete_last_entry(t_history **history);
 
 
 /*
