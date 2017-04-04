@@ -3,6 +3,7 @@
 
 # include <stdlib.h>
 # include <stdbool.h>
+# include "uint.h"
 
 void						print_non_ascii_str(char const *str);
 void						print_non_ascii_char(char c);
@@ -14,7 +15,8 @@ void						print_n_char_fd(char c, size_t n, int fd);
 bool						str_is_digits(char const *str);
 bool						is_circumflex(char c);
 bool						is_bang(char c);
-char						*str_in_str(char *find, char *str, bool must_start);
+char						*str_in_str(char *find, char *str, t_uint start, \
+										bool must_start);
 void						str_join_with_space(char **str, char *to_join);
 void						str_add_space(char **str);
 size_t						number_len(char *str);
