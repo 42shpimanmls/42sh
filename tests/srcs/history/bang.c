@@ -67,12 +67,13 @@ static char	**get_bang_tests()
 		"!!:gsptrptestp"};// !!%"
 
 	i = 0;
-	malloced_tests = malloc(sizeof(char *) * NB_SUB_TESTS);
+	malloced_tests = malloc(sizeof(char *) * (NB_SUB_TESTS + 1));
 	while (i < NB_SUB_TESTS)
 	{
 		malloced_tests[i] = ft_strdup(tests[i]);
 		i++;
 	}
+	malloced_tests[i] = NULL;
 	return (malloced_tests);
 }
 

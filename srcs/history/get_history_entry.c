@@ -52,7 +52,7 @@ static char		*find_in_history(bool must_start, t_history *history, char *str, t_
 	{
 		while (str[i] && !is_posix_blank(str[i]) && str[i] != '\n' && str[i] != '?')
 			i++;
-		if (str[i] && (str[i] == '?' || str[i] == '\n'))
+		if (str[i] && (str[i] == '?'))// || str[i] == '\n'))
 			(*end)++;
 		(*end)++;
 	}
@@ -93,7 +93,6 @@ char	*get_history_entry(char *designator, t_uint *end)
 	// !n command line n   / !-n command n lines back
 	else if (ft_isdigit(*designator) || *designator == '-')
 	{
-		(*end)++;
 		n = ft_atoi(designator);
 		*end += number_len(designator);
 		return (get_nth_entry(history, n));

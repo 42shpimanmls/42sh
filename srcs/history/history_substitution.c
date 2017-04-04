@@ -20,10 +20,16 @@ int 	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
 	else
 	{
 		i = tmp - *str;
-		tmp2 = ft_strsub(*str, 0, i);
-		tmp = ft_strjoin(tmp2, replace);
-		ft_strdel(&tmp2);
-		tmp2 = ft_strsub(*str, i + ft_strlen(to_find), ft_strlen(*str) - (i + ft_strlen(to_find)));
+		if (i > 0)
+		{
+			tmp2 = ft_strsub(*str, 0, i);
+			tmp = ft_strjoin(tmp2, replace);
+			ft_strdel(&tmp2);
+		}
+		else
+			tmp = ft_strdup(replace);
+		tmp2 = ft_strsub(*str, i + ft_strlen(to_find), \
+				ft_strlen(*str) - (i + ft_strlen(to_find)));
 		ft_strdel(str);
 		*str = ft_strjoin(tmp, tmp2);
 		ft_strdel(&tmp);
@@ -32,9 +38,19 @@ int 	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
 	}
 }
 
-int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
+void 	substitute_bang(char **str, char *hist_entry, t_uint *start, t_uint end)
 {
 	char	*to_sub;
+
+	to_sub = ft_strsub(*str, *start, end - *start);
+	find_and_replace(str, to_sub, hist_entry, *start);
+	*start = end;
+	ft_strdel(&hist_entry);
+	ft_strdel(&to_sub);
+}
+
+int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
+{
 	t_uint	end;
 	int		should_run;
 
@@ -42,25 +58,19 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 	if (!hist_entry)
 	{
 		if (!(hist_entry = get_history_entry(&(*str)[*start + 1], &end)))
-		{
 			error_builtin(NULL, ft_strsub(*str, *start, end - *start), EV_NOT_FOUND);
-			// + 1
-		}
-		end++;
+		if ((*str)[end])
+			end++;
 	}
 	else
 		end += 2;
-	if (start_word_designator((*str)[end]))
+	if ((*str)[end] && start_word_designator((*str)[end]))
 		get_entry_word(&hist_entry, &(*str)[end], &end);
 	if ((*str)[end] == ':')
 		should_run = apply_modifiers(&(*str)[end], &hist_entry, &end);
 	if (get_error() == NO_ERROR)
 	{
-		to_sub = ft_strsub(*str, *start, end - *start);
-		find_and_replace(str, to_sub, hist_entry, *start);
-		*start = end;
-		ft_strdel(&hist_entry);
-		ft_strdel(&to_sub);
+		substitute_bang(str, hist_entry, start, end);
 		return (should_run);
 	}
 	ft_strdel(&hist_entry);
@@ -85,7 +95,7 @@ int	history_substitution(char **str)
 	quoted = 0;
 	should_run = 1;
 	set_error(NO_ERROR);
-	while ((*str)[i])
+	while (i < ft_strlen(*str))
 	{
 		if (get_error() != NO_ERROR)
 			return (-1);
@@ -124,7 +134,8 @@ int	history_substitution(char **str)
 		{
 			; // quick_substitution
 		}
-		i++;
+		if (i < ft_strlen(*str))
+			i++;
 	}
 	return (should_run);
 }
