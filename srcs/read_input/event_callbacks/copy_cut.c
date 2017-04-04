@@ -2,7 +2,7 @@
 # include <libft.h>
 # include "abstract_list.h"
 
-static void	get_sub_string(EV_CB_ARGS)
+static void	get_sub_string(t_editor *ed)
 {
 	char	*all;
 	size_t	start;
@@ -16,14 +16,14 @@ static void	get_sub_string(EV_CB_ARGS)
 	free(all);
 }
 
-static void delete_selected(EV_CB_ARGS)
+static void delete_selected(t_editor *ed)
 {
 	ed->cursor_position = ed->selected_string_end;
 	while (ed->cursor_position > ed->selected_string_start)
 		event_delete(ed);
 }
 
-static void	get_position(EV_CB_ARGS)
+static void	get_position(t_editor *ed)
 {
 	if (!ed->in_selection)
 	{
