@@ -77,6 +77,5 @@ t_token			*tokenize_for_substitution(char const *input)
 		}
 		free(state.input);
 	}
-	print_tokens(result);
 	return (result);
 }
