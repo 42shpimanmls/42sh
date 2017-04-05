@@ -32,33 +32,44 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 	}
 }
 
-static bool		args_manipulation(t_history **history, t_hist_opt options)
+static void		print_subst_result(char **argv, t_hist_opt options)
+{
+	int 	i;
+	char 	*args;
+
+	i = 0;
+	while (i < options.ac)
+	{
+		ft_putstr(argv[i]);
+		ft_putchar(' ');
+		i++;
+	}
+	// print line with substitutions without quotes
+	if ((args = array_to_str(options.args)))
+	{
+		ft_putendl(args);
+		ft_puttab(options.args);
+		ft_strdel(&args);
+	}
+}
+
+static void		args_manipulation(t_history **history, t_hist_opt options, char **argv)
 {
 	char	*args;
 	int		i;
 
- /*
-		 -p  Perform history substitution on the args and display the result
-        on the standard output, without storing the results in the history list.
-
-    	-s   The args are added to the end of the history list as a single entry.
-
-
-    	DON'T SAVE IN HISTORY LIST!!!! => bool returned
-    */
     i = 0;
+    // (void)history;
     if (options.s)
     {
+		delete_last_entry(history);
+
 		// todo: add a \n at end of str
     	if ((args = array_to_str(options.args)))
     	{
-    		add_to_history_list(history, \
-    			create_history_entry(args));
+    		history_add_with_nl(get_shell_env(), args);
 			ft_strdel(&args);
     	}
-    	else
-		// if no args the line IS SAVED AS IS e.g. 'history -s', 'history -s -a'
-    		return (true);
     }
     else if (options.args)
     {
@@ -72,20 +83,9 @@ static bool		args_manipulation(t_history **history, t_hist_opt options)
 			history_substitution(&options.args[i]);
 			i++;
 		}
-		/*
-			sh-3.2$ history -p "!!"
-			history -p "last_command"
-			last_command
-		*/
-		//ft_putstr(\command_name_and_options\);
-		if ((args = array_to_str(options.args)))
-		{
-			ft_putendl(args);
-			ft_strdel(&args);
-		}
-		// print line with substitutions without quotes
+		print_subst_result(argv, options);
+		delete_last_entry(history);
 	}
-	return (false);
 }
 
 static void		file_manipulation(t_hist_opt options, t_history *history)
@@ -116,10 +116,10 @@ static void		file_manipulation(t_hist_opt options, t_history *history)
 	}
 }
 
-static bool		execute_options(t_history **history, t_hist_opt options)
+static void		execute_options(t_history **history, t_hist_opt options, char **argv)
 {
 	if (options.s || options.p)
-		return (args_manipulation(history, options));
+		args_manipulation(history, options, argv);
 	else if (options.d || options.c)
 	{
 		if (options.c)
@@ -133,7 +133,6 @@ static bool		execute_options(t_history **history, t_hist_opt options)
 	}
 	else
 		file_manipulation(options, *history);
-	return (true);
 }
 
 BUILTIN_RET	builtin_history(BUILTIN_ARGS)
@@ -141,10 +140,10 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 	int			i;
 	t_history	*history;
 	t_hist_opt	options;
-	bool		should_save;
 
 	set_error(NO_ERROR); // set before?
 	ft_bzero(&options, sizeof(options));
+	options.ac = 1;
 	history = get_shell_env()->history;
 	i = 1;
 	if (argc == 1)
@@ -159,15 +158,7 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 			error_builtin(argv[0], NULL, NEED_NUM);
 	}
 	if (get_error() == NO_ERROR)
-	{
-		#ifdef HISTORY_DEBUG
-			ft_putendl("EXECUTING HISTORY BUILTIN");
-			print_history_options(&options);
-		#endif
-
-		if (!(should_save = execute_options(&get_shell_env()->history, options)))
- 			delete_last_entry(&history);
-	}
+		execute_options(&get_shell_env()->history, options, argv);
 	free_history_options(&options);
 	return (get_error());
 }

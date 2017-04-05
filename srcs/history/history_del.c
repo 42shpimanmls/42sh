@@ -13,8 +13,13 @@ void		free_history(t_history **history)
 
 void 		delete_last_entry(t_history **history)
 {
-	list_goto_last((t_abstract_list **)history);
+	t_history *tmp;
 
+	tmp = *history;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->prev->next = NULL;
+	free_history(&tmp);
 }
 
 void		delete_history_entry(t_history **history, char *offset)

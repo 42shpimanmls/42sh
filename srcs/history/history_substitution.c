@@ -66,6 +66,7 @@ void		bang_sharp(char **str, t_uint *i, int *should_run)
 		tmp = ft_strsub(*str, 2, ft_strlen(*str) - 2);
 		ft_strdel(str);
 		*str = ft_strdup(tmp);
+		ft_strdel(&tmp);
 	}
 	else
 	{

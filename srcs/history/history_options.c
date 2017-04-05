@@ -52,6 +52,7 @@ static int 	get_anrw_options(char c, t_hist_opt *options)
 
 int		get_hist_options(char *arg, t_hist_opt *options)
 {
+	options->ac++;
 	arg++;
 	while (arg && *arg)
 	{

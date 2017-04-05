@@ -38,7 +38,7 @@ t_history	*create_history_entry(char *line)
 	return (NULL);
 }
 
-static void	history_add_with_nl(t_shell_env *shell_env, char *line)
+void		history_add_with_nl(t_shell_env *shell_env, char *line)
 {
 	char	*tmp;
 
@@ -58,8 +58,9 @@ void		load_history(t_shell_env *shell_env, char *filename, bool n_opt)
 	position = 0;
 	if (!filename)
 		filename = HISTFILE;
-	fd = open(filename, O_RDWR | O_CREAT, 0666);
-	if (fd > 0)
+	if ((fd = open(filename, O_RDWR | O_CREAT, 0666)) < 0)
+		;//set_file_error
+	else
 	{
 		if (n_opt)
 			position = get_file_position(filename)->position;
@@ -73,5 +74,4 @@ void		load_history(t_shell_env *shell_env, char *filename, bool n_opt)
 		close(fd);
 		update_file_position(filename, i);
 	}
-	// set_file_error()
 }

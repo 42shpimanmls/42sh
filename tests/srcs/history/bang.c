@@ -157,6 +157,7 @@ void	bang_bang()
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}
+	ft_freetabchar(tests);
 }
 
 void	bang_n()
@@ -183,6 +184,7 @@ void	bang_n()
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}
+	ft_freetabchar(tests);
 }
 
 void	bang_search()
@@ -209,6 +211,7 @@ void	bang_search()
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}
+	ft_freetabchar(tests);
 }
 
 void	bang_word_selection()
@@ -235,6 +238,7 @@ void	bang_word_selection()
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}
+	ft_freetabchar(tests);
 }
 
 void	bang_sharp_quotes()
@@ -257,10 +261,10 @@ void	bang_sharp_quotes()
 		#ifdef BANG_TEST_VERBOSE
 			ft_printf(", result: \"%s\"", tests[i]);
 		#endif
-
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}
+	ft_freetabchar(tests);
 }
 
 void	bang_modifiers()
@@ -287,6 +291,7 @@ void	bang_modifiers()
 		CU_ASSERT_STRING_EQUAL(tests[i], results[i]);
 		i++;
 	}
+	ft_freetabchar(tests);
 }
 
 void	bang_errors()

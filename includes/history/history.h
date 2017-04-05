@@ -16,6 +16,7 @@
 **		load_history.c
 */
 void				load_history(t_shell_env *shell_env, char *filename, bool n_opt);
+void				history_add_with_nl(t_shell_env *shell_env, char *line);
 void				add_to_history_list(t_history **list, t_history *new);
 t_history			*create_history_entry(char *line);
 

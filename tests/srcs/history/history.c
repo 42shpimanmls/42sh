@@ -164,7 +164,7 @@ void	history_clear()
 void 	history_s_option()
 {
 	t_history *history;
-	t_history *new;
+	// t_history *new;
 	char	*av[][6] = {
 						{"history", "-s", "one", "two", "three", NULL},
 						{"history", "-s", "-a", NULL}
@@ -179,17 +179,17 @@ void 	history_s_option()
 
 	while (history->next)
 		history = history->next;
-	CU_ASSERT_STRING_EQUAL(history->line, "one two three");
+	CU_ASSERT_STRING_EQUAL(history->line, "one two three\n");
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("State of history after -s: \n");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history, 1);
 	#endif
 
 	builtin_history(3, av[1]);
-	new = get_shell_env()->history;
-	list_goto_last((t_abstract_list **)&new);
-	CU_ASSERT_PTR_EQUAL(history, new);
+	// new = get_shell_env()->history;
+	// list_goto_last((t_abstract_list **)&new);
+	// CU_ASSERT_PTR_EQUAL(history, new);
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("State of history after -s without args: \n");
@@ -200,7 +200,7 @@ void 	history_s_option()
 void 	history_p_option()
 {
 	t_history *history;
-	t_history *new;
+	// t_history *new;
 	char	*av[][6] = {
 						{"history", "-p", "!!", "!2", NULL},
 						{"history", "-p", NULL}
@@ -214,13 +214,14 @@ void 	history_p_option()
 	history = get_shell_env()->history;
 	while (history->next)
 		history = history->next;
+
 	builtin_history(4, av[0]);
-	new = get_shell_env()->history;
-	list_goto_last((t_abstract_list **)&new);
-	CU_ASSERT_PTR_EQUAL(history, new);
+	// new = get_shell_env()->history;
+	// list_goto_last((t_abstract_list **)&new);
+	// CU_ASSERT_PTR_EQUAL(history, new);
 
 	#ifdef HISTORY_TEST_VERBOSE
-		ft_printf("State of history after -p (should be the same): \n");
+		ft_printf("State of history after -p (should be the same without last line): \n");
 		print_history(get_shell_env()->history, 0);
 	#endif
 
