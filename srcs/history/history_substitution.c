@@ -9,35 +9,6 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-int 	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
-{
-	char	*tmp;
-	char	*tmp2;
-	t_uint	i;
-
-	if (!(tmp = str_in_str(to_find, *str, start, false)))
-		return (-1);//set_error()
-	else
-	{
-		i = tmp - *str;
-		if (i > 0)
-		{
-			tmp2 = ft_strsub(*str, 0, i);
-			tmp = ft_strjoin(tmp2, replace);
-			ft_strdel(&tmp2);
-		}
-		else
-			tmp = ft_strdup(replace);
-		tmp2 = ft_strsub(*str, i + ft_strlen(to_find), \
-				ft_strlen(*str) - (i + ft_strlen(to_find)));
-		ft_strdel(str);
-		*str = ft_strjoin(tmp, tmp2);
-		ft_strdel(&tmp);
-		ft_strdel(&tmp2);
-		return (i + ft_strlen(replace));
-	}
-}
-
 void 	substitute_bang(char **str, char *hist_entry, t_uint *start, t_uint end)
 {
 	char	*to_sub;

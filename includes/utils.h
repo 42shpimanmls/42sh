@@ -17,6 +17,8 @@ bool						is_circumflex(char c);
 bool						is_bang(char c);
 char						*str_in_str(char *find, char *str, t_uint start, \
 										bool must_start);
+int 						find_and_replace(char **str, char *to_find, \
+											char *replace, t_uint start);
 void						str_join_with_space(char **str, char *to_join);
 void						str_add_space(char **str);
 size_t						number_len(char *str);
