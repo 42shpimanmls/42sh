@@ -2,6 +2,7 @@
 # define BUILTINS_H
 
 #include "variable.h"
+#include "opt.h"
 /*# include "builtin_args.h"*/
 
 # define STATUS_SUCCESS 0
@@ -22,7 +23,15 @@ BUILTIN_RET			builtin_history(BUILTIN_ARGS);
 **	
 */
 
-void 		setenv_as(t_variable **env, char *name, char *value);
-void 		unsetenv_as(t_variable **env, char *name);
+/*
+** options
+*/
+int					retrieve_options(int argc, char **argv, t_opt *o);
+
+/*
+** setenv, unsetenv
+*/
+void 			setenv_as(t_variable **env, char *name, char *value);
+void 			unsetenv_as(t_variable **env, char *name);
 
 #endif
