@@ -14,12 +14,14 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 	i  = 1;
 	while (i < argc)
 	{
+		if (get_error() != NO_ERROR)
+			return ;
 		if (argv[i][0] == '-')
 			get_hist_options(argv[i], options);
 		else
 		{
 			options->args = copy_array(argv, i, argc);
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -59,12 +61,9 @@ static void		args_manipulation(t_history **history, t_hist_opt options, char **a
 	int		i;
 
     i = 0;
-    // (void)history;
     if (options.s)
     {
 		delete_last_entry(history);
-
-		// todo: add a \n at end of str
     	if ((args = array_to_str(options.args)))
     	{
     		history_add_with_nl(get_shell_env(), args);
