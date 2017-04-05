@@ -1,8 +1,9 @@
 #include "history.h"
 #include "abstract_list.h"
 #include "utils.h"
+#include "file_positions.h"
 
-void add_to_history_list(t_history **list, t_history *new)
+void 		add_to_history_list(t_history **list, t_history *new)
 {
 	t_history *tmp;
 
@@ -37,26 +38,40 @@ t_history	*create_history_entry(char *line)
 	return (NULL);
 }
 
-void	load_history(t_shell_env *shell_env, char *filename, int position)
+static void	history_add_with_nl(t_shell_env *shell_env, char *line)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(line, "\n");
+	add_to_history_list(&shell_env->history, create_history_entry(tmp));
+	ft_strdel(&tmp);
+}
+
+void		load_history(t_shell_env *shell_env, char *filename, bool n_opt)
 {
 	char	*line;
-	char	*tmp;
 	int		fd;
+	int 	i;
+	int 	position;
 
-	(void)position; // should determine where to start in file (-n option)
-	if (filename)
-		fd = open(filename, O_RDWR | O_CREAT, 0666); // protect in case no rights, etc + set_error
-	else
-		fd = open(HISTFILE, O_RDWR | O_CREAT, 0666);
+	i = 0;
+	position = 0;
+	if (!filename)
+		filename = HISTFILE;
+	fd = open(filename, O_RDWR | O_CREAT, 0666);
 	if (fd > 0)
 	{
+		if (n_opt)
+			position = get_file_position(filename)->position;
 		while ((line = ft_getline(fd)))
 		{
-			tmp = ft_strjoin(line, "\n");
-			add_to_history_list(&shell_env->history, create_history_entry(tmp));
+			if (i >= position)
+				history_add_with_nl(shell_env, line);
 			ft_strdel(&line);
-			ft_strdel(&tmp);
+			i++;
 		}
 		close(fd);
+		update_file_position(filename, i);
 	}
+	// set_file_error()
 }

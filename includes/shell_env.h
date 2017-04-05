@@ -8,6 +8,7 @@
 # include "parse_input/syntax_tree.h"
 # include "variable.h"
 # include "errors.h"
+# include "history/file_positions.h"
 
 /* proposition
 
@@ -36,6 +37,7 @@ typedef struct			s_shell_env
 {
 	t_variable			*variables;
 	t_history			*history;
+	t_file_position		*history_files;
 	bool				should_run;
 	bool				should_keep_reading;
 	char				*command_string;

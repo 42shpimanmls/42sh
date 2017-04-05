@@ -112,7 +112,7 @@ static void		file_manipulation(t_hist_opt options, t_history *history)
 		if (options.r)
 			load_history(get_shell_env(), filename, 0);
 		else
-			load_history(get_shell_env(), filename, 0); // saved position in file
+			load_history(get_shell_env(), filename, 1);
 	}
 }
 

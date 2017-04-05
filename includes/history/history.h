@@ -15,7 +15,7 @@
 /*
 **		load_history.c
 */
-void				load_history(t_shell_env *shell_env, char *filename, int position);
+void				load_history(t_shell_env *shell_env, char *filename, bool n_opt);
 void				add_to_history_list(t_history **list, t_history *new);
 t_history			*create_history_entry(char *line);
 

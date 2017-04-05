@@ -121,6 +121,7 @@ void	history_from_file()
 	char *av[][4] = {
 		{"history", "-r", NULL, NULL},
 		{"history", "-r", "test", NULL},
+		{"history", "-n", "test", NULL},
 	};
 
 	history = get_shell_env()->history;
