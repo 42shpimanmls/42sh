@@ -31,8 +31,6 @@ static void		main_loop(void)
 	parse_input();
 	if (get_error() != NO_ERROR)
 		return ;
-	if (get_error() != NO_ERROR)
-		return ;
 	execute_command_list(get_shell_env()->syntax_tree);
 	delete_command_list(&get_shell_env()->syntax_tree);
 }

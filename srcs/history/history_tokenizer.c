@@ -26,6 +26,7 @@ void			add_quote_token(t_tokenizer_state const state, t_token *result)
 				, (t_abstract_list*)token);
 	ft_strdel(&str);
 	set_error(NO_ERROR);
+	get_shell_env()->last_unmatched = NO_ERROR;
 }
 
 t_token			*tokenize_for_substitution(char const *input)

@@ -55,14 +55,40 @@ static bool is_blank_equal_ret(char c)
 	return (0);
 }
 
-int	history_substitution(char **str)
+void		bang_sharp(char **str, t_uint *i, int *should_run)
+{
+	char *tmp;
+
+	if (*i > 0)
+		*should_run = start_substitution(str, i, ft_strsub(*str, 0, *i));
+	else if (ft_strlen(*str) > 2)
+	{
+		tmp = ft_strsub(*str, 2, ft_strlen(*str) - 2);
+		ft_strdel(str);
+		*str = ft_strdup(tmp);
+	}
+	else
+	{
+		ft_strdel(str);
+		*str = ft_strdup("\n");
+	}
+}
+
+static void	check_quotes(char const *str, t_uint *i, bool *quoted)
+{
+	if (str[*i] == '\\')
+		(*i)++;
+	else if (str[*i] == '\'')
+		*quoted = !*quoted;
+}
+
+int			history_substitution(char **str)
 {
 	t_uint		i;
-	char		*tmp;
 	bool 		quoted;
 	int 		should_run;
 
-	i = 0;
+ 	i = 0;
 	quoted = 0;
 	should_run = 1;
 	set_error(NO_ERROR);
@@ -70,32 +96,16 @@ int	history_substitution(char **str)
 	{
 		if (get_error() != NO_ERROR)
 			return (-1);
-		if ((*str)[i] == '\\')
-			i++;
-		else if ((*str)[i] == '\'')
-			quoted = !quoted;
+		check_quotes(*str, &i, &quoted);
 
 		// '!' starts a history substitution
-		else if (is_bang((*str)[i]) && !quoted)
+		if (is_bang((*str)[i]) && !quoted)
 		{
 			// !# line typed so far
 			if ((*str)[i + 1] && (*str)[i + 1] == '#')
-			{
-				// other func
-				if (i > 0)
-					should_run = start_substitution(str, &i, ft_strsub(*str, 0, i));
-				else if (ft_strlen(*str) > 2)
-				{
-					tmp = ft_strsub(*str, 2, ft_strlen(*str) - 2);
-					ft_strdel(str);
-					*str = ft_strdup(tmp);
-				}
-				else
-				{
-					ft_strdel(str);
-					*str = ft_strdup("\n");
-				}
-			}
+				bang_sharp(str, &i, &should_run);
+
+			// all other cases
 			else if (!is_blank_equal_ret((*str)[i + 1]))
 				should_run = start_substitution(str, &i, NULL);
 		}
