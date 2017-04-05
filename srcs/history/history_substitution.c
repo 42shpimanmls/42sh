@@ -66,7 +66,7 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 		end += 2;
 	if ((*str)[end] && start_word_designator((*str)[end]))
 		get_entry_word(&hist_entry, &(*str)[end], &end);
-	if ((*str)[end] == ':')
+	if (end < ft_strlen(*str) && (*str)[end] == ':')
 		should_run = apply_modifiers(&(*str)[end], &hist_entry, &end);
 	if (get_error() == NO_ERROR)
 	{
