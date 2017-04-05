@@ -61,12 +61,17 @@ void		bang_sharp(char **str, t_uint *i, int *should_run)
 
 	if (*i > 0)
 		*should_run = start_substitution(str, i, ft_strsub(*str, 0, *i));
-	else
+	else if (ft_strlen(*str) > 2)
 	{
 		tmp = ft_strsub(*str, 2, ft_strlen(*str) - 2);
 		ft_strdel(str);
 		*str = ft_strdup(tmp);
 		ft_strdel(&tmp);
+	}
+	else
+	{
+		ft_strdel(str);
+		*str = ft_strdup("\n");
 	}
 }
 
@@ -114,6 +119,6 @@ int			history_substitution(char **str)
 		if (i < ft_strlen(*str))
 			i++;
 	}
-	ft_putendl(*str);
+	// ft_putendl(*str);
 	return (should_run);
 }
