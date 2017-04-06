@@ -16,7 +16,7 @@ int		retrieve_options(int argc, char **argv, t_opt *o)
 	o->s = false;
 	o->n = false;
 	o->e = false;
-	while (++i < argc && argv[i][0] == '-' && argv[i][1])
+	while (++i < argc && argv[i][0] == '-' && argv[i][1] != '-')
 	{
 		j = 0;
 		while (argv[i][++j] != '\0')
