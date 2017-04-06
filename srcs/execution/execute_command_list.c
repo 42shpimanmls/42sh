@@ -28,6 +28,7 @@ static void print_ao_sep(t_ao_type sep_type, size_t lvl)
 t_error_id	execute_and_or_list(t_and_or_list *ao_list, size_t lvl)
 {
 	t_error_id		ret;
+	bool			skip;
 
 	if (ao_list == NULL)
 		return (NO_ERROR);
@@ -37,10 +38,15 @@ t_error_id	execute_and_or_list(t_and_or_list *ao_list, size_t lvl)
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "executing and_or_list\n");
 #endif
+	skip = false;
 	while (ao_list != NULL)
 	{
-		ret = execute_pipeline(ao_list->pipeline, lvl + 1);
-		print_ao_sep(ao_list->separation_type, lvl);
+		if (!skip)
+		{
+			ret = execute_pipeline(ao_list->pipeline, lvl + 1);
+			print_ao_sep(ao_list->separation_type, lvl);
+		}
+		skip = false;
 		if ((ret == NO_ERROR && ao_list->separation_type == AO_OR)
 			|| (ret != NO_ERROR && ao_list->separation_type == AO_AND))
 		{
@@ -48,7 +54,7 @@ t_error_id	execute_and_or_list(t_and_or_list *ao_list, size_t lvl)
 			print_n_char_fd(' ', (lvl) * 2, 2);
 			dprintf(2, "shortcuting and_or_list\n");
 #endif
-			break ;
+			skip = true;
 		}
 		ao_list = ao_list->next;
 	}
