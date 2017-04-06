@@ -47,7 +47,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 	else
 	{
 		wait_for_childs();
-		ret = NO_ERROR;
+		ret = get_error();
 	}
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
