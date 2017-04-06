@@ -5,6 +5,7 @@
 /*# include "builtin_args.h"*/
 
 # define STATUS_SUCCESS 0
+# define STATUS_FAILURE -1
 # define BUILTIN_RET int
 # define BUILTIN_ARGS int argc, char **argv
 
@@ -22,7 +23,7 @@ BUILTIN_RET			builtin_history(BUILTIN_ARGS);
 **	
 */
 
-void 		setenv_as(t_variable **env, char *name, char *value);
-void 		unsetenv_as(t_variable **env, char *name);
+int 		setenv_as(t_variable **env, char *name, char *value);
+int 		unsetenv_as(t_variable **env, char *name);
 
 #endif
