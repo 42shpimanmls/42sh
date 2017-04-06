@@ -2,7 +2,7 @@
 
 #define	N_ERRNO 133
 
-void	print_system_error_list(int signum)
+char	*print_system_error_list(int signum)
 {
 	static char *defs[N_ERRNO + 1] =
 	{
@@ -146,6 +146,7 @@ void	print_system_error_list(int signum)
 
 	if (signum >= 0 && signum <= N_ERRNO)
 	{
-		ft_printf("errno -%d --%s\n", signum, defs[signum]);
+		return (defs[signum]);
 	}
+	return ("");
 }
