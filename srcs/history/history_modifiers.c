@@ -99,7 +99,10 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 
 			*/
 			else if (modifiers[i] == 's')
+			{
+				i++;
 				substitute_str(modifiers, str, &i, false);
+			}
 
 			// &repeat the previous substitution
 
@@ -113,7 +116,7 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 				// i++;
 				if (modifiers[i + 1] == 's')
 				{
-					i++;
+					i += 2;
 					substitute_str(modifiers, str, &i, true);
 				}
 			}

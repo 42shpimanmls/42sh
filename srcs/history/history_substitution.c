@@ -9,7 +9,7 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-void 	substitute_bang(char **str, char *hist_entry, t_uint *start, t_uint end)
+void 	perform_substitution(char **str, char *hist_entry, t_uint *start, t_uint end)
 {
 	char	*to_sub;
 
@@ -18,6 +18,7 @@ void 	substitute_bang(char **str, char *hist_entry, t_uint *start, t_uint end)
 	*start = end;
 	ft_strdel(&hist_entry);
 	ft_strdel(&to_sub);
+	ft_putstr(*str);
 }
 
 int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
@@ -42,7 +43,7 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 		should_run = apply_modifiers(&(*str)[end], &hist_entry, &end);
 	if (get_error() == NO_ERROR)
 	{
-		substitute_bang(str, hist_entry, start, end);
+		perform_substitution(str, hist_entry, start, end);
 		return (should_run);
 	}
 	ft_strdel(&hist_entry);
@@ -114,12 +115,9 @@ int			history_substitution(char **str)
 
 		// case [no bang] ˆstr1ˆstr2[ˆ||\n] same as !!:s/str1/str2
 		else if (is_circumflex((*str)[i]))
-		{
-			; // quick_substitution
-		}
+			quick_substitution(str, &i);
 		if (i < ft_strlen(*str))
 			i++;
 	}
-	// ft_putendl(*str);
 	return (should_run);
 }

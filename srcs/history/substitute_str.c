@@ -14,13 +14,13 @@ static char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
 	if (!(tmp = ft_strchr(modifier, delimiter)))
 	{
 		len = ft_strlen(modifier);
-		str = ft_strsub(modifier, 0, len);
+		str = ft_strsub(modifier, 0, len - 1);
+		(*i)--;
 	}
 	else
 	{
 		len = tmp - modifier;
 		str = ft_strsub(modifier, 0, len);
-		// (*end)++;
 	}
 	*i += len;
 	return (str);
@@ -33,7 +33,6 @@ void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 	char 	delimiter;
 	t_uint 	start;
 
-	(*i)++;
 	start = 0;
 	delimiter = modifier[(*i)++];
 	// + handle quoted
@@ -73,4 +72,15 @@ void		substitute_words_str(char *modifiers, char **str, t_uint *i)
 		words = words->next;
 	}
 	delete_all_tokens(&tmp);
+}
+
+void 		quick_substitution(char **str, t_uint *start)
+{
+	char		*hist_entry;
+	t_uint		end;
+
+	end = *start;
+	hist_entry = get_nth_entry(get_shell_env()->history, -1);
+	substitute_str(&(*str)[end], &hist_entry, &end, false);
+	perform_substitution(str, hist_entry, start, end);
 }

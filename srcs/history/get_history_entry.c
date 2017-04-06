@@ -10,7 +10,7 @@
 #include "history_substitutions.h"
 
 
-static char		*get_nth_entry(t_history *history, int n)
+char		*get_nth_entry(t_history *history, int n)
 {
 	if (n == 0 || !history)
 		return (NULL);

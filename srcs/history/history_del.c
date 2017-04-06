@@ -4,7 +4,7 @@
 #include "utils.h"
 #include "abstract_list.h"
 
-void		free_history(t_history **history)
+static void	free_history(t_history **history)
 {
 	ft_strdel(&(*history)->line);
 	free(*history);

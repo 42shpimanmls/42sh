@@ -10,6 +10,8 @@
 
 int				history_substitution(char **str);
 int				find_and_replace(char **str, char *to_find, char *replace, t_uint start);
+void 			perform_substitution(char **str, char *hist_entry, \
+										t_uint *start, t_uint end);
 
 
 /*
@@ -17,6 +19,7 @@ int				find_and_replace(char **str, char *to_find, char *replace, t_uint start);
 */
 
 char			*get_history_entry(char *designator, t_uint *end);
+char		*get_nth_entry(t_history *history, int n);
 
 /*
 **			get_entry_word.c
@@ -59,5 +62,6 @@ bool			apply_modifiers(char *modifiers, char **str, t_uint *end);
 
 void			substitute_str(char *modifier, char **str, t_uint *i, bool repeat);
 void			substitute_words_str(char *modifiers, char **str, t_uint *i);
+void 			quick_substitution(char **str, t_uint *i);
 
 #endif
