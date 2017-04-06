@@ -55,6 +55,12 @@ static int	ft_atoi_suite(int i, int lon, int res, char *str)
 	return (res);
 }
 
+static int	del_and_return(char **str)
+{
+	ft_strdel(str);
+	return (0);
+}
+
 int			ft_atoi(const char *str)
 {
 	int		i;
@@ -69,7 +75,7 @@ int			ft_atoi(const char *str)
 		strr++;
 	if ((strr[0] == 45) || (strr[0] == 43))
 		if ((strr[1] < 48) || (strr[1] > 57))
-			return (0);
+			return (del_and_return(&strr));
 	if (strr[0] == 43)
 		strr++;
 	lon = 0;
