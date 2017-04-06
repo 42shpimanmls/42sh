@@ -1,3 +1,4 @@
+#include "libft.h"
 #include "opt.h"
 #include "builtins.h"
 
@@ -7,7 +8,7 @@
 ** -e, -E, -s, -n, -esn
 */
 
-int		retrieve_options(int argc, char **argv, t_opt *o)
+int		retrieve_options(int argc, char **argv, t_opt *o, char *opts)
 {
 	int	i;
 	int	j;
@@ -21,11 +22,11 @@ int		retrieve_options(int argc, char **argv, t_opt *o)
 		j = 0;
 		while (argv[i][++j] != '\0')
 		{
-			if (argv[i][j] == 's')
+			if (argv[i][j] == 's' && ft_strchr(opts, 's') != NULL)
 				o->s = true;
-			else if (argv[i][j] == 'n')
+			else if (argv[i][j] == 'n' && ft_strchr(opts, 'n') != NULL)
 				o->n = true;
-			else if (argv[i][j] == 'e')
+			else if (argv[i][j] == 'e' && ft_strchr(opts, 'e') != NULL)
 				o->e = true;
 			else
 				return (i - 1);

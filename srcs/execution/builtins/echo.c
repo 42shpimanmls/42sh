@@ -15,7 +15,7 @@ int		builtin_echo(int argc, char **argv)
 	t_opt	*o;
 
 	o = (t_opt*)malloc(sizeof(t_opt));
-	i = retrieve_options(argc, argv, o);
+	i = retrieve_options(argc, argv, o, "sne");
 	while (++i < argc)
 	{
 		if (o->e == true)

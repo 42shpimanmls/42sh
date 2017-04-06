@@ -26,7 +26,7 @@ BUILTIN_RET			builtin_history(BUILTIN_ARGS);
 /*
 ** options
 */
-int					retrieve_options(int argc, char **argv, t_opt *o);
+int					retrieve_options(int argc, char **argv, t_opt *o, char *opts);
 
 /*
 ** setenv, unsetenv
