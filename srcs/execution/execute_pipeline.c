@@ -4,7 +4,6 @@
 #include <libft.h>
 #include "execute_syntax_tree.h"
 #include "pipe.h"
-#include "errno.h"
 #include <stdio.h>
 #include "expansion/expansion.h"
 #include "errno.h"
