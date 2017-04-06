@@ -19,7 +19,10 @@ int		builtin_echo(int argc, char **argv)
 	while (++i < argc)
 	{
 		if (o->e == true)
-			escape_char(argv[i]);
+		{
+			if (escape_char(argv[i]) == true)
+				break ;
+		}
 		else
 			ft_putstr(argv[i]);
 		if (o->s == false && i + 1 < argc)
@@ -38,7 +41,7 @@ int		builtin_echo(int argc, char **argv)
 ** increment index to not display escaped chars
 */
 
-void	escape_char(char *str)
+bool	escape_char(char *str)
 {
 	int	i;
 
@@ -47,20 +50,22 @@ void	escape_char(char *str)
 	{
 		if (str[i] == '\\' && str[i + 1])
 		{
-			escape(*(&str[++i]));
+			if (escape(*(&str[++i])) == true)
+				return (true);
 			if (str[i] == '0')
 				i += octal(&str[i]);
 		}
 		else
 			ft_putchar(str[i]);
 	}
+	return (false);
 }
 
 /*
-** '\c' is not below as it display nothing
+** if '\c' stop displaying
 */
 
-void	escape(int c)
+bool	escape(int c)
 {
 	if (c == '\\')
 		ft_putchar('\\');
@@ -80,6 +85,7 @@ void	escape(int c)
 		ft_putchar('\t');
 	if (c == 'v')
 		ft_putchar('\v');
+	return (c == 'c' ? true : false);
 }
 
 /*
