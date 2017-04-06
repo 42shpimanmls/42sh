@@ -49,6 +49,6 @@ void				set_error(t_error_id error);
 
 void				error_builtin(char *builtin, char *error, t_error_id id);
 
-char const			*print_system_error_list(int signum);
+char const			*get_system_error(int signum);
 
 #endif

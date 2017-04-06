@@ -2,7 +2,7 @@
 
 #define	N_ERRNO 133
 
-char const	*print_system_error_list(int signum)
+char const	*get_system_error(int signum)
 {
 	static char const *defs[N_ERRNO + 1] =
 	{
