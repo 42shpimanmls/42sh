@@ -75,12 +75,12 @@ void		bang_sharp(char **str, t_uint *i, int *should_run)
 	}
 }
 
-static void	check_quotes(char const *str, t_uint *i, bool *quoted)
+static void	check_quotes(char *str, t_uint *i, bool *quoted)
 {
 	if (str[*i] == '\\')
-		(*i)++;
+		*i += 2;
 	else if (str[*i] == '\'')
-		*quoted = !*quoted;
+		*quoted = !(*quoted);
 }
 
 int			history_substitution(char **str)
