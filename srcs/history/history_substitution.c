@@ -25,6 +25,7 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 	t_uint	end;
 	int		should_run;
 
+	should_run = 1;
 	end = *start;
 	if (!hist_entry)
 	{
