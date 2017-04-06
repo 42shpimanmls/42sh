@@ -63,7 +63,7 @@ static void		args_manipulation(t_history **history, t_hist_opt options, char **a
     i = 0;
     if (options.s)
     {
-		delete_last_entry(history);
+		delete_entry_at(history, list_count((t_abstract_list *)*history));
     	if ((args = array_to_str(options.args)))
     	{
     		history_add_with_nl(get_shell_env(), args);
@@ -83,7 +83,7 @@ static void		args_manipulation(t_history **history, t_hist_opt options, char **a
 			i++;
 		}
 		print_subst_result(argv, options);
-		delete_last_entry(history);
+		delete_entry_at(history, list_count((t_abstract_list *)*history));
 	}
 }
 
@@ -140,7 +140,7 @@ BUILTIN_RET	builtin_history(BUILTIN_ARGS)
 	t_history	*history;
 	t_hist_opt	options;
 
-	set_error(NO_ERROR); // set before?
+	set_error(NO_ERROR);
 	ft_bzero(&options, sizeof(options));
 	options.ac = 1;
 	history = get_shell_env()->history;
