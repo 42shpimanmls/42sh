@@ -37,7 +37,7 @@ static char	*get_path_to_ftsh(char const *ftsh_name)
 	if (ftsh_name[0] == '/')
 		return (ft_strdup(ftsh_name));
 	if (ftsh_name[0] == '.' && ftsh_name[1] == '/')
-		ftsh_name += 2; 		//////////////////////////sa leaks sa non !!!
+		ftsh_name += 2;
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		fatal_error("getcwd(NULL, 0) failed in get_path_to_ftsh()");

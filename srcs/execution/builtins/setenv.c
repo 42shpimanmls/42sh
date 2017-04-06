@@ -17,7 +17,7 @@ BUILTIN_RET		builtin_setenv(BUILTIN_ARGS)
 	}
 	else
 	{
-		ft_dprintf(2, "Usage: setenv <key> <value>\n");
+		ft_dprintf(STDERR_FILENO, "Usage: setenv <key> <value>\n");
 	}
 	return (STATUS_FAILURE);
 }

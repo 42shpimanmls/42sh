@@ -23,7 +23,7 @@ BUILTIN_RET		builtin_unsetenv(BUILTIN_ARGS)
 	}
 	else
 	{
-		ft_dprintf(2, "Usage: unsetenv <key> ...\n");
+		ft_dprintf(STDERR_FILENO, "Usage: unsetenv <key> ...\n");
 	}
 	return (STATUS_FAILURE);
 }
