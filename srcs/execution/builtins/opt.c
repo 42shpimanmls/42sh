@@ -27,6 +27,8 @@ int		retrieve_options(int argc, char **argv, t_opt *o)
 				o->n = true;
 			else if (argv[i][j] == 'e')
 				o->e = true;
+			else
+				return (i - 1);
 		}
 	}
 	return (i - 1);
