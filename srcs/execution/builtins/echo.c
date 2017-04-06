@@ -37,6 +37,7 @@ int		builtin_echo(int argc, char **argv)
 /*
 ** Parcour every char
 ** if start with '\':
+** if '\c' stop displaying
 ** display one char '\x' for two chars "\x"
 ** increment index to not display escaped chars
 */
@@ -44,16 +45,21 @@ int		builtin_echo(int argc, char **argv)
 bool	escape_char(char *str)
 {
 	int	i;
+	int	oct;
 
 	i = -1;
 	while (str[++i] != '\0')
 	{
 		if (str[i] == '\\' && str[i + 1])
 		{
-			if (escape(*(&str[++i])) == true)
+			if (str[i + 1] == 'c')
 				return (true);
-			if (str[i] == '0')
-				i += octal(&str[i]);
+			if (escape(*(&str[i + 1])) == true)
+				i += 1;
+			else if (str[i + 1] == '0' && (oct = octal(&str[i + 1])) > 0)
+				i += 1 + oct;
+			else
+				ft_putchar(str[i]);
 		}
 		else
 			ft_putchar(str[i]);
@@ -62,30 +68,32 @@ bool	escape_char(char *str)
 }
 
 /*
-** if '\c' stop displaying
+** return status if found char
 */
 
 bool	escape(int c)
 {
 	if (c == '\\')
 		ft_putchar('\\');
-	if (c == 'a')
+	else if (c == 'a')
 		ft_putchar('\a');
-	if (c == 'b')
+	else if (c == 'b')
 		ft_putchar('\b');
-	if (c == 'e')
+	else if (c == 'e')
 		ft_putchar('\e');
-	if (c == 'f')
+	else if (c == 'f')
 		ft_putchar('\f');
-	if (c == 'n')
+	else if (c == 'n')
 		ft_putchar('\n');
-	if (c == 'r')
+	else if (c == 'r')
 		ft_putchar('\r');
-	if (c == 't')
+	else if (c == 't')
 		ft_putchar('\t');
-	if (c == 'v')
+	else if (c == 'v')
 		ft_putchar('\v');
-	return (c == 'c' ? true : false);
+	else
+		return (false);
+	return (true);
 }
 
 /*
