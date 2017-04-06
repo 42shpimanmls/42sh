@@ -5,7 +5,8 @@
 /*
 ** for every arguments:
 ** '-e': backslash escapes interpretation
-** handle '-s' and '-n' options
+** handle '-n' options
+** '-s' option: do not display space for last str
 */
 
 int		builtin_echo(int argc, char **argv)
@@ -21,7 +22,7 @@ int		builtin_echo(int argc, char **argv)
 			escape_char(argv[i]);
 		else
 			ft_putstr(argv[i]);
-		if (o->s == false)
+		if (o->s == false && i + 1 < argc)
 			ft_putchar(' ');
 	}
 	if (o->n == false)
