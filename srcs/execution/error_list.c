@@ -2,9 +2,9 @@
 
 #define	N_ERRNO 133
 
-char	*print_system_error_list(int signum)
+char const	*print_system_error_list(int signum)
 {
-	static char *defs[N_ERRNO + 1] =
+	static char const *defs[N_ERRNO + 1] =
 	{
 	//DESCRIPTION					
 	"None",
