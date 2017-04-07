@@ -14,7 +14,7 @@ int		builtin_echo(int argc, char **argv)
 	int		i;
 	t_opt	*o;
 
-	o = (t_opt*)malloc(sizeof(t_opt));
+	o = (t_opt*)memalloc_or_die(sizeof(t_opt));
 	i = retrieve_options(argc, argv, o, "sne");
 	while (++i < argc)
 	{
@@ -73,26 +73,13 @@ bool	escape_char(char *str)
 
 bool	escape(int c)
 {
-	if (c == '\\')
-		ft_putchar('\\');
-	else if (c == 'a')
-		ft_putchar('\a');
-	else if (c == 'b')
-		ft_putchar('\b');
-	else if (c == 'e')
-		ft_putchar('\e');
-	else if (c == 'f')
-		ft_putchar('\f');
-	else if (c == 'n')
-		ft_putchar('\n');
-	else if (c == 'r')
-		ft_putchar('\r');
-	else if (c == 't')
-		ft_putchar('\t');
-	else if (c == 'v')
-		ft_putchar('\v');
-	else
+	char const	*escaped;
+	char const	*ptr;
+
+	escaped = "\\abefnrtv";
+	if ((ptr = ft_strchr(escaped, c)) == NULL)
 		return (false);
+	ft_putchar("\\\a\b\e\f\n\r\t\v"[ptr - escaped]);
 	return (true);
 }
 
