@@ -37,7 +37,8 @@ void		delete_history_entry(t_history **history, char *offset)
 	if (offset && str_is_digits(offset))
 	{
 		n_offset = ft_atoi(offset);
-		if (n_offset <= 0 || (size_t)n_offset > list_count((t_abstract_list *)*history))
+		if (n_offset <= 0 || \
+			(size_t)n_offset > list_count((t_abstract_list *)*history))
 			error_builtin("history", ft_strdup(offset), OUT_OF_RANGE);
 		else
 			delete_entry_at(history, n_offset);

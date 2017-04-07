@@ -64,7 +64,10 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 
 			// t remove head, leave tail i.e.  file name
 			else if (modifiers[i] == 't')
-				remove_head(str, '/');
+			{
+				while(ft_strchr(*str, '/'))
+					remove_head(str, '/');
+			}
 
 			// r Remove a trailing suffix of the form ‘.suffix’, leaving the basename.
 			else if (modifiers[i] == 'r')
@@ -77,7 +80,7 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 			// p print the command but do not execute it
 			else if (modifiers[i] == 'p')
 			{
-				i++;
+				// i++;
 				should_run = 0;
 			}
 
@@ -135,6 +138,7 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 			(*end) += i;
 			return (should_run);
 		}
+		i++;
 	}
 	(*end) += i;
 	return (should_run);

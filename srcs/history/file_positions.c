@@ -3,7 +3,7 @@
 #include "abstract_list.h"
 #include <libft.h>
 
-void 				print_file_positions()
+void			print_file_positions(void)
 {
 	t_file_position *files;
 
@@ -11,13 +11,14 @@ void 				print_file_positions()
 	ft_putendl("<history file positions>");
 	while (files)
 	{
-		ft_printf("File name: %s\nPosition: %d\n", files->filename, files->position);
+		ft_printf("File name: %s\nPosition: %d\n", files->filename, \
+					files->position);
 		files = files->next;
 	}
 	ft_putendl("</history file positions>");
 }
 
-t_file_position		*get_file_position(char *filename)
+t_file_position	*get_file_position(char *filename)
 {
 	t_file_position *files;
 
@@ -31,7 +32,7 @@ t_file_position		*get_file_position(char *filename)
 	return (NULL);
 }
 
-void				free_file_positions(t_file_position **files_addr)
+void			free_file_positions(t_file_position **files_addr)
 {
 	if (*files_addr)
 	{
@@ -42,7 +43,7 @@ void				free_file_positions(t_file_position **files_addr)
 	}
 }
 
-static void			new_file_position(char *filename, int position)
+static void		new_file_position(char *filename, int position)
 {
 	t_file_position *files;
 	t_file_position *new;
@@ -56,7 +57,7 @@ static void			new_file_position(char *filename, int position)
 					(t_abstract_list *)new);
 }
 
-void 				update_file_position(char *filename, int new_position)
+void			update_file_position(char *filename, int new_position)
 {
 	t_file_position *files;
 

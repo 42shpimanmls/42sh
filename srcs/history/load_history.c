@@ -3,7 +3,7 @@
 #include "utils.h"
 #include "file_positions.h"
 
-void 		add_to_history_list(t_history **list, t_history *new)
+void		add_to_history_list(t_history **list, t_history *new)
 {
 	t_history *tmp;
 
@@ -51,14 +51,14 @@ void		load_history(t_shell_env *shell_env, char *filename, bool n_opt)
 {
 	char	*line;
 	int		fd;
-	int 	i;
-	int 	position;
+	int		i;
+	int		position;
 
 	i = 0;
 	position = 0;
 	if (!filename)
 		filename = HISTFILE;
-	if ((fd = open(filename, O_RDWR | O_CREAT, 0666)) < 0)
+	if ((fd = open(filename, O_RDWR | O_CREAT, 0644)) < 0)
 		;//set_file_error
 	else
 	{

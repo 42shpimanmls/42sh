@@ -1,6 +1,5 @@
 #include "history.h"
 #include "history_substitutions.h"
-#include "history_options.h"
 #include "errors.h"
 #include "abstract_list.h"
 #include "utils.h"
@@ -11,7 +10,7 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 {
 	int			i;
 
-	i  = 1;
+	i = 1;
 	while (i < argc)
 	{
 		if (get_error() != NO_ERROR)
@@ -28,113 +27,13 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 	if (get_error() == NO_ERROR && options->d && !options->offset)
 	{
 		if (options->args && options->args[0])
-				options->offset = ft_strdup(options->args[0]);
+			options->offset = ft_strdup(options->args[0]);
 		else
 			error_builtin("history", NULL, NEED_NUM);
 	}
 }
 
-static void		print_subst_result(char **argv, t_hist_opt options)
-{
-	int 	i;
-	char 	*args;
-
-	i = 0;
-	while (i < options.ac)
-	{
-		ft_putstr(argv[i]);
-		ft_putchar(' ');
-		i++;
-	}
-	// print line with substitutions without quotes
-	if ((args = array_to_str(options.args)))
-	{
-		ft_putendl(args);
-		ft_puttab(options.args);
-		ft_strdel(&args);
-	}
-}
-
-static void		args_manipulation(t_history **history, t_hist_opt options, char **argv)
-{
-	char	*args;
-	int		i;
-
-    i = 0;
-    if (options.s)
-    {
-		delete_entry_at(history, list_count((t_abstract_list *)*history));
-    	if ((args = array_to_str(options.args)))
-    	{
-    		history_add_with_nl(get_shell_env(), args);
-			ft_strdel(&args);
-    	}
-    }
-    else if (options.args)
-    {
-    	while (options.args[i])
-    	{
-			/*
-				quotes should already have been removed
-				+ normal substitution made
-				(test with quotes etc when execution loop)
-			*/
-			history_substitution(&options.args[i]);
-			i++;
-		}
-		print_subst_result(argv, options);
-		delete_entry_at(history, list_count((t_abstract_list *)*history));
-	}
-}
-
-static void		file_manipulation(t_hist_opt options, t_history *history)
-{
-	char		*filename;
-
-	if (options.args)
-			filename = options.args[0];
-	else
-		filename = NULL;
-
-	// writing in file
-	if (options.w || options.a)
-	{
-		if (options.w)
-			hist_to_file(history, filename, false);
-		else if (!filename)
-			hist_to_file(history, HISTFILE, true);
-	}
-
-	//reading file
-	else if (options.r || options.n)
-	{
-		if (options.r)
-			load_history(get_shell_env(), filename, 0);
-		else
-			load_history(get_shell_env(), filename, 1);
-	}
-}
-
-static void		execute_options(t_history **history, t_hist_opt options, char **argv)
-{
-	if (options.s || options.p)
-		args_manipulation(history, options, argv);
-	else if (options.d || options.c)
-	{
-		if (options.c)
-			clear_history_list(history);
-		else
-		{
-			if (!options.offset)
-				options.offset = ft_strdup(options.args[0]);
-			delete_history_entry(history, options.offset);
-		}
-	}
-	else
-		file_manipulation(options, *history);
-}
-
-BUILTIN_RET	builtin_history(BUILTIN_ARGS)
+int				builtin_history(int argc, char **argv)
 {
 	int			i;
 	t_history	*history;

@@ -9,19 +9,7 @@
 #include "history.h"
 #include "history_substitutions.h"
 
-void 	perform_substitution(char **str, char *hist_entry, t_uint *start, t_uint end)
-{
-	char	*to_sub;
-
-	to_sub = ft_strsub(*str, *start, end - *start);
-	find_and_replace(str, to_sub, hist_entry, *start);
-	*start = end;
-	ft_strdel(&hist_entry);
-	ft_strdel(&to_sub);
-	ft_putstr(*str);
-}
-
-int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
+int			start_substitution(char **str, t_uint *start, char *hist_entry)
 {
 	t_uint	end;
 	int		should_run;
@@ -31,7 +19,8 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 	if (!hist_entry)
 	{
 		if (!(hist_entry = get_history_entry(&(*str)[*start + 1], &end)))
-			error_builtin(NULL, ft_strsub(*str, *start, end - *start), EV_NOT_FOUND);
+			error_builtin(NULL, ft_strsub(*str, *start, end - *start), \
+							EV_NOT_FOUND);
 		if ((*str)[end])
 			end++;
 	}
@@ -50,7 +39,7 @@ int	 	start_substitution(char **str, t_uint *start, char *hist_entry)
 	return (-1);
 }
 
-static bool is_blank_equal_ret(char c)
+static bool	is_blank_equal_ret(char c)
 {
 	if (is_posix_blank(c) || c == '\n' || c == '=')
 		return (1);
@@ -85,13 +74,22 @@ static void	check_quotes(char *str, t_uint *i, bool *quoted)
 		*quoted = !(*quoted);
 }
 
+/*
+**	'!' starts a substitution on a history entry
+** 	or the line typed so far if the designator is '#'
+**	'^' starts a quick substitution (^str1^str2[^])
+**	should_run determines if the command is executed or not 
+**	(it isn't with the p modifier or in case of an error,
+**	 but the p modifier still saves it to the history list
+*/
+
 int			history_substitution(char **str)
 {
 	t_uint		i;
-	bool 		quoted;
-	int 		should_run;
+	bool		quoted;
+	int			should_run;
 
- 	i = 0;
+	i = 0;
 	quoted = 0;
 	should_run = 1;
 	set_error(NO_ERROR);
@@ -100,24 +98,19 @@ int			history_substitution(char **str)
 		if (get_error() != NO_ERROR)
 			return (-1);
 		check_quotes(*str, &i, &quoted);
-
-		// '!' starts a history substitution
 		if (is_bang((*str)[i]) && !quoted)
 		{
-			// !# line typed so far
 			if ((*str)[i + 1] && (*str)[i + 1] == '#')
 				bang_sharp(str, &i, &should_run);
-
-			// all other cases
 			else if (!is_blank_equal_ret((*str)[i + 1]))
 				should_run = start_substitution(str, &i, NULL);
 		}
-
-		// case [no bang] ˆstr1ˆstr2[ˆ||\n] same as !!:s/str1/str2
 		else if (is_circumflex((*str)[i]))
-			quick_substitution(str, &i);
+			should_run = quick_substitution(str, &i);
 		if (i < ft_strlen(*str))
 			i++;
 	}
+	if (!should_run)
+		add_to_history_list(&get_shell_env()->history, create_history_entry(*str));
 	return (should_run);
 }

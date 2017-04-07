@@ -7,10 +7,10 @@
 #include "utils.h"
 
 
-#define NB_SUB_TESTS 38
+#define NB_SUB_TESTS 40
 #define NB_ERR_TESTS 5
 
-// #define BANG_TEST_VERBOSE
+#define BANG_TEST_VERBOSE
 
 /*
 	to test your own strings:
@@ -64,8 +64,10 @@ static char	**get_bang_tests()
 		"test '!#cocou' !2",
 		"bli bla \"!#:2",
 		"bli bla \"test !#:2",
-		"!!:s/un/test",
-		"!!:gsptrptestp"};// !!%"
+		"!!:s/un/test\n",
+		"!!:gsptrptestp",
+		"^un^test\n",
+		"^un^test^\n"};// !!%"
 
 	i = 0;
 	malloced_tests = malloc(sizeof(char *) * (NB_SUB_TESTS + 1));
@@ -117,8 +119,10 @@ static char **get_bang_results()
 		"test '!#cocou' two",
 		"bli bla \"\"",
 		"bli bla \"test \"test",
-		"test deux trois quatre cinq",
-		"un deux testois quateste cinq"};
+		"test deux trois quatre cinq\n",
+		"un deux testois quateste cinq",
+		"test deux trois quatre cinq\n",
+		"test deux trois quatre cinq\n"};
 	return (results);
 }
 

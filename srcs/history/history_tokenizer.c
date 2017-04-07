@@ -7,9 +7,9 @@
 #include "break_input/tokenizer.h"
 
 /*
-	slightly modified tokenizer to handle 'bli bla "!!' case
-	(bang isn't quoted with double quotes, so substitution IS made)
-	add bool to original tokenizer?
+**	slightly modified tokenizer to handle 'bli bla "!!' case
+**	(bang isn't quoted with double quotes, so substitution IS made)
+**	add bool to original tokenizer?
 */
 
 void			add_quote_to_token(t_token *token)
@@ -28,9 +28,9 @@ void			add_quote_to_token(t_token *token)
 
 void			add_quote_token(t_tokenizer_state const state, t_token *result)
 {
-	t_token 	*token;
-	char 		*str;
-	char 		*tmp;
+	t_token		*token;
+	char		*str;
+	char		*tmp;
 
 	tmp = ft_strdup(state.current_char);
 	str = ft_strtrim(tmp);
@@ -60,7 +60,7 @@ t_token			*tokenize_for_substitution(char const *input)
 			if (get_error() != NO_ERROR)
 			{
 				if (get_error() == UNMATCHED_DOUBLE_QUOTE)
-					break;
+					break ;
 				free(state.input);
 				delete_all_tokens(&state.result);
 				return (NULL);

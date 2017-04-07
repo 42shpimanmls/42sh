@@ -3,7 +3,8 @@
 
 #include "history_substitutions.h"
 
-static void		entry_to_words(char *words, char **entry, t_range range, char *str, int i)
+static void		entry_to_words(char *words, char **entry, \
+								t_range range, char *designator)
 {
 	if (!words)
 	{
@@ -12,15 +13,16 @@ static void		entry_to_words(char *words, char **entry, t_range range, char *str,
 			ft_strdel(entry);
 			*entry = ft_strdup(words);
 			ft_strdel(&words);
+			ft_strdel(&designator);
 		}
 		else
-			error_builtin(NULL, ft_strsub(str, 0, i), BAD_WD_SPEC);
+			error_builtin(NULL, designator, BAD_WD_SPEC);
 	}
 }
 
-void			get_entry_word(char **entry, char *str, t_uint *end) // ret void
+void			get_entry_word(char **entry, char *str, t_uint *end)
 {
-	int 	i;
+	int		i;
 	char	*words;
 	t_range	range;
 
@@ -37,11 +39,11 @@ void			get_entry_word(char **entry, char *str, t_uint *end) // ret void
 			else if (start_word_designator(str[i]))
 				parse_word_designators(str, &i, &words, &range, entry);
 			else
-				return;
+				return ;
 		}
 		else
 			parse_word_designators(str, &i, &words, &range, entry);
 	}
 	(*end) += i;
-	entry_to_words(words, entry, range, str, i);
+	entry_to_words(words, entry, range, ft_strsub(str, 0, i));
 }
