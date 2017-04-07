@@ -49,18 +49,21 @@ void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 	t_uint 	start;
 
 	start = 0;
+	// if (!(delimiter = modifier[(*i)++]) || delimiter == '\n')
+	// {
+	// 	(*i)--;
+	// 	return ;
+	// }
 	delimiter = modifier[(*i)++];
-	// + handle quoted
+	// // + handle quoted
 	if (!(to_find = get_delimited_str(&modifier[*i], delimiter, i)))
-		ft_putendl("previous substitution");
-		// previous_substitution();
+		;
 	else
 	{
 		(*i)++;
 		replace = get_delimited_str(&modifier[*i], delimiter, i);
 		if (modifier[*i] == delimiter && modifier[*i - 1] != delimiter)
 			(*i)++;
-		ft_putnbr(*i);
 		if (repeat)
 		{
 			while (start < ft_strlen(*str))

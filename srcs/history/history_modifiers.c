@@ -4,6 +4,10 @@
 
 #include "history_substitutions.h"
 
+/*
+**	remove trailing pathname component i.e. what is after last slash
+*/
+
 static void	remove_tail(char **str, char c)
 {
 	size_t	i;
@@ -20,6 +24,10 @@ static void	remove_tail(char **str, char c)
 		ft_strdel(&tmp);
 	}
 }
+
+/*
+**	remove head i.e. what is before first slash
+*/
 
 static void 	remove_head(char **str, char c)
 {
@@ -58,11 +66,13 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 		{
 			i++;
 
-			// h remove trailing pathname component i.e. what is after last slash
+			/*
+				regroup these conditions + increment i
+			*/
+
 			if (modifiers[i] == 'h')
 				remove_tail(str, '/');
 
-			// t remove head, leave tail i.e.  file name
 			else if (modifiers[i] == 't')
 			{
 				while(ft_strchr(*str, '/'))
@@ -80,11 +90,13 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 			// p print the command but do not execute it
 			else if (modifiers[i] == 'p')
 			{
-				// i++;
+				i++;
 				should_run = 0;
 			}
 
 			// q quote the substituted word, escaping further substitution
+			else if (modifiers[i] == 'q')
+				;
 
 			// Quote the substituted words as with ‘q’,
 			//but break into words at spaces, tabs, and newlines.
@@ -116,7 +128,6 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 			*/
 			else if (modifiers[i] == 'g')
 			{
-				// i++;
 				if (modifiers[i + 1] == 's')
 				{
 					i += 2;
@@ -138,7 +149,6 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 			(*end) += i;
 			return (should_run);
 		}
-		i++;
 	}
 	(*end) += i;
 	return (should_run);

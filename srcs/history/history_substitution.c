@@ -85,13 +85,17 @@ static void	check_quotes(char *str, t_uint *i, bool *quoted)
 
 int			history_substitution(char **str)
 {
+	// t_hist_subst	subst;
 	t_uint		i;
 	bool		quoted;
 	int			should_run;
 
 	i = 0;
+	// subst.str = str;
+	// subst.range.start = 0;
 	quoted = 0;
 	should_run = 1;
+	// subst.should_run = 1;
 	set_error(NO_ERROR);
 	while (i < ft_strlen(*str))
 	{
