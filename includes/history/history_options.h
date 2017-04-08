@@ -5,12 +5,9 @@
 
 typedef	struct 	s_hist_opt
 {
+	char		anrw;
 	bool		c;
 	bool		d;
-	bool		a;
-	bool		n;
-	bool		r;
-	bool		w;
 	bool		p;
 	bool		s;
 	char		*offset;

@@ -9,13 +9,13 @@ void			print_history_options(t_hist_opt *options)
 		ft_putstr("c, ");
 	if (options->d)
 		ft_putstr("d, ");
-	if (options->a)
+	if (options->anrw & 8)
 		ft_putstr("a, ");
-	if (options->n)
+	if (options->anrw & 4)
 		ft_putstr("n, ");
-	if (options->w)
+	if (options->anrw & 1)
 		ft_putstr("w, ");
-	if (options->r)
+	if (options->anrw & 2)
 		ft_putstr("r, ");
 	if (options->p)
 		ft_putstr("p, ");

@@ -10,44 +10,19 @@ void			free_history_options(t_hist_opt *options)
 		ft_freetabchar(options->args);
 }
 
-static bool 	no_other_anrw(t_hist_opt *options)
-{
-	if (options->a)
-	{
-		if (options->n || options->r || options->w)
-			return (false);
-	}
-	else if (options->n)
-	{
-		if (options->a || options->r || options->w)
-			return (false);
-	}
-	else if (options->r)
-	{
-		if (options->a || options->n || options->w)
-			return (false);
-	}
-	else if (options->w)
-	{
-		if (options->a || options->r || options->n)
-			return (false);
-	}
-	return (true);
-}
-
 static int 	get_anrw_options(char c, t_hist_opt *options)
 {
+	if (options->anrw)
+		return (-1);
 	if (c == 'a')
-		options->a = 1;
+		options->anrw = options->anrw | 8;
 	else if (c == 'w')
-		options->w = 1;
+		options->anrw = options->anrw | 1;
 	else if (c == 'r')
-		options->r = 1;
+		options->anrw = options->anrw | 2;
 	else if (c == 'n')
-		options->n = 1;
-	if (no_other_anrw(options))
-		return (0);
-	return (-1);
+		options->anrw = options->anrw | 4;
+	return (0);
 }
 
 static bool	check_cd_opt(char **arg, t_hist_opt *options)

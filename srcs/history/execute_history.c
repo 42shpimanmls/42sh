@@ -75,16 +75,16 @@ static void		file_manipulation(t_hist_opt options, t_history *history)
 		filename = options.args[0];
 	else
 		filename = NULL;
-	if (options.w || options.a)
+	if (options.anrw & 1 || options.anrw & 8)
 	{
-		if (options.w)
+		if (options.anrw & 1)
 			hist_to_file(history, filename, false);
 		else if (!filename)
 			hist_to_file(history, HISTFILE, true);
 	}
-	else if (options.r || options.n)
+	else if (options.anrw & 2 || options.anrw & 4)
 	{
-		if (options.r)
+		if (options.anrw & 2)
 			load_history(get_shell_env(), filename, 0);
 		else
 			load_history(get_shell_env(), filename, 1);
