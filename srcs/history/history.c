@@ -55,7 +55,6 @@ int				builtin_history(int argc, char **argv)
 		else
 			error_builtin(argv[0], NULL, NEED_NUM);
 	}
-	print_history_options(&options);
 	if (get_error() == NO_ERROR)
 		execute_options(&get_shell_env()->history.list, options, argv);
 	free_history_options(&options);

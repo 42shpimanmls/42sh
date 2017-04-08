@@ -122,6 +122,11 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 			}
 
 			// &repeat the previous substitution
+			else if (modifiers[i] == '&')
+			{
+				i++;
+				replace_and_repeat(&get_shell_env()->history.last_subst, str);
+			}
 
 			/*
 				g Cause changes to be applied over the entire event line.

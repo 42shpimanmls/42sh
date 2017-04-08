@@ -7,6 +7,20 @@
 
 // to do: error handling
 
+void		replace_and_repeat(t_str_subst *subst, char **str)
+{
+	t_uint 	start;
+
+	start = 0;
+	if (subst->repeat)
+	{
+		while (start < ft_strlen(*str))
+			start = find_and_replace(str, subst->to_find, subst->replace, start);
+	}
+	else
+		find_and_replace(str, subst->to_find, subst->replace, 0);
+}
+
 static char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
 {
 	char 	*str;
@@ -28,51 +42,42 @@ static char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
 	return (str);
 }
 
-void		perform_substitution(char **str, char *hist_entry, \
-								t_uint *start, t_uint end)
+static void	save_substitution(t_str_subst subst)
 {
-	char	*to_sub;
+	t_sh_history	*history;
 
-	to_sub = ft_strsub(*str, *start, end - *start);
-	find_and_replace(str, to_sub, hist_entry, *start);
-	*start = end;
-	ft_strdel(&hist_entry);
-	ft_strdel(&to_sub);
-	ft_putstr(*str);
+	history = &get_shell_env()->history;
+	if (history->last_subst.to_find)
+	{
+		ft_strdel(&history->last_subst.to_find);
+		ft_strdel(&history->last_subst.replace);
+	}
+	history->last_subst = subst;
 }
 
 void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 {
-	char 	*to_find;
-	char 	*replace;
-	char 	delimiter;
-	t_uint 	start;
+	t_str_subst	subst;
+	char		delimiter;
 
-	start = 0;
 	// if (!(delimiter = modifier[(*i)++]) || delimiter == '\n')
 	// {
 	// 	(*i)--;
 	// 	return ;
 	// }
+	subst.repeat = repeat;
 	delimiter = modifier[(*i)++];
 	// // + handle quoted
-	if (!(to_find = get_delimited_str(&modifier[*i], delimiter, i)))
+	if (!(subst.to_find = get_delimited_str(&modifier[*i], delimiter, i)))
 		;
 	else
 	{
 		(*i)++;
-		replace = get_delimited_str(&modifier[*i], delimiter, i);
+		subst.replace = get_delimited_str(&modifier[*i], delimiter, i);
 		if (modifier[*i] == delimiter && modifier[*i - 1] != delimiter)
 			(*i)++;
-		if (repeat)
-		{
-			while (start < ft_strlen(*str))
-				start = find_and_replace(str, to_find, replace, start);
-		}
-		else
-			find_and_replace(str, to_find, replace, 0);
-		ft_strdel(&to_find);
-		ft_strdel(&replace);
+		replace_and_repeat(&subst, str);
+		save_substitution(subst);
 	}
 }
 
@@ -91,17 +96,4 @@ void		substitute_words_str(char *modifiers, char **str, t_uint *i)
 		words = words->next;
 	}
 	delete_all_tokens(&tmp);
-}
-
-int 		quick_substitution(char **str, t_uint *start)
-{
-	char		*hist_entry;
-	t_uint		end;
-
-	end = *start;
-	hist_entry = get_nth_entry(get_shell_env()->history.list, -1);
-	substitute_str(&(*str)[end], &hist_entry, &end, false);
-	perform_substitution(str, hist_entry, start, end);
-	// check error
-	return (get_error());
 }

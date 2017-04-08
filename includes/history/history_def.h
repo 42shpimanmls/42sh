@@ -30,7 +30,7 @@ typedef struct 			s_sh_history
 	// size_t				size;
 	t_history			*list;
 	t_file_position		*files;
-	t_str_subst			*last_subst;
+	t_str_subst			last_subst;
 	char				*last_search;
 }						t_sh_history;
 
