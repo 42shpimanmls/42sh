@@ -2,6 +2,7 @@
 # define BUILTINS_H
 
 #include "variable.h"
+#include "opt.h"
 /*# include "builtin_args.h"*/
 
 # define STATUS_SUCCESS 0
@@ -15,7 +16,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS);
 BUILTIN_RET 		builtin_setenv(BUILTIN_ARGS);
 BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS);
 BUILTIN_RET 		builtin_exit(BUILTIN_ARGS);
-BUILTIN_RET			builtin_history(BUILTIN_ARGS);
+BUILTIN_RET		builtin_history(BUILTIN_ARGS);
 
 /*
 **
@@ -23,7 +24,24 @@ BUILTIN_RET			builtin_history(BUILTIN_ARGS);
 **	
 */
 
-int 		setenv_as(t_variable **env, char *name, char *value);
-int 		unsetenv_as(t_variable **env, char *name);
+/*
+** options
+*/
+int			retrieve_options(int argc, char **argv, t_opt *o, char *opts);
+
+/*
+** setenv, unsetenv
+*/
+int	 		setenv_as(t_variable **env, char *name, char *value);
+int 			unsetenv_as(t_variable **env, char *name);
+/*
+** echo
+*/
+
+int			builtin_echo(int argc, char **argv);
+bool			escape_char(char *str);
+bool			escape(int c);
+int			octal(char *c);
+int			convert_base(int nbr, int base_from, int base_to);
 
 #endif

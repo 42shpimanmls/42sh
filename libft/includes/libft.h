@@ -90,6 +90,7 @@ int			ft_isascii(int c);
 int			ft_isprint(int c);
 int			ft_ispair(int num);
 int			ft_isimpair(int num);
+int			is_octal(char c);
 
 int			ft_toupper(int c);
 int			ft_tolower(int c);

@@ -8,8 +8,8 @@ t_builtin_def const			*get_builtin_defs(void)
 	static t_builtin_def const defs[BUILTIN_DEF_COUNT] =
 	{
 	//	ID							NAME					HANDLER FUNCTION
-		{ CD_BUID,					"cd",					builtin_cd },
-		//{ ECHO_BUID,				"echo",					NULL },
+		{ CD_BUID,				"cd",					builtin_cd },
+		{ ECHO_BUID,				"echo",					builtin_echo },
 		{ EXIT_BUID,				"exit",					builtin_exit },
 		{ SETENV_BUID, 				"setenv",				builtin_setenv },
 		{ UNSETENV_BUID, 			"unsetenv",				builtin_unsetenv },
