@@ -1,4 +1,5 @@
 #include "redirection.h"
+#include <errno.h>
 
 #define REDIRECT_DEBUG
 
@@ -35,6 +36,7 @@ t_error_id			redirect(t_redirection *redirections)
 	int 		file_fd;
 
 	set_error(NO_ERROR);
+	ret = NO_ERROR;
 	while (redirections)
 	{
 		file_fd = choose_open(redirections->type, redirections->word);

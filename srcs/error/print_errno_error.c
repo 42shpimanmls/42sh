@@ -1,4 +1,6 @@
 #include <libft.h>
+#include <errno.h>
+#include "errors.h"
 
 void		print_errno_error(int err, char const *pre, char const *post)
 {
