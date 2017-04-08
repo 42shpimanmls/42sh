@@ -22,9 +22,9 @@ void				restore_stdin_stdout(int *std)
 int 				choose_open(t_redir_type type, char *file)
 {
 	if (type == REDIR_OUTPUT)
-		return(open(file, O_RDWR | O_CREAT | O_TRUNC, 0666));
+		return(open(file, O_RDWR | O_CREAT | O_TRUNC, FILE_PERMISSION));
 	else if (type == APPEND_OUTPUT)
-		return(open(file, O_RDWR | O_CREAT | O_APPEND, 0666));
+		return(open(file, O_RDWR | O_CREAT | O_APPEND, FILE_PERMISSION));
 	else
 		return(open(file, O_RDONLY));
 }
