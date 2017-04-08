@@ -15,7 +15,7 @@
 typedef struct			s_shell_env
 {
 	t_variable			*variables;
-	t_history			*history;
+	t_sh_history		history;
 	t_file_position		*history_files;
 	bool				should_run;
 	bool				should_keep_reading;

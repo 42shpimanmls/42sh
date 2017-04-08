@@ -78,7 +78,7 @@ static void	check_quotes(char *str, t_uint *i, bool *quoted)
 **	'!' starts a substitution on a history entry
 ** 	or the line typed so far if the designator is '#'
 **	'^' starts a quick substitution (^str1^str2[^])
-**	should_run determines if the command is executed or not 
+**	should_run determines if the command is executed or not
 **	(it isn't with the p modifier or in case of an error,
 **	 but the p modifier still saves it to the history list
 */
@@ -115,6 +115,6 @@ int			history_substitution(char **str)
 			i++;
 	}
 	if (!should_run)
-		add_to_history_list(&get_shell_env()->history, create_history_entry(*str));
+		add_to_history_list(&get_shell_env()->history.list, create_history_entry(*str));
 	return (should_run);
 }

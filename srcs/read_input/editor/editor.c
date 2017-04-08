@@ -27,7 +27,7 @@ t_editor	*init_editor()
 	new = get_editor();
 	ft_bzero(new, sizeof(t_editor));
 	new->term = init_term();
-	new->history = get_shell_env()->history;
+	new->history = get_shell_env()->history.list;
 	new->prompt = gen_prompt();
 	new->prompt_size = ft_strlen(new->prompt);
 	list_goto_last((t_abstract_list **)&new->history);

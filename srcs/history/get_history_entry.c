@@ -48,7 +48,7 @@ static void		delimit_to_find(char *str, int *i, t_uint *end, bool must_start)
 		while (str[*i] && !is_posix_blank(str[*i]) \
 				&& str[*i] != '\n' && str[*i] != '?')
 			(*i)++;
-		if (str[*i] && (str[*i] == '?'))// || str[i] == '\n'))
+		if (str[*i] && (str[*i] == '?'))
 			(*end)++;
 		(*end)++;
 	}
@@ -96,7 +96,7 @@ char			*get_history_entry(char *designator, t_uint *end)
 	t_history	*history;
 	int			n;
 
-	history = get_shell_env()->history;
+	history = get_shell_env()->history.list;
 	if (is_bang(*designator) || (start_word_designator(*designator) \
 									&& *designator != '-'))
 	{

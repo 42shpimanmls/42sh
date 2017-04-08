@@ -42,7 +42,7 @@ int				builtin_history(int argc, char **argv)
 	set_error(NO_ERROR);
 	ft_bzero(&options, sizeof(options));
 	options.ac = 1;
-	history = get_shell_env()->history;
+	history = get_shell_env()->history.list;
 	i = 1;
 	if (argc == 1)
 		print_history(history, 0);
@@ -57,7 +57,7 @@ int				builtin_history(int argc, char **argv)
 	}
 	print_history_options(&options);
 	if (get_error() == NO_ERROR)
-		execute_options(&get_shell_env()->history, options, argv);
+		execute_options(&get_shell_env()->history.list, options, argv);
 	free_history_options(&options);
 	return (get_error());
 }

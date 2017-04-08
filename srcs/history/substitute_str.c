@@ -99,7 +99,7 @@ int 		quick_substitution(char **str, t_uint *start)
 	t_uint		end;
 
 	end = *start;
-	hist_entry = get_nth_entry(get_shell_env()->history, -1);
+	hist_entry = get_nth_entry(get_shell_env()->history.list, -1);
 	substitute_str(&(*str)[end], &hist_entry, &end, false);
 	perform_substitution(str, hist_entry, start, end);
 	// check error

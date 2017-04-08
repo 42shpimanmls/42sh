@@ -17,7 +17,7 @@ void	initialize_history()
 
 	#ifdef HISTORY_TEST_VERBOSE
 	ft_printf("\nHistory list has been initialized from %s: \n", HISTFILE);
-	print_history(get_shell_env()->history, 0);
+	print_history(get_shell_env()->history.list, 0);
 	#endif
 }
 
@@ -31,7 +31,7 @@ void	history_add_one()
 	char	str[] = "added\n";
 	size_t 	nb;
 
-	history = get_shell_env()->history;
+	history = get_shell_env()->history.list;
 	nb = list_count((t_abstract_list *)history);
 	add_to_history_list(&history, create_history_entry(str));
 	CU_ASSERT_EQUAL(nb + 1, list_count((t_abstract_list *)history));
@@ -73,23 +73,23 @@ void	history_delete()
 						{"history", "-d", "1"}
 					};
 
-	nb = list_count((t_abstract_list *)get_shell_env()->history) - 1;
+	nb = list_count((t_abstract_list *)get_shell_env()->history.list) - 1;
 	//printf("nb: %zu\n", nb);
 	builtin_history(2, av[0]);
-	CU_ASSERT_EQUAL(nb, list_count((t_abstract_list *)get_shell_env()->history));
+	CU_ASSERT_EQUAL(nb, list_count((t_abstract_list *)get_shell_env()->history.list));
 	nb--;
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_putendl("State of history after deleting entry 7:");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
 
 	builtin_history(3, av[1]);
-	CU_ASSERT_EQUAL(nb, list_count((t_abstract_list *)get_shell_env()->history));
+	CU_ASSERT_EQUAL(nb, list_count((t_abstract_list *)get_shell_env()->history.list));
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_putendl("State of history after deleting entry 1:");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
 
 }
@@ -108,7 +108,7 @@ void	history_to_file()
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("This history should have been appended to %s once only \
 					and added to %s:\n", HISTFILE, "test");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
 
 	builtin_history(3, av[1]);
@@ -124,7 +124,7 @@ void	history_from_file()
 		{"history", "-n", "test", NULL},
 	};
 
-	history = get_shell_env()->history;
+	history = get_shell_env()->history.list;
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_putendl("State of history list before reading: ");
@@ -135,14 +135,14 @@ void	history_from_file()
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("State of history list after reading %s\n: ", HISTFILE);
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
-	CU_ASSERT_PTR_NOT_NULL(get_shell_env()->history);
-	history = get_shell_env()->history;
+	CU_ASSERT_PTR_NOT_NULL(get_shell_env()->history.list);
+	history = get_shell_env()->history.list;
 	builtin_history(3, av[1]);
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("State of history list after reading %s\n: ", "test");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
 	if (history)
 		CU_ASSERT_PTR_NOT_NULL(history->next);
@@ -154,10 +154,10 @@ void	history_clear()
 
 
 	builtin_history(2, av);
-	CU_ASSERT_PTR_NULL(get_shell_env()->history);
+	CU_ASSERT_PTR_NULL(get_shell_env()->history.list);
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_putendl("State of history after clearing all (should be empty!):");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
 }
 
@@ -171,11 +171,11 @@ void 	history_s_option()
 					};
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("State of history before -s: \n");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
 
 	builtin_history(5, av[0]);
-	history = get_shell_env()->history;
+	history = get_shell_env()->history.list;
 
 	while (history->next)
 		history = history->next;
@@ -183,7 +183,7 @@ void 	history_s_option()
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("State of history after -s: \n");
-		print_history(get_shell_env()->history, 1);
+		print_history(get_shell_env()->history.list, 1);
 	#endif
 
 	builtin_history(3, av[1]);
@@ -193,7 +193,7 @@ void 	history_s_option()
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("State of history after -s without args: \n");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
 }
 
@@ -208,10 +208,10 @@ void 	history_p_option()
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("State of history before -p: \n");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
 
-	history = get_shell_env()->history;
+	history = get_shell_env()->history.list;
 	while (history->next)
 		history = history->next;
 
@@ -222,7 +222,7 @@ void 	history_p_option()
 
 	#ifdef HISTORY_TEST_VERBOSE
 		ft_printf("State of history after -p (should be the same without last line): \n");
-		print_history(get_shell_env()->history, 0);
+		print_history(get_shell_env()->history.list, 0);
 	#endif
 
 	/*
