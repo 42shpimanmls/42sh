@@ -23,3 +23,9 @@ EV_CB_RET 	event_delete(EV_CB_ARGS)
 	event_cursor_left(ed);
 	list_pop_at_pos(ed->cursor_position, (t_abstract_list **)&ed->string);
 }
+
+EV_CB_RET 	event_delete_right(EV_CB_ARGS)
+{
+	ed->need_refresh = true;
+	list_pop_at_pos(ed->cursor_position, (t_abstract_list **)&ed->string);
+}

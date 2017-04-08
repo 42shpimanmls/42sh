@@ -26,7 +26,8 @@ t_event_callback_def const			*get_event_callback_defs(void)
 		{ PASTE_EVID,				"PASTE",				"\x10",				event_paste },
 		{ CANCEL_EVID,				"CANCEL",				"\x3",				event_cancel },
 		{ EXIT_EVID,				"EXIT",					"\x4",				event_exit },
-		{ DELETE_EVID,				"DELETE",				"\x7f",				event_delete }
+		{ DELETE_EVID,				"DELETE",				"\x7f",				event_delete },
+		{ DELETE_RIGHT_EVID,		"DELETE_RIGHT",			"\x1b[3~",			event_delete_right }
 	};
 	return (defs);
 }

@@ -22,7 +22,8 @@ typedef enum				e_event_id
 	PASTE_EVID,
 	CANCEL_EVID,
 	EXIT_EVID,
-	DELETE_EVID
+	DELETE_EVID,
+	DELETE_RIGHT_EVID
 }							t_event_id;
 
 typedef struct				s_event_callback_def
@@ -33,7 +34,7 @@ typedef struct				s_event_callback_def
 	t_event_callback const	callback;
 }							t_event_callback_def;
 
-# define EVENT_CALLBACK_DEF_COUNT 19
+# define EVENT_CALLBACK_DEF_COUNT 20
 # define EVENT_STR_MAX_LEN 6
 
 t_event_callback_def const			*get_event_callback_defs(void);
