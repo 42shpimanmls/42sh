@@ -8,7 +8,7 @@ void		print_errno_error(int err, char const *pre, char const *post)
 		ft_putstr_fd(pre, 2);
 		ft_putstr_fd(": ", 2);
 	}
-	ft_putstr_fd(sys_errlist[err], 2);
+	ft_putstr_fd(get_system_error(err), 2);
 	if (post != NULL)
 	{
 		ft_putstr_fd(": ", 2);
