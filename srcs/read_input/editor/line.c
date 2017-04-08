@@ -27,27 +27,13 @@ void move_start(t_editor *ed)
 static void print_command_string(t_editor *ed, char const *prompt, t_string *cmd_str
 	, size_t term_width)
 {
-	char	**lines;
 	char	*str;
-	char	*tmp;
-	size_t	u;
 
-	tmp = get_string_from_list(cmd_str);
-	str = ft_strjoin(prompt, tmp);
-	free(tmp);
-	lines = ft_strsplit(str, '\n');
+	str = ft_strjoinf(prompt, get_string_from_list(cmd_str), 2);
+	put_highlighted_line(ed, str);
+	if (ft_strlen(str) % (int)term_width == 0 && !if_on_multiline(ed))
+		ft_putchar('\n');
 	free(str);
-	u = 0;
-	while (lines[u] != NULL)
-	{
-		put_highlighted_line(ed, lines[u]);
-		if (ft_strlen(lines[u]) % term_width == 0)
-			ft_putchar('\n');
-		if (lines[u + 1] != NULL)
-			ft_putchar('\n');
-		u++;
-	}
-	ft_freetabchar(lines);
 }
 
 void put_line(t_editor *ed)
