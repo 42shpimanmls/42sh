@@ -15,13 +15,13 @@ static int 	get_anrw_options(char c, t_hist_opt *options)
 	if (options->anrw)
 		return (-1);
 	if (c == 'a')
-		options->anrw = options->anrw | 8;
+		options->anrw = A_OPT;
 	else if (c == 'w')
-		options->anrw = options->anrw | 1;
+		options->anrw = W_OPT;
 	else if (c == 'r')
-		options->anrw = options->anrw | 2;
+		options->anrw = R_OPT;
 	else if (c == 'n')
-		options->anrw = options->anrw | 4;
+		options->anrw = N_OPT;
 	return (0);
 }
 

@@ -5,7 +5,8 @@
 #include "history_substitutions.h"
 
 /*
-**	remove trailing pathname component i.e. what is after last slash
+**	removes *str's trailing pathname component
+**	i.e. what is after last slash
 */
 
 static void	remove_tail(char **str, char c)
@@ -26,7 +27,8 @@ static void	remove_tail(char **str, char c)
 }
 
 /*
-**	remove head i.e. what is before first slash
+**	removes *str's head
+**	i.e. what is before last slash
 */
 
 static void 	remove_head(char **str, char c)
@@ -35,23 +37,42 @@ static void 	remove_head(char **str, char c)
 	char 	*tmp;
 
 	i = 0;
-	while ((*str)[i] && (*str)[i] != c)
-		i++;
-	if (str[i])
+	while ((tmp = ft_strchr(*str, c)))
 	{
-		tmp = ft_strsub(*str, i + 1, ft_strlen(*str) - i);
-		ft_strdel(str);
-		*str = ft_strdup(tmp);
-		ft_strdel(&tmp);
+		i = tmp - *str;
+		if (str[i])
+		{
+			tmp = ft_strsub(*str, i + 1, ft_strlen(*str) - i);
+			ft_strdel(str);
+			*str = ft_strdup(tmp);
+			ft_strdel(&tmp);
+		}
 	}
 }
 
 /*
- 	!!:s/ !!:s// !!:s previous substitution
- 	if not found substitution failed
- 	!!:s/kg removes kg
+**	h removes the trailing pathname (/pathname)
+**	t keeps only the trailing pathname
+**	r removes a trailing suffix (.suffix)
+**	e removes all but the trailing suffix
 */
 
+void	trimming_modifiers(char modifier, char **str, t_uint *i)
+{
+	if (modifier == 'h')
+		remove_tail(str, '/');
+	else if (modifier == 't')
+		remove_head(str, '/');
+	else if (modifier == 'r')
+		remove_tail(str, '.');
+	else if (modifier == 'e')
+		remove_head(str, '.');
+	(*i)++;
+}
+
+/*
+ 	if not found substitution failed
+*/
 
 bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 {
@@ -60,32 +81,13 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 
 	i = 0;
 	should_run = 1;
-	while (modifiers[i]) // invalid read - why ? fix = i < ft_strlen()
+	while (modifiers[i])
 	{
 		if (modifiers[i] == ':')
 		{
 			i++;
-
-			/*
-				regroup these conditions + increment i
-			*/
-
-			if (modifiers[i] == 'h')
-				remove_tail(str, '/');
-
-			else if (modifiers[i] == 't')
-			{
-				while(ft_strchr(*str, '/'))
-					remove_head(str, '/');
-			}
-
-			// r Remove a trailing suffix of the form ‘.suffix’, leaving the basename.
-			else if (modifiers[i] == 'r')
-				remove_tail(str, '.');
-
-			// e remove all but the trailing suffix
-			else if (modifiers[i] == 'e')
-				remove_head(str, '.');
+			if (ft_strchr("htre", modifiers[i]))
+				trimming_modifiers(modifiers[i], str, &i);
 
 			// p print the command but do not execute it
 			else if (modifiers[i] == 'p')
@@ -94,7 +96,7 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 				should_run = 0;
 			}
 
-			// q quote the substituted word, escaping further substitution
+			// q single quote the substituted word, escaping further substitution
 			else if (modifiers[i] == 'q')
 				;
 
@@ -122,24 +124,22 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end)
 			// &repeat the previous substitution
 
 			/*
-				g
-				Cause changes to be applied over the entire event line.
+				g Cause changes to be applied over the entire event line.
+				G Apply the following ‘s’ modifier once to each word in the event.
 				Used in conjunction with ‘s’, as in gs/old/new/, or with ‘&’.
 			*/
-			else if (modifiers[i] == 'g')
+			else if (modifiers[i] == 'g' || modifiers[i] == 'G')
 			{
-				if (modifiers[i + 1] == 's')
+				i++;
+				if (modifiers[i] == 's')
 				{
-					i += 2;
-					substitute_str(modifiers, str, &i, true);
+					i++;
+					if (modifiers[i - 2] == 'g')
+						substitute_str(modifiers, str, &i, true);
+					else
+						substitute_words_str(modifiers, str, &i);
 				}
 			}
-
-			// G Apply the following ‘s’ modifier once to each word in the event.
-			// non conclusive test in sh
-			else if (modifiers[i] == 'G')
-				substitute_words_str(modifiers, str, &i);
-
 			else
 				return (should_run);
 

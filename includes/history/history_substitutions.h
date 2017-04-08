@@ -4,24 +4,6 @@
 #include "history.h"
 #include "range.h"
 
-typedef struct 	s_hist_subst {
-
-				char	**str;
-				t_range	range;
-				bool	should_run;
-				bool	quote_word;
-
-}				t_hist_subst;
-
-typedef struct 	s_str_subst {
-
-				char	delimiter;
-				char 	*to_find;
-				char	*replace;
-				bool	repeat;
-
-}				t_str_subst;
-
 /*
 **			history_substitutions.c
 */

@@ -3,16 +3,10 @@
 
 #include "execution/builtins/builtin_def.h"
 #include "shell_env.h"
-
-# include "execution/builtins/builtin_def.h"
-
 #include "history_options.h"
-
-/*
-	exported env variable in shells - need absolute path !
-*/
-
-# define HISTFILE ".42sh_history"
+#include "file_positions.h"
+#include "history_def.h"
+#include "history_substitutions.h"
 
 /*
 **		load_history.c

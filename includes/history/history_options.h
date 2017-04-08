@@ -2,6 +2,12 @@
 # define HISTORY_OPTIONS_H
 
 #include <stdbool.h>
+// #include "history.h"
+
+#define A_OPT 0b1000
+#define N_OPT 0b0100
+#define R_OPT 0b0010
+#define W_OPT 0b0001
 
 typedef	struct 	s_hist_opt
 {
