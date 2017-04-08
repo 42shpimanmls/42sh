@@ -34,15 +34,15 @@ t_error_id			redirect(t_redirection *redirections)
 	t_error_id 	ret;
 	int 		file_fd;
 
-	ret = NO_ERROR;
+	set_error(NO_ERROR);
 	while (redirections)
 	{
 		file_fd = choose_open(redirections->type, redirections->word);
 		if (file_fd < 0)
 		{
-			set_file_error(redirections->word);
+			set_error(errno);
 			ret = get_error();
-			print_file_error(ret, redirections->word);
+			print_errno_error(ret, NULL, redirections->word);
 			return (ret);
 		}
 		else
