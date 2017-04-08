@@ -43,6 +43,7 @@ typedef struct			s_editor
 	char				*prompt;
 	bool				need_refresh;
 	bool				action_move_left;
+	bool				in_edition;
 }						t_editor;
 
 #endif
