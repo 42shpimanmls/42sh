@@ -22,7 +22,8 @@ typedef enum				e_error_id
 	UNEXPECTED_SEMI,
 	UNEXPECTED_IF,
 	UNEXPECTED_PIPE,
-	NO_SUCH_BUILTIN
+	NO_SUCH_BUILTIN,
+	CHILD_FAILURE
 }							t_error_id;
 
 typedef struct 			s_error
@@ -51,5 +52,7 @@ void				set_error(t_error_id error);
 void 				set_file_error(char *file);
 
 void				error_builtin(char *builtin, char *error, t_error_id id);
+
+char const			*get_system_error(int signum);
 
 #endif

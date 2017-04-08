@@ -1,9 +1,9 @@
 #include "builtin_def.h"
 #include <libft.h>
 #include "shell_env.h"
-#include "init/init.h"  // replace by envHelper
+#include "init/init.h"
 
-BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
+BUILTIN_RET		builtin_unsetenv(BUILTIN_ARGS)
 {
 	t_variable	**env;
 	size_t		i;
@@ -14,18 +14,28 @@ BUILTIN_RET 		builtin_unsetenv(BUILTIN_ARGS)
 		i = 0;
 		while (argv[++i])
 		{
-			unsetenv_as(env, argv[i]);
+			if (unsetenv_as(env, argv[i]) == STATUS_FAILURE)
+			{
+				return (STATUS_FAILURE);
+			}
 		}
+		return (STATUS_SUCCESS);
 	}
 	else
 	{
-		ft_printf("Usage: unsetenv <key> ...\n");
+		ft_dprintf(STDERR_FILENO, "Usage: unsetenv <key> ...\n");
 	}
-	return (STATUS_SUCCESS);
+	return (STATUS_FAILURE);
 }
 
-void	unsetenv_as(t_variable **env, char *name)
+int				unsetenv_as(t_variable **env, char *name)
 {
 	if (env && ft_strlen(name) > 0)
-		pop_variable_by_name(env, name);
+	{
+		if (pop_variable_by_name(env, name) == STATUS_SUCCESS)
+		{
+			return (STATUS_SUCCESS);
+		}
+	}
+	return (STATUS_FAILURE);
 }

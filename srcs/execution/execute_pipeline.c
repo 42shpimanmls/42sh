@@ -4,7 +4,6 @@
 #include <libft.h>
 #include "execute_syntax_tree.h"
 #include "pipe.h"
-#include "errno.h"
 #include <stdio.h>
 #include "redirection.h"
 #include "expansion/expansion.h"
@@ -31,7 +30,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 	else
 	{
 		wait_for_childs();
-		ret = NO_ERROR;
+		ret = get_error();
 	}
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
