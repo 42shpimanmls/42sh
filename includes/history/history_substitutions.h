@@ -50,7 +50,8 @@ t_token			*tokenize_for_substitution(char const *input);
 **			history_modifiers.c
 */
 
-bool			apply_modifiers(char *modifiers, char **str, t_uint *end);
+bool			apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote);
+void			quote_word(char **word);
 
 /*
 **			substitute_str.c

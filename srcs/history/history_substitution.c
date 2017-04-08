@@ -15,6 +15,7 @@ int			start_substitution(char **str, t_uint *start, char *hist_entry)
 {
 	t_uint	end;
 	int		should_run;
+	bool 	quote;
 
 	should_run = 1;
 	end = *start;
@@ -31,9 +32,11 @@ int			start_substitution(char **str, t_uint *start, char *hist_entry)
 	if ((*str)[end] && start_word_designator((*str)[end]))
 		get_entry_word(&hist_entry, &(*str)[end], &end);
 	if (end < ft_strlen(*str) && (*str)[end] == ':')
-		should_run = apply_modifiers(&(*str)[end], &hist_entry, &end);
+		should_run = apply_modifiers(&(*str)[end], &hist_entry, &end, &quote);
 	if (get_error() == NO_ERROR)
 	{
+		if (quote)
+			quote_word(&hist_entry);
 		perform_substitution(str, hist_entry, start, end);
 		return (should_run);
 	}
