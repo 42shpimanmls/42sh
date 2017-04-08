@@ -20,7 +20,7 @@ t_editor *get_editor()
 	return (&ed);
 }
 
-t_editor	*init_editor()
+void	init_editor()
 {
 	t_editor	*new;
 
@@ -31,7 +31,6 @@ t_editor	*init_editor()
 	new->prompt = gen_prompt();
 	new->prompt_size = ft_strlen(new->prompt);
 	list_goto_last((t_abstract_list **)&new->history);
-	return (new);
 }
 
 void	add_to_string(t_editor *ed, char c)
