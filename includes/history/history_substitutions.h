@@ -61,13 +61,6 @@ t_token			*tokenize_for_substitution(char const *input);
 bool			apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote);
 void			quote_word(char **word);
 
-/*
-**			substitute_str.c
-*/
-
-void			substitute_str(char *modifier, char **str, t_uint *i, bool repeat);
-void			substitute_words_str(char *modifiers, char **str, t_uint *i);
-void			replace_and_repeat(t_str_subst *subst, char **str);
 
 /*
 **			perform_hist_subst

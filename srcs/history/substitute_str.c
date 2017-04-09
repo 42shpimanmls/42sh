@@ -1,17 +1,18 @@
-#include "libft.h"
-#include "shell_env.h"
-#include "errors.h"
-#include "utils.h"
-#include "abstract_list.h"
+#include "string_substitution.h"
 
-#include "history_substitutions.h"
-#include "read_input/editor/editor_struct.h" // move struct elsewhere 
-#include "read_input/editor/editor.h" // move elsewhere 
 
-/*
-	to do: error handling :
- 	if not found substitution failed
-*/
+static void	save_substitution(t_str_subst subst)
+{
+	t_sh_history	*history;
+
+	history = &get_shell_env()->history;
+	if (history->last_subst.to_find)
+	{
+		ft_strdel(&history->last_subst.to_find);
+		ft_strdel(&history->last_subst.replace);
+	}
+	history->last_subst = subst;
+}
 
 void		replace_and_repeat(t_str_subst *subst, char **str)
 {
@@ -28,90 +29,29 @@ void		replace_and_repeat(t_str_subst *subst, char **str)
 			set_error(SUBST_FAIL);
 }
 
-t_string	*str_to_list(char *str)
+/*
+**	replaces all unquoted '&' in subst.replace (new) by subst.to_find (old)
+*/
+
+static void	replace_and_by_old(t_str_subst *subst)
 {
-	t_string	*l_str;
-	t_string	*new;
+	t_str_subst	subst_and;
+	char		*tmp;
 	int			i;
 
 	i = 0;
-	l_str = NULL;
-	while (str && str[i])
+	while ((tmp = ft_strchr(&subst->replace[i], '&')))
 	{
-		new = memalloc_or_die(sizeof(t_string));
-		new->c = str[i];
-		new->next = NULL;
-		list_push_back((t_abstract_list **)&l_str, (t_abstract_list *)new);
-		i++;
-	}
-	return (l_str);
-}
-
-static void	take_out_backslashes(char **str, char delimiter)
-{
-	t_string	*l_str;
-	t_string	*tmp;
-	size_t		pos;
-
-	if (ft_strchr(*str, '\\'))
-	{
-		pos = 0;
-		l_str = str_to_list(*str);
-		tmp = l_str;
-		while (l_str)
+		if (tmp[i - 1] != '\\')
 		{
-			if (l_str->c == '\\' && l_str->next && l_str->next->c == delimiter)
-				list_pop_at_pos(pos, (t_abstract_list **)&tmp);
-			pos++;
-			l_str = l_str->next;
+			subst_and.to_find = "&";
+			subst_and.replace = subst->to_find;
+			subst_and.repeat = false;
+			replace_and_repeat(&subst_and, &subst->replace);
 		}
-		l_str = tmp;
-		ft_strdel(str);
-		*str = get_string_from_list(l_str);
-		free_string(tmp);
+		i = tmp - subst->replace + 1;
 	}
-}
-
-static char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
-{
-	char 	*str;
-	char 	*tmp;
-	size_t 	len;
-
-	if (!(tmp = ft_strchr(modifier, delimiter)))
-	{
-		len = ft_strlen(modifier) - 1;
-		// -1 because of the \n -> are strings always going to end with \n? does it need to be tested?
-		str = ft_strsub(modifier, 0, len);
-	}
-	else
-	{
-		len = tmp - modifier;
-		while (modifier[len - 1] == '\\')
-		{
-			tmp = ft_strchr(&modifier[len + 1], delimiter);
-			len = tmp - modifier;
-		}
-		str = ft_strsub(modifier, 0, len);
-	}
-	ft_putendl(str);
-	take_out_backslashes(&str, delimiter);
-	ft_putendl(str);
-	*i += len;
-	return (str);
-}
-
-static void	save_substitution(t_str_subst subst)
-{
-	t_sh_history	*history;
-
-	history = &get_shell_env()->history;
-	if (history->last_subst.to_find)
-	{
-		ft_strdel(&history->last_subst.to_find);
-		ft_strdel(&history->last_subst.replace);
-	}
-	history->last_subst = subst;
+	take_out_backslashes(&subst->replace, '&');
 }
 
 void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
@@ -127,6 +67,7 @@ void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 		return ;
 	(*i)++;
 	subst.replace = get_delimited_str(&modifier[*i], delimiter, i);
+	replace_and_by_old(&subst);
 	if (modifier[*i] == delimiter && modifier[*i - 1] != delimiter)
 		(*i)++;
 	replace_and_repeat(&subst, str);

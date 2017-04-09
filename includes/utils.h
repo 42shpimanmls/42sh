@@ -4,6 +4,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include "uint.h"
+# include "read_input/editor/editor_struct.h" // move
 
 void						print_non_ascii_str(char const *str);
 void						print_non_ascii_char(char c);
@@ -24,6 +25,7 @@ void						str_add_space(char **str);
 size_t						number_len(char *str);
 char						**copy_array(char **array, size_t start, int end);
 char						*array_to_str(char **array);
+t_string					*str_to_list(char *str);
 void						free_ptr_array(void *ptr_array);
 void						wait_for_childs();
 

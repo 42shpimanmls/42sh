@@ -8,6 +8,7 @@
 
 #include "history.h"
 #include "history_substitutions.h"
+#include "string_substitution.h"
 
 #include "history_debug.h"
 

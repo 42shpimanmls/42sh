@@ -3,6 +3,7 @@
 // #include "errors.h"
 
 #include "history_substitutions.h"
+#include "string_substitution.h"
 
 void		perform_substitution(char **str, char *hist_entry, \
 								t_uint *start, t_uint end)

@@ -3,6 +3,7 @@
 #include "errors.h"
 
 #include "history_substitutions.h"
+#include "string_substitution.h"
 
 static void	quote_quotes(char **word, size_t first)
 {
@@ -153,15 +154,8 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 					*quote = 1;
 				}
 
-			// x
+			// x quote word by word
 
-			/*
-				TO DO:
-				The delimiter may be quoted in old and new with a single backslash.
-				If ‘&’ appears in new, it is replaced by old.
-				A single backslash will quote the ‘&’.
-
-			*/
 			else if (modifiers[i] == 's')
 			{
 				i++;
