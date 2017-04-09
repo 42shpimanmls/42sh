@@ -7,10 +7,10 @@
 #include "utils.h"
 
 
-#define NB_SUB_TESTS 40
-#define NB_ERR_TESTS 5
+#define NB_SUB_TESTS 39
+#define NB_ERR_TESTS 11
 
-#define BANG_TEST_VERBOSE
+// #define BANG_TEST_VERBOSE
 
 /*
 	to test your own strings:
@@ -55,7 +55,6 @@ static char	**get_bang_tests()
 		"!!:$",
 		"!*",
 		"!^",
-		"!-",
 		"un deux \"!#",
 		"!#",
 		"!#test",
@@ -110,7 +109,6 @@ static char **get_bang_results()
 		"cinq",
 		"deux trois quatre cinq",
 		"deux",
-		"!-",
 		"un deux \"un deux \"",
 		"\n",
 		"test",
@@ -129,11 +127,17 @@ static char **get_bang_results()
 static char	**get_bang_error_tests()
 {
 	static char *error_tests[] = {
-		"echo !0",
+		"echo !0\n",
+		"!-\n",
 		"!-0",
 		"!6534",
 		"!!:40",
-		"test !45"
+		"test !45",
+		"^flkjf\n",
+		"^dg^fe\n",
+		"!?ju",
+		"!!:s/gjgf ehco\n",
+		"!!:s/dg/rf/ jg"
 	};
 	return (error_tests);
 }
@@ -228,7 +232,7 @@ void	bang_word_selection()
 	i = 10;
 	tests = get_bang_tests();
 	results = get_bang_results();
-	while (i < 28)
+	while (i < 27)
 	{
 		#ifdef BANG_TEST_VERBOSE
 			ft_printf("\nstr: \"%s\", expected: \"%s\"", tests[i], results[i]);
@@ -252,7 +256,7 @@ void	bang_sharp_quotes()
 	char **results;
 	int i;
 
-	i = 28;
+	i = 27;
 	tests = get_bang_tests();
 	results = get_bang_results();
 	while (i < 36)

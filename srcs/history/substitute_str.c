@@ -2,8 +2,11 @@
 #include "shell_env.h"
 #include "errors.h"
 #include "utils.h"
+#include "abstract_list.h"
 
 #include "history_substitutions.h"
+#include "read_input/editor/editor_struct.h" // move struct elsewhere 
+#include "read_input/editor/editor.h" // move elsewhere 
 
 /*
 	to do: error handling :
@@ -25,6 +28,50 @@ void		replace_and_repeat(t_str_subst *subst, char **str)
 			set_error(SUBST_FAIL);
 }
 
+t_string	*str_to_list(char *str)
+{
+	t_string	*l_str;
+	t_string	*new;
+	int			i;
+
+	i = 0;
+	l_str = NULL;
+	while (str && str[i])
+	{
+		new = memalloc_or_die(sizeof(t_string));
+		new->c = str[i];
+		new->next = NULL;
+		list_push_back((t_abstract_list **)&l_str, (t_abstract_list *)new);
+		i++;
+	}
+	return (l_str);
+}
+
+static void	take_out_backslashes(char **str, char delimiter)
+{
+	t_string	*l_str;
+	t_string	*tmp;
+	size_t		pos;
+
+	if (ft_strchr(*str, '\\'))
+	{
+		pos = 0;
+		l_str = str_to_list(*str);
+		tmp = l_str;
+		while (l_str)
+		{
+			if (l_str->c == '\\' && l_str->next && l_str->next->c == delimiter)
+				list_pop_at_pos(pos, (t_abstract_list **)&tmp);
+			pos++;
+			l_str = l_str->next;
+		}
+		l_str = tmp;
+		ft_strdel(str);
+		*str = get_string_from_list(l_str);
+		free_string(tmp);
+	}
+}
+
 static char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
 {
 	char 	*str;
@@ -40,8 +87,16 @@ static char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
 	else
 	{
 		len = tmp - modifier;
+		while (modifier[len - 1] == '\\')
+		{
+			tmp = ft_strchr(&modifier[len + 1], delimiter);
+			len = tmp - modifier;
+		}
 		str = ft_strsub(modifier, 0, len);
 	}
+	ft_putendl(str);
+	take_out_backslashes(&str, delimiter);
+	ft_putendl(str);
 	*i += len;
 	return (str);
 }
@@ -78,7 +133,7 @@ void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 	save_substitution(subst);
 	if ((err = get_error()) != NO_ERROR)
 	{
-		modifier = ft_strsub(modifier, 0, ft_strlen(modifier) - 1);
+		modifier = ft_strsub(modifier, 0, *i);
 		error_builtin(modifier, NULL, err);
 		ft_strdel(&modifier);
 	}
