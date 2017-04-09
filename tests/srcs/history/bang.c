@@ -7,7 +7,7 @@
 #include "utils.h"
 
 
-#define NB_SUB_TESTS 39
+#define NB_SUB_TESTS 40
 #define NB_ERR_TESTS 11
 
 // #define BANG_TEST_VERBOSE
@@ -66,7 +66,8 @@ static char	**get_bang_tests()
 		"!!:s/un/test\n",
 		"!!:gsptrptestp",
 		"^un^test\n",
-		"^un^test^\n"};// !!%"
+		"^un^test^\n",
+		"!!:s/un/\\/slash\n"};// !!%"
 
 	i = 0;
 	malloced_tests = malloc(sizeof(char *) * (NB_SUB_TESTS + 1));
@@ -120,7 +121,8 @@ static char **get_bang_results()
 		"test deux trois quatre cinq\n",
 		"un deux testois quateste cinq",
 		"test deux trois quatre cinq\n",
-		"test deux trois quatre cinq\n"};
+		"test deux trois quatre cinq\n",
+		"/slash deux trois quatre cinq\n"};
 	return (results);
 }
 

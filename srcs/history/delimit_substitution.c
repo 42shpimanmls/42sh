@@ -1,12 +1,4 @@
-#include "libft.h"
-// #include "shell_env.h"
-// #include "errors.h"
-#include "utils.h"
-#include "abstract_list.h"
-
-// #include "history_substitutions.h"
-#include "read_input/editor/editor_struct.h" // move struct elsewhere 
-#include "read_input/editor/editor.h" // move elsewhere 
+#include "string_substitution.h"
 
 void	take_out_backslashes(char **str, char delimiter)
 {
@@ -22,15 +14,29 @@ void	take_out_backslashes(char **str, char delimiter)
 		while (l_str)
 		{
 			if (l_str->c == '\\' && l_str->next && l_str->next->c == delimiter)
+			{
 				list_pop_at_pos(pos, (t_abstract_list **)&tmp);
+				pos--;
+			}
 			pos++;
 			l_str = l_str->next;
-		}
+		}		
 		l_str = tmp;
 		ft_strdel(str);
 		*str = get_string_from_list(l_str);
 		free_string(tmp);
 	}
+}
+
+char	*next_unquoted(char *str, char c)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	while ((tmp = ft_strchr(&str[i], c)) && *(tmp - 1) == '\\')
+		i = tmp - str + 1;
+	return (tmp);
 }
 
 char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
@@ -39,7 +45,7 @@ char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
 	char 	*tmp;
 	size_t 	len;
 
-	if (!(tmp = ft_strchr(modifier, delimiter)))
+	if (!(tmp = next_unquoted(modifier, delimiter)))
 	{
 		len = ft_strlen(modifier) - 1;
 		// -1 because of the \n -> are strings always going to end with \n? does it need to be tested?
@@ -48,12 +54,15 @@ char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
 	else
 	{
 		len = tmp - modifier;
+
 		while (modifier[len - 1] == '\\')
 		{
+			
 			tmp = ft_strchr(&modifier[len + 1], delimiter);
 			len = tmp - modifier;
 		}
 		str = ft_strsub(modifier, 0, len);
+		ft_putendl(str);
 	}
 	take_out_backslashes(&str, delimiter);
 	*i += len;

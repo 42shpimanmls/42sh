@@ -149,10 +149,10 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 				should_run = 0;
 			}
 			else if (modifiers[i] == 'q')
-				{
+			{
 					i++;
 					*quote = 1;
-				}
+			}
 
 			// x quote word by word
 
