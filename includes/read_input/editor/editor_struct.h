@@ -32,9 +32,11 @@ typedef struct			s_editor
 	size_t				selected_string_start;
 	size_t				selected_string_end;
 	char				*selected_string;
+	char				*history_saved_current_string;
 	t_string			*string;
 	t_term				*term;
 	t_history			*history;
+	t_history			*history_current;
 	size_t				old_position;
 	t_vec2i				pos;
 	size_t				cursor_position;
@@ -44,6 +46,7 @@ typedef struct			s_editor
 	bool				need_refresh;
 	bool				action_move_left;
 	bool				in_edition;
+	bool				in_history;
 }						t_editor;
 
 #endif

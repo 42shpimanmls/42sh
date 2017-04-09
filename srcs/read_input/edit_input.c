@@ -54,6 +54,8 @@ static char *start_normal_mode(t_editor *ed)
 		}
 		else
 		{
+			ed->in_history = false;
+			ed->history_current = NULL;
 			add_buffer_to_string(ed, buf);
 		}
 		refresh_line(ed);
