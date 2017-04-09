@@ -18,12 +18,19 @@ char			*get_history_entry(char *designator, t_uint *end);
 char			*get_nth_entry(t_history *history, int n);
 
 /*
+**			history_search.c
+*/
+
+char		*find_in_history(bool must_start, t_history *history, \
+							char *str, t_uint *end);
+char		*last_hist_search();
+
+/*
 **			get_entry_word.c
 */
 
 char			*get_nth_word(char *line, t_uint n);
 void 			get_entry_word(char **entry, char *str, t_uint *end);
-
 
 /*
 **			word_range.c
@@ -38,7 +45,8 @@ char			*get_word_range(char *line, t_range *range);
 */
 
 bool			start_word_designator(char c);
-void			parse_word_designators(char *str, int *i, char **words, t_range *range, char **entry);
+void			parse_word_designators(char *str, int *i, t_range *range, \
+										char **entry, char **words);
 
 /*
 **			history_tokenizer.c

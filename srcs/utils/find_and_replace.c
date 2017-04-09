@@ -1,5 +1,6 @@
 #include <libft.h>
 #include "utils.h"
+#include "errors.h"
 
 int 	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
 {
@@ -7,9 +8,7 @@ int 	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
 	char	*tmp2;
 	t_uint	i;
 
-	if (!(tmp = str_in_str(to_find, *str, start, false)))
-		return (-1);//set_error()
-	else
+	if ((tmp = str_in_str(to_find, *str, start, false)))
 	{
 		i = tmp - *str;
 		if (i > 0)
@@ -28,4 +27,5 @@ int 	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
 		ft_strdel(&tmp2);
 		return (i + ft_strlen(replace));
 	}
+	return (-1);
 }

@@ -5,11 +5,14 @@
 
 #include "history_substitutions.h"
 
-// to do: error handling
+/*
+	to do: error handling :
+ 	if not found substitution failed
+*/
 
 void		replace_and_repeat(t_str_subst *subst, char **str)
 {
-	t_uint 	start;
+	t_uint 		start;
 
 	start = 0;
 	if (subst->repeat)
@@ -18,7 +21,8 @@ void		replace_and_repeat(t_str_subst *subst, char **str)
 			start = find_and_replace(str, subst->to_find, subst->replace, start);
 	}
 	else
-		find_and_replace(str, subst->to_find, subst->replace, 0);
+		if (find_and_replace(str, subst->to_find, subst->replace, 0) < 0)
+			set_error(SUBST_FAIL);
 }
 
 static char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
@@ -59,25 +63,22 @@ void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 {
 	t_str_subst	subst;
 	char		delimiter;
+	t_error_id	err;
 
-	// if (!(delimiter = modifier[(*i)++]) || delimiter == '\n')
-	// {
-	// 	(*i)--;
-	// 	return ;
-	// }
 	subst.repeat = repeat;
 	delimiter = modifier[(*i)++];
 	// // + handle quoted
 	if (!(subst.to_find = get_delimited_str(&modifier[*i], delimiter, i)))
-		;
-	else
-	{
+		return ;
+	(*i)++;
+	subst.replace = get_delimited_str(&modifier[*i], delimiter, i);
+	if (modifier[*i] == delimiter && modifier[*i - 1] != delimiter)
 		(*i)++;
-		subst.replace = get_delimited_str(&modifier[*i], delimiter, i);
-		if (modifier[*i] == delimiter && modifier[*i - 1] != delimiter)
-			(*i)++;
-		replace_and_repeat(&subst, str);
-		save_substitution(subst);
+	replace_and_repeat(&subst, str);
+	save_substitution(subst);
+	if ((err = get_error() != NO_ERROR))
+	{
+		// print_name_and_error(err, modifier, NULL)
 	}
 }
 

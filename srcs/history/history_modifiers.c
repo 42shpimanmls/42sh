@@ -114,7 +114,17 @@ void	trimming_modifiers(char modifier, char **str, t_uint *i)
 }
 
 /*
- 	if not found substitution failed
+**	p prints the substituted command without executing it
+**	q quotes the substituted string
+**	x breaks the substituted string into words at \n sp \t
+**		then quotes them
+**	s/old/new[/] Substitutes new for the first occurrence of old in the event line.
+**				 Any delimiter may be used in place of ‘/’.
+**				 Final delimiter is optional if last character on the input line.
+**				 If '&' appears in new, it is replaced by old
+**				 A single backslash quotes the delimiter and '&'
+**	[gG]s/old/new apply substitution to whole string (g) or once each word (G)
+**	& repeats previous substitution
 */
 
 bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
@@ -124,6 +134,7 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 
 	i = 0;
 	should_run = 1;
+	*quote = 0;
 	while (modifiers[i])
 	{
 		if (modifiers[i] == ':')
@@ -131,30 +142,20 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 			i++;
 			if (ft_strchr("htre", modifiers[i]))
 				trimming_modifiers(modifiers[i], str, &i);
-
-			// p print the command but do not execute it
 			else if (modifiers[i] == 'p')
 			{
 				i++;
 				should_run = 0;
 			}
-
-			// q single quote the substituted word, escaping further substitution
 			else if (modifiers[i] == 'q')
 				{
 					i++;
 					*quote = 1;
 				}
 
-			// Quote the substituted words as with ‘q’,
-			//but break into words at spaces, tabs, and newlines.
+			// x
 
 			/*
-				s/old/new/
-				Substitute new for the first occurrence of old in the event line.
-				Any delimiter may be used in place of ‘/’.
-				The final delimiter is optional if it is the last character on the input line.
-
 				TO DO:
 				The delimiter may be quoted in old and new with a single backslash.
 				If ‘&’ appears in new, it is replaced by old.
@@ -166,19 +167,11 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 				i++;
 				substitute_str(modifiers, str, &i, false);
 			}
-
-			// &repeat the previous substitution
 			else if (modifiers[i] == '&')
 			{
 				i++;
 				replace_and_repeat(&get_shell_env()->history.last_subst, str);
 			}
-
-			/*
-				g Cause changes to be applied over the entire event line.
-				G Apply the following ‘s’ modifier once to each word in the event.
-				Used in conjunction with ‘s’, as in gs/old/new/, or with ‘&’.
-			*/
 			else if (modifiers[i] == 'g' || modifiers[i] == 'G')
 			{
 				i++;
@@ -193,13 +186,9 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 			}
 			else
 				return (should_run);
-
 		}
 		else
-		{
-			(*end) += i;
-			return (should_run);
-		}
+			break ;
 	}
 	(*end) += i;
 	return (should_run);

@@ -35,50 +35,6 @@ char			*get_nth_entry(t_history *history, int n)
 	return (ft_strtrim(history->line));
 }
 
-static void		delimit_to_find(char *str, int *i, t_uint *end, bool must_start)
-{
-	if (must_start)
-	{
-		while (str[*i] && !start_word_designator(str[*i]) \
-				&& !is_posix_blank(str[*i]))
-			(*i)++;
-	}
-	else
-	{
-		while (str[*i] && !is_posix_blank(str[*i]) \
-				&& str[*i] != '\n' && str[*i] != '?')
-			(*i)++;
-		if (str[*i] && (str[*i] == '?'))
-			(*end)++;
-		(*end)++;
-	}
-	*end += *i;
-}
-
-static char		*find_in_history(bool must_start, t_history *history, \
-								char *str, t_uint *end)
-{
-	char	*find;
-	int		i;
-
-	i = 0;
-	list_goto_last((t_abstract_list **)&history);
-	delimit_to_find(str, &i, end, must_start);
-	find = ft_strsub(str, 0, i);
-	while (history)
-	{
-		if ((must_start && str_in_str(find, history->line, 0, true)) \
-			|| (!must_start && str_in_str(find, history->line, 0, false)))
-		{
-			ft_strdel(&find);
-			return (ft_strtrim(history->line));
-		}
-		history = history->prev;
-	}
-	ft_strdel(&find);
-	return (NULL);
-}
-
 /*
 ** 		retrieves history entry according to what follows the first '!' :
 **

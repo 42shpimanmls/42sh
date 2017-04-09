@@ -15,6 +15,7 @@ t_error const			*get_error_defs(void)
 		{ INVALID_OPTION,		"invalid option" },
 		{ EV_NOT_FOUND,			"event not found"},
 		{ BAD_WD_SPEC,			"bad word specifier"},
+		{ SUBST_FAIL,			"substitution failed"},
 		{ ANRW,					"cannot use more than one of -anrw"},
 		{ PERM_DENIED,			"permission denied" },
 		{ NO_SUCH_FILE,			"no such file or directory" },
