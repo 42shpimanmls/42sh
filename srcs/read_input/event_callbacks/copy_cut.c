@@ -42,8 +42,6 @@ static void	get_position(t_editor *ed)
 
 EV_CB_RET	event_copy(EV_CB_ARGS)
 {
-	if (if_on_multiline(ed))
-		return ;
 	get_position(ed);
 	if (ed->selected)
 	{
@@ -55,8 +53,6 @@ EV_CB_RET	event_copy(EV_CB_ARGS)
 
 EV_CB_RET	event_cut(EV_CB_ARGS)
 {
-	if (if_on_multiline(ed))
-		return ;
 	get_position(ed);
 	if (ed->selected)
 	{
