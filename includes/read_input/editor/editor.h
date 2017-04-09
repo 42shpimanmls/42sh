@@ -9,6 +9,7 @@ t_editor 	*get_editor();
 void		add_to_string(t_editor *ed, char c);
 char		*get_string_from_list(t_string *s);
 void		free_string(t_string *s);
+void		close_history(t_editor *ed);
 char		*gen_prompt(void);
 t_vec2i		get_cursor_vector(t_editor *ed);
 void		move_cursor(t_vec2i	vec, t_term *term);

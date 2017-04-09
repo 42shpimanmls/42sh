@@ -39,6 +39,14 @@ static void change_string(EV_CB_ARGS, char *line)
 	free(trimed);
 }
 
+void		close_history(EV_CB_ARGS)
+{
+	free(ed->history_saved_current_string);
+	ed->history_saved_current_string = NULL;
+	ed->in_history = false;
+	ed->history_current = NULL;
+}
+
 EV_CB_RET 	event_history_up(EV_CB_ARGS)
 {
 	if (!ed->in_history)
@@ -82,10 +90,8 @@ EV_CB_RET 	event_history_down(EV_CB_ARGS)
 		}
 		else
 		{
-			// change_string(ed, "base");
 			change_string(ed, ed->history_saved_current_string);
-			ed->in_history = false;
-			ed->history_current = NULL;
+			close_history(ed);
 		}
 	}
 }

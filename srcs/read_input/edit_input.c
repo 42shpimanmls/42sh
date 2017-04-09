@@ -50,12 +50,22 @@ static char *start_normal_mode(t_editor *ed)
 		{
 			def->callback(ed);
 			if (def->id == NEWLINE_EVID)
+			{
+				close_history(ed);
+				// free(ed->history_saved_current_string);
+				// ed->history_saved_current_string = NULL;
+				// ed->in_history = false;
+				// ed->history_current = NULL;
 				break ;
+			}
 		}
 		else
 		{
-			ed->in_history = false;
-			ed->history_current = NULL;
+			close_history(ed);
+			// free(ed->history_saved_current_string);
+			// ed->history_saved_current_string = NULL;
+			// ed->in_history = false;
+			// ed->history_current = NULL;
 			add_buffer_to_string(ed, buf);
 		}
 		refresh_line(ed);
