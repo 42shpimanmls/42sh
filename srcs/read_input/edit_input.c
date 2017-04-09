@@ -16,13 +16,13 @@ static void	add_buffer_to_string(t_editor *ed, char buf[])
 	}
 }
 
-// void		print_cursor_vector(t_editor *ed)
-// {
-// 	t_vec2i						vec;
+void		print_cursor_vector(t_editor *ed)
+{
+	t_vec2i						vec;
 
-// 	vec = get_cursor_vector(ed);
-// 	dprintf(2, "cx: %d, cy: %d\n", vec.x, vec.y);
-// }
+	vec = get_cursor_vector(ed);
+	ft_dprintf(2, "cx: %d, cy: %d\n", vec.x, vec.y);
+}
 
 static char *start_rescue_mode()
 {

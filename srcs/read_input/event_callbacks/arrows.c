@@ -25,40 +25,35 @@ void		move_cursor(t_vec2i	vec, t_term *term)
 	}
 }
 
-static void	cursor_left_core(t_editor *ed)
+EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 {
 	t_vec2i		cursor_vec;
 	t_vec2i		mov_vec;
 
 	if (ed->cursor_position > 0)
 	{
+		ed->need_refresh = true;
 		cursor_vec = get_cursor_vector(ed);
 		ed->cursor_position--;
 		mov_vec = vec2i_sub(cursor_vec, get_cursor_vector(ed));
 		move_cursor(mov_vec, ed->term);
-	}
-}
-
-EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
-{
-	cursor_left_core(ed);
-	if (ed->cursor_position == 0)
-	{
-		ed->need_refresh = true;
-	}
-	else
-	{
-		cursor_left_core(ed);
-		event_cursor_right(ed);
+		ed->pos = get_cursor_vector(ed);
 	}
 }
 
 EV_CB_RET 	event_cursor_right(EV_CB_ARGS)
 {
-	ed->need_refresh = true;
+	t_vec2i		cursor_vec;
+	t_vec2i		mov_vec;
+
 	if (ed->cursor_position < ed->string_size)
 	{
+		ed->need_refresh = true;
+		cursor_vec = get_cursor_vector(ed);
 		ed->cursor_position++;
+		mov_vec = vec2i_sub(cursor_vec, get_cursor_vector(ed));
+		move_cursor(mov_vec, ed->term);
+		ed->pos = get_cursor_vector(ed);
 	}
 }
 
@@ -73,10 +68,12 @@ EV_CB_RET 	event_cursor_up(EV_CB_ARGS)
 
 	if (if_on_multiline(ed))
 		return ;
+	ed->need_refresh = true;
 
 	pos = get_cursor_vector(ed);
 	ed->cursor_position = find_index_at_vector(ed, pos.x, pos.y - 1);
 	move_cursor_to(pos, get_cursor_vector(ed), ed->term);
+	ed->pos = get_cursor_vector(ed);
 }
 
 EV_CB_RET 	event_cursor_down(EV_CB_ARGS)
@@ -90,4 +87,5 @@ EV_CB_RET 	event_cursor_down(EV_CB_ARGS)
 	pos = get_cursor_vector(ed);
 	ed->cursor_position = find_index_at_vector(ed, pos.x, pos.y + 1);
 	move_cursor_to(pos, get_cursor_vector(ed), ed->term);
+	ed->pos = get_cursor_vector(ed);
 }

@@ -2,25 +2,12 @@
 # include "read_input/event_callbacks/event_callback_def.h"
 # include "abstract_list.h"
 
-// void		print_cursor_vector(t_editor *ed);
+void		print_cursor_vector(t_editor *ed);
 
 void move_start(t_editor *ed)
 {
-	t_vec2i	vec;
-
-	vec = get_cursor_vector(ed);
-	// print_cursor_vector(ed);
-
-	if (vec.x > 0)
-	{
-		while (vec.y-- > 0)
-			ft_putstr(ed->term->move_up);
-	}
-	else
-	{
-		while (vec.y-- > 1)
-			ft_putstr(ed->term->move_up);
-	}
+	while (ed->pos.y-- > 0)
+		ft_putstr(ed->term->move_up);
 	ft_putstr(ed->term->move_cursor_begining);
 }
 
@@ -48,9 +35,10 @@ void put_line(t_editor *ed)
 	free(line);
 }
 
-static void restore_old_cursor_position(t_editor *ed, t_vec2i old_pos)
+void restore_old_cursor_position(t_editor *ed, t_vec2i old_pos)
 {
 	move_cursor(vec2i_sub(old_pos, ed->pos), ed->term);
+	ed->cursor_position = ed->old_position;
 }
 
 void refresh_line(t_editor *ed)
@@ -62,7 +50,6 @@ void refresh_line(t_editor *ed)
 		clear_line(ed);
 		put_line(ed);
 		restore_old_cursor_position(ed, get_cursor_vector(ed));
-		ed->cursor_position = ed->old_position;
 		ft_putstr(ed->term->show_cursor);
 	}
 }
