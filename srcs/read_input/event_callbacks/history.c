@@ -54,18 +54,15 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 		ed->history_current = ed->history;
 		ed->history_saved_current_string = get_string_from_list(ed->string);
 	}
-	if (ed->history_current && ed->history_current->prev)
+	else if (ed->history_current->prev)
+	{
+		ed->history_current = ed->history_current->prev;
+	}
+	if (ed->history_current)
 	{
 		ed->in_history = true;
 		ed->need_refresh = true;
-
-		if (ed->history_current != ed->history)
-			ed->history_current = ed->history_current->prev;
-
 		change_string(ed, ed->history_current->line);
-
-		if (ed->history_current && ed->history_current == ed->history)
-			ed->history_current = ed->history_current->prev;
 	}
 }
 
