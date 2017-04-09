@@ -21,9 +21,9 @@ char			*get_nth_entry(t_history *history, int n);
 **			history_search.c
 */
 
-char		*find_in_history(bool must_start, t_history *history, \
+char			*find_in_history(bool must_start, t_history *history, \
 							char *str, t_uint *end);
-char		*last_hist_search();
+char			*last_hist_search();
 
 /*
 **			get_entry_word.c
@@ -73,7 +73,7 @@ void			replace_and_repeat(t_str_subst *subst, char **str);
 **			perform_hist_subst
 */
 
-int				quick_substitution(char **str, t_uint *i);
+void			quick_substitution(char **str, t_uint *i);
 void 			perform_substitution(char **str, char *hist_entry, \
 										t_uint *start, t_uint end);
 

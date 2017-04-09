@@ -111,7 +111,7 @@ int			history_substitution(char **str)
 				should_run = start_substitution(str, &i, NULL);
 		}
 		else if (is_circumflex((*str)[i]))
-			should_run = quick_substitution(str, &i);
+			quick_substitution(str, &i);
 		if (i < ft_strlen(*str))
 			i++;
 	}

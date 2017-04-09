@@ -76,9 +76,11 @@ void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 		(*i)++;
 	replace_and_repeat(&subst, str);
 	save_substitution(subst);
-	if ((err = get_error() != NO_ERROR))
+	if ((err = get_error()) != NO_ERROR)
 	{
-		// print_name_and_error(err, modifier, NULL)
+		modifier = ft_strsub(modifier, 0, ft_strlen(modifier) - 1);
+		error_builtin(modifier, NULL, err);
+		ft_strdel(&modifier);
 	}
 }
 
