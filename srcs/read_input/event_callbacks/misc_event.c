@@ -4,9 +4,10 @@
 
 EV_CB_RET 	event_newline(EV_CB_ARGS)
 {
-	ed->cursor_position = ed->string_size;
+	event_cursor_end(ed);
+	close_history(ed);
 	add_to_string(ed, '\n');
-	ft_putchar('\n');
+	refresh_line(ed);
 }
 
 EV_CB_RET 	event_cancel(EV_CB_ARGS)

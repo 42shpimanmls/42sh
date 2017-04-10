@@ -50,12 +50,7 @@ static char *start_normal_mode(t_editor *ed)
 		{
 			def->callback(ed);
 			if (def->id == NEWLINE_EVID)
-			{
-				event_cursor_end(ed);
-				refresh_line(ed);
-				close_history(ed);
 				break ;
-			}
 		}
 		else
 		{
