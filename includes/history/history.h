@@ -8,6 +8,8 @@
 #include "history_def.h"
 #include "history_substitutions.h"
 
+#define FILE_PERMISSION (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
+
 /*
 **		load_history.c
 */

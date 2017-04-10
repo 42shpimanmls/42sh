@@ -1,0 +1,10 @@
+one
+two
+three
+four
+five
+un deux trois quatre cinq
+history 
+history -w file
+cat file
+history -a file
