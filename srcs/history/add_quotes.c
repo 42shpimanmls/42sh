@@ -53,6 +53,7 @@ void			quote_word(char **word)
 	tmp = ft_strjoin("\'", *word);
 	ft_strdel(word);
 	*word = ft_strjoin(tmp, "\'");
+	ft_strdel(&tmp);
 }
 
 static void		add_quote_at_pos(t_string **l_str, size_t pos)
@@ -98,5 +99,5 @@ void			quote_per_word(char **str)
 	}
 	ft_strdel(str);
 	*str = get_string_from_list(beg);
-	free(beg);
+	free_string(beg);
 }

@@ -25,8 +25,10 @@ void		replace_and_repeat(t_str_subst *subst, char **str)
 			start = find_and_replace(str, subst->to_find, subst->replace, start);
 	}
 	else
-		if (find_and_replace(str, subst->to_find, subst->replace, 0) < 0)
+	{
+		if (!subst->to_find || find_and_replace(str, subst->to_find, subst->replace, 0) < 0)
 			set_error(SUBST_FAIL);
+	}
 }
 
 /*

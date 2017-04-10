@@ -27,6 +27,9 @@ void 		quick_substitution(char **str, t_uint *start)
 	hist_entry = get_nth_entry(get_shell_env()->history.list, -1);
 	substitute_str(&(*str)[end], &hist_entry, &end, false);
 	if (get_error() != NO_ERROR)
+	{
+		ft_strdel(&hist_entry);
 		return ;
+	}
 	perform_substitution(str, hist_entry, start, end);
 }

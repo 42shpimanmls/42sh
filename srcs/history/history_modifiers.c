@@ -93,6 +93,8 @@ int		subst_modifiers(char modifier, char *modifiers, t_uint *i, char **str)
 	else if (modifier == '&')
 	{
 		replace_and_repeat(&get_shell_env()->history.last_subst, str);
+		if (get_error() != NO_ERROR)
+			print_name_and_error(get_error());
 		return (1);
 	}
 	else if (modifier == 'g' && modifiers[*i] == 's')
