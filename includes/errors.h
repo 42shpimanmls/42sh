@@ -15,6 +15,7 @@ typedef enum				e_error_id
 	BAD_WD_SPEC,
 	PERM_DENIED,
 	NO_SUCH_FILE,
+	IS_DIR,
 	UNMATCHED_SINGLE_QUOTE,
 	UNMATCHED_DOUBLE_QUOTE,
 	UNMATCHED_BACKQUOTE,
@@ -43,9 +44,12 @@ t_error const 		*get_error_defs(void);
 void				print_error_msg(t_error_id id);
 void				print_usage_msg(t_builtin_id id);
 void				print_name_and_error(t_error_id id);
+void				print_errno_error(int err, char const *pre, char const *post);
 
 t_error_id			get_error(void);
 void				set_error(t_error_id error);
+
+void 				set_file_error(char *file);
 
 void				error_builtin(char *builtin, char *error, t_error_id id);
 

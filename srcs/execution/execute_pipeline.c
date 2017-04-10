@@ -5,25 +5,9 @@
 #include "execute_syntax_tree.h"
 #include "pipe.h"
 #include <stdio.h>
+#include "redirection.h"
 #include "expansion/expansion.h"
 #include "errno.h"
-
-void		print_errno_error(int err, char const *pre, char const *post)
-{
-	ft_putstr_fd("42sh: ", 2);
-	if (pre != NULL)
-	{
-		ft_putstr_fd(pre, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	ft_putstr_fd(get_system_error(err), 2);
-	if (post != NULL)
-	{
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(post, 2);
-	}
-	ft_putchar_fd('\n', 2);
-}
 
 t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 {
@@ -60,6 +44,7 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 	t_error_id	ret;
 	extern char	**environ;
 	char		**environ_backup;
+	int 		*stdin_out_backup;
 
 	ret = NO_ERROR;
 	if (cmd != NULL)
@@ -76,8 +61,11 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 		print_n_char_fd(' ', (lvl + 1) * 2, 2);
 		dprintf(2, "done expanding simple command %s\n", cmd->argv[0]);
 #endif
-		//redirect(cmd->redirections);
+		stdin_out_backup = save_stdin_stdout();
+		ret = redirect(cmd->redirections);
 		//expand_assignments_values(cmd->assignments);
+		if (ret != NO_ERROR)
+			return (ret);
 		environ_backup = environ;
 		environ = get_variables_for_execution(cmd->assignments);
 		ret = execute_builtin(cmd, lvl + 1);
@@ -85,6 +73,8 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 			ret = execute_file(cmd, lvl + 1);
 		ft_freetabchar(environ);
 		environ = environ_backup;
+
+		restore_stdin_stdout(stdin_out_backup);
 #ifdef FTSH_DEBUG
 		print_n_char_fd(' ', (lvl) * 2, 2);
 		dprintf(2, "done executing simple command %s, %s\n", cmd->argv[0], ret == NO_ERROR ? "ok" : "error");
