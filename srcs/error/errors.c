@@ -23,6 +23,7 @@ t_error const			*get_error_defs(void)
 		{ UNEXPECTED_SEMI,		"syntax error: near unexpected ;"},
 		{ UNEXPECTED_IF,		"syntax error: near unexpected && or ||"},
 		{ UNEXPECTED_PIPE,		"syntax error: near unexpected |"},
+		{ UNEXPECTED_TOKEN,		"syntax error: near unexpected token"}
 	};
 	return (errors);
 }
