@@ -1,7 +1,9 @@
-#include "builtin_def.h"
-#include <libft.h>
-#include "shell_env.h"
-#include "init/init.h"
+# include "builtin_def.h"
+# include <libft.h>
+# include "shell_env.h"
+# include "init/init.h"
+
+# define USAGE "Usage: unsetenv <key> ...\n"
 
 BUILTIN_RET		builtin_unsetenv(BUILTIN_ARGS)
 {
@@ -23,7 +25,7 @@ BUILTIN_RET		builtin_unsetenv(BUILTIN_ARGS)
 	}
 	else
 	{
-		ft_dprintf(STDERR_FILENO, "Usage: unsetenv <key> ...\n");
+		ft_dprintf(STDERR_FILENO, USAGE);
 	}
 	return (STATUS_FAILURE);
 }
