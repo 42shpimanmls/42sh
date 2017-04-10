@@ -15,30 +15,32 @@ static void	add_buffer_to_string(t_editor *ed, char buf[])
 	}
 }
 
-#include <stdio.h>
+// void		print_cursor_vector(t_editor *ed)
+// {
+// 	t_vec2i						vec;
 
-void		print_cursor_vector(t_editor *ed)
+// 	vec = get_cursor_vector(ed);
+// 	dprintf(2, "cx: %d, cy: %d\n", vec.x, vec.y);
+// }
+
+static char *start_rescue_mode()
 {
-	t_vec2i						vec;
+	char	*line;
 
-	vec = get_cursor_vector(ed);
-	dprintf(2, "cx: %d, cy: %d\n", vec.x, vec.y);
+	ft_close_termcaps();
+	ft_printf("[RESCUE MODE]$ ");
+	line = ft_getline(STDIN_FILENO);
+	return (line);
 }
 
-char 		*edit_input()
+static char *start_normal_mode(t_editor *ed)
 {
 	char						buf[EVENT_STR_MAX_LEN + 1];
 	int							ret;
 	t_event_callback_def const	*def;
-	t_editor					*ed;
-	char						*line;
 
-	ft_start_termcaps();
-	ed = get_editor();
-	init_editor();
 	ed->need_refresh = true;
 	refresh_line(ed);
-	// print_cursor_vector(ed);
 	while ((ret = read(0, buf, EVENT_STR_MAX_LEN)) > 0)
 	{
 		buf[ret] = '\0';
@@ -54,11 +56,28 @@ char 		*edit_input()
 			add_buffer_to_string(ed, buf);
 		}
 		refresh_line(ed);
-		// print_cursor_vector(ed);
 	}
-
 	ft_close_termcaps();
-	line = get_string_from_list(ed->string);
+	return (get_string_from_list(ed->string));
+}
+
+char 		*edit_input()
+{
+
+	t_editor					*ed;
+	char						*line;
+
+	ft_start_termcaps();
+	ed = get_editor();
+	init_editor();
+	if (ed->term->rescue_mode)
+	{
+		line = start_rescue_mode();
+	}
+	else
+	{
+		line = start_normal_mode(ed);
+	}
 	free_editor(ed);
 	return (line);
 }

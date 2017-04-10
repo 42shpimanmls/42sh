@@ -3,6 +3,7 @@
 
 # include <stdbool.h>
 # include "builtins.h"
+# include "opt.h"
 
 typedef enum				e_builtin_id
 {
@@ -24,7 +25,7 @@ typedef struct				s_builtin_def
 	t_builtin const				builtin;
 }							t_builtin_def;
 
-# define BUILTIN_DEF_COUNT 5
+# define BUILTIN_DEF_COUNT 6
 
 t_builtin_def const			*get_builtin_defs(void);
 t_builtin_def const			*get_matching_builtin(char const *str);

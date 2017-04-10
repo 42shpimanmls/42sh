@@ -4,6 +4,7 @@
 #include "abstract_list.h"
 #include "history/history.h"
 #include "errors.h"
+#include "utils.h"
 
 static void	init_variables_list(t_shell_env *shell_env)
 {
@@ -27,6 +28,22 @@ static void	init_variables_list(t_shell_env *shell_env)
 	}
 }
 
+static char	*get_path_to_ftsh(char const *ftsh_name)
+{
+	char		*cwd;
+
+	if (ftsh_name == NULL)
+		fatal_error("NULL ptr fed to get_path_to_ftsh()");
+	if (ftsh_name[0] == '/')
+		return (ft_strdup(ftsh_name));
+	if (ftsh_name[0] == '.' && ftsh_name[1] == '/')
+		ftsh_name += 2;
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+		fatal_error("getcwd(NULL, 0) failed in get_path_to_ftsh()");
+	return (ft_strjoinf(cwd, ft_strjoin("/", ftsh_name), 3));
+}
+
 void	init(int ac, char **av)
 {
 	t_shell_env		*shell_env;
@@ -35,6 +52,7 @@ void	init(int ac, char **av)
 	shell_env = get_shell_env();
 	ft_bzero(shell_env, sizeof(t_shell_env));
 	ft_bzero(&shell_env->history, sizeof(t_sh_history));
+	shell_env->path_to_42sh = get_path_to_ftsh(av[0]);
 	init_variables_list(shell_env);
 	parse_options(ac, av, shell_env);
 	load_history(shell_env, HISTFILE, 0);

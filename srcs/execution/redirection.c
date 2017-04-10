@@ -1,0 +1,58 @@
+#include "redirection.h"
+#include <errno.h>
+
+#define REDIRECT_DEBUG
+
+int 				*save_stdin_stdout()
+{
+	static int std[2];
+
+	std[0] = dup(STDIN_FILENO);
+	std[1] = dup(STDOUT_FILENO);
+	return (std);
+}
+
+void				restore_stdin_stdout(int *std)
+{
+	dup2(std[0], STDIN_FILENO);
+	close(std[0]);
+	dup2(std[1], STDOUT_FILENO);
+	close(std[1]);
+}
+
+int 				choose_open(t_redir_type type, char *file)
+{
+	if (type == REDIR_OUTPUT)
+		return(open(file, O_RDWR | O_CREAT | O_TRUNC, FILE_PERMISSION));
+	else if (type == APPEND_OUTPUT)
+		return(open(file, O_RDWR | O_CREAT | O_APPEND, FILE_PERMISSION));
+	else
+		return(open(file, O_RDONLY));
+}
+
+t_error_id			redirect(t_redirection *redirections)
+{
+	t_error_id 	ret;
+	int 		file_fd;
+
+	set_error(NO_ERROR);
+	ret = NO_ERROR;
+	while (redirections)
+	{
+		file_fd = choose_open(redirections->type, redirections->word);
+		if (file_fd < 0)
+		{
+			set_error(errno);
+			ret = get_error();
+			print_errno_error(ret, NULL, redirections->word);
+			return (ret);
+		}
+		else
+		{
+			dup2(file_fd, redirections->n);
+			close(file_fd);
+		}
+		redirections = redirections->next;
+	}
+	return (ret);
+}

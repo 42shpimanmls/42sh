@@ -107,8 +107,8 @@ void			apply_rules(t_tokenizer_state *state)
 	// rule 9
 	if (c == '#')
 	{
-		while (*(state->current_char + 1) != '\0'
-			&& *(state->current_char + 1) != '\n')
+		while (*(state->current_char) != '\0'
+			&& *(state->current_char) != '\n')
 			state->current_char++;
 #ifdef TOKENIZER_DEBUG
 		ft_putstr("rule 9 aka SKIP COMMENT\n");
