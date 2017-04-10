@@ -2,9 +2,9 @@
 #include "history.h"
 
 /*
-**	-a appends if file exists
+**	-a appends entries not already appended
 **	-w overwrites or creates file
-**	if filename is specified, -w writes to file but -a does NOTHING
+**	if filename is specified, write to file
 */
 
 void	hist_to_file(t_history *history, char *filename, bool append)
@@ -12,14 +12,14 @@ void	hist_to_file(t_history *history, char *filename, bool append)
 	int		fd;
 
 	if (append)
-		fd = open(HISTFILE, O_WRONLY | O_APPEND); // protect
+		fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, FILE_PERMISSION); // protect
 	else
-		fd = open(filename, O_TRUNC | O_WRONLY | O_CREAT, 0644);
+		fd = open(filename, O_TRUNC | O_WRONLY | O_CREAT, FILE_PERMISSION);
 	if (fd > 0)
 	{
 		while (history)
 		{
-			if (!history->appended)
+			if (!append || !history->appended)
 			{
 				history->appended = true;
 				ft_putstr_fd(history->line, fd);

@@ -74,13 +74,13 @@ static void		file_manipulation(t_hist_opt options, t_history *history)
 	if (options.args)
 		filename = options.args[0];
 	else
-		filename = NULL;
+		filename = HISTFILE;
 	if (options.anrw & W_OPT || options.anrw & A_OPT)
 	{
 		if (options.anrw & W_OPT)
 			hist_to_file(history, filename, false);
-		else if (!filename)
-			hist_to_file(history, HISTFILE, true);
+		else
+			hist_to_file(history, filename, true);
 	}
 	else if (options.anrw & R_OPT || options.anrw & N_OPT)
 	{
