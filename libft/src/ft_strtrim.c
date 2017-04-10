@@ -15,15 +15,17 @@
 char	*ft_strtrim(char const *s)
 {
 	int		i;
+	int		len;
 	int		end;
 
-	if (s == NULL)
+	len = ft_strlen(s);
+	if (s == NULL || len <= 0)
 		return (NULL);
 	i = 0;
 	while (s[i] == 9 || s[i] == 10 || s[i] == 32)
 		i++;
-	end = ft_strlen(s) - 1;
-	while (s[end] == 9 || s[end] == 10 || s[end] == 32)
+	end = len - 1;
+	while (end >= 0 && (s[end] == 9 || s[end] == 10 || s[end] == 32))
 		end--;
 	if (end < 0)
 		end = 0;

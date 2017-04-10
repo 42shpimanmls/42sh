@@ -1,4 +1,5 @@
 # include <libft.h>
+# include <signal.h>
 # include "read_input/editor/editor.h"
 # include "read_input/event_callbacks/event_callback_def.h"
 # include "read_input/termcap/init_deinit.h"
@@ -15,13 +16,13 @@ static void	add_buffer_to_string(t_editor *ed, char buf[])
 	}
 }
 
-// void		print_cursor_vector(t_editor *ed)
-// {
-// 	t_vec2i						vec;
+void		print_cursor_vector(t_editor *ed)
+{
+	t_vec2i						vec;
 
-// 	vec = get_cursor_vector(ed);
-// 	dprintf(2, "cx: %d, cy: %d\n", vec.x, vec.y);
-// }
+	vec = get_cursor_vector(ed);
+	ft_dprintf(2, "cx: %d, cy: %d\n", vec.x, vec.y);
+}
 
 static char *start_rescue_mode()
 {
@@ -53,6 +54,7 @@ static char *start_normal_mode(t_editor *ed)
 		}
 		else
 		{
+			close_history(ed);
 			add_buffer_to_string(ed, buf);
 		}
 		refresh_line(ed);
@@ -61,12 +63,29 @@ static char *start_normal_mode(t_editor *ed)
 	return (get_string_from_list(ed->string));
 }
 
+void	refresh_termcap(int ret)
+{
+	t_editor *ed;
+
+	(void)ret;
+	ed = get_editor();
+	if (!ed || !ed->in_edition)
+		return ;
+	ft_close_termcaps();
+	ft_start_termcaps();
+	free(ed->term);
+	ed->term = NULL;
+	ed->term = init_term();
+	ed->pos = get_cursor_vector(ed);
+}
+
 char 		*edit_input()
 {
 
 	t_editor					*ed;
 	char						*line;
 
+	signal(SIGWINCH, refresh_termcap);
 	ft_start_termcaps();
 	ed = get_editor();
 	init_editor();
@@ -76,8 +95,10 @@ char 		*edit_input()
 	}
 	else
 	{
+		ed->in_edition = true;
 		line = start_normal_mode(ed);
 	}
+	ed->in_edition = false;
 	free_editor(ed);
 	return (line);
 }

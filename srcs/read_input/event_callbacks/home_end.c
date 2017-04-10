@@ -3,18 +3,22 @@
 
 EV_CB_RET 	event_cursor_home(EV_CB_ARGS)
 {
-	t_vec2i		cursor_vec;
-	t_vec2i		mov_vec;
+	t_vec2i		pos;
 
-	cursor_vec = get_cursor_vector(ed);
+	ed->need_refresh = true;
+	pos = get_cursor_vector(ed);
 	ed->cursor_position = 0;
-	mov_vec = vec2i_sub(cursor_vec, get_cursor_vector(ed));
-	move_cursor(mov_vec, ed->term);
+	move_cursor_to(pos, get_cursor_vector(ed), ed->term);
+	ed->pos = get_cursor_vector(ed);
 }
 
 EV_CB_RET 	event_cursor_end(EV_CB_ARGS)
 {
-	clear_line(ed);
+	t_vec2i		pos;
+
+	ed->need_refresh = true;
+	pos = get_cursor_vector(ed);
 	ed->cursor_position = ed->string_size;
-	put_line(ed);
+	move_cursor_to(pos, get_cursor_vector(ed), ed->term);
+	ed->pos = get_cursor_vector(ed);
 }

@@ -26,5 +26,6 @@ EV_CB_RET 	event_paste(EV_CB_ARGS);
 EV_CB_RET 	event_cancel(EV_CB_ARGS);
 EV_CB_RET 	event_exit(EV_CB_ARGS);
 EV_CB_RET 	event_delete(EV_CB_ARGS);
+EV_CB_RET 	event_delete_right(EV_CB_ARGS);
 
 #endif
