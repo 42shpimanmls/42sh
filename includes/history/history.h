@@ -44,6 +44,6 @@ void			hist_to_file(t_history *history, char *filename, bool append);
 **		execute_history
 */
 
-void		execute_options(t_history **history, t_hist_opt options, char **argv);
+void		execute_options(t_history **history, t_hist_opt options);
 
 #endif

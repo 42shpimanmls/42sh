@@ -1,10 +1,5 @@
-one
-two
-three
-four
-five
-un deux trois quatre cinq
-history 
 history -w file
 cat file
+toto
+titi
 history -a file

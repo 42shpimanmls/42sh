@@ -3,34 +3,12 @@
 #include "abstract_list.h"
 #include "utils.h"
 
-static void		print_subst_result(char **argv, t_hist_opt options)
-{
-	int		i;
-	char	*args;
-
-	i = 0;
-	while (i < options.ac)
-	{
-		ft_putstr(argv[i]);
-		ft_putchar(' ');
-		i++;
-	}
-	// print line with substitutions without quotes
-	if ((args = array_to_str(options.args)))
-	{
-		ft_putendl(args);
-		ft_puttab(options.args);
-		ft_strdel(&args);
-	}
-}
-
 /*
 **	option -p prints the result of the substituted arguments
 **	option -s saves the result of the substituted arguments to the history list
 */
 
-static void		args_manipulation(t_history **history, t_hist_opt options, \
-		char **argv)
+static void		args_manipulation(t_history **history, t_hist_opt options)
 {
 	char	*args;
 	int		i;
@@ -57,7 +35,6 @@ static void		args_manipulation(t_history **history, t_hist_opt options, \
 			history_substitution(&options.args[i]);
 			i++;
 		}
-		print_subst_result(argv, options);
 		delete_entry_at(history, list_count((t_abstract_list *)*history));
 	}
 }
@@ -91,10 +68,10 @@ static void		file_manipulation(t_hist_opt options, t_history *history)
 	}
 }
 
-void			execute_options(t_history **history, t_hist_opt options, char **argv)
+void			execute_options(t_history **history, t_hist_opt options)
 {
 	if (options.s || options.p)
-		args_manipulation(history, options, argv);
+		args_manipulation(history, options);
 	else if (options.d || options.c)
 	{
 		if (options.c)
