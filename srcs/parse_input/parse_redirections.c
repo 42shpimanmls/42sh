@@ -56,6 +56,7 @@ t_redirection			*parse_redirections(t_token const *tokens\
 	t_redirection	**next_addr;
 	t_token			**next_remain;
 
+	set_error(NO_ERROR);
 	*remains = NULL;
 	result = NULL;
 	next_addr = &result;
@@ -65,7 +66,14 @@ t_redirection			*parse_redirections(t_token const *tokens\
 		*next_addr = create_redirection(tokens, &tokens);
 		if (*next_addr == NULL)
 		{
-			// if the word is not part of redirection, copy it in remains
+			// if the word is not part of redirection and a valid word,
+			// copy it in remains
+			if (tokens->type->id != TOKEN_TOKID)
+			{
+				delete_redirections(&result);
+				set_error(UNEXPECTED_TOKEN);
+				return (NULL);
+			}
 			*next_remain = copy_token(tokens);
 			next_remain = &(*next_remain)->next;
 			tokens = tokens->next;

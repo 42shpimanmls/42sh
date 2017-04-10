@@ -22,8 +22,9 @@ typedef enum				e_error_id
 	UNEXPECTED_SEMI,
 	UNEXPECTED_IF,
 	UNEXPECTED_PIPE,
+	UNEXPECTED_TOKEN,
 	NO_SUCH_BUILTIN,
-	CHILD_FAILURE
+	CHILD_FAILURE,
 }							t_error_id;
 
 typedef struct 			s_error
@@ -38,7 +39,7 @@ typedef struct s_builtin_usage
 	char	*msg;
 }				t_builtin_usage;
 
-#define TOTAL_ERROR_COUNT 18
+#define TOTAL_ERROR_COUNT 19
 
 t_error const 		*get_error_defs(void);
 void				print_error_msg(t_error_id id);
