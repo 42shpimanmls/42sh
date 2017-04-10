@@ -53,10 +53,11 @@ void	ft_start_termcaps(void)
 	struct termios	term;
 	char			*env;
 
-	env = getenv("TERM");
+	env = get_variable("TERM");
 	if (!env || tgetent(NULL, env) == ERR ||
 		tcgetattr(0, &term) == -1)
 	{
+		free(env);
 		ft_dprintf(2, "%s: I need a variable \"TERM\"\n", SHNAME);
 		exit(-1);
 	}
@@ -66,9 +67,11 @@ void	ft_start_termcaps(void)
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSADRAIN, &term) == -1)
 	{
+		free(env);
 		ft_dprintf(2, "%s: Termcap is lost\n", SHNAME);
 		exit(-1);
 	}
+	free(env);
 }
 
 void	ft_close_termcaps(void)

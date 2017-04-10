@@ -6,7 +6,7 @@ char	*get_variable(char *var)
 	t_variable	*env;
 
 	env = get_shell_env()->variables;
-	while (env->next != NULL)
+	while (env)
 	{
 		if (ft_strcmp(env->name, var) == 0)
 			return (ft_strdup(env->value));
