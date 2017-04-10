@@ -81,6 +81,7 @@ void	refresh_termcap(int ret)
 	free(ed->term);
 	ed->term = NULL;
 	ed->term = init_term();
+	ed->pos = get_cursor_vector(ed);
 }
 
 char 		*edit_input()
