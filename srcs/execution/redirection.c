@@ -30,7 +30,7 @@ int 				choose_open(t_redir_type type, char *file)
 		return(open(file, O_RDONLY));
 }
 
-t_error_id			redirect(t_redirection *redirections)
+t_error_id			redirect(t_redirection *redirections, int *backup)
 {
 	t_error_id 	ret;
 	int 		file_fd;
@@ -45,6 +45,7 @@ t_error_id			redirect(t_redirection *redirections)
 			set_error(errno);
 			ret = get_error();
 			print_errno_error(ret, NULL, redirections->word);
+			restore_stdin_stdout(backup);
 			return (ret);
 		}
 		else
