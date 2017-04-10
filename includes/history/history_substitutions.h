@@ -59,8 +59,13 @@ t_token			*tokenize_for_substitution(char const *input);
 */
 
 bool			apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote);
-void			quote_word(char **word);
 
+/*
+**			add_quotes.c
+*/
+
+void			quote_word(char **word);
+void			quote_per_word(char **str);
 
 /*
 **			perform_hist_subst

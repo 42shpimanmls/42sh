@@ -5,49 +5,6 @@
 #include "history_substitutions.h"
 #include "string_substitution.h"
 
-static void	quote_quotes(char **word, size_t first)
-{
-	char	*tmp;
-	char	*tmp2;
-	char	*tmp3;
-
-	tmp = ft_strsub(*word, 0, first);
-	tmp2 = ft_strjoin(tmp, "'\\'");
-	ft_strdel(&tmp);
-	tmp3 = ft_strdup(&(*word)[first]);
-	tmp = ft_strjoin(tmp2, tmp3);
-	ft_strdel(word);
-	ft_strdel(&tmp2);
-	ft_strdel(&tmp3);
-	*word = ft_strdup(tmp);
-	ft_strdel(&tmp);
-}
-
-/*
-**	if word already has quotes, quotes them with " '\' "
-**	then simple-quotes word
-*/
-
-void			quote_word(char **word)
-{
-	char	*tmp;
-	int	i;
-	int	len;
-
-	i  = -3;
-	len = ft_strlen(*word);
-	while (i < len)
-	{
-		if (!(tmp = ft_strchr(*word + i + 3, '\'')))
-			break ;
-		i = tmp - *word + 1;
-		quote_quotes(word, tmp - *word);
-	}
-	tmp = ft_strjoin("\'", *word);
-	ft_strdel(word);
-	*word = ft_strjoin(tmp, "\'");
-}
-
 /*
 **	removes *str's trailing pathname component
 **	i.e. what is after last slash
@@ -150,12 +107,14 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 			}
 			else if (modifiers[i] == 'q')
 			{
-					i++;
-					*quote = 1;
+				i++;
+				*quote = 1;
 			}
-
-			// x quote word by word
-
+			else if (modifiers[i] == 'x')
+			{
+				quote_per_word(str);
+				i++;
+			}
 			else if (modifiers[i] == 's')
 			{
 				i++;
