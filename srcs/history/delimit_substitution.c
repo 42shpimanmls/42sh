@@ -20,7 +20,7 @@ void	take_out_backslashes(char **str, char delimiter)
 			}
 			pos++;
 			l_str = l_str->next;
-		}		
+		}
 		l_str = tmp;
 		ft_strdel(str);
 		*str = get_string_from_list(l_str);
@@ -54,15 +54,7 @@ char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
 	else
 	{
 		len = tmp - modifier;
-
-		while (modifier[len - 1] == '\\')
-		{
-			
-			tmp = ft_strchr(&modifier[len + 1], delimiter);
-			len = tmp - modifier;
-		}
 		str = ft_strsub(modifier, 0, len);
-		ft_putendl(str);
 	}
 	take_out_backslashes(&str, delimiter);
 	*i += len;

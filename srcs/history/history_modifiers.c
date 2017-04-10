@@ -58,17 +58,56 @@ static void 	remove_head(char **str, char c)
 **	e removes all but the trailing suffix
 */
 
-void	trimming_modifiers(char modifier, char **str, t_uint *i)
+int		trimming_modifiers(char modifier, char **str)
 {
 	if (modifier == 'h')
+	{
 		remove_tail(str, '/');
+		return (1);
+	}
 	else if (modifier == 't')
+	{
 		remove_head(str, '/');
+		return (1);
+	}
 	else if (modifier == 'r')
+	{
 		remove_tail(str, '.');
+		return (1);
+	}
 	else if (modifier == 'e')
+	{
 		remove_head(str, '.');
-	(*i)++;
+		return (1);
+	}
+	return (0);
+}
+
+int		subst_modifiers(char modifier, char *modifiers, t_uint *i, char **str)
+{
+	if (modifier == 's')
+	{
+		substitute_str(modifiers, str, i, false);
+		return (1);
+	}
+	else if (modifier == '&')
+	{
+		replace_and_repeat(&get_shell_env()->history.last_subst, str);
+		return (1);
+	}
+	else if (modifier == 'g' && modifiers[*i] == 's')
+	{
+		(*i)++;
+		substitute_str(modifiers, str, i, true);
+		return (1);
+	}
+	else if (modifier == 'G' && modifiers[*i] == 's')
+	{
+		(*i)++;
+		substitute_words_str(modifiers, str, i);
+		return (1);
+	}
+	return (0);
 }
 
 /*
@@ -89,6 +128,7 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 {
 	t_uint 		i;
 	bool		should_run;
+	char 		modifier;
 
 	i = 0;
 	should_run = 1;
@@ -97,46 +137,18 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 	{
 		if (modifiers[i] == ':')
 		{
+			modifier = modifiers[++i];
 			i++;
-			if (ft_strchr("htre", modifiers[i]))
-				trimming_modifiers(modifiers[i], str, &i);
-			else if (modifiers[i] == 'p')
-			{
-				i++;
+			if (trimming_modifiers(modifier, str))
+				continue ;
+			else if (modifier == 'p')
 				should_run = 0;
-			}
-			else if (modifiers[i] == 'q')
-			{
-				i++;
+			else if (modifier == 'q')
 				*quote = 1;
-			}
-			else if (modifiers[i] == 'x')
-			{
+			else if (modifier == 'x')
 				quote_per_word(str);
-				i++;
-			}
-			else if (modifiers[i] == 's')
-			{
-				i++;
-				substitute_str(modifiers, str, &i, false);
-			}
-			else if (modifiers[i] == '&')
-			{
-				i++;
-				replace_and_repeat(&get_shell_env()->history.last_subst, str);
-			}
-			else if (modifiers[i] == 'g' || modifiers[i] == 'G')
-			{
-				i++;
-				if (modifiers[i] == 's')
-				{
-					i++;
-					if (modifiers[i - 2] == 'g')
-						substitute_str(modifiers, str, &i, true);
-					else
-						substitute_words_str(modifiers, str, &i);
-				}
-			}
+			else if (subst_modifiers(modifier, modifiers, &i, str))
+				continue ;
 			else
 				return (should_run);
 		}
