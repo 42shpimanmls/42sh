@@ -1,9 +1,15 @@
 #include "builtins.h"
-#include <stdlib.h>
+
+#include "utils.h"
+#include <libft.h>
 
 BUILTIN_RET 		builtin_exit(BUILTIN_ARGS)
 {
-	(void)argc;
-	(void)argv;
-	exit(EXIT_SUCCESS);
+	t_uchar	ret;
+
+	if (argc > 1)
+		ret = ft_atoi(argv[1]);
+	else
+		ret = get_last_exit_status();
+	exit(ret);
 }
