@@ -8,5 +8,5 @@
 #define FILE_PERMISSION (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
 
 int 			*save_stdin_stdout();
-t_error_id		redirect(t_redirection *redirections);
+t_error_id		redirect(t_redirection *redirections, int *backup);
 void			restore_stdin_stdout(int *std);
