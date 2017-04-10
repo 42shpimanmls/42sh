@@ -17,13 +17,15 @@ typedef enum				e_error_id
 	ANRW,
 	PERM_DENIED,
 	NO_SUCH_FILE,
+	IS_DIR,
 	UNMATCHED_SINGLE_QUOTE,
 	UNMATCHED_DOUBLE_QUOTE,
 	UNMATCHED_BACKQUOTE,
 	UNEXPECTED_SEMI,
 	UNEXPECTED_IF,
 	UNEXPECTED_PIPE,
-	NO_SUCH_BUILTIN
+	NO_SUCH_BUILTIN,
+	CHILD_FAILURE
 }							t_error_id;
 
 typedef struct 			s_error
@@ -38,16 +40,21 @@ typedef struct s_builtin_usage
 	char	*msg;
 }				t_builtin_usage;
 
-#define TOTAL_ERROR_COUNT 17
+#define TOTAL_ERROR_COUNT 18
 
 t_error const 		*get_error_defs(void);
 void				print_error_msg(t_error_id id);
 void				print_usage_msg(t_builtin_id id);
 void				print_name_and_error(t_error_id id);
+void				print_errno_error(int err, char const *pre, char const *post);
 
 t_error_id			get_error(void);
 void				set_error(t_error_id error);
 
+void 				set_file_error(char *file);
+
 void				error_builtin(char *builtin, char *error, t_error_id id);
+
+char const			*get_system_error(int signum);
 
 #endif

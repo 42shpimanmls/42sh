@@ -2,8 +2,7 @@
 #include <libft.h>
 #include "shell_env.h"
 #include "abstract_list.h"
-
-#include "init/init.h"  // replace by envHelper
+#include "init/init.h"
 
 BUILTIN_RET		builtin_setenv(BUILTIN_ARGS)
 {
@@ -14,15 +13,16 @@ BUILTIN_RET		builtin_setenv(BUILTIN_ARGS)
 	if (argc == 3)
 	{
 		setenv_as(env, argv[1], argv[2]);
+		return (STATUS_SUCCESS);
 	}
 	else
 	{
-		ft_printf("Usage: setenv <key> <value>\n");
+		ft_dprintf(STDERR_FILENO, "Usage: setenv <key> <value>\n");
 	}
-	return (STATUS_SUCCESS);
+	return (STATUS_FAILURE);
 }
 
-void			setenv_as(t_variable **env, char *name, char*value)
+int			setenv_as(t_variable **env, char *name, char*value)
 {
 	if (env && ft_strlen(name) > 0)
 	{
@@ -32,5 +32,7 @@ void			setenv_as(t_variable **env, char *name, char*value)
 		}
 		list_push_back((t_abstract_list**)&env,
 			(t_abstract_list*)create_variable(name, value, true));
+		return (STATUS_SUCCESS);
 	}
+	return (STATUS_FAILURE);
 }

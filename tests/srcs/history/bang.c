@@ -10,7 +10,7 @@
 #define NB_SUB_TESTS 41
 #define NB_ERR_TESTS 11
 
-// #define BANG_TEST_VERBOSE
+#define BANG_TEST_VERBOSE
 
 /*
 	to test your own strings:

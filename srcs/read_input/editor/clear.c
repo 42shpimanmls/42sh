@@ -12,4 +12,5 @@ void free_editor(t_editor *ed)
 {
 	free_string(ed->string);
 	free(ed->prompt);
+	free(ed->term);
 }
