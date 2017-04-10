@@ -25,7 +25,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 		print_n_char_fd(' ', (lvl + 1) * 2, 2);
 #endif
 		print_errno_error(errno, cmd->argv[0], NULL);
-		ret = errno;
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
