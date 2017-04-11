@@ -3,7 +3,7 @@
 # include <signal.h>
 # include "shell_env.h"
 # include "abstract_list.h"
-# include "init/init.h"
+# include "variable.h"
 
 # define FORBIDDEN_CHAR	"Is forbidden to use the character '='\n"
 # define USAGE 			"Usage: setenv <key> <value>\n"

@@ -27,7 +27,9 @@ char						**copy_array(char **array, size_t start, int end);
 char						*array_to_str(char **array);
 t_string					*str_to_list(char *str);
 void						free_ptr_array(void *ptr_array);
-void						wait_for_childs();
 void						fatal_error(char const *str);
+t_uchar						get_last_exit_status(void);
+void						set_last_exit_status(t_uchar status);
+void						wait_for_childs();
 
 #endif
