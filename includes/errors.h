@@ -13,6 +13,8 @@ typedef enum				e_error_id
 	INVALID_OPTION,
 	EV_NOT_FOUND,
 	BAD_WD_SPEC,
+	SUBST_FAIL,
+	ANRW,
 	PERM_DENIED,
 	NO_SUCH_FILE,
 	IS_DIR,

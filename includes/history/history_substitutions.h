@@ -9,14 +9,21 @@
 */
 
 int				history_substitution(char **str);
-int				find_and_replace(char **str, char *to_find, char *replace, t_uint start);
-
 
 /*
 **			get_history_entry.c
 */
 
 char			*get_history_entry(char *designator, t_uint *end);
+char			*get_nth_entry(t_history *history, int n);
+
+/*
+**			history_search.c
+*/
+
+char			*find_in_history(bool must_start, t_history *history, \
+							char *str, t_uint *end);
+char			*last_hist_search();
 
 /*
 **			get_entry_word.c
@@ -24,7 +31,6 @@ char			*get_history_entry(char *designator, t_uint *end);
 
 char			*get_nth_word(char *line, t_uint n);
 void 			get_entry_word(char **entry, char *str, t_uint *end);
-
 
 /*
 **			word_range.c
@@ -39,7 +45,8 @@ char			*get_word_range(char *line, t_range *range);
 */
 
 bool			start_word_designator(char c);
-void			parse_word_designators(char *str, int *i, char **words, t_range *range, char **entry);
+void			parse_word_designators(char *str, int *i, t_range *range, \
+										char **entry, char **words);
 
 /*
 **			history_tokenizer.c
@@ -51,13 +58,21 @@ t_token			*tokenize_for_substitution(char const *input);
 **			history_modifiers.c
 */
 
-bool			apply_modifiers(char *modifiers, char **str, t_uint *end);
+bool			apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote);
 
 /*
-**			substitute_str.c
+**			add_quotes.c
 */
 
-void			substitute_str(char *modifier, char **str, t_uint *i, bool repeat);
-void			substitute_words_str(char *modifiers, char **str, t_uint *i);
+void			quote_word(char **word);
+void			quote_per_word(char **str);
+
+/*
+**			perform_hist_subst
+*/
+
+void			quick_substitution(char **str, t_uint *i);
+void 			perform_substitution(char **str, char *hist_entry, \
+										t_uint *start, t_uint end);
 
 #endif

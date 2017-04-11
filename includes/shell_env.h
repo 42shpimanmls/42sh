@@ -8,34 +8,15 @@
 # include "parse_input/syntax_tree.h"
 # include "variable.h"
 # include "errors.h"
-
-/* proposition
-
-typedef struct 			s_history
-{
-	size_t			size;
-	t_history_list	*last_elem
-	t_history_list	*history_list;
-}
-
-OR liste circulaire
-
-*/
+# include "history/history_def.h"
 
 # define SHNAME "42sh"
-
-typedef struct			s_history
-{
-	struct s_history	*next;
-	char				*line;
-	bool				appended;
-	struct s_history	*prev;
-}						t_history;
 
 typedef struct			s_shell_env
 {
 	t_variable			*variables;
-	t_history			*history;
+	t_sh_history		history;
+	t_file_position		*history_files;
 	bool				should_run;
 	bool				should_keep_reading;
 	char				*command_string;

@@ -4,6 +4,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include "uint.h"
+# include "read_input/editor/editor_struct.h" // move
 
 void						print_non_ascii_str(char const *str);
 void						print_non_ascii_char(char c);
@@ -17,11 +18,14 @@ bool						is_circumflex(char c);
 bool						is_bang(char c);
 char						*str_in_str(char *find, char *str, t_uint start, \
 										bool must_start);
+int 						find_and_replace(char **str, char *to_find, \
+											char *replace, t_uint start);
 void						str_join_with_space(char **str, char *to_join);
 void						str_add_space(char **str);
 size_t						number_len(char *str);
 char						**copy_array(char **array, size_t start, int end);
 char						*array_to_str(char **array);
+t_string					*str_to_list(char *str);
 void						free_ptr_array(void *ptr_array);
 void						wait_for_childs();
 void						fatal_error(char const *str);

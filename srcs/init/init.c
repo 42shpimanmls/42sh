@@ -51,6 +51,7 @@ void	init(int ac, char **av)
 	set_error(NO_ERROR);
 	shell_env = get_shell_env();
 	ft_bzero(shell_env, sizeof(t_shell_env));
+	ft_bzero(&shell_env->history, sizeof(t_sh_history));
 	shell_env->path_to_42sh = get_path_to_ftsh(av[0]);
 	init_variables_list(shell_env);
 	parse_options(ac, av, shell_env);

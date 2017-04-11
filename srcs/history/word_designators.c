@@ -30,10 +30,46 @@ static char		*get_last_word(char *line)
 	return (word);
 }
 
-void			parse_word_designators(char *str, int *i, char **words, t_range *range, char **entry)
+static void		match_last_search(char **hist_entry, char **result)
+{
+	t_token *words;
+	t_token	*tmp;
+	char	*to_find;
+
+	if ((to_find = get_shell_env()->history.last_search))
+	{
+		if ((words = tokenize_for_substitution(*hist_entry)))
+		{
+			tmp = words;
+			while (tmp)
+			{
+				if (str_in_str(to_find, tmp->str, 0, false))
+				{
+					*result = ft_strdup(tmp->str);
+					delete_all_tokens(&words);
+					return ;
+				}
+				tmp = tmp->next;
+			}
+		}
+	}
+	else
+		*result = ft_strnew(1);
+}
+
+/*
+**	'*' = range 1-last (all arguments)
+**	'^' word 1 (first argument)
+**	'$' last word
+**	'%' word that matches last ?str[?] search
+**	'[n]-[m]' a range of words
+*/
+
+void			parse_word_designators(char *str, int *i, t_range *range, \
+										char **entry, char **result)
 {
 	/*
-		'*' all the words except 0 (1-$)
+		!!!!!
 		It is not an error to use ‘*’ if there is just one word in the event;
 		the empty string is returned in that case.
 	*/
@@ -43,23 +79,17 @@ void			parse_word_designators(char *str, int *i, char **words, t_range *range, c
 		range->end = -1;
 		range->empty_ok = true;
 	}
-
-	// ^ word 1 (first argument)
 	else if (str[*i] == '^')
 		range->start = range->end = 1;
-
-	// $ last argument/word
 	else if (str[*i] == '$')
 	{
-		*words = get_last_word(*entry);
+		*result = get_last_word(*entry);
 		ft_strdel(entry);
-		*entry = ft_strdup(*words);
-		ft_strdel(words);
+		*entry = ft_strdup(*result);
+		ft_strdel(result);
 	}
-
-	// % The word matched by the most recent ‘?string?’ search.
 	else if (str[*i] == '%')
-	{;}
+		match_last_search(entry, result);
 	else if (str[*i] == '-')
 		parse_range(str, i, range);
 	(*i)++;
