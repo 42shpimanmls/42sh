@@ -1,18 +1,19 @@
-#include "builtin_def.h"
-#include <stdlib.h>
-#include "uint.h"
-#include <libft.h>
+# include "builtin_def.h"
+# include <stdlib.h>
+# include "uint.h"
+# include <libft.h>
 
 t_builtin_def const			*get_builtin_defs(void)
 {
 	static t_builtin_def const defs[BUILTIN_DEF_COUNT] =
 	{
 	//	ID							NAME					HANDLER FUNCTION
-		{ CD_BUID,				"cd",					builtin_cd },
+		{ CD_BUID,					"cd",					builtin_cd },
 		{ ECHO_BUID,				"echo",					builtin_echo },
 		{ EXIT_BUID,				"exit",					builtin_exit },
 		{ SETENV_BUID, 				"setenv",				builtin_setenv },
 		{ UNSETENV_BUID, 			"unsetenv",				builtin_unsetenv },
+		{ SET_BUID, 				"set",					builtin_set },
 		//{ UNSET_BUID, 				"unset",				NULL },
 		//{ EXPORT_BUID,				"export",				NULL },
 		{ HISTORY_BUID,				"history",				builtin_history },
@@ -23,7 +24,7 @@ t_builtin_def const			*get_builtin_defs(void)
 
 t_builtin_def const			*get_matching_builtin(char const *str)
 {
-	t_uint						u;
+	t_uint				u;
 	t_builtin_def const	*defs;
 
 	if (str != NULL)

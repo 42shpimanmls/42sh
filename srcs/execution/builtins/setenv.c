@@ -21,7 +21,7 @@ BUILTIN_RET		builtin_setenv(BUILTIN_ARGS)
 			ft_dprintf(STDERR_FILENO, FORBIDDEN_CHAR);
 			return (STATUS_FAILURE);
 		}
-		if (setenv_as(env, argv[1], argv[2]) == STATUS_SUCCESS)
+		if (setenv_as(env, argv[1], argv[2], true) == STATUS_SUCCESS)
 			return (STATUS_SUCCESS);
 	}
 	else
@@ -31,7 +31,7 @@ BUILTIN_RET		builtin_setenv(BUILTIN_ARGS)
 	return (STATUS_FAILURE);
 }
 
-int			setenv_as(t_variable **env, char *name, char*value)
+int			setenv_as(t_variable **env, char *name, char*value, bool exported)
 {
 	if (env && ft_strlen(name) > 0)
 	{
@@ -43,7 +43,7 @@ int			setenv_as(t_variable **env, char *name, char*value)
 				return (STATUS_SUCCESS);
 		}
 		list_push_back((t_abstract_list**)&env,
-			(t_abstract_list*)create_variable(name, value, true, true));
+			(t_abstract_list*)create_variable(name, value, exported, true));
 		return (STATUS_SUCCESS);
 	}
 	return (STATUS_FAILURE);

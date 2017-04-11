@@ -14,7 +14,7 @@ typedef struct			s_variable
 
 char					*get_variable(char *var);
 void					set_variable(char const *var, char const *val);
-void					display_variables(void);
+void					display_variables(bool only_exported);
 char					**get_variables_for_execution(t_variable *assignments);
 
 t_variable				*create_variable(char *name, char *value,

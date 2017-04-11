@@ -15,15 +15,27 @@ char	*get_variable(char *var)
 	return (NULL);
 }
 
-void	display_variables(void)
+void	display_variables(bool only_exported)
 {
 	t_variable	*env;
 
 	env = get_shell_env()->variables;
-	while (env->next != NULL)
+	if (only_exported)
 	{
-		if (env->exported == 1)
-			ft_printf("%s=%s\n", env->name, env->value);
+		while (env)
+		{
+			if (env->exported == true)
+				ft_printf("%s=%s\n", env->name, env->value);
+		}
+		ft_printf("%s=%s\n", env->name, env->value);
 		env = env->next;
+	}
+	else
+	{
+		while (env)
+		{
+			ft_printf("%s=%s\n", env->name, env->value);
+			env = env->next;
+		}
 	}
 }
