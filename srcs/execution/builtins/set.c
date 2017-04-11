@@ -16,16 +16,25 @@ BUILTIN_RET		builtin_set(BUILTIN_ARGS)
 	if (argc == 1)
 	{
 		display_variables(false);
+		return (STATUS_SUCCESS);
 	}
-	else if (argc == 3)
+	else if (argc == 2 || argc == 3)
 	{
-		if (ft_strchr(argv[2], '='))
+		if (ft_strchr(argv[1], '='))
 		{
 			ft_dprintf(STDERR_FILENO, FORBIDDEN_CHAR);
 			return (STATUS_FAILURE);
 		}
-		if (setenv_as(env, argv[1], argv[2], false) == STATUS_SUCCESS)
-			return (STATUS_SUCCESS);
+		if (argc == 2)
+		{
+			if (setenv_as(env, argv[1], "", false) == STATUS_SUCCESS)
+				return (STATUS_SUCCESS);
+		}
+		else
+		{
+			if (setenv_as(env, argv[1], argv[2], false) == STATUS_SUCCESS)
+				return (STATUS_SUCCESS);
+		}
 	}
 	else
 	{

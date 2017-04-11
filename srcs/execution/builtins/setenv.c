@@ -14,15 +14,23 @@ BUILTIN_RET		builtin_setenv(BUILTIN_ARGS)
 
 	env = &get_shell_env()->variables;
 
-	if (argc == 3)
+	if (argc == 2 || argc == 3)
 	{
-		if (ft_strchr(argv[2], '='))
+		if (ft_strchr(argv[1], '='))
 		{
 			ft_dprintf(STDERR_FILENO, FORBIDDEN_CHAR);
 			return (STATUS_FAILURE);
 		}
-		if (setenv_as(env, argv[1], argv[2], true) == STATUS_SUCCESS)
-			return (STATUS_SUCCESS);
+		if (argc == 2)
+		{
+			if (setenv_as(env, argv[1], "", true) == STATUS_SUCCESS)
+				return (STATUS_SUCCESS);
+		}
+		else
+		{
+			if (setenv_as(env, argv[1], argv[2], true) == STATUS_SUCCESS)
+				return (STATUS_SUCCESS);
+		}
 	}
 	else
 	{
