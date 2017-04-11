@@ -42,10 +42,13 @@ static bool	check_cd_opt(char **arg, t_hist_opt *options)
 	return (0);
 }
 
-void		get_hist_options(char *arg, t_hist_opt *options)
+bool		get_hist_options(char *arg, t_hist_opt *options)
 {
+	bool	ret;
+
 	options->ac++;
 	arg++;
+	ret = 1;
 	while (arg && *arg)
 	{
 		if (check_cd_opt(&arg, options))
@@ -55,18 +58,21 @@ void		get_hist_options(char *arg, t_hist_opt *options)
 			if (get_anrw_options(*arg, options) < 0)
 			{
 				error_builtin("history", NULL, ANRW);
-				return ;
+				return (0);
 			}
 		}
 		else if (*arg == 'p')
 			options->p = 1;
 		else if (*arg == 's')
 			options->s = 1;
+		else if (*arg == '-' && ret ==1)
+			ret = 0;
 		else
 		{
 			error_builtin("history", ft_strdup(arg), INVALID_OPTION);
-			return ;
+			return (0);
 		}
 		arg++;
 	}
+	return (ret);
 }
