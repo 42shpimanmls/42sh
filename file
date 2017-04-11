@@ -1,5 +1,0 @@
-history -w file
-cat file
-toto
-titi
-history -a file
