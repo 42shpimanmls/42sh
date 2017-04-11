@@ -69,7 +69,8 @@ void	execute_path(char **cmd, char **env, char **path)
 			exec_if_perm_ok(p_exec, cmd, env);
 			ft_strdel(&p_exec);
 		}
-	exec_if_perm_ok(cmd[0], cmd, env);
+	if (ft_strchr(cmd[0], '/') != NULL)
+		exec_if_perm_ok(cmd[0], cmd, env);
 }
 
 /*
