@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "abstract_list.h"
 
-t_variable	*create_variable(char *name, char *value, bool exported)
+t_variable	*create_variable(char const *name, char const *value, bool exported)
 {
 	t_variable *v;
 
