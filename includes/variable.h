@@ -24,7 +24,8 @@ void					delete_all_variables(t_variable **var);
 t_variable 				*copy_variable(t_variable *e);
 
 void					print_variable(t_variable *v);
-bool					check_if_variable_exist(t_variable *v, char *name);
+bool					variable_exist(t_variable *v, char *name);
+bool					variable_is_overwritable(t_variable *v, char *name);
 void					free_variable(t_variable *list);
 int						pop_variable_by_name(t_variable **list, char *name);
 
