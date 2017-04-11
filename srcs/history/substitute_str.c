@@ -1,60 +1,83 @@
-#include "libft.h"
-#include "shell_env.h"
-#include "errors.h"
-#include "utils.h"
+#include "string_substitution.h"
 
-#include "history_substitutions.h"
-
-static char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
+static void	save_substitution(t_str_subst subst)
 {
-	char 	*str;
-	char 	*tmp;
-	size_t 	len;
+	t_sh_history	*history;
 
-	if (!(tmp = ft_strchr(modifier, delimiter)))
+	history = &get_shell_env()->history;
+	if (history->last_subst.to_find)
 	{
-		len = ft_strlen(modifier);
-		str = ft_strsub(modifier, 0, len);
+		ft_strdel(&history->last_subst.to_find);
+		ft_strdel(&history->last_subst.replace);
+	}
+	history->last_subst = subst;
+}
+
+void		replace_and_repeat(t_str_subst *subst, char **str)
+{
+	t_uint 		start;
+
+	start = 0;
+	if (subst->repeat)
+	{
+		while (start < ft_strlen(*str))
+			start = find_and_replace(str, subst->to_find, subst->replace, start);
 	}
 	else
 	{
-		len = tmp - modifier;
-		str = ft_strsub(modifier, 0, len);
-		// (*end)++;
+		if (!subst->to_find || find_and_replace(str, subst->to_find, subst->replace, 0) < 0)
+			set_error(SUBST_FAIL);
 	}
-	*i += len;
-	return (str);
+}
+
+/*
+**	replaces all unquoted '&' in subst.replace (new) by subst.to_find (old)
+*/
+
+static void	replace_and_by_old(t_str_subst *subst)
+{
+	t_str_subst	subst_and;
+	char		*tmp;
+	int			i;
+
+	i = 0;
+	while ((tmp = ft_strchr(&subst->replace[i], '&')))
+	{
+		if (tmp[i - 1] != '\\')
+		{
+			subst_and.to_find = "&";
+			subst_and.replace = subst->to_find;
+			subst_and.repeat = false;
+			replace_and_repeat(&subst_and, &subst->replace);
+		}
+		i = tmp - subst->replace + 1;
+	}
+	take_out_backslashes(&subst->replace, '&');
 }
 
 void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 {
-	char 	*to_find;
-	char 	*replace;
-	char 	delimiter;
-	t_uint 	start;
+	t_str_subst	subst;
+	char		delimiter;
+	t_error_id	err;
 
-	(*i)++;
-	start = 0;
+	subst.repeat = repeat;
 	delimiter = modifier[(*i)++];
-	// + handle quoted
-	if (!(to_find = get_delimited_str(&modifier[*i], delimiter, i)))
-		ft_putendl("previous substitution");
-		// previous_substitution();
-	else
-	{
+	// // + handle quoted
+	if (!(subst.to_find = get_delimited_str(&modifier[*i], delimiter, i)))
+		return ;
+	(*i)++;
+	subst.replace = get_delimited_str(&modifier[*i], delimiter, i);
+	replace_and_by_old(&subst);
+	if (modifier[*i] == delimiter && modifier[*i - 1] != delimiter)
 		(*i)++;
-		replace = get_delimited_str(&modifier[*i], delimiter, i);
-		if (modifier[*i] == delimiter && modifier[*i - 1] != delimiter)
-			(*i)++;
-		if (repeat)
-		{
-			while (start < ft_strlen(*str))
-				start = find_and_replace(str, to_find, replace, start);
-		}
-		else
-			find_and_replace(str, to_find, replace, 0);
-		ft_strdel(&to_find);
-		ft_strdel(&replace);
+	replace_and_repeat(&subst, str);
+	save_substitution(subst);
+	if ((err = get_error()) != NO_ERROR)
+	{
+		modifier = ft_strsub(modifier, 0, *i);
+		error_builtin(modifier, NULL, err);
+		ft_strdel(&modifier);
 	}
 }
 

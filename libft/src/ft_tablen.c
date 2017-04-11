@@ -14,15 +14,11 @@
 
 int		ft_tablen(char **tab)
 {
-	int i;
+	int		i;
 
 	i = 0;
-	if (tab[0])
-	{
-		while (tab[i])
+	if (tab != NULL)
+		while (tab[i] != NULL)
 			i++;
-		return (i);
-	}
-	else
-		return (-1);
+	return (i);
 }

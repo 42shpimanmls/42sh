@@ -8,13 +8,17 @@ char			**copy_array(char **array, size_t start, int end)
 
 	i = 0;
 	size = end - start;
-	copy = (char **)memalloc_or_die(sizeof(char *) * (size + 1));
-	copy[size] = NULL;
-	while (i < size)
+	copy = NULL;
+	if (size)
 	{
-		copy[i] = ft_strdup(array[start]);
-		i++;
-		start++;
+		copy = (char **)memalloc_or_die(sizeof(char *) * (size + 1));
+		copy[size] = NULL;
+		while (i < size)
+		{
+			copy[i] = ft_strdup(array[start]);
+			i++;
+			start++;
+		}
 	}
 	return (copy);
 }
