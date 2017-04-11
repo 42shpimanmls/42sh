@@ -13,8 +13,8 @@ void	pre_exec(char **cmd)
 	char	**path;
 	char	**env;
  
-	env = tabify(get_shell_env()->variables);
-	path = ft_strsplit(get_tenv(env, "PATH"), ':');
+	env = get_variables_for_execution(get_shell_env()->variables);
+	path = ft_strsplit(get_variable("PATH"), ':');
 	execute(cmd, env, path);
 	ft_freetabchar(path);
 	ft_freetabchar(env);
