@@ -4,6 +4,7 @@
 #include <libft.h>
 #include "execute_syntax_tree.h"
 #include "pipe.h"
+#include "exec.h"
 #include <stdio.h>
 #include "redirection.h"
 #include "expansion/expansion.h"
@@ -20,7 +21,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 #endif
 	if (enter_subshell() == FORKED_IN_CHILD)
 	{
-		execvp(cmd->argv[0], cmd->argv);
+		pre_exec(cmd->argv);
 #ifdef FTSH_DEBUG
 		print_n_char_fd(' ', (lvl + 1) * 2, 2);
 #endif
