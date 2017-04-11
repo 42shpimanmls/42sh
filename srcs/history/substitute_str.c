@@ -1,6 +1,5 @@
 #include "string_substitution.h"
 
-
 static void	save_substitution(t_str_subst subst)
 {
 	t_sh_history	*history;

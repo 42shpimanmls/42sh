@@ -1,5 +1,6 @@
 #include "errors.h"
 #include "libft.h"
+#include "shell_env.h"
 
 static void		ft_putstr_colon(char *str)
 {
@@ -10,7 +11,7 @@ static void		ft_putstr_colon(char *str)
 void			error_builtin(char *builtin, char *error, t_error_id id)
 {
 	set_error(id);
-	ft_putstr_colon("42sh");
+	ft_putstr_colon(SHNAME);
 	if (builtin)
 		ft_putstr_colon(builtin);
 	if (error)

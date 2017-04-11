@@ -37,8 +37,8 @@ void			print_history_options(t_hist_opt *options)
 
 void	print_subst(t_str_subst subst)
 {
-	ft_printf("<saved substitution>\nto_find: %s\n\
-replace: %s\nrepeat: %d\nword_repead: %d\n", \
+	ft_printf("<substitution>\nto_find: %s\n\
+replace: %s\nrepeat: %d\nword_repeat: %d\n", \
 			subst.to_find, subst.replace, subst.repeat, subst.repeat_word);
 }
 
