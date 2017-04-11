@@ -1,6 +1,5 @@
 #include "libft.h"
 #include "shell_env.h"
-#include "env_tools.h"
 #include "exec.h"
 #include <unistd.h>
 
