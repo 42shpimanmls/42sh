@@ -93,10 +93,10 @@ void    error_message(char *one, char *two, char *three)
 {
 	if (three == NULL || ft_strcmp(three, "exit") == 0)
 	{
-		ft_dprintf(2, ">42sh: %s: %s.\n", one, two);
+		ft_dprintf(2, ">%s: %s: %s.\n", SHNAME, one, two);
 		if (three != NULL && ft_strcmp(three, "exit") == 0)
 			exit(0);
 	}
 	else
-		ft_dprintf(2, ">42sh: %s: %s: %s.\n", one, two, three);
+		ft_dprintf(2, ">%s: %s: %s: %s.\n", SHNAME, one, two, three);
 }
