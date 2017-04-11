@@ -2,6 +2,7 @@
 #include "shell_env.h"
 #include "exec.h"
 #include <unistd.h>
+#include <paths.h>
 
 /*
 ** Retrieve env vars and PATH
@@ -9,11 +10,15 @@
 
 void	pre_exec(char **cmd)
 {
+	char	*spath;
 	char	**path;
 	char	**env;
  
 	env = get_variables_for_execution(get_shell_env()->variables);
-	path = ft_strsplit(get_variable("PATH"), ':');
+	if ((spath = get_variable("PATH")) == NULL)
+		spath = ft_strdup(_PATH_DEFPATH);
+	path = ft_strsplit(spath, ':');
+	ft_strdel(&spath);
 	execute(cmd, env, path);
 	ft_freetabchar(path);
 	ft_freetabchar(env);
