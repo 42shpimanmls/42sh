@@ -45,7 +45,7 @@ static bool		delimit_to_find(char *str, int *i, t_uint *end, bool must_start)
 	if (must_start)
 	{
 		while (str[*i] && !start_word_designator(str[*i]) \
-				&& !is_posix_blank(str[*i]))
+				&& !is_posix_blank(str[*i]) && str[*i] != '\n')
 			(*i)++;
 	}
 	else
