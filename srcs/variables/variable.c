@@ -2,7 +2,8 @@
 #include "utils.h"
 #include "abstract_list.h"
 
-t_variable	*create_variable(char *name, char *value, bool exported)
+t_variable	*create_variable(char *name, char *value,
+	bool exported, bool overwrite)
 {
 	t_variable *v;
 
@@ -10,6 +11,7 @@ t_variable	*create_variable(char *name, char *value, bool exported)
 	v->name = ft_strdup(name);
 	v->value = ft_strdup(value);
 	v->exported = exported;
+	v->overwrite = overwrite;
 	v->next = NULL;
 	return (v);
 }
@@ -22,17 +24,34 @@ void		print_variable(t_variable *v)
 		ft_printf("Value: \"%s\"	", v->value);
 		if (v->exported)
 			ft_printf("FOR EXPORT\n");
+		if (v->overwrite)
+			ft_printf("OVERWRITE\n");
 		v = v->next;
 	}
 }
 
-bool		check_if_variable_exist(t_variable *v, char *name)
+bool		variable_exist(t_variable *v, char *name)
 {
 	while (v)
 	{
 		if (!ft_strcmp(v->name, name))
 		{
 			return (true);
+		}
+		v = v->next;
+	}
+	return (false);
+}
+
+bool		variable_is_overwritable(t_variable *v, char *name)
+{
+	while (v)
+	{
+		if (!ft_strcmp(v->name, name))
+		{
+			if (v->overwrite)
+				return (true);
+			return (false);
 		}
 		v = v->next;
 	}
@@ -99,7 +118,7 @@ t_variable *copy_variable(t_variable *e)
 	tmp = NULL;
 	while (e)
 	{
-		new = create_variable(e->name, e->value, true);
+		new = create_variable(e->name, e->value, e->exported, e->overwrite);
 		list_push_back((t_abstract_list**)&tmp, (t_abstract_list*)new);
 		e = e->next;
 	}

@@ -89,7 +89,7 @@ char	**get_variables_for_execution(t_variable *assignments)
 
 	while (assignments)
 	{
-		setenv_as(&e, assignments->name, assignments->value);
+		setenv_as(&e, assignments->name, assignments->value, true);
 		assignments = assignments->next;
 	}
 	envp = create_envp(e, size);
