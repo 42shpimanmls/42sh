@@ -25,19 +25,12 @@ void	pre_exec(char **cmd)
 ** Check file exist.
 ** Check user have executable rights on it.
 ** Execute it and exit fork.
-** Else
-** Execute direct given path like /bin/ls
-** Search for executable in PATH paths.
-** then run it.
+** Else: execute path
 ** exit the fork if the no execution because execution stop the fork
 */
 
 void	execute(char **cmd, char **env, char **path)
 {
-	int	i;
-	char	*p_exec;	
-
-	i = -1;
 	if (cmd[0][0] == '.' && cmd[0][1] == '/' && cmd[0][2] != '\0')
 	{
 		cmd[0] = &cmd[0][2];
@@ -49,17 +42,30 @@ void	execute(char **cmd, char **env, char **path)
 			execve(cmd[0], &cmd[0], env);
 	}
 	else
-	{
-		if (path != NULL)
-			while (path[++i] != NULL)
-			{
-				p_exec = ft_strjoinf(path[i], ft_strjoin("/", cmd[0]), 2);
-				exec_if_perm_ok(p_exec, cmd, env);
-				ft_strdel(&p_exec);
-			}
-		exec_if_perm_ok(cmd[0], cmd, env);
-	}
+		execute_path(cmd, env, path);
 	error_message(cmd[0], "no such command", "exit");
+}
+
+/*
+** Search for executable in PATH paths.
+** then run it.
+** Execute direct given path like /bin/ls
+*/
+
+void	execute_path(char **cmd, char **env, char **path)
+{
+	int	i;
+	char	*p_exec;
+
+	i = -1;
+	if (path != NULL)
+		while (path[++i] != NULL)
+		{
+			p_exec = ft_strjoinf(path[i], ft_strjoin("/", cmd[0]), 2);
+			exec_if_perm_ok(p_exec, cmd, env);
+			ft_strdel(&p_exec);
+		}
+	exec_if_perm_ok(cmd[0], cmd, env);
 }
 
 /*
