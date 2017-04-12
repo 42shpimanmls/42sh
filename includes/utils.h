@@ -31,5 +31,7 @@ void						fatal_error(char const *str);
 t_uchar						get_last_exit_status(void);
 void						set_last_exit_status(t_uchar status);
 void						wait_for_childs();
+char						*get_options_core(int ac, char **av);
+bool						is_an_argument(char *arg);
 
 #endif

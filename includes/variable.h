@@ -10,6 +10,8 @@ typedef struct			s_variable
 	char				*value;
 	bool				exported;
 	bool				overwrite;
+	bool				is_variable;
+	bool				is_function;
 }						t_variable;
 
 char					*get_variable(char *var);
@@ -18,7 +20,7 @@ void					display_variables(bool only_exported);
 char					**get_variables_for_execution(t_variable *assignments);
 
 t_variable				*create_variable(char const *name, char const *value,
-											bool exported, bool overwrite);
+											bool exported);
 void					delete_variable(t_variable **var);
 void					delete_all_variables(t_variable **var);
 t_variable 				*copy_variable(t_variable *e);
@@ -29,5 +31,7 @@ bool					variable_is_overwritable(t_variable *v, char *name);
 void					free_variable(t_variable *list);
 int						pop_variable_by_name(t_variable **list, char *name);
 bool					set_variable_for_export(t_variable *v, char *name);
+bool					is_a_variable(t_variable *v, char *name);
+bool					is_a_function(t_variable *v, char *name);
 
 #endif
