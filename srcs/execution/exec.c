@@ -1,6 +1,7 @@
 #include "libft.h"
 #include "shell_env.h"
 #include "exec.h"
+#include "tabenv.h"
 #include <unistd.h>
 #include <paths.h>
 
@@ -12,18 +13,18 @@
 ** free memory
 */
 
-void	pre_exec(char **cmd)
+void	pre_exec(t_simple_command *cmd)
 {
 	char	*spath;
 	char	**path;
 	char	**env;
 
-	env = get_variables_for_execution(get_shell_env()->variables);
-	if ((spath = get_variable("PATH")) == NULL)
+	env = get_variables_for_execution(cmd->assignments);
+	if ((spath = ft_strdup(get_tenv(env, "PATH"))) == NULL)
 		spath = ft_strdup(_PATH_DEFPATH);
 	path = ft_strsplit(spath, ':');
 	ft_strdel(&spath);
-	execute(cmd, env, path);
+	execute(cmd->argv, env, path);
 	ft_freetabchar(path);
 	ft_freetabchar(env);
 }
