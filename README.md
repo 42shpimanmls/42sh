@@ -5,14 +5,14 @@
 FEATURES
 ---
 
-- [ ] Edition de ligne
-	- [ ] Editer la ligne à l’endroit où se trouve le curseur.
+- [ ] Édition de ligne
+	- [ ] Éditer la ligne à l’endroit où se trouve le curseur.
 	- [ ] Déplacer le curseur vers la gauche et vers la droite.
-	- [ ] Les fleches du haut et du bas pour naviguer dans l’historique.
+	- [ ] Les flèches du haut et du bas pour naviguer dans l’historique.
 	- [ ] Couper, copier et/ou coller tout ou partie d’une ligne.
 	- [ ] Se déplacer par "mot" vers la gauche et vers la droite.
 	- [ ] Aller directement au début et à la fin d’une ligne.
-	- [ ] Ecrire ET éditer une commande sur plusieurs lignes.
+	- [ ] Écrire ET éditer une commande sur plusieurs lignes.
 	- [ ] Saut d’une ligne à l’autre.
 	- [ ] Retour à la ligne partie parenthésée de la commande non refermée.
 	- [ ] ctrl+D et ctrl+C dans l’édition de la ligne.
@@ -29,7 +29,7 @@ FEATURES
 	- [ ] export [-p] name[=word]...
 	- [ ] history
 
-- [ ] Execution
+- [ ] Exécution
 	- [ ] Exécution de commandes avec leurs paramètres et gestion du PATH.
 	- [ ] Gestion des erreurs et de la valeur de retour des commandes.
 	- [ ] Les redirection suivantes : ">", ">>", "<".
