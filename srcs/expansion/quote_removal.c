@@ -13,33 +13,23 @@ void	print_lstr(t_string *l_str)
 	ft_putchar('\n');
 }
 
-/*
-**	removes backslash if not quoted
-**	or if quoted but quotes a quote
-*/
-
 static void	remove_backslash(t_string **l_addr, t_string **l_str, \
 								bool *quoted, size_t *pos)
 {
-	if ((quoted[0] && (*l_str)->next && (*l_str)->next->c == '\'') \
-		|| (quoted[1] && (*l_str)->next && (*l_str)->next->c == '\"'))
+
+	if (!quoted[0] && (quoted[1] && (*l_str)->next && (*l_str)->next->c == '\"'))
 	{
 		*l_str = (*l_str)->next;
 		list_pop_at_pos(*pos, (t_abstract_list **)l_addr);
 	}
 	else if (!quoted[0] && !quoted[1])
 	{
-		*l_str = (*l_str)->next;
 		list_pop_at_pos(*pos, (t_abstract_list **)l_addr);
-		(*pos)--;
+		*l_str = (*l_str)->next;
 	}
 }
 
-/*
-**	removes single or double quote if unquoted
-*/
-
-static void	remove_quote(t_string **l_addr, bool *quoted, size_t *pos, char c)
+static void	remove_quote(t_string **l_addr, char c, bool *quoted, size_t *pos)
 {
 	size_t			i;
 	char const		*quotes;
@@ -70,22 +60,38 @@ static void	remove_quotes(t_string **l_addr)
 			if (l_str->c == '\\')
 				remove_backslash(l_addr, &l_str, quoted, &pos);
 			else
-				remove_quote(l_addr, quoted, &pos, l_str->c);
+				remove_quote(l_addr, l_str->c, quoted, &pos);
 		}
 		pos++;
 		l_str = l_str->next;
 	}
 }
 
-char	*quote_removal(char *str)
+static bool	has_quotes(char *str)
+{
+	while (*str)
+	{
+		if (is_quote(*str))
+			return (true);
+		str++;
+	}
+	return (false);
+}
+
+void	quote_removal(char **word)
 {
 	t_string		*l_str;
-	char	*result;
 
-	l_str = str_to_list(str);
-	remove_quotes(&l_str);
-	result = get_string_from_list(l_str);
-	ft_printf("after quote removal: %s\n", result);
-	free_string(l_str);
-	return (result);
+	// check as it is a heavy operation to convert to list, etc.
+	if (has_quotes(*word))
+	{
+		ft_printf("before quote removal: %s\n", *word);
+		// maybe not very optimal (malloc strlen times) but easier to use list...
+		l_str = str_to_list(*word);
+		remove_quotes(&l_str);
+		ft_strdel(word);
+		*word = get_string_from_list(l_str);
+		ft_printf("after quote removal: %s\n", *word);
+		free_string(l_str);
+	}
 }

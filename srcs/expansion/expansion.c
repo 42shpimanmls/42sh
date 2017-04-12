@@ -61,12 +61,10 @@ static t_strlist	*expand_cmd_word(char const *word)
 		it = result;
 		while (it != NULL)
 		{
-			str = ft_strdup(it->str);
 			/*str = pathname_expansion(it->str);
 			free(it->str);
 			*/
-			it->str = quote_removal(str);
-			/*free(str);*/
+			quote_removal(&it->str);
 			it = it->next;
 		}
 	}
