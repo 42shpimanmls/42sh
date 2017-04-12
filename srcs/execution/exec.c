@@ -30,7 +30,7 @@ void	pre_exec(char **cmd)
 ** else if contains '/':
 ** Execute direct given path like '/bin/ls' or './42sh'
 ** exit the fork if the no execution because execution stop the fork
-** if found nothing: trow a message
+** if found nothing: throw a message
 */
 
 void	execute(char **cmd, char **env, char **path)
@@ -48,7 +48,7 @@ void	execute(char **cmd, char **env, char **path)
 		}
 	if (ft_strchr(cmd[0], '/') != NULL)
 		exec_if_perm_ok(cmd[0], cmd, env);
-	error_message(cmd[0], "no such command", "exit");
+	error_message(cmd[0], "no such command", true);
 }
 
 /*
@@ -66,18 +66,13 @@ void	exec_if_perm_ok(char *path, char **cmd, char **env)
 		if (access(path, X_OK) != -1)
 			execve(path, &cmd[0], env);
 		else
-			error_message(path, "no rights to execute it", "exit");
+			error_message(path, "no rights to execute it", true);
 	}
 }
 
-void    error_message(char *one, char *two, char *three)
+void    error_message(char *one, char *two, bool exite)
 {
-	if (three == NULL || ft_strcmp(three, "exit") == 0)
-	{
-		ft_dprintf(2, ">%s: %s: %s.\n", SHNAME, one, two);
-		if (three != NULL && ft_strcmp(three, "exit") == 0)
-			exit(0);
-	}
-	else
-		ft_dprintf(2, ">%s: %s: %s: %s.\n", SHNAME, one, two, three);
+	ft_dprintf(2, ">%s: %s: %s.\n", SHNAME, one, two);
+	if (exite == true)
+		exit(0);
 }
