@@ -25,38 +25,15 @@ void	pre_exec(char **cmd)
 }
 
 /*
-** If local executable:
-** Check file exist.
-** Check user have executable rights on it.
-** Execute it and exit fork.
-** Else: execute path
+** Search for executable in PATH paths.
+** if found, execute it.
+** else if contains '/':
+** Execute direct given path like '/bin/ls' or './42sh'
 ** exit the fork if the no execution because execution stop the fork
+** if found nothing: trow a message
 */
 
 void	execute(char **cmd, char **env, char **path)
-{
-	if (cmd[0][0] == '.' && cmd[0][1] == '/' && cmd[0][2] != '\0')
-	{
-		cmd[0] = &cmd[0][2];
-		if (access(cmd[0], F_OK) == -1)
-			error_message(cmd[0], "no such executable", "exit");
-		else if (access(cmd[0], X_OK) == -1)
-			error_message(cmd[0], "no rights to execute it", "exit");
-		else
-			execve(cmd[0], &cmd[0], env);
-	}
-	else
-		execute_path(cmd, env, path);
-	error_message(cmd[0], "no such command", "exit");
-}
-
-/*
-** Search for executable in PATH paths.
-** then run it.
-** Execute direct given path like /bin/ls
-*/
-
-void	execute_path(char **cmd, char **env, char **path)
 {
 	int	i;
 	char	*p_exec;
@@ -71,11 +48,14 @@ void	execute_path(char **cmd, char **env, char **path)
 		}
 	if (ft_strchr(cmd[0], '/') != NULL)
 		exec_if_perm_ok(cmd[0], cmd, env);
+	error_message(cmd[0], "no such command", "exit");
 }
 
 /*
+** Check file exist.
 ** Check permissions and executions rights on the file.
 ** If it's ok, execute it.
+** Execute it and exit fork.
 ** Else: error message
 */
 
