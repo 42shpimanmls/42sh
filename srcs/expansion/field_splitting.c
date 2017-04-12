@@ -77,6 +77,7 @@ void field_splitting(t_strlist **l_addr)
 					ft_putendl("FIELD ADDED");
 				#endif
 			}
+			ft_strdel(&tmp);
 			list_pop_at_pos(to_del, (t_abstract_list **)l_addr);
 		}
 		pos++;
