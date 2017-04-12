@@ -83,6 +83,7 @@ static bool	has_quotes(char *str)
 void	quote_removal(char **word)
 {
 	t_string		*l_str;
+	char			*tmp;
 
 	// check as it is a heavy operation to convert to list, etc.
 	if (has_quotes(*word))
@@ -94,7 +95,8 @@ void	quote_removal(char **word)
 		l_str = str_to_list(*word);
 		remove_quotes(&l_str);
 		ft_strdel(word);
-		*word = get_string_from_list(l_str);
+		tmp = get_string_from_list(l_str);
+		*word = ft_strtrim(tmp);
 		#ifdef EXPANSION_DEBUG
 			ft_printf("after quote removal: %s\n", *word);
 		#endif
