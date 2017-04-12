@@ -20,7 +20,7 @@ static void	init_variables_list(t_shell_env *shell_env)
 		if (line && ft_tablen(line) == 2 &&
 			ft_strlen(line[0]) > 0 && ft_strlen(line[1]) > 0)
 		{
-			var = create_variable(line[0], line[1], true, true);
+			var = create_variable(line[0], line[1], true);
 			list_push_back((t_abstract_list**)&shell_env->variables\
 				, (t_abstract_list*)var);
 		}

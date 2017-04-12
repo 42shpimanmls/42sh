@@ -3,7 +3,7 @@
 #include "abstract_list.h"
 
 t_variable	*create_variable(char const *name, char const *value,
-	bool exported, bool overwrite)
+	bool exported)
 {
 	t_variable *v;
 
@@ -11,9 +11,41 @@ t_variable	*create_variable(char const *name, char const *value,
 	v->name = ft_strdup(name);
 	v->value = ft_strdup(value);
 	v->exported = exported;
-	v->overwrite = overwrite;
+	v->overwrite = true;
+	v->is_variable = true;
+	v->is_function = false;
 	v->next = NULL;
 	return (v);
+}
+
+bool		is_a_variable(t_variable *v, char *name)
+{
+	while (v)
+	{
+		if (!ft_strcmp(v->name, name))
+		{
+			if (v->is_variable)
+				return (true);
+			return (false);
+		}
+		v = v->next;
+	}
+	return (false);
+}
+
+bool		is_a_function(t_variable *v, char *name)
+{
+	while (v)
+	{
+		if (!ft_strcmp(v->name, name))
+		{
+			if (v->is_function)
+				return (true);
+			return (false);
+		}
+		v = v->next;
+	}
+	return (false);
 }
 
 void		print_variable(t_variable *v)
@@ -22,10 +54,15 @@ void		print_variable(t_variable *v)
 	{
 		ft_printf("Name: \"%s\"	", v->name);
 		ft_printf("Value: \"%s\"	", v->value);
+		if (v->is_variable)
+			ft_printf("VARIABLE	");
+		if (v->is_function)
+			ft_printf("FUNCTION	");
 		if (v->exported)
-			ft_printf("FOR EXPORT\n");
+			ft_printf("FOR EXPORT	");
 		if (v->overwrite)
-			ft_printf("OVERWRITE\n");
+			ft_printf("OVERWRITE	");
+		ft_printf("\n");
 		v = v->next;
 	}
 }
@@ -118,7 +155,7 @@ t_variable *copy_variable(t_variable *e)
 	tmp = NULL;
 	while (e)
 	{
-		new = create_variable(e->name, e->value, e->exported, e->overwrite);
+		new = create_variable(e->name, e->value, e->exported);
 		list_push_back((t_abstract_list**)&tmp, (t_abstract_list*)new);
 		e = e->next;
 	}

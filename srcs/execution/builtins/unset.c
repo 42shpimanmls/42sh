@@ -4,11 +4,7 @@
 # include "init/init.h"
 # include "utils.h"
 
-# define USAGE 			"Usage: unset [-fv] name...\n"
-
-// -v check no delete on overwrite, is a variable
-// -f check if a fonction and delete
-// nothing delete.
+# define USAGE	"Usage: unset [-fv] name...\n"
 
 int				unset_as(t_variable **env, char *name)
 {
@@ -22,33 +18,79 @@ int				unset_as(t_variable **env, char *name)
 	return (STATUS_FAILURE);
 }
 
+/*
+** If neither -f nor -v is specified, name refers to a variable;
+** if a variable by that name does not exist,
+** it is unspecified whether a function by that name, if any, shall be unset.
+*/
+
+static void 	unset_classic(t_variable **env, char **argv)
+{
+	size_t	i;
+
+	i = 0;
+	while (argv[++i])
+	{
+		if (!is_an_argument(argv[i]))
+			unset_as(env, argv[i]);
+	}
+}
+
+/*
+** If -f is specified, name refers to a function
+** and the shell shall unset the function definition.
+*/
+
+static void 	unset_option_f(t_variable **env, char **argv)
+{
+	size_t	i;
+
+	i = 0;
+	while (argv[++i])
+	{
+		if (!is_an_argument(argv[i]) && is_a_function(*env, argv[i]))
+		{
+			unset_as(env, argv[i]);
+		}
+	}
+}
+
+/*
+** If -v is specified, name refers to a variable name
+** and the shell shall unset it and remove it from the environment.
+** Read-only variables cannot be unset.
+*/
+
+static void		unset_option_v(t_variable **env, char **argv)
+{
+	size_t	i;
+
+	i = 0;
+	while (argv[++i])
+	{
+		if (!is_an_argument(argv[i]) && is_a_variable(*env, argv[i]))
+		{
+			if (variable_is_overwritable(*env, argv[i]))
+				unset_as(env, argv[i]);
+		}
+	}
+}
+
 BUILTIN_RET		builtin_unset(BUILTIN_ARGS)
 {
 	t_variable	**env;
 	char		*opt;
-	size_t		i;
 
 	env = &get_shell_env()->variables;
 	opt = get_options_core(argc, argv);
-
 	if (argc > 1)
 	{
-		if (ft_strchr(opt, 'v'))
-		{
-
-		}
-		else if (ft_strchr(opt, 'f'))
-		{
-
-		}
+		if (ft_strchr(opt, 'f'))
+			unset_option_f(env, argv);
+		else if (ft_strchr(opt, 'v'))
+			unset_option_v(env, argv);
 		else
-		{
-			i = 0;
-			while (argv[++i])
-			{
-				unset_as(env, argv[i]);
-			}
-		}
+			unset_classic(env, argv);
 	}
 	else
 	{

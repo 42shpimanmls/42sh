@@ -18,5 +18,5 @@ void			set_variable(char const *var, char const *val)
 			break ;
 		env = env->next;
 	}
-	env->next = create_variable(var, val, false, true);
+	env->next = create_variable(var, val, false);
 }
