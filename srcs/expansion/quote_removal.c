@@ -2,6 +2,7 @@
 #include "abstract_list.h"
 #include "utils.h"
 #include "break_input/quoting.h"
+#include "expansion.h"
 
 void	print_lstr(t_string *l_str)
 {
@@ -85,13 +86,17 @@ void	quote_removal(char **word)
 	// check as it is a heavy operation to convert to list, etc.
 	if (has_quotes(*word))
 	{
-		ft_printf("before quote removal: %s\n", *word);
+		#ifdef EXPANSION_DEBUG
+			ft_printf("before quote removal: %s\n", *word);
+		#endif
 		// maybe not very optimal (malloc strlen times) but easier to use list...
 		l_str = str_to_list(*word);
 		remove_quotes(&l_str);
 		ft_strdel(word);
 		*word = get_string_from_list(l_str);
-		ft_printf("after quote removal: %s\n", *word);
+		#ifdef EXPANSION_DEBUG
+			ft_printf("after quote removal: %s\n", *word);
+		#endif
 		free_string(l_str);
 	}
 }
