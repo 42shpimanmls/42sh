@@ -5,7 +5,11 @@
 #include <paths.h>
 
 /*
-** Retrieve env vars and PATH
+** Retrieve env vars
+** retrieve PATH
+** if PATH not assign: use default value '/bin:/usr/bin'
+** execute
+** free memory
 */
 
 void	pre_exec(char **cmd)
@@ -13,7 +17,7 @@ void	pre_exec(char **cmd)
 	char	*spath;
 	char	**path;
 	char	**env;
- 
+
 	env = get_variables_for_execution(get_shell_env()->variables);
 	if ((spath = get_variable("PATH")) == NULL)
 		spath = ft_strdup(_PATH_DEFPATH);
@@ -39,15 +43,15 @@ void	execute(char **cmd, char **env, char **path)
 	char	*p_exec;
 
 	i = -1;
-	if (path != NULL)
+	if (ft_strchr(cmd[0], '/') != NULL)
+		exec_if_perm_ok(cmd[0], cmd, env);
+	else if (path != NULL)
 		while (path[++i] != NULL)
 		{
 			p_exec = ft_strjoinf(path[i], ft_strjoin("/", cmd[0]), 2);
 			exec_if_perm_ok(p_exec, cmd, env);
 			ft_strdel(&p_exec);
 		}
-	if (ft_strchr(cmd[0], '/') != NULL)
-		exec_if_perm_ok(cmd[0], cmd, env);
 	error_message(cmd[0], "no such command", 127);
 }
 
