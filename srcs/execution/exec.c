@@ -48,7 +48,7 @@ void	execute(char **cmd, char **env, char **path)
 		}
 	if (ft_strchr(cmd[0], '/') != NULL)
 		exec_if_perm_ok(cmd[0], cmd, env);
-	error_message(cmd[0], "no such command", true);
+	error_message(cmd[0], "no such command", 127);
 }
 
 /*
@@ -66,13 +66,12 @@ void	exec_if_perm_ok(char *path, char **cmd, char **env)
 		if (access(path, X_OK) != -1)
 			execve(path, &cmd[0], env);
 		else
-			error_message(path, "no rights to execute it", true);
+			error_message(path, "no rights to execute it", 126);
 	}
 }
 
-void    error_message(char *one, char *two, bool exite)
+void    error_message(char *one, char *two, int ret)
 {
 	ft_dprintf(2, ">%s: %s: %s.\n", SHNAME, one, two);
-	if (exite == true)
-		exit(0);
+	exit(ret);
 }
