@@ -6,13 +6,13 @@ FEATURES
 ---
 
 - [ ] Édition de ligne
-	- [ ] Éditer la ligne à l’endroit où se trouve le curseur.
-	- [ ] Déplacer le curseur vers la gauche et vers la droite.
-	- [ ] Les flèches du haut et du bas pour naviguer dans l’historique.
-	- [ ] Couper, copier et/ou coller tout ou partie d’une ligne.
-	- [ ] Se déplacer par "mot" vers la gauche et vers la droite.
-	- [ ] Aller directement au début et à la fin d’une ligne.
-	- [ ] Écrire ET éditer une commande sur plusieurs lignes.
+	- [x] Éditer la ligne à l’endroit où se trouve le curseur.
+	- [x] Déplacer le curseur vers la gauche et vers la droite.
+	- [x] Les flèches du haut et du bas pour naviguer dans l’historique.
+	- [x] Couper, copier et/ou coller tout ou partie d’une ligne.
+	- [x] Se déplacer par "mot" vers la gauche et vers la droite.
+	- [x] Aller directement au début et à la fin d’une ligne.
+	- [x] Écrire ET éditer une commande sur plusieurs lignes.
 	- [ ] Saut d’une ligne à l’autre.
 	- [ ] Retour à la ligne partie parenthésée de la commande non refermée.
 	- [ ] ctrl+D et ctrl+C dans l’édition de la ligne.
@@ -23,8 +23,8 @@ FEATURES
 	- [ ] echo [string...]
 	- [ ] exit [n]
 	- [ ] env [-i] [name=value]... [utility [argument...]]
-	- [ ] Setenv
-	- [ ] Unsetenv
+	- [x] Setenv
+	- [x] Unsetenv
 	- [ ] unset [-fv] name...
 	- [ ] export [-p] name[=word]...
 	- [ ] history
