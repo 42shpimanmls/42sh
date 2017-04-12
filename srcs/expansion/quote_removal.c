@@ -18,7 +18,8 @@ static void	remove_backslash(t_string **l_addr, t_string **l_str, \
 								bool *quoted, size_t *pos)
 {
 
-	if (!quoted[0] && (quoted[1] && (*l_str)->next && (*l_str)->next->c == '\"'))
+	if (!quoted[0] && (quoted[1] && (*l_str)->next && ((*l_str)->next->c == '\"' \
+		|| (*l_str)->next->c == '\\')))
 	{
 		*l_str = (*l_str)->next;
 		list_pop_at_pos(*pos, (t_abstract_list **)l_addr);
