@@ -19,7 +19,7 @@ void 			export_classic(t_variable **env, char **argv, char *opt)
 		if (!is_an_argument(argv[i]) && ft_strchr(argv[i], '='))
 		{
 			tab = ft_strsplit(argv[i], '=');
-			if (ft_tablen(tab) >= 2)
+			if (ft_tablen(tab) >= 1)
 			{
 				setenv_as(env, tab[0], tab[1], true);
 				if (ft_strchr(opt, 'p'))
@@ -46,7 +46,7 @@ BUILTIN_RET		builtin_export(BUILTIN_ARGS)
 
 	if (argc == 1)
 	{
-		display_variables(false);
+		display_variables(true);
 	}
 	else if (argc >= 2)
 	{
