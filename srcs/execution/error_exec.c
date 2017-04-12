@@ -1,10 +1,10 @@
 #include <libft.h>
 
-#define	NSIG 31
+#define	N_MAX_SIG 31
 
 char const *get_signal_error(int signum)
 {
-	static char *defs[NSIG + 1] =
+	static char *defs[N_MAX_SIG + 1] =
 	{
 	//DESCRIPTION					
 	"None"									,
@@ -41,10 +41,9 @@ char const *get_signal_error(int signum)
 	"Bad system call."						
 	};
 
-	if (signum >= 0 && signum <= NSIG)
+	if (signum >= 0 && signum <= N_MAX_SIG)
 	{
 		return (defs[signum]);
-		// ft_printf("Finished signal -%d --%s\n", signum, defs[signum]);
 	}
 	return ("");
 }
