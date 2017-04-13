@@ -30,7 +30,8 @@ static void					add_passive_string(t_strlist **strlist_addr
 	char	*tmp;
 
 	tmp = strdup_until(start, end);
-	strlist_append(strlist_addr, tmp, false);
+	if (tmp && *tmp)
+		strlist_append(strlist_addr, tmp, false);
 	free(tmp);
 }
 
@@ -108,7 +109,7 @@ static void					add_substitution(t_strlist **strlist_addr
 
 case double-quoted => substitution but no field splitting
 (sh $ "`ls`" != sh $ `ls`)
-
+*/
 static void 				handle_quotes(char const **word, char *quoted)
 {
 	if (**word == '\\')
@@ -128,7 +129,7 @@ static void 				handle_quotes(char const **word, char *quoted)
 			*quoted |= IS_QU_DOUBLE;
 	}
 }
-*/
+
 
 static t_strlist			*split_subsitutions(char const *word)
 {
@@ -142,10 +143,10 @@ static t_strlist			*split_subsitutions(char const *word)
 	result = NULL;
 	while (*word != '\0')
 	{
-		/*
 		if (is_quote(*word))
-			handle_quotes(&word, &quoted);*/
-		if (is_substitution_start(word))
+			handle_quotes(&word, &quoted);
+		if (is_substitution_start(word) && \
+			(!(quoted & IS_QU_SIMPLE) || (quoted & IS_QU_DOUBLE)))
 		{
 			if (passv_str_start != NULL)
 				add_passive_string(&result, passv_str_start, word - 1);
