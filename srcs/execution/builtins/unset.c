@@ -84,8 +84,9 @@ BUILTIN_RET		builtin_unset(BUILTIN_ARGS)
 	char		*opt;
 
 	env = &get_shell_env()->variables;
-	opt = get_options_core(argc, argv);
-	if (argc > 1)
+	if ((opt = get_options_core(argc, argv)) == (char *)-1)
+		return (STATUS_FAILURE);
+	if (argc > 1 && check_only_allowed_option(opt, "fv"))
 	{
 		if (ft_strchr(opt, 'f'))
 			unset_option_f(env, argv);
@@ -97,6 +98,7 @@ BUILTIN_RET		builtin_unset(BUILTIN_ARGS)
 	else
 	{
 		ft_dprintf(STDERR_FILENO, USAGE);
+		free(opt);
 		return (STATUS_FAILURE);
 	}
 	free(opt);
