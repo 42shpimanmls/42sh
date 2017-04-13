@@ -100,33 +100,6 @@ static void					add_substitution(t_strlist **strlist_addr
 	free(argv[2]);
 }
 
-
-/*
-
-case double-quoted => substitution but no field splitting
-(sh $ "`ls`" != sh $ `ls`)
-*/
-static void 				handle_quotes(char const **word, char *quoted)
-{
-	// if (**word == '\\')
-	// 	;
-	if (**word == '\'')
-	{
-		if (*quoted & IS_QU_SIMPLE)
-			*quoted -= IS_QU_SIMPLE;
-		else
-			*quoted |= IS_QU_SIMPLE;
-	}
-	else if (**word == '\"')
-	{
-		if (*quoted & IS_QU_DOUBLE)
-			*quoted -= IS_QU_DOUBLE;
-		else
-			*quoted |= IS_QU_DOUBLE;
-	}
-}
-
-
 static t_strlist			*split_subsitutions(char const *word)
 {
 	char const	*passv_str_start;
@@ -140,7 +113,7 @@ static t_strlist			*split_subsitutions(char const *word)
 	while (*word != '\0')
 	{
 		if (is_quote(*word))
-			handle_quotes(&word, &quoted);
+			handle_quotes(*word, &quoted);
 		if (is_substitution_start(word) && \
 			(!(quoted & IS_QU_SIMPLE) || (quoted & IS_QU_DOUBLE)))
 		{
