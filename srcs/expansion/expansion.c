@@ -43,7 +43,7 @@ the result is unspecified.
 static t_strlist	*expand_cmd_word(char const *word)
 {
 	t_strlist	*result;
-	// char		*str;
+	char		*str;
 	t_strlist	*it;
 	//char		*tmp;
 
@@ -55,9 +55,9 @@ static t_strlist	*expand_cmd_word(char const *word)
 		str = parameter_expansion(str);
 		free(tmp);
 		tmp = str;*/
-		result = command_substition(word);
-		field_splitting(&result);
-		// free(str);
+		str = command_substition(word);
+		result = field_splitting(str);
+		free(str);
 		it = result;
 		while (it != NULL)
 		{

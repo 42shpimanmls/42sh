@@ -10,8 +10,8 @@ typedef struct		s_strlist
 	bool				to_split;
 }					t_strlist;
 
-t_strlist			*strlist_construct(char const *str, bool to_split);
+t_strlist			*strlist_construct(char const *str);
 char				**strlist_to_strarray(t_strlist const *list);
 void				strlist_delete(t_strlist **strlist_addr);
-void				strlist_append(t_strlist **strlist_addr , char const *str, bool to_split);
+void				strlist_append(t_strlist **strlist_addr , char const *str);
 #endif

@@ -30,49 +30,45 @@ static void					add_passive_string(t_strlist **strlist_addr
 	char	*tmp;
 
 	tmp = strdup_until(start, end);
-	if (tmp && *tmp)
-		strlist_append(strlist_addr, tmp, false);
+	strlist_append(strlist_addr, tmp);
 	free(tmp);
 }
 
-static t_strlist					*fd_to_str(int fd, char quoted)
+static char					*fd_to_str(int fd)
 {
 	size_t const	bufsz = 4096;
 	char			buffer[bufsz];
 	t_strlist		*list;
 	int				ret;
-	// char			*result;
+	char			*result;
 
 	list = NULL;
 	while ((ret = read(fd, buffer, bufsz - 1)) > 0)
 	{
 		buffer[ret] = '\0';
-		if (quoted & IS_QU_DOUBLE)
-			strlist_append(&list, buffer, false);
-		else
-			strlist_append(&list, buffer, true);
+		strlist_append(&list, buffer);
 	}
-	// result = strlist_to_str(list);
-	// strlist_delete(&list);
-	return (list);
+	result = strlist_to_str(list);
+	strlist_delete(&list);
+	return (result);
 }
 
-// static void					rm_trailing_newlines(char *str)
-// {
-// 	size_t	len;
-// 	len = ft_strlen(str);
-// 	while (len-- > 0 && str[len] == '\n')
-// 		str[len] = '\0';
-// }
+static void					rm_trailing_newlines(char *str)
+{
+	size_t	len;
+	len = ft_strlen(str);
+	while (len-- > 0 && str[len] == '\n')
+		str[len] = '\0';
+}
 
 static void					add_substitution(t_strlist **strlist_addr
-										, char const *start, char const *end, char quoted)
+										, char const *start, char const *end)
 {
 	int					pipefds[2];
 	char				**argv;
 	extern char			**environ;
 	char				**environ_backup;
-	t_strlist			*tmp;
+	char				*tmp;
 
 	argv = (char*[]){ft_strdup(get_shell_env()->path_to_42sh), "-c"
 											, strdup_until(start, end), NULL};
@@ -91,11 +87,11 @@ static void					add_substitution(t_strlist **strlist_addr
 	{
 
 		close(pipefds[1]);
-		tmp = fd_to_str(pipefds[0], quoted);
-		// rm_trailing_newlines(tmp);
-		list_concat((t_abstract_list**)strlist_addr, (t_abstract_list*)tmp);
-		// strlist_append(strlist_addr, tmp, true);
-		// free(tmp);
+		tmp = fd_to_str(pipefds[0]);
+
+		rm_trailing_newlines(tmp);
+		strlist_append(strlist_addr, tmp);
+		free(tmp);
 		wait_for_childs();
 	}
 	ft_freetabchar(environ);
@@ -112,9 +108,9 @@ case double-quoted => substitution but no field splitting
 */
 static void 				handle_quotes(char const **word, char *quoted)
 {
-	if (**word == '\\')
-		*word += 2;
-	else if (**word == '\'')
+	// if (**word == '\\')
+	// 	;
+	if (**word == '\'')
 	{
 		if (*quoted & IS_QU_SIMPLE)
 			*quoted -= IS_QU_SIMPLE;
@@ -149,15 +145,16 @@ static t_strlist			*split_subsitutions(char const *word)
 			(!(quoted & IS_QU_SIMPLE) || (quoted & IS_QU_DOUBLE)))
 		{
 			if (passv_str_start != NULL)
-				add_passive_string(&result, passv_str_start, word - 1);
+				add_passive_string(&result, passv_str_start, word);
 			subst_end = find_substitution_end(word + 1);
 			if (get_error() != NO_ERROR)
 				// same as quotes - go back to read_input
 				fatal_error("substitution end not found in split_subsitutions(), a substitution hasn't been correctly recognized before being expanded");
-			add_substitution(&result, word + 1, subst_end, quoted);
+			add_substitution(&result, word + 1, subst_end);
 			if (get_error() != NO_ERROR)
 				fatal_error("error in add_substitution() in split_subsitutions()");
 			word = subst_end + 1;
+			passv_str_start = word;
 		}
 		else
 		{
@@ -171,13 +168,13 @@ static t_strlist			*split_subsitutions(char const *word)
 	return (result);
 }
 
-t_strlist						*command_substition(char const *word)
+char						*command_substition(char const *word)
 {
 	t_strlist	*strlist;
-	// char		*result;
+	char		*result;
 
 	strlist = split_subsitutions(word);
-	// result = strlist_to_str(strlist);
-	// strlist_delete(&strlist);
-	return (strlist);
+	result = strlist_to_str(strlist);
+	strlist_delete(&strlist);
+	return (result);
 }

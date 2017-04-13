@@ -2,13 +2,12 @@
 #include <libft.h>
 #include "abstract_list.h"
 
-t_strlist			*strlist_construct(char const *str, bool to_split)
+t_strlist			*strlist_construct(char const *str)
 {
 	t_strlist	*result;
 
 	result = memalloc_or_die(sizeof(t_strlist));
 	result->str = ft_strdup(str);
-	result->to_split = to_split;
 	result->next = NULL;
 	return (result);
 }
@@ -48,12 +47,12 @@ void				strlist_delete(t_strlist **strlist_addr)
 	*strlist_addr = NULL;
 }
 
-void				strlist_append(t_strlist **strlist_addr , char const *str, bool to_split)
+void				strlist_append(t_strlist **strlist_addr , char const *str)
 {
 	t_strlist	*it;
 	t_strlist	*new_elem;
 
-	new_elem = strlist_construct(str, to_split);
+	new_elem = strlist_construct(str);
 	if (*strlist_addr == NULL)
 	{
 		*strlist_addr = new_elem;

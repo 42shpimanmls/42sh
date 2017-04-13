@@ -89,7 +89,7 @@ void	quote_removal(char **word)
 	if (has_quotes(*word))
 	{
 		#ifdef EXPANSION_DEBUG
-			ft_printf("before quote removal: %s\n", *word);
+			ft_dprintf(2, "before quote removal: %s\n", *word);
 		#endif
 		// maybe not very optimal (malloc strlen times) but easier to use list...
 		l_str = str_to_list(*word);
@@ -98,7 +98,7 @@ void	quote_removal(char **word)
 		tmp = get_string_from_list(l_str);
 		*word = ft_strtrim(tmp);
 		#ifdef EXPANSION_DEBUG
-			ft_printf("after quote removal: %s\n", *word);
+			ft_dprintf(2, "after quote removal: %s\n", *word);
 		#endif
 		free_string(l_str);
 	}

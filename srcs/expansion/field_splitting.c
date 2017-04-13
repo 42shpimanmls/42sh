@@ -6,31 +6,33 @@
 #include "range.h"
 #include "utils.h"
 #include "abstract_list.h"
+#include "break_input/quoting.h"
 
-
-static void		next_ret_posix_blank(char *word, int *i)
+static void		end_of_quote(char const *word, t_range *delimit)
 {
-	while (word[*i] && (!is_posix_blank(word[*i]) && word[*i] != '\n'))
-		(*i)++;
+	char 	quote;
+
+	quote = *word;
+	delimit->end++;
+	while (word[delimit->end] != quote)
+		delimit->end++;
 }
 
-static void		skip_posix_blanks(char *word, int *i)
+static void		skip_posix_blanks(char const *word, int *i)
 {
 	while (word[*i] && (is_posix_blank(word[*i]) || word[*i] == '\n'))
 		(*i)++;
 }
 
-static void		add_field(char *word, t_strlist **result, t_range *delimit, size_t pos)
+static void		add_field(char const *word, t_strlist **result, t_range *delimit)
 {
 	char		*tmp;
-	t_strlist	*new;
 
 	tmp = ft_strsub(word, delimit->start, delimit->end - delimit->start);
 	#ifdef EXPANSION_DEBUG
 		ft_printf("Adding field, str: %s\n", tmp);
 	#endif
-	new = strlist_construct(tmp, false);
-	list_push_at_pos(pos, (t_abstract_list **)result, (t_abstract_list *)new);
+	strlist_append(result, tmp);
 	// Each occurrence in the input of an IFS character that is not IFS white space,
 	// along with any adjacent IFS white space, shall delimit a field, as described previously.
 	// Non-zero-length IFS white space shall delimit a field
@@ -42,45 +44,26 @@ static void		add_field(char *word, t_strlist **result, t_range *delimit, size_t 
 /*
 **	scan the results of expansions and substitutions
 ** 	that did not occur in double-quotes and split into fields
-**	(marked with the flag "to_split")
 */
 
-// TO DO: double quote handling, white space fields (see comment above)
+// TO DO: white space fields (see comment above)
 
-void field_splitting(t_strlist **l_addr)
+t_strlist *field_splitting(char const *word)
 {
 	t_strlist	*result;
-	char		*tmp;
 	t_range		delimit;
-	size_t		pos;
-	size_t		to_del;
 
-	pos = 0;
-	result = *l_addr;
 	ft_bzero(&delimit, sizeof(t_range));
-	while (result)
+	while (word[delimit.start])
 	{
-		if (result->to_split && result->str != NULL)
+		while (word[delimit.end] && !is_posix_blank(word[delimit.end]) \
+				&& word[delimit.end] != '\n')
 		{
-			to_del = pos;
-			tmp = ft_strtrim(result->str);
-			while (tmp && tmp[delimit.end])
-			{
-				pos++;
-
-				next_ret_posix_blank(tmp, &delimit.end);
-				#ifdef EXPANSION_DEBUG
-					printf("delimit_end: %d\n delimit_start: %d\n", delimit.end, delimit.start);
-				#endif
-				add_field(tmp, l_addr, &delimit, pos);
-				#ifdef EXPANSION_DEBUG
-					ft_putendl("FIELD ADDED");
-				#endif
-			}
-			ft_strdel(&tmp);
-			list_pop_at_pos(to_del, (t_abstract_list **)l_addr);
+			if (is_quote(word[delimit.end]))
+				end_of_quote(&word[delimit.end], &delimit);
+			delimit.end++;
 		}
-		pos++;
-		result = result->next;
+		add_field(word, &result, &delimit);
 	}
+	return (result);
 }
