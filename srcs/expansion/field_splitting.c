@@ -54,7 +54,6 @@ t_strlist *field_splitting(char const *word)
 	t_range		delimit;
 
 	ft_bzero(&delimit, sizeof(t_range));
-	ft_dprintf(2, "<word>%s</word>\n", word);
 	while (word[delimit.start])
 	{
 		while (word[delimit.end] && !is_posix_blank(word[delimit.end]) \
