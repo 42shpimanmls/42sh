@@ -10,15 +10,20 @@ char	*get_options_core(int ac, char **av)
 		return (NULL);
 	arg = NULL;
 	i = 0;
-	while (++i < ac && av[i] && av[i][0] == '-' && av[i][1] != '-')
+	while (++i < ac && av[i])
 	{
-		j = 0;
-		while (av[i][++j])
+		if (av[i][0] == '-' && av[i][1] == '-')
+			break;
+		if (av[i][0] == '-' && av[i][1] != '-')
 		{
-			if (ft_isalpha(av[i][j]))
+			j = 0;
+			while (av[i][++j])
 			{
-				if (!ft_strchr(arg, av[i][j]))
-					arg = ft_strjoinf(arg, ft_strndup(&av[i][j], 1), 3);
+				if (ft_isalpha(av[i][j]))
+				{
+					if (!ft_strchr(arg, av[i][j]))
+						arg = ft_strjoinf(arg, ft_strndup(&av[i][j], 1), 3);
+				}
 			}
 		}
 	}

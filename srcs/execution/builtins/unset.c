@@ -34,7 +34,7 @@ static void 	unset_classic(t_variable **env, char **argv)
 	i = 0;
 	while (argv[++i])
 	{
-		if (!is_an_argument(argv[i]))
+		if (!is_an_option(argv, i))
 			unset_as(env, argv[i]);
 	}
 }
@@ -51,7 +51,7 @@ static void 	unset_option_f(t_variable **env, char **argv)
 	i = 0;
 	while (argv[++i])
 	{
-		if (!is_an_argument(argv[i]) && is_a_function(*env, argv[i]))
+		if (!is_an_option(argv, i) && is_a_function(*env, argv[i]))
 		{
 			unset_as(env, argv[i]);
 		}
@@ -71,7 +71,7 @@ static void		unset_option_v(t_variable **env, char **argv)
 	i = 0;
 	while (argv[++i])
 	{
-		if (!is_an_argument(argv[i]) && is_a_variable(*env, argv[i]))
+		if (!is_an_option(argv, i) && is_a_variable(*env, argv[i]))
 		{
 			unset_as(env, argv[i]);
 		}
