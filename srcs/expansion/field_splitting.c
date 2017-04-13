@@ -30,7 +30,7 @@ static void		add_field(char const *word, t_strlist **result, t_range *delimit)
 
 	tmp = ft_strsub(word, delimit->start, delimit->end - delimit->start);
 	#ifdef EXPANSION_DEBUG
-		ft_printf("Adding field, str: %s\n", tmp);
+		ft_dprintf(2, "Adding field, str: %s\n", tmp);
 	#endif
 	strlist_append(result, tmp);
 	// Each occurrence in the input of an IFS character that is not IFS white space,
@@ -54,6 +54,7 @@ t_strlist *field_splitting(char const *word)
 	t_range		delimit;
 
 	ft_bzero(&delimit, sizeof(t_range));
+	ft_dprintf(2, "<word>%s</word>\n", word);
 	while (word[delimit.start])
 	{
 		while (word[delimit.end] && !is_posix_blank(word[delimit.end]) \

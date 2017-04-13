@@ -57,6 +57,7 @@ static t_strlist	*expand_cmd_word(char const *word)
 		tmp = str;*/
 		str = command_substition(word);
 		result = field_splitting(str);
+
 		free(str);
 		it = result;
 		while (it != NULL)
