@@ -10,9 +10,12 @@ int				unset_as(t_variable **env, char *name)
 {
 	if (env && ft_strlen(name) > 0)
 	{
-		if (pop_variable_by_name(env, name) == STATUS_SUCCESS)
+		if (variable_is_overwritable(*env, name))
 		{
-			return (STATUS_SUCCESS);
+			if (pop_variable_by_name(env, name) == STATUS_SUCCESS)
+			{
+				return (STATUS_SUCCESS);
+			}
 		}
 	}
 	return (STATUS_FAILURE);
@@ -70,8 +73,7 @@ static void		unset_option_v(t_variable **env, char **argv)
 	{
 		if (!is_an_argument(argv[i]) && is_a_variable(*env, argv[i]))
 		{
-			if (variable_is_overwritable(*env, argv[i]))
-				unset_as(env, argv[i]);
+			unset_as(env, argv[i]);
 		}
 	}
 }
@@ -95,6 +97,7 @@ BUILTIN_RET		builtin_unset(BUILTIN_ARGS)
 	else
 	{
 		ft_dprintf(STDERR_FILENO, USAGE);
+		return (STATUS_FAILURE);
 	}
 	free(opt);
 	return (STATUS_SUCCESS);
