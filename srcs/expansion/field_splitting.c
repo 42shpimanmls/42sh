@@ -53,6 +53,7 @@ t_strlist *field_splitting(char const *word)
 	t_strlist	*result;
 	t_range		delimit;
 
+	result = NULL;
 	ft_bzero(&delimit, sizeof(t_range));
 	while (word[delimit.start])
 	{

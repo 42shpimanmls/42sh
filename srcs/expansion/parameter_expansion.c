@@ -36,6 +36,7 @@ static void	replace_by_variable(char **word, char *parameter, t_uint *start)
 
 	replace = get_variable(parameter + 1);
 	*start = find_and_replace(word, parameter, replace, *start);
+	ft_strdel(&replace);
 }
 
 /*
@@ -51,8 +52,9 @@ char		*parameter_expansion(char const *word)
 	char	*parameter;
 
 	result = ft_strdup(word);
+	quoted = 0;
 	ft_bzero(&delimit, sizeof(t_range));
-	while (result && result[delimit.start])
+	while (result && delimit.start < ft_strlen(result))
 	{
 		if (next_dollar_sign(result, &delimit, &quoted))
 		{
@@ -60,6 +62,7 @@ char		*parameter_expansion(char const *word)
 			goto_parameter_end(result, &delimit);
 			parameter = ft_strsub(result, delimit.start, delimit.end - delimit.start);
 			replace_by_variable(&result, parameter, &delimit.start);
+			ft_strdel(&parameter);
 		}
 		else
 			delimit.start++;
