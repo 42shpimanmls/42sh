@@ -44,7 +44,7 @@ void list_push_at_pos(size_t pos, t_abstract_list **list, t_abstract_list *new)
 	}
 }
 
-void list_pop_at_pos(size_t pos, t_abstract_list **list)
+void **list_pop_at_pos(size_t pos, t_abstract_list **list)
 {
 	t_abstract_list	*lst;
 	t_abstract_list	**addr;
@@ -58,11 +58,12 @@ void list_pop_at_pos(size_t pos, t_abstract_list **list)
 		if (i == pos)
 		{
 			*addr = lst->next;
-			free(lst);
-			return ;
+			// free(lst);
+			return((void**)lst);
 		}
 		addr = &(*addr)->next;
 		lst = *addr;
 		i++;
 	}
+	return (NULL);
 }

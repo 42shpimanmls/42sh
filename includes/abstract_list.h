@@ -14,7 +14,7 @@ typedef struct				s_abstract_list
 size_t						list_count(t_abstract_list const *list);
 
 void						list_goto_last(t_abstract_list **list);
-void 						list_pop_at_pos(size_t pos
+void 						**list_pop_at_pos(size_t pos
 							, t_abstract_list **list_addr);
 void						list_push_at_pos(size_t pos
 							, t_abstract_list **list_addr, t_abstract_list *elem);
