@@ -23,17 +23,11 @@ static bool	next_dollar_sign(char const *word, t_range *delimit, char *quoted)
 
 static void	goto_parameter_end(char *word, t_range *delimit)
 {
-	while (word[delimit->end])
-	{
+	delimit->end++;
+	while (word[delimit->end] && word[delimit->end] != '\\' \
+			&& !is_posix_blank(word[delimit->end]) && !is_quote(word[delimit->end]) \
+			&& word[delimit->end] != '$')
 		delimit->end++;
-		if (is_quote(word[delimit->end]) || is_posix_blank(word[delimit->end]))
-		{
-			delimit->end--;
-			break ;
-		}
-	}
-	if (is_posix_blank(word[delimit->end]))
-		delimit->end--;
 }
 
 static void	replace_by_variable(char **word, char *parameter, t_uint *start)
@@ -60,14 +54,15 @@ char		*parameter_expansion(char const *word)
 	ft_bzero(&delimit, sizeof(t_range));
 	while (result && result[delimit.start])
 	{
-		delimit.end = delimit.start;
-		if (next_dollar_sign(word, &delimit, &quoted))
+		if (next_dollar_sign(result, &delimit, &quoted))
 		{
+			delimit.end = delimit.start;
 			goto_parameter_end(result, &delimit);
-			parameter = ft_strsub(result, delimit.start, delimit.end);
+			parameter = ft_strsub(result, delimit.start, delimit.end - delimit.start);
 			replace_by_variable(&result, parameter, &delimit.start);
 		}
-		delimit.start++;
+		else
+			delimit.start++;
 	}
 	return (result);
 }
