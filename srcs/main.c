@@ -37,11 +37,19 @@ static void		main_loop(void)
 
 int				main(int ac, char **av)
 {
-	//////////// TEST GET OPTION ////////////
+	////////// TEST GET OPTION ////////////
 	// char	*tmp = get_options_core(ac, av);
-	// ft_dprintf(2, "ARGUMENT \"%s\"\n", tmp);
+	// ft_dprintf(2, "ALL ARGUMENT \"%s\"\n", tmp);
+	// int i = 0;
+	// while (av[++i])
+	// {
+	// 	if (is_an_option(av, i))
+	// 		ft_dprintf(2, "   OPT%d \"%s\"\n", i, av[i]);
+	// 	else
+	// 		ft_dprintf(2, "NO OPT%d \"%s\"\n", i, av[i]);
+	// }
 	// return (0);
-	/////////////////////////////////////////
+	///////////////////////////////////////
 
 	setbuf(stdout, NULL);
 	setbuf(stderr, NULL);
