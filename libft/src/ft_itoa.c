@@ -76,5 +76,6 @@ char			*ft_itoa(int c)
 	if (cc < 0)
 		str[i - 1] = '-';
 	dst = ft_retourne(str, lon);
+	free(str);
 	return (dst);
 }

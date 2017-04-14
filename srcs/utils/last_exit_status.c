@@ -19,6 +19,10 @@ t_uchar			get_last_exit_status(void)
 
 void			set_last_exit_status(t_uchar status)
 {
-	set_variable("?", ft_itoa(status));
+	char *st;
+
+	st = ft_itoa(status);
+	set_variable("?", st);
+	free(st);
 	*get_ptr() = status;
 }

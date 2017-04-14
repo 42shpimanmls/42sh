@@ -18,15 +18,21 @@ EV_CB_RET 	event_exit(EV_CB_ARGS)
 
 EV_CB_RET 	event_delete(EV_CB_ARGS)
 {
+	void **p;
+
 	if (ed->cursor_position <= 0)
 		return ;
 	ed->need_refresh = true;
 	event_cursor_left(ed);
-	list_pop_at_pos(ed->cursor_position, (t_abstract_list **)&ed->string);
+	p = list_pop_at_pos(ed->cursor_position, (t_abstract_list **)&ed->string);
+	free(p);
 }
 
 EV_CB_RET 	event_delete_right(EV_CB_ARGS)
 {
+	void **p;
+
 	ed->need_refresh = true;
-	list_pop_at_pos(ed->cursor_position, (t_abstract_list **)&ed->string);
+	p = list_pop_at_pos(ed->cursor_position, (t_abstract_list **)&ed->string);
+	free(p);
 }
