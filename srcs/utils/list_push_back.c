@@ -58,6 +58,7 @@ void list_pop_at_pos(size_t pos, t_abstract_list **list)
 		if (i == pos)
 		{
 			*addr = lst->next;
+			free(lst);
 			return ;
 		}
 		addr = &(*addr)->next;
