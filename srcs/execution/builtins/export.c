@@ -8,7 +8,7 @@
 
 # define USAGE	"Usage: export [-p] name[=word]...\n"
 
-void 			export_classic(t_variable **env, char **argv, char *opt)
+static void 	export_classic(t_variable **env, char **argv)
 {
 	char	**tab;
 	size_t	i;
@@ -16,46 +16,78 @@ void 			export_classic(t_variable **env, char **argv, char *opt)
 	i = 0;
 	while (argv[++i])
 	{
-		if (!is_an_argument(argv[i]) && ft_strchr(argv[i], '='))
+		if (!is_an_argument(argv, i))
+			continue ;
+		if (ft_strchr(argv[i], '='))
 		{
 			tab = ft_strsplit(argv[i], '=');
 			if (ft_tablen(tab) >= 1)
 			{
 				setenv_as(env, tab[0], tab[1], true);
-				if (ft_strchr(opt, 'p'))
-					ft_dprintf(STDOUT_FILENO, "export %s=%s\n", tab[0], tab[1]);
 			}
 			ft_freetabchar(tab);
 		}
 		else
 		{
-			set_variable_for_export(*env, argv[i]);
-			if (ft_strchr(opt, 'p'))
-				ft_dprintf(STDOUT_FILENO, "export %s\n", argv[i]);
+			if (variable_exist(*env, argv[i]))
+				set_variable_for_export(*env, argv[i]);
+			else
+				setenv_as(env, argv[i], NULL, true);
 		}
 	}
 }
+
+/*
+** When -p is specified, export shall write to
+** the standard output the names and
+** values of all exported variables.
+*/
+
+static void		export_option_p(t_variable *env)
+{
+	while (env)
+	{
+		if (env->exported == true)
+		{
+			if (ft_strlen(env->value))
+				ft_printf("export %s=%s\n", env->name, env->value);
+			else
+				ft_printf("export %s\n", env->name);
+		}
+		env = env->next;
+	}
+}
+
+/*
+** The shell shall give the export attribute to the variables
+** corresponding to the specified names,
+** which shall cause them to be in the environment of
+** subsequently executed commands.
+**
+** If the name of a variable is followed by =word,
+** then the value of that variable shall be set to word.
+*/
 
 BUILTIN_RET		builtin_export(BUILTIN_ARGS)
 {
 	t_variable	**env;
 	char		*opt;
+	bool		allowed;
 
 	env = &get_shell_env()->variables;
-	opt = get_options_core(argc, argv);
-
-	if (argc == 1)
-	{
+	if ((opt = get_options_core(argc, argv)) == (char *)-1)
+		return (STATUS_FAILURE);
+	allowed = check_only_allowed_option(opt, "p");
+	if (ft_strchr(opt, 'p'))
+		export_option_p(*env);
+	else if (argc == 1 && allowed)
 		display_variables(true);
-	}
-	else if (argc >= 2)
-	{
-		export_classic(env, argv, opt);
-	}
+	else if (argc >= 2 && allowed)
+		export_classic(env, argv);
 	else
 	{
 		ft_dprintf(STDERR_FILENO, USAGE);
+		return (STATUS_FAILURE);
 	}
 	return (STATUS_SUCCESS);
 }
-
