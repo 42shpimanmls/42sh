@@ -9,11 +9,11 @@ FEATURES
 	- [x] Éditer la ligne à l’endroit où se trouve le curseur.
 	- [x] Déplacer le curseur vers la gauche et vers la droite.
 	- [x] Les flèches du haut et du bas pour naviguer dans l’historique.
-	- [x] Couper, copier et/ou coller tout ou partie d’une ligne.
-	- [x] Se déplacer par "mot" vers la gauche et vers la droite.
-	- [x] Aller directement au début et à la fin d’une ligne.
+	- [x] Couper, copier et/ou coller tout ou partie d’une ligne. `ctrl+K` `ctrl+B` `ctrl+P`
+	- [x] Se déplacer par "mot" vers la gauche et vers la droite. `ctrl+LEFT` `ctrl+RIGHT`
+	- [x] Aller directement au début et à la fin d’une ligne. `home` `end`
 	- [x] Écrire ET éditer une commande sur plusieurs lignes.
-	- [ ] Saut d’une ligne à l’autre.
+	- [ ] Saut d’une ligne à l’autre. `ctrl+UP` `ctrl+DOWN`
 	- [ ] Retour à la ligne partie parenthésée de la commande non refermée.
 	- [ ] ctrl+D et ctrl+C dans l’édition de la ligne.
 	- [ ] Gérer complètement les quotes et doubles quotes, (hors expansions).
