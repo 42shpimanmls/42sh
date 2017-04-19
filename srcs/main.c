@@ -3,7 +3,8 @@
 #include "init/init.h"
 #include <stdio.h>
 #include "errors.h"
-#include "history/history_substitutions.h"
+#include "history/substitution/history_substitutions.h"
+#include "history/builtin/history.h"
 #include "parse_input/print_syntax_tree.h"
 #include "execution/execute_syntax_tree.h"
 

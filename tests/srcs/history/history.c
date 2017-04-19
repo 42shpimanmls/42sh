@@ -2,7 +2,7 @@
 #include "test_utils.h"
 
 #include "shell_env.h"
-#include "history/history.h"
+#include "history/builtin/history.h"
 #include "ftsh.h"
 #include "abstract_list.h"
 
