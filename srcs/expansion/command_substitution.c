@@ -5,6 +5,7 @@
 #include "strlist.h"
 #include "utils.h"
 #include "errors.h"
+#include "execution/exec.h"
 #include "execution/pipe.h"
 #include <stdio.h>
 #include "shell_env.h"
@@ -65,6 +66,8 @@ static void					add_substitution(t_strlist **strlist_addr
 	int					pipefds[2];
 	char				**argv;
 	char				*tmp;
+	char				*spath;
+	char				**path;
 
 	argv = (char*[]){ft_strdup(get_shell_env()->path_to_42sh), "-c"
 											, strdup_until(start, end), NULL};
@@ -74,7 +77,11 @@ static void					add_substitution(t_strlist **strlist_addr
 		close(pipefds[0]);
 		dup2(pipefds[1], STDOUT_FILENO);
 		close(pipefds[1]);
-		execvp(argv[0], argv);
+		spath = get_variable("PATH");
+		path = ft_strsplit(spath, ':');
+		ft_strdel(&spath);
+		execute(argv, environ, path);
+		ft_freetabchar(path);
 		fatal_error("failed to execute recursively in add_substitution");
 	}
 	else
