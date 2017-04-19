@@ -70,6 +70,7 @@ static void		export_option_p(t_variable *env)
 
 BUILTIN_RET		builtin_export(BUILTIN_ARGS)
 {
+	(void)envp;
 	t_variable	**env;
 	char		*opt;
 	bool		allowed;
