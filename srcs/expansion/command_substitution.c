@@ -64,15 +64,11 @@ static void					add_substitution(t_strlist **strlist_addr
 {
 	int					pipefds[2];
 	char				**argv;
-	extern char			**environ;
-	char				**environ_backup;
 	char				*tmp;
 
 	argv = (char*[]){ft_strdup(get_shell_env()->path_to_42sh), "-c"
 											, strdup_until(start, end), NULL};
 	pipe(pipefds);
-	environ_backup = environ;
-	environ = get_variables_for_execution(NULL);
 	if (enter_subshell() == FORKED_IN_CHILD)
 	{
 		close(pipefds[0]);
@@ -91,8 +87,6 @@ static void					add_substitution(t_strlist **strlist_addr
 		free(tmp);
 		wait_for_childs();
 	}
-	ft_freetabchar(environ);
-	environ = environ_backup;
 	free(argv[0]);
 	free(argv[2]);
 }
