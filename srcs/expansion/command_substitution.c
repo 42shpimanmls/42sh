@@ -68,6 +68,7 @@ static void					add_substitution(t_strlist **strlist_addr
 	char				*tmp;
 	char				*spath;
 	char				**path;
+	char				**env;
 
 	argv = (char*[]){ft_strdup(get_shell_env()->path_to_42sh), "-c"
 											, strdup_until(start, end), NULL};
@@ -80,8 +81,10 @@ static void					add_substitution(t_strlist **strlist_addr
 		spath = get_variable("PATH");
 		path = ft_strsplit(spath, ':');
 		ft_strdel(&spath);
-		execute(argv, environ, path);
+		env = get_variables_for_execution(NULL);
+		execute(argv, env, path);
 		ft_freetabchar(path);
+		ft_freetabchar(env);
 		fatal_error("failed to execute recursively in add_substitution");
 	}
 	else
