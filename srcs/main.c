@@ -48,6 +48,7 @@ int				main(int ac, char **av)
 	// 	else
 	// 		ft_dprintf(2, "NO OPT%d \"%s\"\n", i, av[i]);
 	// }
+	// ft_dprintf(2, "NB ARG: %d\n", number_of_argument(av));
 	// return (0);
 	///////////////////////////////////////
 
