@@ -18,7 +18,8 @@ BUILTIN_RET		builtin_echo(BUILTIN_ARGS)
 	if ((opt = get_options_core(argc, argv)) == (char *)-1)
 		return (STATUS_FAILURE);
 	i = 1;
-	while (i < argc && argv[i][0] == '-' && argv[i][1] != '-')
+	while (i < argc && argv[i][0] == '-' && \
+	(argv[i][1] == 's' || argv[i][1] == 'n' || argv[i][1] == 'e'))
 		i++;
 	while (i < argc)
 	{
