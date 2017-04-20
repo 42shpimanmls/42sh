@@ -22,7 +22,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 #endif
 	if (enter_subshell() == FORKED_IN_CHILD)
 	{
-		signal(SIGINT, sig_handler(SIGINT));
+		signal(SIGINT, SIG_DFL);
 		pre_exec(cmd);
 #ifdef FTSH_DEBUG
 		print_n_char_fd(' ', (lvl + 1) * 2, 2);
