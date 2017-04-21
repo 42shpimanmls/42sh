@@ -33,10 +33,12 @@ void					fatal_error(char const *str);
 t_uchar					get_last_exit_status(void);
 void					set_last_exit_status(t_uchar status);
 void					wait_for_childs();
+void					wait_for_last_child(pid_t last_child_pid);
 char					*get_options_core(int ac, char **av);
 bool					is_an_option(char **argv, int pos);
 bool					is_an_argument(char **argv, int pos);
 bool					check_only_allowed_option(char *option, char *allowed);
 size_t					number_of_argument(char **argv);
+void					*sig_handler(int sig);
 
 #endif

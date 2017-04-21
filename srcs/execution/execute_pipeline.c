@@ -9,6 +9,7 @@
 #include "redirection.h"
 #include "expansion/expansion.h"
 #include "errno.h"
+#include <signal.h>
 
 t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 {
@@ -21,6 +22,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 #endif
 	if (enter_subshell() == FORKED_IN_CHILD)
 	{
+		signal(SIGINT, SIG_DFL);
 		pre_exec(cmd);
 #ifdef FTSH_DEBUG
 		print_n_char_fd(' ', (lvl + 1) * 2, 2);
@@ -107,7 +109,9 @@ t_error_id	execute_pipeline(t_simple_command *pipeline, size_t lvl)
 		}
 		pipeline = pipeline->next;
 	}
-	wait_for_childs();
+	wait_for_last_child(pipeline_state.last_pid);
+	kill(0, SIGINT);
+
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "done executing pipeline, %s\n", pipeline_state.last_ret == NO_ERROR ? "ok" : "error");
