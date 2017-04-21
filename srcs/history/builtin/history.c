@@ -37,9 +37,8 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 	}
 }
 
-BUILTIN_RET		builtin_history(BUILTIN_ARGS)
+int				builtin_history(int argc, char **argv)
 {
-	(void)envp;
 	int			i;
 	t_history	*history;
 	t_hist_opt	options;
