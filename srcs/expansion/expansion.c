@@ -45,26 +45,31 @@ static t_strlist	*expand_cmd_word(char const *word)
 	t_strlist	*result;
 	char		*str;
 	t_strlist	*it;
-	//char		*tmp;
+	char		*tmp;
 
 	result = NULL;
 	if (word != NULL)
 	{
 		/*str = tilde_expansion(word);
-		tmp = str;
-		str = parameter_expansion(str);
-		free(tmp);
 		tmp = str;*/
-		str = command_substition(word);
-		result = field_splitting(str);
-		free(str);
+		str = parameter_expansion(word);
+		// tmp = str;
+		if (!str)
+			return (NULL);
+		tmp = command_substition(str);
+		ft_strdel(&str);
+		if (!tmp)
+			return (NULL);
+		result = field_splitting(tmp);
+		ft_strdel(&tmp);
+
 		it = result;
 		while (it != NULL)
 		{
 			/*str = pathname_expansion(it->str);
 			free(it->str);
-			it->str = quote_removal(str);
-			free(str);*/
+			*/
+			quote_removal(&it->str);
 			it = it->next;
 		}
 	}
