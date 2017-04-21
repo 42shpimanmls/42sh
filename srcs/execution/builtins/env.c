@@ -13,7 +13,7 @@
 ** restore previous env var
 */
 
-BUILTIN_RET	builtin_env(BUILTIN_ARGS)
+BUILTIN_RET	builtin_env(BUILTIN_ARGS, t_simple_command *cmd)
 {
 	char		*opt;
 	t_variable	*e;
@@ -39,7 +39,7 @@ BUILTIN_RET	builtin_env(BUILTIN_ARGS)
 ** else: display env var
 */
 
-void		run_env(BUILTIN_ARGS)
+void		run_env(BUILTIN_ARGS, t_simple_command *cmd)
 {
 	int	i;
 	char	**split;

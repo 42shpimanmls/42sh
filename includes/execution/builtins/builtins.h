@@ -2,6 +2,7 @@
 # define BUILTINS_H
 
 #include "variable.h"
+# include "../../parse_input/syntax_tree.h"
 /*# include "builtin_args.h"*/
 
 # define STATUS_SUCCESS 0
@@ -44,7 +45,7 @@ int			convert_base(int nbr, int base_from, int base_to);
 /*
 ** env.c
 */
-int			builtin_env(BUILTIN_ARGS);
-void			run_env(BUILTIN_ARGS);
+int			builtin_env(BUILTIN_ARGS, t_simple_command *cmd);
+void			run_env(BUILTIN_ARGS, t_simple_command *cmd);
 
 #endif

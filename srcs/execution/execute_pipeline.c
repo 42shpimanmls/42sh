@@ -65,7 +65,10 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 		//expand_assignments_values(cmd->assignments);
 		if (ret != NO_ERROR)
 			return (ret);
-		ret = execute_builtin(cmd, lvl + 1);
+		if (ft_strcmp(cmd->argv[0], "env") == 0)
+			ret = builtin_env(ft_tablen(cmd->argv), cmd->argv, cmd);
+		else
+			ret = execute_builtin(cmd, lvl + 1);
 		if (ret == NO_SUCH_BUILTIN)
 			ret = execute_file(cmd, lvl + 1);
 
