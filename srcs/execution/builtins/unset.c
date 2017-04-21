@@ -80,7 +80,6 @@ static void		unset_option_v(t_variable **env, char **argv)
 
 BUILTIN_RET		builtin_unset(BUILTIN_ARGS)
 {
-	(void)envp;
 	t_variable	**env;
 	char		*opt;
 

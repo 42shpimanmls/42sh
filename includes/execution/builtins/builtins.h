@@ -7,7 +7,7 @@
 # define STATUS_SUCCESS 0
 # define STATUS_FAILURE -1
 # define BUILTIN_RET int
-# define BUILTIN_ARGS int argc, char **argv, char **envp
+# define BUILTIN_ARGS int argc, char **argv
 
 typedef BUILTIN_RET	(*t_builtin)(BUILTIN_ARGS);
 
@@ -35,7 +35,7 @@ int 		unsetenv_as(t_variable **env, char *name);
 ** echo
 */
 
-int			builtin_echo(BUILTIN_ARGS);
+int			builtin_echo(int argc, char **argv);
 bool		escape_char(char *str);
 bool		escape(int c);
 int			octal(char *c);
