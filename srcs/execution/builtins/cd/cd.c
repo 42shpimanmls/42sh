@@ -124,7 +124,7 @@ static char			*find_cdpath(char const *directory)
 	return (str);
 }
 
-static BUILTIN_RET	cd_oldpwd(char **envp)
+static BUILTIN_RET	cd_oldpwd()
 {
 	BUILTIN_RET	ret;
 	char		*oldpwd;
@@ -138,7 +138,7 @@ static BUILTIN_RET	cd_oldpwd(char **envp)
 		ft_putendl_fd("42sh: cd -: OLDPWD not set", 2);
 		return (EXIT_FAILURE);
 	}
-	ret = builtin_cd(2, (char*[]){"cd", oldpwd, NULL}, envp);
+	ret = builtin_cd(2, (char*[]){"cd", oldpwd, NULL});
 	if (ret == EXIT_SUCCESS)
 		ft_putendl(get_variable("PWD"));
 	free(oldpwd);
@@ -181,7 +181,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 	{
 		free(directory);
 		free(current_pwd);
-		return (cd_oldpwd(envp));
+		return (cd_oldpwd());
 	}
 	if (directory[0] == '/')
 	{

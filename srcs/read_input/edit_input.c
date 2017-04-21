@@ -41,7 +41,8 @@ static char *start_normal_mode(t_editor *ed)
 	t_event_callback_def const	*def;
 
 	ed->need_refresh = true;
-	refresh_line(ed);
+	put_line(ed);
+	// refresh_line(ed);
 	while ((ret = read(0, buf, EVENT_STR_MAX_LEN)) > 0)
 	{
 		buf[ret] = '\0';
