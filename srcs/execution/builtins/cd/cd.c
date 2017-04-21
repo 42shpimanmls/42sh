@@ -154,6 +154,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 	char	*current_pwd;
 	t_uchar	opt;
 
+	/* If, during the execution of the above steps, the PWD environment variable is set, the OLDPWD environment variable shall also be set to the value of the old working directory (that is the current working directory immediately prior to the call to cd). */
 	current_pwd = getcwd(NULL, 0);
 	curpath = NULL;
 	/* cd [-L|-P] [directory] */
