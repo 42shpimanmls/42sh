@@ -57,7 +57,7 @@ void		run_env(BUILTIN_ARGS, t_simple_command *cmd)
 	}
 	if (argc > i)
 	{
-		cmd->argv = &(cmd->argv[i]);
+		cmd->argv = ft_tabdup(&(cmd->argv[i]));
 		execute_simple_command(cmd, 0);
 	}
 	else
