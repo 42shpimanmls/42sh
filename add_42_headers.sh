@@ -26,11 +26,11 @@ c_header="/* *******************************************************************
 
 add_42_headers() {
     cd srcs
-    for file in $(find -name "*.c"); do
+    for file in $(find . -name "*.c"); do
       add_42_header "$file"
     done
     cd ../includes
-    for file in $(find -name "*.h"); do
+    for file in $(find . -name "*.h"); do
       add_42_header "$file"
     done
     cd ..
