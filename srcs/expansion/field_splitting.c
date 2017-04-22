@@ -14,10 +14,11 @@ static void		end_of_quote(char const *word, t_range *delimit)
 
 	quote = *word;
 	delimit->end++;
+	if (quote == '\\')
+		return ;
 	while (word[delimit->end] && (word[delimit->end] != quote \
-			|| (word[delimit->end - 1] && word[delimit->end - 1] == '\\'))) // && ! backslashed
+			|| (word[delimit->end - 1] && word[delimit->end - 1] == '\\')))
 		delimit->end++;
-//	ft_printf("quote end: %d\n", delimit->end);
 }
 
 static void		skip_posix_blanks(char const *word, int *i)
