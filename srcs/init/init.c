@@ -54,6 +54,7 @@ void	init(int ac, char **av)
 	ft_bzero(&shell_env->history, sizeof(t_sh_history));
 	shell_env->path_to_42sh = get_path_to_ftsh(av[0]);
 	init_variables_list(shell_env);
+	set_default_variables();
 	parse_options(ac, av, shell_env);
 	load_history(shell_env, HISTFILE, 0);
 	shell_env->should_run = true;

@@ -1,7 +1,7 @@
 #include <libft.h>
 #include "shell_env.h"
 
-void			set_variable(char const *var, char const *val)
+void			set_variable(char const *var, char const *val, bool overwrite)
 {
 	t_variable	*env;
 
@@ -12,11 +12,12 @@ void			set_variable(char const *var, char const *val)
 		{
 			free(env->value);
 			env->value = ft_strdup(val);
+			env->overwrite = overwrite;
 			return ;
 		}
 		if (env->next == NULL)
 			break ;
 		env = env->next;
 	}
-	env->next = create_variable(var, val, false);
+	env->next = create_variable(var, val, overwrite);
 }

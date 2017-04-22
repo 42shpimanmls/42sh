@@ -30,11 +30,11 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		ret = chdir(new_pwd);
 		if (ret == 0)
 		{
-			set_variable("OLDPWD", old_pwd);
+			set_variable("OLDPWD", old_pwd, false);
 			free(old_pwd);
 			free(new_pwd);
 			new_pwd = getcwd(NULL, 0);
-			set_variable("PWD", new_pwd);
+			set_variable("PWD", new_pwd, false);
 			free(new_pwd);
 			return (STATUS_SUCCESS);
 		}

@@ -22,7 +22,7 @@ void			set_last_exit_status(t_uchar status)
 	char *st;
 
 	st = ft_itoa(status);
-	set_variable("?", st);
+	set_variable("?", st, false);
 	free(st);
 	*get_ptr() = status;
 }
