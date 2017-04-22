@@ -40,5 +40,7 @@ bool					is_an_argument(char **argv, int pos);
 bool					check_only_allowed_option(char *option, char *allowed);
 size_t					number_of_argument(char **argv);
 void					*sig_handler(int sig);
+void					quote_word(char **word);
+void					quote_per_word(char **str);
 
 #endif

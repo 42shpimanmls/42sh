@@ -50,10 +50,11 @@ static t_strlist	*expand_cmd_word(char const *word)
 	result = NULL;
 	if (word != NULL)
 	{
-		/*str = tilde_expansion(word);
-		tmp = str;*/
-		str = parameter_expansion(word);
+		str = tilde_expansion(word);
 		// tmp = str;
+		tmp = parameter_expansion(str);
+		ft_strdel(&str);
+		str = tmp;
 		if (!str)
 			return (NULL);
 		tmp = command_substition(str);

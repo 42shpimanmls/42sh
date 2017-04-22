@@ -1,6 +1,6 @@
 #include "utils.h"
-#include "history_substitutions.h"
-#include "string_substitution.h"
+#include "abstract_list.h"
+#include "read_input/editor/editor.h"
 
 static void		add_quoted_backslash(char **word, size_t first)
 {
