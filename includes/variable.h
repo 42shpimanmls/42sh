@@ -34,4 +34,12 @@ bool					set_variable_for_export(t_variable *v, char *name);
 bool					is_a_variable(t_variable *v, char *name);
 bool					is_a_function(t_variable *v, char *name);
 
+/*
+**			set_default_variables.c
+*/
+
+void					set_underscore(char **words);
+void					set_default_variables(void);
+void					add_path_to_env(char *path, char **env);
+
 #endif

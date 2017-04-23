@@ -53,6 +53,7 @@ void	execute(char **cmd, char **env, char **path)
 			exec_if_perm_ok(p_exec, cmd, env);
 			ft_strdel(&p_exec);
 		}
+	set_underscore(cmd);
 	error_message(cmd[0], "no such command", 127);
 }
 
@@ -69,7 +70,10 @@ void	exec_if_perm_ok(char *path, char **cmd, char **env)
 	if (access(path, F_OK) != -1)
 	{
 		if (access(path, X_OK) != -1)
+		{
+			add_path_to_env(path, env);
 			execve(path, &cmd[0], env);
+		}
 		else
 			error_message(path, "no rights to execute it", 126);
 	}

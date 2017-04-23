@@ -147,7 +147,6 @@ int		pop_variable_by_name(t_variable **list, char *name)
 
 	lst = *list;
 	addr = list;
-	print_variable(lst);
 	while (lst)
 	{
 		if (!ft_strcmp(lst->name, name))
