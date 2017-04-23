@@ -33,6 +33,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 	else
 	{
 		wait_for_childs();
+		set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1] , false);
 		ret = get_error();
 	}
 #ifdef FTSH_DEBUG

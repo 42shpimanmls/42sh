@@ -51,7 +51,7 @@ int			setenv_as(t_variable **env, char *name, char*value, bool exported)
 				return (STATUS_SUCCESS);
 		}
 		list_push_back((t_abstract_list**)&env,
-			(t_abstract_list*)create_variable(name, value, exported));
+			(t_abstract_list*)create_variable(name, value, exported, true));
 		return (STATUS_SUCCESS);
 	}
 	return (STATUS_FAILURE);

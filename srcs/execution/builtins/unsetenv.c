@@ -40,10 +40,15 @@ int				unsetenv_as(t_variable **env, char *name)
 			ft_dprintf(STDERR_FILENO, FORBIDDEN_CHAR);
 			return (STATUS_FAILURE);
 		}
-		if (pop_variable_by_name(env, name) == STATUS_SUCCESS)
+		if (variable_is_overwritable(*env, name))
 		{
-			return (STATUS_SUCCESS);
+			if (pop_variable_by_name(env, name) == STATUS_SUCCESS)
+			{
+				return (STATUS_SUCCESS);
+			}
 		}
+		else
+			return (STATUS_SUCCESS);
 	}
 	return (STATUS_FAILURE);
 }
