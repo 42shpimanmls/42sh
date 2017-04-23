@@ -42,13 +42,16 @@ static void	set_shlvl(void)
 	char	*tmp;
 	int 	shlvl;
 
-	tmp = get_variable("SHLVL");
-	shlvl = ft_atoi(tmp);
-	ft_strdel(&tmp);
-	tmp = ft_itoa(shlvl + 1);
-	set_variable("SHLVL", tmp, false);
-	ft_strdel(&tmp);
-	set_variable("_", get_shell_env()->path_to_42sh, false);
+	if ((tmp = get_variable("SHLVL")))
+	{
+		shlvl = ft_atoi(tmp);
+		ft_strdel(&tmp);
+		tmp = ft_itoa(shlvl + 1);
+		set_variable("SHLVL", tmp, false);
+		ft_strdel(&tmp);
+	}
+	else
+		set_variable("SHLVL", "1", false);
 }
 
 void		set_default_variables(void)
@@ -61,6 +64,7 @@ void		set_default_variables(void)
 	set_variable("?", "0", false);
 	set_variable("SHELL", SHNAME, false);
 	set_shlvl();
+	set_variable("_", get_shell_env()->path_to_42sh, false);
 	tmp = getcwd(NULL, 0);
 	set_variable("PWD", tmp, false);
 	ft_strdel(&tmp);
