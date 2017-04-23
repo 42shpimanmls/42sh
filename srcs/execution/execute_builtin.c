@@ -29,5 +29,6 @@ t_error_id	execute_builtin(t_simple_command *cmd, size_t lvl)
 		print_n_char_fd(' ', (lvl) * 2, 2);
 		dprintf(2, "done executing builtin %s, %s\n", builtin->name, ret == NO_ERROR ? "ok" : "error");
 	}
+	set_last_exit_status(ret == NO_ERROR ? 0 : 1);
 	return (ret);
 }
