@@ -53,7 +53,8 @@ void		run_env(BUILTIN_ARGS, t_simple_command *cmd)
 
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
-		i++;
+		if (argv[i++][1] == '-')
+			break ;
 	while (i < argc && ft_strchr(argv[i], '=') != NULL)
 	{
 		split = ft_strsplit(argv[i], '=');
