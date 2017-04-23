@@ -12,12 +12,11 @@ void			set_variable(char const *var, char const *val, bool overwrite)
 		{
 			free(env->value);
 			env->value = ft_strdup(val);
-			env->overwrite = overwrite;
 			return ;
 		}
 		if (env->next == NULL)
 			break ;
 		env = env->next;
 	}
-	env->next = create_variable(var, val, overwrite);
+	env->next = create_variable(var, val, false, overwrite);
 }

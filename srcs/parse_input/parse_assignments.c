@@ -46,7 +46,7 @@ static t_variable		*create_assignment(t_token const *token)
 		return (NULL);
 	name = strdup_until(token->str, equal_pos);
 	value = ft_strdup(equal_pos + 1);
-	result = create_variable(name, value, false);
+	result = create_variable(name, value, false, true);
 	free(name);
 	free(value);
 	return (result);
