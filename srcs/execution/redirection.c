@@ -1,4 +1,5 @@
 #include "redirection.h"
+#include "utils.h"
 #include <errno.h>
 
 #define REDIRECT_DEBUG
@@ -46,6 +47,7 @@ t_error_id			redirect(t_redirection *redirections, int *backup)
 			ret = get_error();
 			print_errno_error(ret, NULL, redirections->word);
 			restore_stdin_stdout(backup);
+			set_last_exit_status(1);
 			return (ret);
 		}
 		else
