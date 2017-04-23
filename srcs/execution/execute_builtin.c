@@ -25,6 +25,7 @@ t_error_id	execute_builtin(t_simple_command *cmd, size_t lvl)
 			return (NO_SUCH_BUILTIN);
 		}
 		ret = builtin->builtin(ft_tablen(cmd->argv), cmd->argv);
+		set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1], false);
 		print_n_char_fd(' ', (lvl) * 2, 2);
 		dprintf(2, "done executing builtin %s, %s\n", builtin->name, ret == NO_ERROR ? "ok" : "error");
 	}
