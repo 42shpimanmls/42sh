@@ -18,5 +18,8 @@ void			set_variable(char const *var, char const *val, bool overwrite)
 			break ;
 		env = env->next;
 	}
-	env->next = create_variable(var, val, false, overwrite);
+	if (env)
+		env->next = create_variable(var, val, false, overwrite);
+	else
+		env = create_variable(var, val, false, overwrite);
 }
