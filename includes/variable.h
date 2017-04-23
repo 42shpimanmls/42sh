@@ -15,12 +15,12 @@ typedef struct			s_variable
 }						t_variable;
 
 char					*get_variable(char *var);
-void					set_variable(char const *var, char const *val);
+void					set_variable(char const *var, char const *val, bool overwrite);
 void					display_variables(bool only_exported);
 char					**get_variables_for_execution(t_variable *assignments);
 
 t_variable				*create_variable(char const *name, char const *value,
-											bool exported);
+											bool exported, bool overwrite);
 void					delete_variable(t_variable **var);
 void					delete_all_variables(t_variable **var);
 t_variable 				*copy_variable(t_variable *e);
@@ -33,5 +33,13 @@ int						pop_variable_by_name(t_variable **list, char *name);
 bool					set_variable_for_export(t_variable *v, char *name);
 bool					is_a_variable(t_variable *v, char *name);
 bool					is_a_function(t_variable *v, char *name);
+
+/*
+**			set_default_variables.c
+*/
+
+void					set_underscore(char **words);
+void					set_default_variables(void);
+void					add_path_to_env(char *path, char **env);
 
 #endif
