@@ -34,7 +34,7 @@ FEATURES
 	- [x] Gestion des erreurs et de la valeur de retour des commandes.
 	- [x] Les redirection suivantes : ">", ">>", "<".
 	- [x] Les pipes “|”.
-	- [x] Les opérateurs logiques "&&" et "||".
+	- [ ] Les opérateurs logiques "&&" et "||".
 	- [x] Les back quotes "‘".
 	- [x] Le séparateur ";".
 
