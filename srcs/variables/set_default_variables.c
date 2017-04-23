@@ -13,15 +13,18 @@ void		add_path_to_env(char *path, char **env)
 	int		i;
 
 	i = 0;
-	while (env[i])
+	if (env)
 	{
-		if (*env[i] == '_' && env[i][1] == '=')
+		while (env[i])
 		{
-			ft_strdel(&env[i]);
-			env[i] = ft_strjoin("_=", path);
-			return ;
+			if (*env[i] == '_' && env[i][1] == '=')
+			{
+				ft_strdel(&env[i]);
+				env[i] = ft_strjoin("_=", path);
+				return ;
+			}
+			i++;
 		}
-		i++;
 	}
 }
 
