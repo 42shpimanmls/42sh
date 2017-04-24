@@ -1,0 +1,187 @@
+#!/usr/bin/php
+<?php
+//////////////////////////
+//////////////////////////
+// USAGE ./test [detail] [random]
+//////////////////////////
+//////////////////////////
+
+///////// ARGUMENT //////////
+$testRandom = array_search("random", $argv) ? true : false;
+$detail 	= array_search("detail", $argv) ? true : false;
+// $testSignal = array_search("signal", $argv)	? true : false;
+$testSignal = TRUE;
+//////////////////////////
+
+$filetest			= "./testraw";
+$shellexec1			= "42sh";
+$shellexec2			= "sh";
+// $TG					= "1>&- 2>&-";
+$commentChar		= '#';
+$randomTest			= 100;
+$randomLengthMax	= 10;
+
+//////////////// HERE RANDOM /////////////////////
+$rlogic_operator 	= array("&&", "||", ";");
+$rcommand 			= array("echo", "ls", "pwd");
+//////////////// HERE RANDOM /////////////////////
+
+$COLORGREY 		= "\033[37m";
+$COLORPINK 		= "\033[36m";
+$COLORCYAN 		= "\033[35m";
+$COLORBLUE 		= "\033[34m";
+$COLORYELLOW 	= "\033[33m";
+$COLORGREEN 	= "\033[32m";
+$COLORRED 		= "\033[31m";
+$COLORCLOSE 	= "\033[0m";
+
+$allerror 	= "";
+$countAll 	= 0;
+$countOK 	= 0;
+
+if ($testRandom)
+{
+	while ($countAll < $randomTest) {
+
+		// $command = random_bytes(10);
+		$command = getRandomCommand();
+
+		compute($command);
+	}
+}
+else
+{
+	$content = file($filetest, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	foreach ($content as $key => $command) {
+		$tmp = trim($command);
+		if ($command && $tmp[0] == $commentChar)
+			continue;
+		compute($command);
+	}
+}
+
+echo $allerror;
+if ($countOK == $countAll)
+	echo "$COLORGREEN";
+else
+	echo "$COLORRED";
+
+echo " ---------- Total $countOK/$countAll ----------";
+echo "$COLORCLOSE\n";
+
+if ($allerror)
+{
+	print "$COLORRED"." ------ REGRESSION DETECTED  ------"."$COLORCLOSE\n";
+	exit(1);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// FUNCTION ////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
+function getRandomCommand() {
+	global $rcommand;
+	global $rlogic_operator;
+
+	$command  = "";
+	$command .= get_random($rcommand);
+	$command .= " ";
+	$command .= get_random_argument(0);
+	$command .= " ";
+	$command .= get_random_string(0);
+	$command .= " ";
+	$command .= get_random($rlogic_operator);
+	$command .= " ";
+	$command .= get_random($rcommand);
+
+	return ($command);
+}
+
+function compute($command) {
+	global $commentChar;
+	global $countOK;
+	global $countAll;
+	global $allerror;
+	global $detail;
+	global $testSignal;
+	global $COLORGREEN;
+	global $COLORBLUE;
+	global $COLORYELLOW;
+	global $COLORRED;
+	global $COLORCLOSE;
+	global $shellexec1;
+	global $shellexec2;
+
+	$countAll++;
+	$result1 = exec("./$shellexec1 -c '$command' 2>&1", $null, $return_var1);
+	$result2 = exec("$shellexec2 -c '$command' 2>&1", $null, $return_var2);
+
+	file_put_contents("res1", $result1);
+	file_put_contents("res2", $result2);
+
+	$res = shell_exec("diff res1 res2");
+	unlink("res1");
+	unlink("res2");
+
+	if ($res || ($testSignal && ($return_var1 != $return_var2)))
+	{
+		$allerror .= "$COLORRED [KO] $COLORCLOSE \"$command\"\n";
+		if ($testSignal && ($return_var1 != $return_var2))
+			$allerror .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
+		if ($detail)
+			$allerror .= "$res";
+	}
+	else
+	{
+		$countOK++;
+		echo "$COLORGREEN [OK] $COLORCLOSE \"$command\"\n";
+	}
+}
+
+function get_ramdom_char() {
+	$r = rand(0, 2);
+	$chr = "";
+	if ($r == 0)
+		$chr = chr(rand(64, 90));	// @ A-Z
+	if ($r == 1)
+		$chr = chr(rand(97, 122));	// a-z
+	if ($r == 2)
+		$chr = chr(rand(48, 57));	// 0-9
+	// if ($r == 2)
+		// $chr = chr(45);	// -
+	// return (chr(rand(32, 126)));
+	return ($chr);
+}
+
+function get_random_string($length = 10) {
+	global $randomLengthMax;
+
+	if ($length < 0)
+		$length = -$length;
+	$str = "";
+	if ($length == 0)
+		$length = rand(1, $randomLengthMax);
+	while ($length--)
+		$str .= get_ramdom_char();
+	return ($str);
+}
+
+function get_random_argument($length = 10) {
+	global $randomLengthMax;
+
+	if ($length < 0)
+		$length = -$length;
+	$str = "-";
+	if ($length == 0)
+		$length = rand(1, $randomLengthMax);
+	$str .= get_random_string($length);
+	return ($str);
+}
+
+function get_random($array) {
+
+	if (count($array) <= 0)
+		return ("");
+	$n = rand(0, count($array) -1);
+	return ($array[$n]);
+}

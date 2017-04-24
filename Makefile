@@ -28,6 +28,10 @@ all:
 test:
 	@make re -C ./tests $(MAKE_OPTS) $(MAKE_OPTS_THREAD)
 
+testsh:
+	@gcc -o segv testcomp/testsegv.c
+	./test detail
+
 $(PROG_NAME): $(OBJS_DIRS) $(OBJS)
 	@echo "LINK   " $@
 	@$(LINKER) -o $@ $(OBJS) $(LFLAGS)
@@ -51,4 +55,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test testsh
