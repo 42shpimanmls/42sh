@@ -15,14 +15,14 @@ FEATURES
 	- [x] Écrire ET éditer une commande sur plusieurs lignes.
 	- [x] Saut d’une ligne à l’autre. `ctrl+UP` `ctrl+DOWN`
 	- [x] Retour à la ligne partie parenthésée de la commande non refermée.
-	- [ ] ctrl+D et ctrl+C dans l’édition de la ligne.
+	- [x] ctrl+D et ctrl+C dans l’édition de la ligne.
 	- [x] Gérer complètement les quotes et doubles quotes, (hors expansions).
 
 - [ ] Builtins
 	- [ ] cd [-L|-P] [directory]
 	- [x] echo [string...]
 	- [x] exit [n]
-	- [ ] env [-i] [name=value]... [utility [argument...]]
+	- [x] env [-i] [name=value]... [utility [argument...]]
 	- [x] setenv
 	- [x] unsetenv
 	- [x] unset [-fv] name...
@@ -42,9 +42,9 @@ FEATURES
 	- [ ] Les variables locales.
 	- [ ] Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash).
 
-- [ ] Signaux 
-	- [ ] ctrl+D 
-	- [ ] ctrl+C
+- [x] Signaux 
+	- [x] ctrl+D
+	- [x] ctrl+C
 
 - [ ] Bonus
 	- [ ] Le heredoc "<<".
