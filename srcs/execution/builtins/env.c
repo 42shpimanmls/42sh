@@ -4,6 +4,8 @@
 #include <sys/wait.h>
 #include <paths.h>
 
+# define USAGE  "Usage: env [-i] name[=word]…\n"
+
 /*
 ** retrive '-i' option
 ** if '-i' empty var env, set e as NULL
@@ -21,6 +23,11 @@ BUILTIN_RET	builtin_env(BUILTIN_ARGS, t_simple_command *cmd)
 
 	if ((opt = get_options_core(argc, argv)) == (char *)-1)
 		return (STATUS_FAILURE);
+	if (check_only_allowed_option(opt, "i") == false)
+        {
+                ft_dprintf(STDERR_FILENO, USAGE);
+                return (STATUS_FAILURE);
+        }
 	e = ft_strchr(opt, 'i') != NULL ? NULL : \
 		copy_variable(get_shell_env()->variables);
 	save = get_shell_env()->variables;
@@ -45,8 +52,9 @@ void		run_env(BUILTIN_ARGS, t_simple_command *cmd)
 	char	**split;
 
 	i = 1;
-	while (i < argc && argv[i][0] == '-' && argv[i][1] == 'i')
-		i++;
+	while (i < argc && argv[i][0] == '-')
+		if (argv[i++][1] == '-')
+			break ;
 	while (i < argc && ft_strchr(argv[i], '=') != NULL)
 	{
 		split = ft_strsplit(argv[i], '=');
