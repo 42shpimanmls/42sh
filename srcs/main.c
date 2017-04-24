@@ -8,7 +8,7 @@
 #include "parse_input/print_syntax_tree.h"
 #include "execution/execute_syntax_tree.h"
 
-#include <signal.h>
+#include "sig_handler.h"
 
 static void		main_loop(void)
 {
@@ -53,7 +53,7 @@ int				main(int ac, char **av)
 	// return (0);
 	///////////////////////////////////////
 
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, &sig_handler);
 	setbuf(stdout, NULL);
 	setbuf(stderr, NULL);
 	init(ac, av);
