@@ -13,6 +13,7 @@ void				wait_for_childs()
 	t_uchar	estatus;
 
 	set_error(NO_ERROR);
+	wstatus = 0;
 	while(wait(&wstatus) != -1 && errno != ECHILD)
 	{
 		if (WIFEXITED(wstatus))

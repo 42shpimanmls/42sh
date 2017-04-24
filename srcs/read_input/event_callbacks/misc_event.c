@@ -14,7 +14,10 @@ EV_CB_RET 	event_cancel(EV_CB_ARGS)
 {(void)ed;}
 
 EV_CB_RET 	event_exit(EV_CB_ARGS)
-{(void)ed;}
+{
+	if (ed->string_size == 0)
+		builtin_exit(0, NULL);
+}
 
 EV_CB_RET 	event_delete(EV_CB_ARGS)
 {
