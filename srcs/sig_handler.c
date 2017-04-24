@@ -11,11 +11,13 @@ void		sig_handler(int sig)
 	ed = get_editor();
 	if (sig == SIGINT)
 	{
-		ft_putchar('\n');
 		init_editor();
-		wait(0);
 		refresh_line(ed);
+		wait(0);
 		if (errno == ECHILD)
+		{
+			ft_putchar('\n');
 			put_line(ed);
+		}
 	}
 }

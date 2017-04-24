@@ -48,9 +48,12 @@ static char			*get_hostname()
 	int		fd;
 	int		ret;
 
-	result = memalloc_or_die(sizeof(char) * 4096);
-	fd = open("/proc/sys/kernel/hostname", O_RDONLY);
-	ret = read(fd, result, 4095);
+	ret = -1;
+	if ((fd = open("/proc/sys/kernel/hostname", O_RDONLY)) > 0)
+	{
+		result = memalloc_or_die(sizeof(char) * 4096);
+		ret = read(fd, result, 4095);
+	}
 	if (ret <= 0)
 		return (ft_strdup(""));
 	result[ret - 1] = '\0';
