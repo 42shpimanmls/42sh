@@ -23,17 +23,27 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 	if (enter_subshell() == FORKED_IN_CHILD)
 	{
 		signal(SIGINT, SIG_DFL);
-		pre_exec(cmd);
-#ifdef FTSH_DEBUG
-		print_n_char_fd(' ', (lvl + 1) * 2, 2);
-#endif
-		print_errno_error(errno, cmd->argv[0], NULL);
-		exit(EXIT_FAILURE);
+		if (cmd->argv[0])
+		{
+			pre_exec(cmd);
+	#ifdef FTSH_DEBUG
+			print_n_char_fd(' ', (lvl + 1) * 2, 2);
+	#endif
+			print_errno_error(errno, cmd->argv[0], NULL);
+			exit(EXIT_FAILURE);
+		}
+		exit (EXIT_SUCCESS);
 	}
 	else
 	{
 		wait_for_childs();
-		set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1] , false);
+		if (cmd->argv && cmd->argv[0])
+			set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1] , false);
+		else
+		{
+			set_assignments(cmd->assignments);
+			set_variable("_", NULL , false);
+		}
 		ret = get_error();
 	}
 #ifdef FTSH_DEBUG
@@ -71,7 +81,6 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 		ret = execute_builtin(cmd, lvl + 1);
 		if (ret == NO_SUCH_BUILTIN)
 			ret = execute_file(cmd, lvl + 1);
-
 		restore_stdin_stdout(stdin_out_backup);
 #ifdef FTSH_DEBUG
 		print_n_char_fd(' ', (lvl) * 2, 2);

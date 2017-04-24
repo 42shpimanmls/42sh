@@ -23,3 +23,13 @@ void			set_variable(char const *var, char const *val, bool overwrite)
 	else
 		env = create_variable(var, val, false, overwrite);
 }
+
+
+void			set_assignments(t_variable *assignments)
+{
+	while (assignments)
+	{
+		set_variable(assignments->name, assignments->value, true);
+		assignments = assignments->next;
+	}
+}
