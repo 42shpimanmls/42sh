@@ -41,5 +41,6 @@ bool					check_only_allowed_option(char *option, char *allowed);
 size_t					number_of_argument(char **argv);
 void					quote_word(char **word);
 void					quote_per_word(char **str);
+int					convert_base(int nbr, int base_from, int base_to);
 
 #endif
