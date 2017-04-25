@@ -28,6 +28,7 @@ MAKE_OPTS 			= --no-print-directory
 MAKE_OPTS_THREAD 	= -j$(NBTHREADS)
 
 all:
+	@echo "Begin compilation with $(NBTHREADS) thread"
 	@make -C ./libft $(MAKE_OPTS)
 	@$(MAKE) $(PROG_NAME) $(MAKE_OPTS) $(MAKE_OPTS_THREAD)
 
