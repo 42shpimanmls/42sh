@@ -41,7 +41,6 @@ void			display_echo(int argc, char **argv, char *opt, int i);
 bool		escape_char(char *str);
 bool		escape(int c);
 int			octal(char *c);
-int			convert_base(int nbr, int base_from, int base_to);
 
 /*
 ** env.c
