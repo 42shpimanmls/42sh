@@ -16,10 +16,7 @@ int		builtin_echo(int argc, char **argv)
 		return (STATUS_FAILURE);
 	i = 1;
 	if (check_only_allowed_option(opt, "nse") == false)
-	{
 		ft_strdel(&opt);
-		opt = ft_strdup("abc");
-	}
 	else
 		while (i < argc && argv[i][0] == '-' && \
 		(argv[i][1] == 's' || argv[i][1] == 'n' || argv[i][1] == 'e'))
