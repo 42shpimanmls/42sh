@@ -1,5 +1,5 @@
-#ifndef EDIT_INPUT
-#define EDIT_INPUT
+#ifndef EDIT_INPUT_H
+# define EDIT_INPUT_H
 
 char	*edit_input();
 

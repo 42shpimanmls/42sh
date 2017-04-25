@@ -1,5 +1,5 @@
-#ifndef TOKENIZER_STATE
-# define TOKENIZER_STATE
+#ifndef TOKENIZER_STATE_H
+# define TOKENIZER_STATE_H
 
 # include "token.h"
 
