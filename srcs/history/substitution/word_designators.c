@@ -65,14 +65,16 @@ static void		match_last_search(char **hist_entry, char **result)
 **	'[n]-[m]' a range of words
 */
 
-void			parse_word_designators(char *str, int *i, t_range *range, \
-										char **entry, char **result)
+char			*parse_word_designators(char *str, int *i, t_range *range, \
+										char **entry)
 {
+	char	*result;
 	/*
 		!!!!!
 		It is not an error to use ‘*’ if there is just one word in the event;
 		the empty string is returned in that case.
 	*/
+	result = NULL;
 	if (str[*i] == '*')
 	{
 		range->start = 1;
@@ -83,14 +85,15 @@ void			parse_word_designators(char *str, int *i, t_range *range, \
 		range->start = range->end = 1;
 	else if (str[*i] == '$')
 	{
-		*result = get_last_word(*entry);
+		result = get_last_word(*entry);
 		ft_strdel(entry);
-		*entry = ft_strdup(*result);
-		ft_strdel(result);
+		*entry = ft_strdup(result);
+		ft_strdel(&result);
 	}
 	else if (str[*i] == '%')
-		match_last_search(entry, result);
+		match_last_search(entry, &result);
 	else if (str[*i] == '-')
 		parse_range(str, i, range);
 	(*i)++;
+	return (result);
 }

@@ -44,12 +44,12 @@ void			get_entry_word(char **entry, char *str, t_uint *end)
 			if (ft_isdigit(str[i]) || str[i] == '-')
 				range_selection(str, &i, &range, &words);
 			else if (start_word_designator(str[i]))
-				parse_word_designators(str, &i, &range, entry, &words);
+				words = parse_word_designators(str, &i, &range, entry);
 			else
 				return ;
 		}
 		else
-			parse_word_designators(str, &i, &range, entry, &words);
+			words = parse_word_designators(str, &i, &range, entry);
 	}
 	(*end) += i;
 	entry_to_words(words, entry, range, ft_strsub(str, 0, i));

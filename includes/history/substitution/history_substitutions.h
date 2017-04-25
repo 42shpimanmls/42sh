@@ -47,8 +47,8 @@ char			*get_word_range(char *line, t_range *range);
 */
 
 bool			start_word_designator(char c);
-void			parse_word_designators(char *str, int *i, t_range *range, \
-										char **entry, char **words);
+char			*parse_word_designators(char *str, int *i, t_range *range, \
+										char **entry);
 
 /*
 **			history_tokenizer.c
