@@ -12,19 +12,6 @@
 #include "abstract_list.h"
 #include "break_input/quoting.h"
 
-char					*strlist_to_str(t_strlist const *list)
-{
-	char	*result;
-
-	result = NULL;
-	while (list != NULL)
-	{
-		result = ft_strjoinf(result, list->str, 1);
-		list = list->next;
-	}
-	return (result);
-}
-
 static void					add_passive_string(t_strlist **strlist_addr
 										, char const *start, char const *end)
 {
