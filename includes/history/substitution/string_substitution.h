@@ -1,5 +1,5 @@
 #ifndef STRING_SUBSTITUTION_H
-#define STRING_SUBSTITUTION_H
+# define STRING_SUBSTITUTION_H
 
 # include "libft.h"
 # include "shell_env.h"
@@ -8,8 +8,8 @@
 # include "abstract_list.h"
 
 # include "history_substitutions.h"
-# include "read_input/editor/editor_struct.h" // move struct elsewhere
-# include "read_input/editor/editor.h" // move elsewhere
+# include "read_input/editor/editor_struct.h"
+# include "read_input/editor/editor.h"
 
 /*
 **			substitute_str.c

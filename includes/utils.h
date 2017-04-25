@@ -4,7 +4,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include "uint.h"
-# include "read_input/editor/editor_struct.h" // move
+# include "read_input/editor/editor_struct.h"
 
 # define ARG_STOP "--"
 

@@ -2,7 +2,6 @@
 # define HISTORY_OPTIONS_H
 
 # include <stdbool.h>
-// # include "history.h"
 
 # define A_OPT 0b1000
 # define N_OPT 0b0100

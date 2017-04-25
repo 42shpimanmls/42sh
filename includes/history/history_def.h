@@ -1,10 +1,6 @@
 #ifndef HISTORY_DEF_H
 # define HISTORY_DEF_H
 
-/*
-** #include "file_positions.h"
-**exported env var in shells / + need absolute path
-*/
 # define HISTFILE ".42sh_history"
 
 typedef struct				s_str_subst
@@ -32,7 +28,6 @@ typedef struct				s_history
 
 typedef struct				s_sh_history
 {
-	// size_t				size;
 	t_history				*list;
 	t_file_position			*files;
 	t_str_subst				last_subst;
