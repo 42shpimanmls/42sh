@@ -3,7 +3,6 @@
 
 #include "variable.h"
 # include "../../parse_input/syntax_tree.h"
-/*# include "builtin_args.h"*/
 
 # define STATUS_SUCCESS 0
 # define STATUS_FAILURE -1

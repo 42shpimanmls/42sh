@@ -1,22 +1,23 @@
 #ifndef HISTORY_H
 # define HISTORY_H
 
-#include "execution/builtins/builtin_def.h"
-#include "shell_env.h"
-#include "history_options.h"
-#include "file_positions.h"
-#include "history/history_def.h"
+# include "execution/builtins/builtin_def.h"
+# include "shell_env.h"
+# include "history_options.h"
+# include "file_positions.h"
+# include "history/history_def.h"
 
-#define FILE_PERMISSION (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
+# define FILE_PERMISSION (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
 
 /*
 **		load_history.c
 */
 
-void				load_history(t_shell_env *shell_env, char *filename, bool n_opt);
-void				history_add_with_nl(t_shell_env *shell_env, char *line);
-void				add_to_history_list(t_history **list, t_history *new);
-t_history			*create_history_entry(char *line);
+void			load_history(t_shell_env *shell_env, char *filename,
+					bool n_opt);
+void			history_add_with_nl(t_shell_env *shell_env, char *line);
+void			add_to_history_list(t_history **list, t_history *new);
+t_history		*create_history_entry(char *line);
 
 /*
 **		print_history.c
@@ -43,6 +44,6 @@ void			hist_to_file(t_history *history, char *filename, bool append);
 **		execute_history
 */
 
-void		execute_options(t_history **history, t_hist_opt options);
+void			execute_options(t_history **history, t_hist_opt options);
 
 #endif

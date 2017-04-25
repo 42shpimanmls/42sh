@@ -1,10 +1,8 @@
 #ifndef ABSTRACT_LIST_H
 # define ABSTRACT_LIST_H
 # include <stdlib.h>
-
-#include <stdbool.h>
-#include "uint.h"
-
+# include <stdbool.h>
+# include "uint.h"
 
 typedef struct				s_abstract_list
 {
@@ -14,10 +12,11 @@ typedef struct				s_abstract_list
 size_t						list_count(t_abstract_list const *list);
 
 void						list_goto_last(t_abstract_list **list);
-void 						**list_pop_at_pos(size_t pos
+void						**list_pop_at_pos(size_t pos
 							, t_abstract_list **list_addr);
-void						list_push_at_pos(size_t pos
-							, t_abstract_list **list_addr, t_abstract_list *elem);
+void						list_push_at_pos(size_t pos,
+								t_abstract_list **list_addr,
+								t_abstract_list *elem);
 void						list_push_back(t_abstract_list **list_addr
 											, t_abstract_list *elem);
 t_abstract_list const		*list_get_last_const(t_abstract_list const *list);
