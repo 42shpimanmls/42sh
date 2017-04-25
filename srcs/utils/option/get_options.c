@@ -1,5 +1,6 @@
 # include <stdbool.h>
 # include "libft.h"
+# include "utils.h"
 
 bool	check_only_allowed_option(char *option, char *allowed)
 {
@@ -32,7 +33,7 @@ char	*get_options_core(int ac, char **av)
 	i = 0;
 	while (++i < ac && av[i])
 	{
-		if (av[i][0] == '-' && av[i][1] == '-')
+		if ((av[i][0] == '-' && av[i][1] == '-') || is_an_argument(av, i))
 			break;
 		if (av[i][0] == '-' && av[i][1] != '-')
 		{
