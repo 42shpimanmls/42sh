@@ -14,6 +14,7 @@
 // #include "history/history.h"
 
 #include "variable.h"
+#include <sys/utsname.h>
 
 typedef struct		s_unmatched_def
 {
@@ -44,20 +45,11 @@ static char const	*get_unmatched_str(t_error_id id)
 
 static char			*get_hostname()
 {
-	char 	*result;
-	int		fd;
-	int		ret;
+	struct utsname  machine;
 
-	ret = -1;
-	if ((fd = open("/proc/sys/kernel/hostname", O_RDONLY)) > 0)
-	{
-		result = memalloc_or_die(sizeof(char) * 4096);
-		ret = read(fd, result, 4095);
-	}
-	if (ret <= 0)
+	if (uname(&machine) < 0)
 		return (ft_strdup(""));
-	result[ret - 1] = '\0';
-	return (result);
+	return (ft_strdup(machine.nodename));
 }
 
 static char			*mangle_home(char *str)
