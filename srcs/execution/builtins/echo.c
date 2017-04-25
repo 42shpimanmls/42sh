@@ -3,10 +3,8 @@
 #include "libft.h"
 
 /*
-** for every arguments:
-** '-e': backslash escapes interpretation
-** handle '-n' options
-** '-s' option: do not display space for last str
+** get options, if one wrong opt, consider there is no opt
+** else: pass options to not display them
 */
 
 int		builtin_echo(int argc, char **argv)
@@ -26,6 +24,20 @@ int		builtin_echo(int argc, char **argv)
 		while (i < argc && argv[i][0] == '-' && \
 		(argv[i][1] == 's' || argv[i][1] == 'n' || argv[i][1] == 'e'))
 			i++;
+	display_echo(argc, argv, opt, i);
+	free(opt);
+	return (STATUS_SUCCESS);
+}
+
+/*
+** for every arguments:
+** '-e': backslash escapes interpretation
+** handle '-n' options
+** '-s' option: do not display space for last str
+*/
+
+void	display_echo(int argc, char **argv, char *opt, int i)
+{
 	while (i < argc)
 	{
 		if (ft_strchr(opt, 'e') != NULL)
@@ -41,8 +53,6 @@ int		builtin_echo(int argc, char **argv)
 	}
 	if (ft_strchr(opt, 'n') == NULL)
 		ft_putchar('\n');
-	free(opt);
-	return (STATUS_SUCCESS);
 }
 
 /*
