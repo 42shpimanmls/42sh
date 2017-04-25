@@ -15,7 +15,7 @@ $testSignal = TRUE;
 
 $filetest			= "./testraw";
 $shellexec1			= "42sh";
-$shellexec2			= "sh";
+$shellexec2			= "bash";
 // $TG					= "1>&- 2>&-";
 $commentChar		= '#';
 $randomTest			= 100;
