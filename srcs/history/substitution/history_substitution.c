@@ -15,7 +15,7 @@ int			start_substitution(char **str, t_uint *start, char *hist_entry)
 {
 	t_uint	end;
 	int		should_run;
-	bool 	quote;
+	bool	quote;
 
 	should_run = 1;
 	quote = 0;
@@ -117,6 +117,7 @@ int			history_substitution(char **str)
 			i++;
 	}
 	if (!should_run)
-		add_to_history_list(&get_shell_env()->history.list, create_history_entry(*str));
+		add_to_history_list(&get_shell_env()->history.list, \
+							create_history_entry(*str));
 	return (should_run);
 }

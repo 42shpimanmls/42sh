@@ -63,6 +63,13 @@ t_token			*tokenize_for_substitution(char const *input);
 bool			apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote);
 
 /*
+**			remove_head_tail.c
+*/
+
+void			remove_head(char **str, char c);
+void			remove_tail(char **str, char c);
+
+/*
 **			add_quotes.c
 */
 
