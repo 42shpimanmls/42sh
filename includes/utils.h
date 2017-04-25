@@ -20,7 +20,7 @@ bool					is_circumflex(char c);
 bool					is_bang(char c);
 char					*str_in_str(char *find, char *str, t_uint start, \
 									bool must_start);
-int 					find_and_replace(char **str, char *to_find, \
+int						find_and_replace(char **str, char *to_find, \
 										char *replace, t_uint start);
 void					str_join_with_space(char **str, char *to_join);
 void					str_add_space(char **str);
@@ -41,6 +41,6 @@ bool					check_only_allowed_option(char *option, char *allowed);
 size_t					number_of_argument(char **argv);
 void					quote_word(char **word);
 void					quote_per_word(char **str);
-int					convert_base(int nbr, int base_from, int base_to);
+int						convert_base(int nbr, int base_from, int base_to);
 
 #endif

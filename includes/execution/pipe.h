@@ -1,13 +1,10 @@
 #ifndef PIPE_H
 # define PIPE_H
 
-#include "utils.h"
-
-#include "errors.h"
-
-#include <unistd.h>
-#include <libft.h>
-
+# include "utils.h"
+# include "errors.h"
+# include <unistd.h>
+# include <libft.h>
 
 # define FORKED_IN_CHILD ((pid_t)0)
 
