@@ -41,14 +41,15 @@ char	*next_unquoted(char *str, char c)
 
 char	*get_delimited_str(char *modifier, char delimiter, t_uint *i)
 {
-	char 	*str;
-	char 	*tmp;
-	size_t 	len;
+	char	*str;
+	char	*tmp;
+	size_t	len;
 
 	if (!(tmp = next_unquoted(modifier, delimiter)))
 	{
-		len = ft_strlen(modifier) - 1;
-		// -1 because of the \n -> are strings always going to end with \n? does it need to be tested?
+		len = ft_strlen(modifier);
+		if (modifier[len - 1] == '\n')
+			len--;
 		str = ft_strsub(modifier, 0, len);
 	}
 	else

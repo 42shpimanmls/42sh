@@ -15,17 +15,19 @@ static void	save_substitution(t_str_subst subst)
 
 void		replace_and_repeat(t_str_subst *subst, char **str)
 {
-	t_uint 		start;
+	t_uint	start;
 
 	start = 0;
 	if (subst->repeat)
 	{
 		while (start < ft_strlen(*str))
-			start = find_and_replace(str, subst->to_find, subst->replace, start);
+			start = find_and_replace(str, subst->to_find, subst->replace, \
+									start);
 	}
 	else
 	{
-		if (!subst->to_find || find_and_replace(str, subst->to_find, subst->replace, 0) < 0)
+		if (!subst->to_find || find_and_replace(str, subst->to_find, \
+											subst->replace, 0) < 0)
 			set_error(SUBST_FAIL);
 	}
 }
@@ -63,7 +65,6 @@ void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 
 	subst.repeat = repeat;
 	delimiter = modifier[(*i)++];
-	// // + handle quoted
 	if (!(subst.to_find = get_delimited_str(&modifier[*i], delimiter, i)))
 		return ;
 	(*i)++;
@@ -83,8 +84,8 @@ void		substitute_str(char *modifier, char **str, t_uint *i, bool repeat)
 
 void		substitute_words_str(char *modifiers, char **str, t_uint *i)
 {
-	t_token 	*words;
-	t_token 	*tmp;
+	t_token		*words;
+	t_token		*tmp;
 
 	words = tokenize_for_substitution(*str);
 	tmp = words;

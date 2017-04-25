@@ -1,8 +1,6 @@
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
-//# define TOKENIZER_DEBUG
-
 # include "tokenizer_state.h"
 
 t_token		*tokenize(char const *input);

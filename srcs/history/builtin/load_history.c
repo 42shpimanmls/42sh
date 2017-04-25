@@ -2,6 +2,7 @@
 #include "abstract_list.h"
 #include "utils.h"
 #include "file_positions.h"
+#include <errno.h>
 
 void		add_to_history_list(t_history **list, t_history *new)
 {
@@ -58,9 +59,7 @@ void		load_history(t_shell_env *shell_env, char *filename, bool n_opt)
 	position = 0;
 	if (!filename)
 		filename = HISTFILE;
-	if ((fd = open(filename, O_RDWR | O_CREAT, 0644)) < 0)
-		;//set_file_error
-	else
+	if ((fd = open(filename, O_RDONLY)) >= 0)
 	{
 		if (n_opt)
 			position = get_file_position(filename)->position;

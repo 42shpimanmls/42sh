@@ -68,9 +68,6 @@ char			*get_history_entry(char *designator, t_uint *end)
 	}
 	else if (*designator == '?')
 		return (find_in_history(false, history, ++designator, end));
-	/*
-	!!! + store string search in shell_env !!! for :%
-	*/
 	else
 		return (find_in_history(true, history, designator, end));
 	return (NULL);

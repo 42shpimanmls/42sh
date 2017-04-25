@@ -6,7 +6,6 @@
 #include "utils.h"
 #include "uint.h"
 
-// #include "history.h"
 #include "history/history_def.h"
 #include "history_substitutions.h"
 
@@ -23,18 +22,20 @@ static void		save_search(char *to_find)
 static char		*hist_search(t_history *history, char *to_find, \
 							bool must_start)
 {
-	// if find
-	while (history)
+	if (to_find)
 	{
-		if ((must_start && str_in_str(to_find, history->line, 0, true)) \
-			|| (!must_start && str_in_str(to_find, history->line, 0, false)))
+		while (history)
 		{
-			ft_strdel(&to_find);
-			return (ft_strtrim(history->line));
+			if ((must_start && str_in_str(to_find, history->line, 0, true)) \
+			|| (!must_start && str_in_str(to_find, history->line, 0, false)))
+			{
+				ft_strdel(&to_find);
+				return (ft_strtrim(history->line));
+			}
+			history = history->prev;
 		}
-		history = history->prev;
+		ft_strdel(&to_find);
 	}
-	ft_strdel(&to_find);
 	return (NULL);
 }
 
@@ -64,7 +65,7 @@ static bool		delimit_to_find(char *str, int *i, t_uint *end, bool must_start)
 	return (save);
 }
 
-char		*find_in_history(bool must_start, t_history *history, \
+char			*find_in_history(bool must_start, t_history *history, \
 								char *str, t_uint *end)
 {
 	char	*to_find;

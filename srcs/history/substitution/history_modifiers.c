@@ -6,59 +6,13 @@
 #include "string_substitution.h"
 
 /*
-**	removes *str's trailing pathname component
-**	i.e. what is after last slash
-*/
-
-static void	remove_tail(char **str, char c)
-{
-	size_t	i;
-	char 	*tmp;
-
-	i = ft_strlen(*str);
-	while (i > 0 && (*str)[i] != c)
-		i--;
-	if (i > 0)
-	{
-		tmp = ft_strsub(*str, 0, i);
-		ft_strdel(str);
-		*str = ft_strdup(tmp);
-		ft_strdel(&tmp);
-	}
-}
-
-/*
-**	removes *str's head
-**	i.e. what is before last slash
-*/
-
-static void 	remove_head(char **str, char c)
-{
-	size_t	i;
-	char 	*tmp;
-
-	i = 0;
-	while ((tmp = ft_strchr(*str, c)))
-	{
-		i = tmp - *str;
-		if (str[i])
-		{
-			tmp = ft_strsub(*str, i + 1, ft_strlen(*str) - i);
-			ft_strdel(str);
-			*str = ft_strdup(tmp);
-			ft_strdel(&tmp);
-		}
-	}
-}
-
-/*
 **	h removes the trailing pathname (/pathname)
 **	t keeps only the trailing pathname
 **	r removes a trailing suffix (.suffix)
 **	e removes all but the trailing suffix
 */
 
-int		trimming_modifiers(char modifier, char **str)
+static int	trimming_modifiers(char modifier, char **str)
 {
 	if (modifier == 'h')
 	{
@@ -83,7 +37,8 @@ int		trimming_modifiers(char modifier, char **str)
 	return (0);
 }
 
-int		subst_modifiers(char modifier, char *modifiers, t_uint *i, char **str)
+static int	subst_modifiers(char modifier, char *modifiers, t_uint *i, \
+							char **str)
 {
 	if (modifier == 's')
 	{
@@ -117,24 +72,51 @@ int		subst_modifiers(char modifier, char *modifiers, t_uint *i, char **str)
 **	q quotes the substituted string
 **	x breaks the substituted string into words at \n sp \t
 **		then quotes them
-**	s/old/new[/] Substitutes new for the first occurrence of old in the event line.
+**	s/old/new[/] Substitutes new for the first occurrence of old
+**				 in the event line.
 **				 Any delimiter may be used in place of ‘/’.
-**				 Final delimiter is optional if last character on the input line.
+**				 Final delimiter is optional if last character
+**				 on the input line.
 **				 If '&' appears in new, it is replaced by old
 **				 A single backslash quotes the delimiter and '&'
 **	[gG]s/old/new apply substitution to whole string (g) or once each word (G)
 **	& repeats previous substitution
 */
 
-bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
+static bool	pqx_mods(char modifier, char **str, bool *should_run, bool *quote)
 {
-	t_uint 		i;
-	bool		should_run;
-	char 		modifier;
+	if (modifier == 'p')
+	{
+		should_run = 0;
+		return (true);
+	}
+	else if (modifier == 'q')
+	{
+		*quote = 1;
+		return (true);
+	}
+	else if (modifier == 'x')
+	{
+		quote_per_word(str);
+		return (true);
+	}
+	return (false);
+}
 
-	i = 0;
-	should_run = 1;
-	*quote = 0;
+static void	norm_init(bool *should_run, t_uint *i)
+{
+	*i = 0;
+	*should_run = 1;
+}
+
+bool		apply_modifiers(char *modifiers, char **str, t_uint *end, \
+							bool *quote)
+{
+	t_uint		i;
+	bool		should_run;
+	char		modifier;
+
+	norm_init(&should_run, &i);
 	while (modifiers[i])
 	{
 		if (modifiers[i] == ':')
@@ -143,12 +125,8 @@ bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote)
 			i++;
 			if (trimming_modifiers(modifier, str))
 				continue ;
-			else if (modifier == 'p')
-				should_run = 0;
-			else if (modifier == 'q')
-				*quote = 1;
-			else if (modifier == 'x')
-				quote_per_word(str);
+			else if (pqx_mods(modifier, str, &should_run, quote))
+				continue ;
 			else if (subst_modifiers(modifier, modifiers, &i, str))
 				continue ;
 			else
