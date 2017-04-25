@@ -37,12 +37,12 @@ typedef struct				s_event_callback_def
 # define EVENT_CALLBACK_DEF_COUNT 20
 # define EVENT_STR_MAX_LEN 6
 
-t_event_callback_def const			*get_event_callback_defs(void);
-t_event_callback_def const			*get_matching_event_callback(
+t_event_callback_def const	*get_event_callback_defs(void);
+t_event_callback_def const	*get_matching_event_callback(
 	char const *str);
 
-void								print_event_callback_def(
+void						print_event_callback_def(
 	t_event_callback_def const *def);
-void								print_event_callback_defs(void);
+void						print_event_callback_defs(void);
 
 #endif

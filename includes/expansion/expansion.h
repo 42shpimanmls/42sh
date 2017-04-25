@@ -4,7 +4,6 @@
 # include "strlist.h"
 
 // #define EXPANSION_DEBUG
-
 # define IS_QU_SIMPLE 0b0001
 # define	IS_QU_DOUBLE 0b0010
 
