@@ -69,5 +69,5 @@ void		run_env(BUILTIN_ARGS, t_simple_command *cmd)
 		execute_simple_command(cmd, 0);
 	}
 	else
-		display_variables(false);
+		display_variables(true);
 }

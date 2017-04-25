@@ -4,7 +4,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include "uint.h"
-# include "read_input/editor/editor_struct.h" // move
+# include "read_input/editor/editor_struct.h"
 
 # define ARG_STOP "--"
 
@@ -20,7 +20,7 @@ bool					is_circumflex(char c);
 bool					is_bang(char c);
 char					*str_in_str(char *find, char *str, t_uint start, \
 									bool must_start);
-int 					find_and_replace(char **str, char *to_find, \
+int						find_and_replace(char **str, char *to_find, \
 										char *replace, t_uint start);
 void					str_join_with_space(char **str, char *to_join);
 void					str_add_space(char **str);
@@ -39,8 +39,11 @@ bool					is_an_option(char **argv, int pos);
 bool					is_an_argument(char **argv, int pos);
 bool					check_only_allowed_option(char *option, char *allowed);
 size_t					number_of_argument(char **argv);
+bool					is_directory(char const *path);
+void					strfreeswap(char **dst_addr, char *src);
+void					*sig_handler(int sig);
 void					quote_word(char **word);
 void					quote_per_word(char **str);
-int					convert_base(int nbr, int base_from, int base_to);
+int						convert_base(int nbr, int base_from, int base_to);
 
 #endif

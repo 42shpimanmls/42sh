@@ -5,7 +5,7 @@
 # include "vec2i.h"
 
 void		init_editor();
-t_editor 	*get_editor();
+t_editor	*get_editor();
 void		add_to_string(t_editor *ed, char c);
 char		*get_string_from_list(t_string *s);
 void		free_string(t_string *s);
@@ -22,7 +22,7 @@ void		move_start(t_editor *ed);
 void		refresh_line(t_editor *ed);
 void		free_editor(t_editor *ed);
 
-void		put_highlighted_line(t_editor *ed, char* line);
+void		put_highlighted_line(t_editor *ed, char *line);
 void		swap_position_if_needed(t_editor *ed);
 void		clear_selected_pos(t_editor *ed);
 

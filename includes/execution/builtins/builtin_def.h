@@ -33,6 +33,4 @@ t_builtin_def const			*get_matching_builtin(char const *str);
 void						print_builtin_def(t_builtin_def const *def);
 void						print_builtin_defs(void);
 
-
-
 #endif
