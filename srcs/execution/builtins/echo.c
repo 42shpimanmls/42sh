@@ -17,9 +17,15 @@ int		builtin_echo(int argc, char **argv)
 	if ((opt = get_options_core(argc, argv)) == (char *)-1)
 		return (STATUS_FAILURE);
 	i = 1;
-	while (i < argc && argv[i][0] == '-' && \
-	(argv[i][1] == 's' || argv[i][1] == 'n' || argv[i][1] == 'e'))
-		i++;
+	if (check_only_allowed_option(opt, "nse") == false)
+	{
+		ft_strdel(&opt);
+		opt = ft_strdup("abc");
+	}
+	else
+		while (i < argc && argv[i][0] == '-' && \
+		(argv[i][1] == 's' || argv[i][1] == 'n' || argv[i][1] == 'e'))
+			i++;
 	while (i < argc)
 	{
 		if (ft_strchr(opt, 'e') != NULL)
