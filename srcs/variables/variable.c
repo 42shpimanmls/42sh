@@ -3,7 +3,7 @@
 #include "abstract_list.h"
 
 t_variable	*create_variable(char const *name, char const *value,
-	bool exported)
+	bool exported, bool overwrite)
 {
 	t_variable *v;
 
@@ -11,7 +11,7 @@ t_variable	*create_variable(char const *name, char const *value,
 	v->name = ft_strdup(name);
 	v->value = ft_strdup(value);
 	v->exported = exported;
-	v->overwrite = true;
+	v->overwrite = overwrite;
 	v->is_variable = true;
 	v->is_function = false;
 	v->next = NULL;
@@ -169,7 +169,7 @@ t_variable *copy_variable(t_variable *e)
 	tmp = NULL;
 	while (e)
 	{
-		new = create_variable(e->name, e->value, e->exported);
+		new = create_variable(e->name, e->value, e->exported, e->overwrite);
 		list_push_back((t_abstract_list**)&tmp, (t_abstract_list*)new);
 		e = e->next;
 	}

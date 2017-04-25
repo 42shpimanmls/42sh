@@ -222,8 +222,8 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		print_errno_error(errno, "cd", curpath);
 	else if (opt != 'P')
 	{
-		set_variable("OLDPWD", current_pwd);
-		set_variable("PWD", new_pwd);
+		set_variable("OLDPWD", current_pwd, true);
+		set_variable("PWD", new_pwd, true);
 	}
 	free(curpath);
 	return (errno);

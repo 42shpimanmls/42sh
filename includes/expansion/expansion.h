@@ -14,5 +14,6 @@ t_strlist			*field_splitting(char const *word);
 char				*parameter_expansion(char const *word);
 void				quote_removal(char **word);
 void 				handle_quotes(char c, char *quoted);
+char				*tilde_expansion(char const *word);
 
 #endif

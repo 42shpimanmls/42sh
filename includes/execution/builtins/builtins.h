@@ -2,6 +2,7 @@
 # define BUILTINS_H
 
 #include "variable.h"
+# include "../../parse_input/syntax_tree.h"
 /*# include "builtin_args.h"*/
 
 # define STATUS_SUCCESS 0
@@ -36,9 +37,15 @@ int 		unsetenv_as(t_variable **env, char *name);
 */
 
 int			builtin_echo(int argc, char **argv);
+void			display_echo(int argc, char **argv, char *opt, int i);
 bool		escape_char(char *str);
 bool		escape(int c);
 int			octal(char *c);
-int			convert_base(int nbr, int base_from, int base_to);
+
+/*
+** env.c
+*/
+int			builtin_env(BUILTIN_ARGS, t_simple_command *cmd);
+void			run_env(BUILTIN_ARGS, t_simple_command *cmd);
 
 #endif

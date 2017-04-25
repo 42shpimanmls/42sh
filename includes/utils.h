@@ -42,5 +42,8 @@ size_t					number_of_argument(char **argv);
 bool					is_directory(char const *path);
 void					strfreeswap(char **dst_addr, char *src);
 void					*sig_handler(int sig);
+void					quote_word(char **word);
+void					quote_per_word(char **str);
+int						convert_base(int nbr, int base_from, int base_to);
 
 #endif

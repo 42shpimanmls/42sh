@@ -18,6 +18,7 @@ int			start_substitution(char **str, t_uint *start, char *hist_entry)
 	bool 	quote;
 
 	should_run = 1;
+	quote = 0;
 	end = *start;
 	if (!hist_entry)
 	{

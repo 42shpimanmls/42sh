@@ -35,5 +35,8 @@
 **/.DS_Store
 debug
 errlog
+tmp
+tmp2
+segv
 
 vgcore.*

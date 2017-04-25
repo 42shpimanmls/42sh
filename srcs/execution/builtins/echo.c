@@ -3,10 +3,8 @@
 #include "libft.h"
 
 /*
-** for every arguments:
-** '-e': backslash escapes interpretation
-** handle '-n' options
-** '-s' option: do not display space for last str
+** get options, if one wrong opt, consider there is no opt
+** else: pass options to not display them
 */
 
 int		builtin_echo(int argc, char **argv)
@@ -17,9 +15,26 @@ int		builtin_echo(int argc, char **argv)
 	if ((opt = get_options_core(argc, argv)) == (char *)-1)
 		return (STATUS_FAILURE);
 	i = 1;
-	while (i < argc && argv[i][0] == '-' && \
-	(argv[i][1] == 's' || argv[i][1] == 'n' || argv[i][1] == 'e'))
-		i++;
+	if (check_only_allowed_option(opt, "nse") == false)
+		ft_strdel(&opt);
+	else
+		while (i < argc && argv[i][0] == '-' && \
+		(argv[i][1] == 's' || argv[i][1] == 'n' || argv[i][1] == 'e'))
+			i++;
+	display_echo(argc, argv, opt, i);
+	free(opt);
+	return (STATUS_SUCCESS);
+}
+
+/*
+** for every arguments:
+** '-e': backslash escapes interpretation
+** handle '-n' options
+** '-s' option: do not display space for last str
+*/
+
+void	display_echo(int argc, char **argv, char *opt, int i)
+{
 	while (i < argc)
 	{
 		if (ft_strchr(opt, 'e') != NULL)
@@ -35,8 +50,6 @@ int		builtin_echo(int argc, char **argv)
 	}
 	if (ft_strchr(opt, 'n') == NULL)
 		ft_putchar('\n');
-	free(opt);
-	return (STATUS_SUCCESS);
 }
 
 /*
@@ -120,27 +133,4 @@ int		octal(char *c)
 	ft_strdel(&str);
 	ft_putchar((char)convert_base(nbr, 10, 8));
 	return (n);
-}
-
-/*
-** generic function to handle conversion of base
-** Should works till 999
-*/
-
-int		convert_base(int nbr, int base_from, int base_to)
-{
-	int	ret;
-
-	ret = 0;
-	if (nbr >= base_from * base_from)
-	{
-		ret += base_to * base_to;
-		nbr -= base_from * base_from;
-	}
-	while (nbr >= base_to)
-	{
-		ret += base_to;
-		nbr -= base_from;
-	}
-	return (ret + nbr);
 }

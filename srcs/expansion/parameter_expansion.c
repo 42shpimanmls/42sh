@@ -39,6 +39,13 @@ static void	replace_by_variable(char **word, char *parameter, t_uint *start)
 	ft_strdel(&replace);
 }
 
+static bool	is_special_parameter(char c)
+{
+	if (ft_strchr("?$", c))
+		return (true);
+	return (false);
+}
+
 /*
 	$VAR replaced by variable if found, by en empty string if not
 	$ can be quoted with simple quotes or a backslash
@@ -59,7 +66,10 @@ char		*parameter_expansion(char const *word)
 		if (next_dollar_sign(result, &delimit, &quoted))
 		{
 			delimit.end = delimit.start;
-			goto_parameter_end(result, &delimit);
+			if (is_special_parameter(result[delimit.start + 1]))
+				delimit.end = delimit.start + 2;
+			else
+				goto_parameter_end(result, &delimit);
 			parameter = ft_strsub(result, delimit.start, delimit.end - delimit.start);
 			replace_by_variable(&result, parameter, &delimit.start);
 			ft_strdel(&parameter);
