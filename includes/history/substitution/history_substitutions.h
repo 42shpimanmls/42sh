@@ -6,11 +6,15 @@
 # include "history/history_def.h"
 # include "range.h"
 
+#include "break_input/tokenizer_state.h"
+
 /*
 **			history_substitutions.c
 */
 
+int		start_substitution(char **str, t_uint *start, char *hist_entry);
 int		history_substitution(char **str);
+
 
 /*
 **			get_history_entry.c
@@ -35,6 +39,12 @@ char	*get_nth_word(char *line, t_uint n);
 void	get_entry_word(char **entry, char *str, t_uint *end);
 
 /*
+**			bang_sharp.c
+*/
+
+void			bang_sharp(char **str, t_uint *i, int *should_run);
+
+/*
 **			word_range.c
 */
 
@@ -51,16 +61,25 @@ void	parse_word_designators(char *str, int *i, t_range *range, \
 										char **entry, char **words);
 
 /*
-**			history_tokenizer.c
+**			history_tokenizer.c + history_tokenizer_quotes.c
 */
 
+void		add_token_quote(t_tokenizer_state state, t_token *result);
 t_token	*tokenize_for_substitution(char const *input);
+
 
 /*
 **			history_modifiers.c
 */
 
 bool	apply_modifiers(char *modifiers, char **str, t_uint *end, bool *quote);
+
+/*
+**			remove_head_tail.c
+*/
+
+void	remove_head(char **str, char c);
+void	remove_tail(char **str, char c);
 
 /*
 **			add_quotes.c

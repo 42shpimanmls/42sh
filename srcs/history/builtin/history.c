@@ -6,6 +6,18 @@
 
 #include "history_debug.h"
 
+static void		get_args(int argc, char **argv, int i, t_hist_opt *options)
+{
+	options->args = copy_array(argv, i, argc);
+	if (get_error() == NO_ERROR && options->d && !options->offset)
+	{
+		if (options->args && options->args[0])
+			options->offset = ft_strdup(options->args[0]);
+		else
+			error_builtin("history", NULL, NEED_NUM);
+	}
+}
+
 static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 {
 	int			i;
@@ -27,14 +39,7 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 			break ;
 		i++;
 	}
-	options->args = copy_array(argv, i, argc);
-	if (get_error() == NO_ERROR && options->d && !options->offset)
-	{
-		if (options->args && options->args[0])
-			options->offset = ft_strdup(options->args[0]);
-		else
-			error_builtin("history", NULL, NEED_NUM);
-	}
+	get_args(argc, argv, i, options);
 }
 
 int				builtin_history(int argc, char **argv)

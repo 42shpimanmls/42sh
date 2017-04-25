@@ -17,7 +17,7 @@ void		perform_substitution(char **str, char *hist_entry, \
 	ft_putstr(*str);
 }
 
-void 		quick_substitution(char **str, t_uint *start)
+void		quick_substitution(char **str, t_uint *start)
 {
 	char		*hist_entry;
 	t_uint		end;

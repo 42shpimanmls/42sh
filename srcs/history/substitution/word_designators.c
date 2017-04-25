@@ -16,7 +16,7 @@ static char		*get_last_word(char *line)
 {
 	t_token *words;
 	t_token *tmp;
-	char 	*word;
+	char	*word;
 
 	word = NULL;
 	if ((words = tokenize_for_substitution(line)))
@@ -58,7 +58,7 @@ static void		match_last_search(char **hist_entry, char **result)
 }
 
 /*
-**	'*' = range 1-last (all arguments)
+**	'*' = range 1-last (all arguments - not an error to use * with no arguments)
 **	'^' word 1 (first argument)
 **	'$' last word
 **	'%' word that matches last ?str[?] search
@@ -68,11 +68,6 @@ static void		match_last_search(char **hist_entry, char **result)
 void			parse_word_designators(char *str, int *i, t_range *range, \
 										char **entry, char **result)
 {
-	/*
-		!!!!!
-		It is not an error to use ‘*’ if there is just one word in the event;
-		the empty string is returned in that case.
-	*/
 	if (str[*i] == '*')
 	{
 		range->start = 1;
@@ -80,7 +75,10 @@ void			parse_word_designators(char *str, int *i, t_range *range, \
 		range->empty_ok = true;
 	}
 	else if (str[*i] == '^')
-		range->start = range->end = 1;
+	{
+		range->start = 1;
+		range->end = 1;
+	}
 	else if (str[*i] == '$')
 	{
 		*result = get_last_word(*entry);

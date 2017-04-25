@@ -1,5 +1,7 @@
 #include "shell_env.h"
 #include "history.h"
+#include <errno.h>
+#include "errors.h"
 
 /*
 **	-a appends entries not already appended
@@ -12,7 +14,7 @@ void	hist_to_file(t_history *history, char *filename, bool append)
 	int		fd;
 
 	if (append)
-		fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, FILE_PERMISSION); // protect
+		fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, FILE_PERMISSION);
 	else
 		fd = open(filename, O_TRUNC | O_WRONLY | O_CREAT, FILE_PERMISSION);
 	if (fd > 0)
@@ -28,5 +30,9 @@ void	hist_to_file(t_history *history, char *filename, bool append)
 		}
 		close(fd);
 	}
-	// set_error
+	else
+	{
+		print_errno_error(errno, "history", filename);
+		set_error(1);
+	}
 }

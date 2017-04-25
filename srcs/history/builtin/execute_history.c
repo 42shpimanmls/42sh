@@ -27,11 +27,6 @@ static void		args_manipulation(t_history **history, t_hist_opt options)
 	{
 		while (options.args[i])
 		{
-			/*
-			   quotes should already have been removed
-			   + normal substitution made
-			   (test with quotes etc when execution loop)
-			   */
 			history_substitution(&options.args[i]);
 			i++;
 		}
@@ -73,16 +68,13 @@ void			execute_options(t_history **history, t_hist_opt options)
 {
 	if (options.s || options.p)
 		args_manipulation(history, options);
-	else if (options.d || options.c)
+	else if (options.c)
+		clear_history_list(history);
+	else if (options.d)
 	{
-		if (options.c)
-			clear_history_list(history);
-		else
-		{
-			if (!options.offset)
-				options.offset = ft_strdup(options.args[0]);
-			delete_history_entry(history, options.offset);
-		}
+		if (!options.offset)
+			options.offset = ft_strdup(options.args[0]);
+		delete_history_entry(history, options.offset);
 	}
 	else if (options.anrw)
 		file_manipulation(options, *history);
@@ -92,8 +84,8 @@ void			execute_options(t_history **history, t_hist_opt options)
 		if (options.ac > 1)
 			error_builtin("history", NULL, TOO_MANY_ARGS);
 		else if (str_is_digits(*options.args))
-			print_history(*history, list_count((t_abstract_list *)history) - ft_atoi(*options.args));
-			//print_history_n(i + 1 < options.ac, options.args[0], history);
+			print_history(*history, list_count((t_abstract_list *)history) \
+							- ft_atoi(*options.args));
 		else
 			error_builtin("history", NULL, NEED_NUM);
 	}
