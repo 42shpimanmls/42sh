@@ -22,9 +22,7 @@ int		builtin_set(int argc, char **argv)
 			ft_dprintf(STDERR_FILENO, "It's forbidden to use '='\n");
 			return (STATUS_FAILURE);
 		}
-		if (argc == 2 && setenv_as(env, argv[1], "", false) == STATUS_SUCCESS)
-			return (STATUS_SUCCESS);
-		else if (setenv_as(env, argv[1], argv[2], false) == STATUS_SUCCESS)
+		if (setenv_as(env, argv[1], argv[2], false) == STATUS_SUCCESS)
 			return (STATUS_SUCCESS);
 	}
 	else

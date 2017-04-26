@@ -1,11 +1,15 @@
 # THIS IS A COMMENTS.
 #ls | ls PIPE NOT WORK
 
+echo ERRORS
+error
+
 echo BACKOTE
 echo ``
 echo `ls`
 # echo `ls -l`
 # echo `ls -lah`
+#`error`
 echo ----------
 
 echo AND OR
@@ -14,6 +18,7 @@ mkdir srcs || ls
 echo PASS && echo PASS
 # ./segv || ls
 # mkdir srcs && echo PASS
+#`qsdqsdqsd` && echo SUCCESS || echo FAILURE
 echo ----------
 
 echo COMMA
@@ -24,7 +29,7 @@ echo ----------
 echo REDIRECTION
 ls > tmp && cat tmp
 ls > tmp && ls >> tmp && cat tmp
-ls > tmp && cat < tmp >tmp2 && cat tmp2 
+ls > tmp && cat < tmp >tmp2 && cat tmp2
 ls > tmp &&cat<tmp>tmp2&&cat tmp2
 ls>tmp &&cat<tmp>tmp2&&cat -e tmp2
 echo ----------
@@ -47,18 +52,18 @@ env -i ls
 echo ----------
 
 echo BUILTIN EXPORT
-# export 
+# export
 # export =
 # export =sss
 # export =a
 # export a=
 # export a=a
 # export lol=a && lol2=aa env
-export lol && lol2=aa env -i 
+export lol && lol2=aa env -i
 echo ----------
 
 echo ASSHOLE
-     				ls   -llll  -rrr  -- /		
+     				ls   -llll  -rrr  -- /
 # ;
 # ;;;;;
 #  ; ; ; ;  ;		;

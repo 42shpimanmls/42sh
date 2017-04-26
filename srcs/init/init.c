@@ -44,7 +44,7 @@ static char	*get_path_to_ftsh(char const *ftsh_name)
 	return (ft_strjoinf(cwd, ft_strjoin("/", ftsh_name), 3));
 }
 
-void	init(int ac, char **av)
+void		init(int ac, char **av)
 {
 	t_shell_env		*shell_env;
 

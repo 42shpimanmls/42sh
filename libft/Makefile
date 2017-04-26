@@ -21,9 +21,13 @@ FOLDER	=	-I $(HDIR)
 
 ifeq ($(shell uname), Linux)
 NBTHREADS	=`cat /proc/cpuinfo | grep processor | wc -l`
+else ifeq ($(shell uname), Darwin)
+NBTHREADS	=`sysctl -a | grep hw.logicalcpu: | cut -d ' ' -f 2`
 else
-NBTHREADS	= 8
+NBTHREADS	= 1
 endif
+$(eval NBTHREADS=$(shell echo $$(($(NBTHREADS)*2))))
+
 MAKE_OPTS_THREAD 	= -j$(NBTHREADS)
 
 SRCA = ft_strlen.c \

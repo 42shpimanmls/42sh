@@ -140,7 +140,7 @@ void		delete_all_variables(t_variable **var)
 	*var = NULL;
 }
 
-int		pop_variable_by_name(t_variable **list, char *name)
+int			pop_variable_by_name(t_variable **list, char *name)
 {
 	t_variable *lst;
 	t_variable **addr;
@@ -161,7 +161,7 @@ int		pop_variable_by_name(t_variable **list, char *name)
 	return (STATUS_FAILURE);
 }
 
-t_variable *copy_variable(t_variable *e)
+t_variable	*copy_variable(t_variable *e)
 {
 	t_variable	*tmp;
 	t_variable	*new;
