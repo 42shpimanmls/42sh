@@ -1,5 +1,5 @@
 #include "sig_handler.h"
-#include "ftsh.h"
+// #include "ftsh.h"
 #include "read_input/editor/editor.h"
 #include "errno.h"
 #include <sys/wait.h>

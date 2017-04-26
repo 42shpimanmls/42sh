@@ -9,7 +9,7 @@
 #include "execution/execute_syntax_tree.h"
 #include "sig_handler.h"
 
-void		main_loop(void)
+static void		main_loop(void)
 {
 	t_shell_env *shell_env;
 
