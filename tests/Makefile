@@ -10,7 +10,7 @@ OBJS_ROOT = objs
 
 TARGET_OBJS_ROOT = ../objs
 TARGET_INCL_ROOT = ../includes
-TARGET_OBJS = $(filter-out %main.o, $(filter %.o, $(shell find $(TARGET_OBJS_ROOT) -type f)))
+TARGET_OBJS = $(filter-out %main.o %sig_handler.o, $(filter %.o, $(shell find $(TARGET_OBJS_ROOT) -type f)))
 
 SRCS_DIRS = $(shell find $(SRCS_ROOT) -type d)
 OBJS_DIRS = $(patsubst $(SRCS_ROOT)%, $(OBJS_ROOT)%, $(SRCS_DIRS))
