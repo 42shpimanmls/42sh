@@ -10,7 +10,7 @@
 int		builtin_echo(int argc, char **argv)
 {
 	int		i;
-	char		*opt;
+	char	*opt;
 
 	if ((opt = get_options_core(argc, argv)) == (char *)-1)
 		return (STATUS_FAILURE);

@@ -1,14 +1,14 @@
-# include "builtin_def.h"
-# include <libft.h>
-# include <signal.h>
-# include "shell_env.h"
-# include "abstract_list.h"
-# include "init/init.h"
-# include "utils.h"
+#include "builtin_def.h"
+#include <libft.h>
+#include <signal.h>
+#include "shell_env.h"
+#include "abstract_list.h"
+#include "init/init.h"
+#include "utils.h"
 
 # define USAGE	"Usage: export [-p] name[=word]...\n"
 
-static void 	export_classic(t_variable **env, char **argv)
+static void		export_classic(t_variable **env, char **argv)
 {
 	char	**tab;
 	size_t	i;
@@ -68,7 +68,7 @@ static void		export_option_p(t_variable *env)
 ** then the value of that variable shall be set to word.
 */
 
-BUILTIN_RET		builtin_export(BUILTIN_ARGS)
+int				builtin_export(int argc, char **argv)
 {
 	t_variable	**env;
 	char		*opt;

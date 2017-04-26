@@ -1,8 +1,8 @@
-# include "builtin_def.h"
-# include <libft.h>
-# include "shell_env.h"
-# include "init/init.h"
-# include "utils.h"
+#include "builtin_def.h"
+#include <libft.h>
+#include "shell_env.h"
+#include "init/init.h"
+#include "utils.h"
 
 # define USAGE	"Usage: unset [-fv] name...\n"
 
@@ -27,7 +27,7 @@ int				unset_as(t_variable **env, char *name)
 ** it is unspecified whether a function by that name, if any, shall be unset.
 */
 
-static void 	unset_classic(t_variable **env, char **argv)
+static void		unset_classic(t_variable **env, char **argv)
 {
 	size_t	i;
 
@@ -44,7 +44,7 @@ static void 	unset_classic(t_variable **env, char **argv)
 ** and the shell shall unset the function definition.
 */
 
-static void 	unset_option_f(t_variable **env, char **argv)
+static void		unset_option_f(t_variable **env, char **argv)
 {
 	size_t	i;
 
@@ -78,7 +78,7 @@ static void		unset_option_v(t_variable **env, char **argv)
 	}
 }
 
-BUILTIN_RET		builtin_unset(BUILTIN_ARGS)
+int				builtin_unset(int argc, char **argv)
 {
 	t_variable	**env;
 	char		*opt;

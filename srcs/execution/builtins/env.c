@@ -4,7 +4,7 @@
 #include <sys/wait.h>
 #include <paths.h>
 
-# define USAGE  "Usage: env [-i] name[=word]…\n"
+# define USAGE "Usage: env [-i] name[=word]…\n"
 
 /*
 ** retrive '-i' option
@@ -15,7 +15,7 @@
 ** restore previous env var
 */
 
-BUILTIN_RET	builtin_env(BUILTIN_ARGS, t_simple_command *cmd)
+int			builtin_env(int argc, char **argv, t_simple_command *cmd)
 {
 	char		*opt;
 	t_variable	*e;
@@ -24,10 +24,10 @@ BUILTIN_RET	builtin_env(BUILTIN_ARGS, t_simple_command *cmd)
 	if ((opt = get_options_core(argc, argv)) == (char *)-1)
 		return (STATUS_FAILURE);
 	if (check_only_allowed_option(opt, "i") == false)
-        {
-                ft_dprintf(STDERR_FILENO, USAGE);
-                return (STATUS_FAILURE);
-        }
+	{
+		ft_dprintf(STDERR_FILENO, USAGE);
+		return (STATUS_FAILURE);
+	}
 	e = ft_strchr(opt, 'i') != NULL ? NULL : \
 		copy_variable(get_shell_env()->variables);
 	save = get_shell_env()->variables;
@@ -46,9 +46,9 @@ BUILTIN_RET	builtin_env(BUILTIN_ARGS, t_simple_command *cmd)
 ** else: display env var
 */
 
-void		run_env(BUILTIN_ARGS, t_simple_command *cmd)
+void		run_env(int argc, char **argv, t_simple_command *cmd)
 {
-	int	i;
+	int		i;
 	char	**split;
 
 	i = 1;
@@ -59,7 +59,7 @@ void		run_env(BUILTIN_ARGS, t_simple_command *cmd)
 	{
 		split = ft_strsplit(argv[i], '=');
 		setenv_as(&get_shell_env()->variables, split[0], split[1],\
-			 false);
+			false);
 		ft_freetabchar(split);
 		i++;
 	}

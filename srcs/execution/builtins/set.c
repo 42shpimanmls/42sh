@@ -1,14 +1,11 @@
-# include "builtin_def.h"
-# include <libft.h>
-# include <signal.h>
-# include "shell_env.h"
-# include "abstract_list.h"
-# include "init/init.h"
+#include "builtin_def.h"
+#include <libft.h>
+#include <signal.h>
+#include "shell_env.h"
+#include "abstract_list.h"
+#include "init/init.h"
 
-# define FORBIDDEN_CHAR	"Is forbidden to use the character '='\n"
-# define USAGE 			"Usage: set <key> <value>\n"
-
-BUILTIN_RET		builtin_set(BUILTIN_ARGS)
+int		builtin_set(int argc, char **argv)
 {
 	t_variable	**env;
 
@@ -22,24 +19,15 @@ BUILTIN_RET		builtin_set(BUILTIN_ARGS)
 	{
 		if (ft_strchr(argv[1], '='))
 		{
-			ft_dprintf(STDERR_FILENO, FORBIDDEN_CHAR);
+			ft_dprintf(STDERR_FILENO, "It's forbidden to use '='\n");
 			return (STATUS_FAILURE);
 		}
-		if (argc == 2)
-		{
-			if (setenv_as(env, argv[1], "", false) == STATUS_SUCCESS)
-				return (STATUS_SUCCESS);
-		}
-		else
-		{
-			if (setenv_as(env, argv[1], argv[2], false) == STATUS_SUCCESS)
-				return (STATUS_SUCCESS);
-		}
+		if (argc == 2 && setenv_as(env, argv[1], "", false) == STATUS_SUCCESS)
+			return (STATUS_SUCCESS);
+		else if (setenv_as(env, argv[1], argv[2], false) == STATUS_SUCCESS)
+			return (STATUS_SUCCESS);
 	}
 	else
-	{
-		ft_dprintf(STDERR_FILENO, USAGE);
-	}
+		ft_dprintf(STDERR_FILENO, "Usage: set <key> <value>\n");
 	return (STATUS_FAILURE);
 }
-

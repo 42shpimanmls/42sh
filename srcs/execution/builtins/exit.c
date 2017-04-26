@@ -3,7 +3,7 @@
 #include "utils.h"
 #include <libft.h>
 
-BUILTIN_RET 		builtin_exit(BUILTIN_ARGS)
+int		builtin_exit(int argc, char **argv)
 {
 	t_uchar	ret;
 
