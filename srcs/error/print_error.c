@@ -25,19 +25,20 @@ void					print_error_msg(t_error_id id)
 	{
 		if (id == errors[u].id)
 		{
-			ft_putendl(errors[u].msg);
+			ft_putendl_fd(errors[u].msg, 2);
 			return;
 		}
 		u++;
 	}
+	ft_putendl_fd("undefined error message", 2);
 }
 
 void					print_name_and_error(t_error_id id)
 {
 	if (id == NO_ERROR)
 		return ;
-	ft_putstr(SHNAME);
-	ft_putstr(": ");
+	ft_putstr_fd(SHNAME, 2);
+	ft_putstr_fd(": ", 2);
 	print_error_msg(id);
 }
 
