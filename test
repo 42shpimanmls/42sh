@@ -113,8 +113,8 @@ function compute($command) {
 	global $shellexec2;
 
 	$countAll++;
-	$result1 = exec("./$shellexec1 -c '$command' 2>&1", $null, $return_var1);
-	$result2 = exec("$shellexec2 -c '$command' 2>&1", $null, $return_var2);
+	$result1 = exec("./$shellexec1 -c '$command' 2>/dev/null", $null, $return_var1);
+	$result2 = exec("$shellexec2 -c '$command' 2>/dev/null", $null, $return_var2);
 
 	file_put_contents("res1", $result1);
 	file_put_contents("res2", $result2);
