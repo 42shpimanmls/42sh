@@ -12,7 +12,7 @@ void	str_add_space(char **str)
 
 void	str_join_with_space(char **str, char *to_join)
 {
-	char 	*tmp;
+	char	*tmp;
 
 	str_add_space(str);
 	tmp = ft_strjoin(*str, to_join);

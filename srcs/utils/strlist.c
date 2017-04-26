@@ -2,7 +2,7 @@
 #include <libft.h>
 #include "abstract_list.h"
 
-char					*strlist_to_str(t_strlist const *list)
+char		*strlist_to_str(t_strlist const *list)
 {
 	char	*result;
 
@@ -15,7 +15,7 @@ char					*strlist_to_str(t_strlist const *list)
 	return (result);
 }
 
-char					*strlist_to_str_until(t_strlist const *list
+char		*strlist_to_str_until(t_strlist const *list
 														, t_strlist const *end)
 {
 	char	*result;
@@ -29,7 +29,7 @@ char					*strlist_to_str_until(t_strlist const *list
 	return (result);
 }
 
-t_strlist			*strlist_construct(char const *str)
+t_strlist	*strlist_construct(char const *str)
 {
 	t_strlist	*result;
 
@@ -39,7 +39,7 @@ t_strlist			*strlist_construct(char const *str)
 	return (result);
 }
 
-char				**strlist_to_strarray(t_strlist const *list)
+char		**strlist_to_strarray(t_strlist const *list)
 {
 	char		**result;
 	char		**it;
@@ -58,7 +58,7 @@ char				**strlist_to_strarray(t_strlist const *list)
 	return (result);
 }
 
-void				strlist_delete(t_strlist **strlist_addr)
+void		strlist_delete(t_strlist **strlist_addr)
 {
 	t_strlist	*it;
 	t_strlist	*next;
@@ -74,7 +74,7 @@ void				strlist_delete(t_strlist **strlist_addr)
 	*strlist_addr = NULL;
 }
 
-void				strlist_append(t_strlist **strlist_addr , char const *str)
+void		strlist_append(t_strlist **strlist_addr, char const *str)
 {
 	t_strlist	*it;
 	t_strlist	*new_elem;

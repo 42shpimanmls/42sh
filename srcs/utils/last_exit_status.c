@@ -22,9 +22,9 @@ void			set_last_exit_status(t_uchar status)
 	char *st;
 
 	st = ft_itoa(status);
-	#ifdef FTSH_DEBUG
-		ft_dprintf(2, "setting last exit status to %s\n", st);
-	#endif
+#ifdef FTSH_DEBUG
+	ft_dprintf(2, "setting last exit status to %s\n", st);
+#endif
 	set_variable("?", st, false);
 	free(st);
 	*get_ptr() = status;
