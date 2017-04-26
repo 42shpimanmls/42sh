@@ -1,7 +1,5 @@
 # 42sh
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e64c37954bc84549bf555381defa6fdc)](https://www.codacy.com/app/pilespin/42sh)
-
-[![Build Status](https://travis-ci.org/42shpimanmls/42sh.svg?branch=master)](https://travis-ci.org/42shpimanmls/42sh)
+[![Build Status](https://travis-ci.org/42shpimanmls/42sh.svg?branch=master)](https://travis-ci.org/42shpimanmls/42sh) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e64c37954bc84549bf555381defa6fdc)](https://www.codacy.com/app/pilespin/42sh)
 
 FEATURES
 ---
