@@ -8,8 +8,10 @@ LFLAGS		= -L./libft/ -lft -lncurses
 
 ifeq ($(shell uname), Linux)
 NBTHREADS	=`cat /proc/cpuinfo | grep processor | wc -l`
+else ifeq ($(shell uname), Darwin)
+NBTHREADS	=`sysctl -a | grep hw.logicalcpu: | cut -d ' ' -f 2`
 else
-NBTHREADS	= 8
+NBTHREADS	= 1
 endif
 $(eval NBTHREADS=$(shell echo $$(($(NBTHREADS)*2))))
 
