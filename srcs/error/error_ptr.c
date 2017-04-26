@@ -3,6 +3,7 @@
 static t_error_id		*get_error_ptr(void)
 {
 	static t_error_id	error;
+
 	return (&error);
 }
 
