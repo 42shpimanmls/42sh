@@ -40,8 +40,11 @@ char	*get_options_core(int ac, char **av)
 			j = 0;
 			while (av[i][++j])
 			{
-				if (ft_isalpha(av[i][j]) && !ft_strchr(arg, av[i][j]))
-					arg = ft_strjoinf(arg, ft_strndup(&av[i][j], 1), 3);
+				if (ft_isalpha(av[i][j]))
+				{
+					if (!ft_strchr(arg, av[i][j]))
+						arg = ft_strjoinf(arg, ft_strndup(&av[i][j], 1), 3);
+				}
 				else
 				{
 					free(arg);
