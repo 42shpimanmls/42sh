@@ -13,9 +13,9 @@
 
 t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 {
-	(void)lvl;
 	t_error_id	ret;
 
+	(void)lvl;
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "executing file %s\n", cmd->argv[0]);
@@ -32,17 +32,17 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 			print_errno_error(errno, cmd->argv[0], NULL);
 			exit(EXIT_FAILURE);
 		}
-		exit (EXIT_SUCCESS);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
 		wait_for_childs();
 		if (cmd->argv && cmd->argv[0])
-			set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1] , false);
+			set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1], false);
 		else
 		{
 			set_assignments(cmd->assignments);
-			set_variable("_", NULL , false);
+			set_variable("_", NULL, false);
 		}
 		ret = get_error();
 	}
@@ -56,7 +56,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 {
 	t_error_id	ret;
-	int 		*stdin_out_backup;
+	int			*stdin_out_backup;
 
 	ret = NO_ERROR;
 	if (cmd != NULL)
@@ -121,7 +121,6 @@ t_error_id	execute_pipeline(t_simple_command *pipeline, size_t lvl)
 	}
 	wait_for_last_child(pipeline_state.last_pid);
 	kill(0, SIGINT);
-
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "done executing pipeline, %s\n", pipeline_state.last_ret == NO_ERROR ? "ok" : "error");

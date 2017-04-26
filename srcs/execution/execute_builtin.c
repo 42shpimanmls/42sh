@@ -28,11 +28,9 @@ t_error_id	execute_builtin(t_simple_command *cmd, size_t lvl)
 			if (builtin->builtin == NULL)
 			{
 			#ifdef FTSH_DEBUG
-
 				print_n_char_fd(' ', (lvl + 1) * 2, 2);
 				dprintf(2, "%s is undefined\n", builtin->name);
 			#endif
-
 				return (NO_SUCH_BUILTIN);
 			}
 			ret = builtin->builtin(ft_tablen(cmd->argv), cmd->argv);
