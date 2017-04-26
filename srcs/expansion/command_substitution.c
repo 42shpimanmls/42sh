@@ -44,6 +44,7 @@ static char					*fd_to_str(int fd)
 static void					rm_trailing_newlines(char *str)
 {
 	size_t	len;
+
 	len = ft_strlen(str);
 	while (len-- > 0 && str[len] == '\n')
 		str[len] = '\0';
@@ -78,7 +79,6 @@ static void					add_substitution(t_strlist **strlist_addr
 	}
 	else
 	{
-
 		close(pipefds[1]);
 		tmp = fd_to_str(pipefds[0]);
 
@@ -116,7 +116,7 @@ static t_strlist			*split_subsitutions(char const *word)
 				fatal_error("substitution end not found in split_subsitutions(), a substitution hasn't been correctly recognized before being expanded");
 			add_substitution(&result, word + 1, subst_end);
 			if (get_error() != NO_ERROR)
-				fatal_error("error in add_substitution() in split_subsitutions()");
+				fatal_error("error in add_substitution in split_subsitutions");
 			word = subst_end + 1;
 			passv_str_start = word;
 		}
