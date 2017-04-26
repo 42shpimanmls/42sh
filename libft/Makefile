@@ -24,6 +24,8 @@ NBTHREADS	=`cat /proc/cpuinfo | grep processor | wc -l`
 else
 NBTHREADS	= 8
 endif
+$(eval NBTHREADS=$(shell echo $$(($(NBTHREADS)*2))))
+
 MAKE_OPTS_THREAD 	= -j$(NBTHREADS)
 
 SRCA = ft_strlen.c \
