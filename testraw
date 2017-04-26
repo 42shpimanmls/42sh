@@ -3,6 +3,10 @@
 
 echo ERRORS
 error
+./nope
+chmod 000 segv
+./segv
+# ./segv
 
 echo BACKOTE
 echo ``
@@ -77,3 +81,5 @@ ls -lah
 pwd
 # ls -ZDjtnNLIF lKMotSazCt && ls
 echo ----------
+echo 42sh
+commandnotfound
