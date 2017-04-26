@@ -3,9 +3,6 @@
 #include "shell_env.h"
 #include "init/init.h"
 
-# define FORBIDDEN_CHAR	"Is forbidden to use the character '='\n"
-# define USAGE 			"Usage: unsetenv <key> ...\n"
-
 int		builtin_unsetenv(int argc, char **argv)
 {
 	t_variable	**env;
@@ -25,9 +22,7 @@ int		builtin_unsetenv(int argc, char **argv)
 		return (STATUS_SUCCESS);
 	}
 	else
-	{
-		ft_dprintf(STDERR_FILENO, USAGE);
-	}
+		ft_dprintf(STDERR_FILENO, "Usage: unsetenv <key> …\n");
 	return (STATUS_FAILURE);
 }
 
@@ -37,7 +32,7 @@ int		unsetenv_as(t_variable **env, char *name)
 	{
 		if (ft_strchr(name, '='))
 		{
-			ft_dprintf(STDERR_FILENO, FORBIDDEN_CHAR);
+			ft_dprintf(STDERR_FILENO, "It's forbidden to use '='\n");
 			return (STATUS_FAILURE);
 		}
 		if (variable_is_overwritable(*env, name))

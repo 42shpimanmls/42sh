@@ -6,8 +6,6 @@
 #include "init/init.h"
 #include "utils.h"
 
-# define USAGE	"Usage: export [-p] name[=word]...\n"
-
 static void		export_classic(t_variable **env, char **argv)
 {
 	char	**tab;
@@ -86,7 +84,7 @@ int				builtin_export(int argc, char **argv)
 		export_classic(env, argv);
 	else
 	{
-		ft_dprintf(STDERR_FILENO, USAGE);
+		ft_dprintf(STDERR_FILENO, "Usage: export [-p] name[=word]...\n");
 		return (STATUS_FAILURE);
 	}
 	return (STATUS_SUCCESS);

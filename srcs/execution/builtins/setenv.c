@@ -5,9 +5,6 @@
 #include "abstract_list.h"
 #include "variable.h"
 
-# define FORBIDDEN_CHAR	"Is forbidden to use the character '='\n"
-# define USAGE 			"Usage: setenv <key> <value>\n"
-
 int		builtin_setenv(int argc, char **argv)
 {
 	t_variable	**env;
@@ -17,7 +14,7 @@ int		builtin_setenv(int argc, char **argv)
 	{
 		if (ft_strchr(argv[1], '='))
 		{
-			ft_dprintf(STDERR_FILENO, FORBIDDEN_CHAR);
+			ft_dprintf(STDERR_FILENO, "It's forbidden to use '='\n");
 			return (STATUS_FAILURE);
 		}
 		if (argc == 2)
@@ -32,7 +29,7 @@ int		builtin_setenv(int argc, char **argv)
 		}
 	}
 	else
-		ft_dprintf(STDERR_FILENO, USAGE);
+		ft_dprintf(STDERR_FILENO, "Usage: setenv <key> <value>\n");
 	return (STATUS_FAILURE);
 }
 

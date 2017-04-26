@@ -4,8 +4,6 @@
 #include "init/init.h"
 #include "utils.h"
 
-# define USAGE	"Usage: unset [-fv] name...\n"
-
 int				unset_as(t_variable **env, char *name)
 {
 	if (env && ft_strlen(name) > 0)
@@ -97,7 +95,7 @@ int				builtin_unset(int argc, char **argv)
 	}
 	else
 	{
-		ft_dprintf(STDERR_FILENO, USAGE);
+		ft_dprintf(STDERR_FILENO, "Usage: unset [-fv] name...\n");
 		free(opt);
 		return (STATUS_FAILURE);
 	}
