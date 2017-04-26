@@ -1,11 +1,12 @@
 #include "shell_env.h"
 #include "variable.h"
-// #include "utils.h"
 
 /*
-**	The underscore variable expands to the last argument to the previous command, after expansion.
-**	It is also set to the full pathname of each command executed and placed in the environment
-**	exported to that command.
+** The underscore variable expands to the last argument to the previous command,
+** after expansion.
+** It is also set to the full pathname of each command executed and
+** placed in the environment.
+** exported to that command.
 */
 
 void		add_path_to_env(char *path, char **env)
@@ -43,7 +44,7 @@ void		set_underscore(char **words)
 static void	set_shlvl(void)
 {
 	char	*tmp;
-	int 	shlvl;
+	int		shlvl;
 
 	if ((tmp = get_variable("SHLVL")))
 	{
