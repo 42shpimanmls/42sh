@@ -9,6 +9,6 @@ bool		list_goto_n(t_abstract_list **list, t_uint n)
 		n--;
 	}
 	if (!(*list))
-			return (false);
+		return (false);
 	return (true);
 }

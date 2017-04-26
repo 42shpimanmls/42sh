@@ -1,7 +1,7 @@
-# include <stdbool.h>
-# include <libft.h>
+#include <stdbool.h>
+#include <libft.h>
 
-bool is_an_option(char **argv, int pos)
+bool	is_an_option(char **argv, int pos)
 {
 	int		i;
 	int		j;

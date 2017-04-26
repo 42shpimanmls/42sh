@@ -7,14 +7,14 @@
 #include "execution/signal_error_exec.h"
 #include <signal.h>
 
-void				wait_for_childs()
+void	wait_for_childs(void)
 {
 	int		wstatus;
 	t_uchar	estatus;
 
 	set_error(NO_ERROR);
 	wstatus = 0;
-	while(wait(&wstatus) != -1 && errno != ECHILD)
+	while (wait(&wstatus) != -1 && errno != ECHILD)
 	{
 		if (WIFEXITED(wstatus))
 		{
@@ -34,13 +34,12 @@ void				wait_for_childs()
 		set_last_exit_status(WEXITSTATUS(wstatus));
 }
 
- void	wait_for_last_child(pid_t last_child_pid)
- {
- 	int		wstatus;
+void	wait_for_last_child(pid_t last_child_pid)
+{
+	int		wstatus;
 	t_uchar	estatus;
 
 	set_error(NO_ERROR);
-
 	while (waitpid(last_child_pid, &wstatus, 0) != last_child_pid && !errno)
 		;
 	if (WIFEXITED(wstatus))
@@ -50,4 +49,4 @@ void				wait_for_childs()
 		if (estatus != EXIT_SUCCESS)
 			set_error(CHILD_FAILURE);
 	}
- }
+}

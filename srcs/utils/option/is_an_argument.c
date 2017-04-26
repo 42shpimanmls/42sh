@@ -1,8 +1,8 @@
-# include <stdbool.h>
-# include <libft.h>
-# include "utils.h"
+#include <stdbool.h>
+#include <libft.h>
+#include "utils.h"
 
-bool is_an_argument(char **argv, int pos)
+bool	is_an_argument(char **argv, int pos)
 {
 	if (ft_tablen(argv) <= pos)
 		return (false);
