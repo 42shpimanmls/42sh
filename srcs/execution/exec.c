@@ -40,7 +40,7 @@ void	pre_exec(t_simple_command *cmd)
 
 void	execute(char **cmd, char **env, char **path)
 {
-	int	i;
+	int		i;
 	char	*p_exec;
 
 	i = -1;
@@ -79,7 +79,7 @@ void	exec_if_perm_ok(char *path, char **cmd, char **env)
 	}
 }
 
-void    error_message(char *one, char *two, int ret)
+void	error_message(char *one, char *two, int ret)
 {
 	ft_dprintf(2, ">%s: %s: %s.\n", SHNAME, one, two);
 	exit(ret);
