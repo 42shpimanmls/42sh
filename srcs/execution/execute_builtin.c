@@ -4,15 +4,38 @@
 #include "variable.h"
 #include <stdio.h>
 
+static char		*get_backup_var(t_variable *env_backup, char *name)
+{
+	t_variable	*env;
+	char		*val;
+
+	env = get_shell_env()->variables;
+	get_shell_env()->variables = env_backup;
+	val = get_variable(name);
+	if (!val && variable_exist(env_backup, name))
+		val = ft_strnew(1);
+	get_shell_env()->variables = env;
+	return (val);
+}
+
 static void		set_env_exec(t_variable **env_backup, t_variable *assignments)
 {
 	*env_backup = copy_variable(get_shell_env()->variables);
 	set_assignments(assignments, true);
 }
 
-static void		restore_env(t_variable **env_backup)
+static void		restore_env(t_variable **env_backup, t_variable *assignments)
 {
-	get_shell_env()->variables = copy_variable(*env_backup);
+	char		*val;
+
+	while (assignments)
+	{
+		val = get_backup_var(*env_backup, assignments->name);
+		if (val)
+			setenv_as(&get_shell_env()->variables, assignments->name, val, true);
+		ft_strdel(&val);
+		assignments = assignments->next;
+	}
 	free_variable(*env_backup);
 }
 
@@ -27,7 +50,7 @@ t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
 	if (cmd != NULL)
 	{
 		set_variable("_", cmd->argv[0], false);
-		if (ft_strcmp(cmd->argv[0], "exit"))
+		if (cmd->argv[0] && ft_strcmp(cmd->argv[0], "exit"))
 			set_env_exec(&env_backup, cmd->assignments);
 		if (ft_strcmp(cmd->argv[0], "env") == 0)
 			ret = builtin_env(ft_tablen(cmd->argv), cmd->argv, cmd);
@@ -56,7 +79,7 @@ t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
 			#endif
 		}
 	}
-	restore_env(&env_backup);
+	restore_env(&env_backup, cmd->assignments);
 	set_last_exit_status(ret == NO_ERROR ? 0 : 1);
 	return (ret);
 }
