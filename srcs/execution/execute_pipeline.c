@@ -41,7 +41,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 			set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1], false);
 		else
 		{
-			set_assignments(cmd->assignments);
+			set_assignments(cmd->assignments, false);
 			set_variable("_", NULL, false);
 		}
 		ret = get_last_exit_status();
