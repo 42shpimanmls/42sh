@@ -57,7 +57,7 @@ void		run_env(int argc, char **argv, t_simple_command *cmd)
 	{
 		split = ft_strsplit(argv[i], '=');
 		setenv_as(&get_shell_env()->variables, split[0], split[1],\
-			false);
+			true);
 		ft_freetabchar(split);
 		i++;
 	}
