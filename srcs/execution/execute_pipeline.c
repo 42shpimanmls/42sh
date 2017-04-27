@@ -44,7 +44,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 			set_assignments(cmd->assignments);
 			set_variable("_", NULL, false);
 		}
-		ret = get_error();
+		ret = get_last_exit_status();
 	}
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
