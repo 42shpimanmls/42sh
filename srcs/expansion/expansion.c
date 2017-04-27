@@ -63,7 +63,6 @@ static t_strlist	*expand_cmd_word(char const *word)
 			return (NULL);
 		result = field_splitting(tmp);
 		ft_strdel(&tmp);
-
 		it = result;
 		while (it != NULL)
 		{
