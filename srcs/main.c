@@ -61,7 +61,7 @@ int				main(int ac, char **av)
 	init(ac, av);
 	while (get_shell_env()->should_run)
 		main_loop();
-	if (get_error() == CHILD_FAILURE)
+	if (get_error() == CHILD_FAILURE || get_last_exit_status())
 		return (get_last_exit_status());
 	else if (get_error() == NO_ERROR)
 		return (EXIT_SUCCESS);
