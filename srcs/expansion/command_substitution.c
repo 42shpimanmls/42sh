@@ -113,11 +113,6 @@ static t_strlist			*split_subsitutions(char const *word)
 				add_passive_string(&result, passv_str_start, word);
 			subst_end = find_substitution_end(word + 1);
 			add_substitution(&result, word + 1, subst_end);
-			if (get_error() != NO_ERROR)
-			{
-				strlist_delete(&result);
-				return (NULL);
-			}
 			word = subst_end + 1;
 			passv_str_start = word;
 		}
