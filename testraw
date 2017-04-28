@@ -1,15 +1,15 @@
 # THIS IS A COMMENTS.
-# PIPE NOT WORK Ex: ls | ls 
+# PIPE NOT WORK Ex: ls | ls
 
 ###########################################################################
 ################################# BUILTIN #################################
 ###########################################################################
 
+
 #################################
 ############### CD ##############
 #################################
 # cd [-L|-P] [directory]
-
 # cd ; pwd
 # cd ~ ; pwd
 # cd / ; pwd
@@ -202,8 +202,8 @@ ls > tmp ; cat tmp ; rm tmp
 ls >> tmp ; cat tmp ; rm tmp
 mkdir 2> tmp; cat tmp ; rm tmp
 mkdir 2>> tmp; cat tmp ; rm tmp
-ls 2> tmp; cat tmp ; rm tmp 
-ls 2>> tmp; cat tmp ; rm tmp 
+ls 2> tmp; cat tmp ; rm tmp
+ls 2>> tmp; cat tmp ; rm tmp
 ls>tmp ; cat tmp ; rm tmp
 ls 1> tmp ; cat tmp
 
@@ -216,7 +216,7 @@ cat < tmp >> /tmp/txt; cat /tmp/txt; rm /tmp/tx
 t
 ### Same file name
 cat < tmp > tmp
-cat < tmp >> tmp 
+cat < tmp >> tmp
 
 #################################
 ############## PIPE #############
@@ -253,12 +253,18 @@ mkdir srcs && echo PASS
 ########## BACKQUOTE ##########
 #################################
 # Les back quotes "‘".
-
+``
 echo ``
+`ls`
 echo `ls`
-echo `ls -l`
-echo `ls -lah`
-# `error`
+`error`
+echo `error`
+`./error`
+echo `./error`
+echo `echo 'un'` `error` `echo trois`
+echo "`ls`"
+echo "`ls\``"
+echo '`ls`'
 
 #################################
 ############# COMMA #############
