@@ -9,11 +9,14 @@ chmod 000 segv
 # ./segv
 
 echo BACKOTE
+``
 echo ``
+`ls`
 echo `ls`
-# echo `ls -l`
-# echo `ls -lah`
 #`error`
+echo `error`
+#`./error`
+echo `./error`
 echo ----------
 
 echo AND OR
