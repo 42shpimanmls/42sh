@@ -4,5 +4,6 @@
 # include "syntax_tree.h"
 
 void	print_command_list(t_command_list const *cmd_list, size_t lvl);
+void	print_pipeline(t_simple_command const *pip, size_t lvl);
 
 #endif

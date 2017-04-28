@@ -24,7 +24,7 @@ void		print_cursor_vector(t_editor *ed)
 	ft_dprintf(2, "cx: %d, cy: %d\n", vec.x, vec.y);
 }
 
-static char *start_rescue_mode()
+char		*start_rescue_mode()
 {
 	char	*line;
 
@@ -34,7 +34,7 @@ static char *start_rescue_mode()
 	return (line);
 }
 
-static char *start_normal_mode(t_editor *ed)
+char		*start_normal_mode(t_editor *ed)
 {
 	char						buf[EVENT_STR_MAX_LEN + 1];
 	int							ret;
@@ -62,44 +62,4 @@ static char *start_normal_mode(t_editor *ed)
 	}
 	ft_close_termcaps();
 	return (get_string_from_list(ed->string));
-}
-
-void	refresh_termcap(int ret)
-{
-	t_editor *ed;
-
-	(void)ret;
-	ed = get_editor();
-	if (!ed || !ed->in_edition)
-		return ;
-	ft_close_termcaps();
-	ft_start_termcaps();
-	free(ed->term);
-	ed->term = NULL;
-	ed->term = init_term();
-	ed->pos = get_cursor_vector(ed);
-}
-
-char 		*edit_input()
-{
-
-	t_editor					*ed;
-	char						*line;
-
-	signal(SIGWINCH, refresh_termcap);
-	ft_start_termcaps();
-	ed = get_editor();
-	init_editor();
-	if (ed->term->rescue_mode)
-	{
-		line = start_rescue_mode();
-	}
-	else
-	{
-		ed->in_edition = true;
-		line = start_normal_mode(ed);
-	}
-	ed->in_edition = false;
-	free_editor(ed);
-	return (line);
 }
