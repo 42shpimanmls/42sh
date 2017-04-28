@@ -149,6 +149,7 @@ function compute($command) {
 		}
 		if ($detail)
 		{
+			$res = preg_replace('/---\n|1c1\n|>|</', '', $res);
 			if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
 				$allerror .= "$res";
 			else
@@ -161,6 +162,9 @@ function compute($command) {
 			else
 				$allerrorcheck .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
 		}
+		if (!$ERRSTDOUT)
+				$allerrorcheck .= "\n";
+
 	}
 	else
 	{
