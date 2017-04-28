@@ -262,6 +262,8 @@ echo `error`
 `./error`
 echo `./error`
 echo `echo 'un'` `error` `echo trois`
+echo `echo 'un'``error``echo trois`
+echo `echo 'un'`et`error`et`echo trois`
 echo "`ls`"
 echo "`ls\``"
 echo '`ls`'
@@ -276,9 +278,9 @@ ls;ls
 cat auteur ; cat auteur
 cat auteur ; cat auteur ; cat auteur
 
-# ;
-# ;;;;;
-#  ; ; ; ;  ;		;
+;
+;;;;;
+; ; ; ;  ;		;
 
 ###########################################################################
 ################################## TRASH ##################################
