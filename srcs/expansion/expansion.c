@@ -97,5 +97,5 @@ void				expand_cmd_words(char ***words_addr)
 	*words_addr = strlist_to_strarray(word_list);
 	strlist_delete(&word_list);
 	if (*words_addr && **words_addr)
-		set_last_exit_status(EXIT_SUCCESS);
+		set_error(NO_ERROR);
 }
