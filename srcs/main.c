@@ -68,6 +68,6 @@ int				main(int ac, char **av)
 	else
 	{
 		print_name_and_error(get_error());
-		return (get_error());
+		return (EXIT_FAILURE);
 	}
 }
