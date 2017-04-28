@@ -20,8 +20,7 @@ void				overwrite_fd(int src, int overwrited)
 	ret = dup2(src, overwrited);
 	if (ret < 0)
 	{
-		ft_putstr_fd("42sh: dup2 failed in overwrite_fd: ", 2);
-		perror("");
+		print_errno_error(errno, "dup2 failed in overwrite_fd", "");
 		exit(EXIT_FAILURE);
 	}
 }
