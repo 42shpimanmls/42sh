@@ -69,6 +69,8 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 		dprintf(2, "expanding simple command %s\n", cmd->argv[0]);
 #endif
 		expand_cmd_words(&cmd->argv);
+		if ((ret = get_error()) != NO_ERROR)
+			return (ret);
 #ifdef FTSH_DEBUG
 		print_n_char_fd(' ', (lvl + 1) * 2, 2);
 		dprintf(2, "done expanding simple command %s\n", cmd->argv[0]);

@@ -56,9 +56,7 @@ static void					add_substitution(t_strlist **strlist_addr
 	int					pipefds[2];
 	char				**argv;
 	char				*tmp;
-	char				*spath;
-	char				**path;
-	char				**env;
+	t_simple_command	cmd;
 
 	argv = (char*[]){ft_strdup(get_shell_env()->path_to_42sh), "-c"
 											, strdup_until(start, end), NULL};
@@ -68,13 +66,9 @@ static void					add_substitution(t_strlist **strlist_addr
 		close(pipefds[0]);
 		dup2(pipefds[1], STDOUT_FILENO);
 		close(pipefds[1]);
-		spath = get_variable("PATH");
-		path = ft_strsplit(spath, ':');
-		ft_strdel(&spath);
-		env = get_variables_for_execution(NULL);
-		execute(argv, env, path);
-		ft_freetabchar(path);
-		ft_freetabchar(env);
+		ft_bzero(&cmd, sizeof(t_simple_command));
+		cmd.argv = argv;
+		pre_exec(&cmd);
 		fatal_error("failed to execute recursively in add_substitution");
 	}
 	else
@@ -104,19 +98,26 @@ static t_strlist			*split_subsitutions(char const *word)
 	while (*word != '\0')
 	{
 		if (is_quote(*word))
+		{
 			handle_quotes(*word, &quoted);
-		if (is_substitution_start(word) && \
+			if (passv_str_start == NULL)
+				passv_str_start = word;
+			if (*word == '\\' && *(word + 1) == '`')
+				word++;
+			word++;
+		}
+		else if (is_substitution_start(word) && \
 			(!(quoted & IS_QU_SIMPLE) || (quoted & IS_QU_DOUBLE)))
 		{
 			if (passv_str_start != NULL)
 				add_passive_string(&result, passv_str_start, word);
 			subst_end = find_substitution_end(word + 1);
-			if (get_error() != NO_ERROR)
-				// same as quotes - go back to read_input
-				fatal_error("substitution end not found in split_subsitutions(), a substitution hasn't been correctly recognized before being expanded");
 			add_substitution(&result, word + 1, subst_end);
 			if (get_error() != NO_ERROR)
-				fatal_error("error in add_substitution in split_subsitutions");
+			{
+				strlist_delete(&result);
+				return (NULL);
+			}
 			word = subst_end + 1;
 			passv_str_start = word;
 		}

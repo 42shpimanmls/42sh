@@ -72,9 +72,6 @@ t_strlist	*field_splitting(char const *word)
 	}
 	tmp = result;
 	while (tmp)
-	{
-	//	ft_printf("<field>%s</field>\n", tmp->str);
 		tmp = tmp->next;
-	}
 	return (result);
 }
