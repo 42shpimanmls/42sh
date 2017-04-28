@@ -13,9 +13,9 @@ echo BACKOTE
 echo ``
 `ls`
 echo `ls`
-#`error`
+`error`
 echo `error`
-#`./error`
+`./error`
 echo `./error`
 echo ----------
 
