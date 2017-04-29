@@ -25,13 +25,13 @@ static void		set_env_exec(t_variable **env_backup, t_variable *assignments)
 	set_assignments(assignments, true);
 }
 
-static void		restore_env(t_variable **env_backup, t_variable *assignments)
+static void		restore_env(t_variable *env_backup, t_variable *assignments)
 {
 	char		*val;
 
 	while (assignments)
 	{
-		val = get_backup_var(*env_backup, assignments->name);
+		val = get_backup_var(env_backup, assignments->name);
 		if (val)
 			setenv_as(&get_shell_env()->variables, assignments->name, val, true);
 		else
@@ -39,7 +39,6 @@ static void		restore_env(t_variable **env_backup, t_variable *assignments)
 		ft_strdel(&val);
 		assignments = assignments->next;
 	}
-	delete_all_variables(env_backup);
 }
 
 t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
@@ -53,15 +52,17 @@ t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
 	if (cmd != NULL)
 	{
 		set_variable("_", cmd->argv[0], false);
-		if (cmd->argv[0] && ft_strcmp(cmd->argv[0], "exit"))
-			set_env_exec(&env_backup, cmd->assignments);
 		if (ft_strcmp(cmd->argv[0], "env") == 0)
+		{
+			set_env_exec(&env_backup, cmd->assignments);
 			ret = builtin_env(ft_tablen(cmd->argv), cmd->argv, cmd);
+		}
 		else
 		{
 			builtin = get_matching_builtin(cmd->argv[0]);
 			if (builtin == NULL)
 				return (NO_SUCH_BUILTIN);
+			set_env_exec(&env_backup, cmd->assignments);
 			#ifdef FTSH_DEBUG
 			print_n_char_fd(' ', (lvl) * 2, 2);
 			dprintf(2, "executing builtin %s\n", builtin->name);
@@ -81,8 +82,10 @@ t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
 			dprintf(2, "done executing builtin %s, %s\n", builtin->name, ret == NO_ERROR ? "ok" : "error");
 			#endif
 		}
+		if (!is_special_builtin(cmd->argv[0]))
+			restore_env(env_backup, cmd->assignments);
+		delete_all_variables(&env_backup);
 	}
-	restore_env(&env_backup, cmd->assignments);
 	set_last_exit_status(ret == NO_ERROR ? 0 : 1);
 	return (ret);
 }

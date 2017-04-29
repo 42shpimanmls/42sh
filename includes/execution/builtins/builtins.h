@@ -23,7 +23,7 @@ BUILTIN_RET			builtin_history(BUILTIN_ARGS);
 /*
 **
 **	SUB BUILTIN
-**	
+**
 */
 
 /*

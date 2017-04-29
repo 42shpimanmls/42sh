@@ -44,5 +44,6 @@ void					strfreeswap(char **dst_addr, char *src);
 void					quote_word(char **word);
 void					quote_per_word(char **str);
 int						convert_base(int nbr, int base_from, int base_to);
+bool					is_special_builtin(char *builtin);
 
 #endif
