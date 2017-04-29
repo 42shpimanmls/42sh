@@ -247,7 +247,8 @@ echo PASS && echo PASS
 ./segv || echo FAILURE
 ./segv || ls
 mkdir srcs && echo PASS
-# `qsdqsdqsd` && echo SUCCESS || echo FAILURE
+`qsdqsdqsd` && echo SUCCESS || echo FAILURE
+./not_found || ./segv
 
 #################################
 ########## BACKQUOTE ##########

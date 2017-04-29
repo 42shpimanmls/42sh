@@ -7,42 +7,10 @@
 #include "execution/signal_error_exec.h"
 #include <signal.h>
 
-void	wait_for_childs(void)
+static void	handle_wait_status(int wstatus)
 {
-	int		wstatus;
 	t_uchar	estatus;
 
-	set_error(NO_ERROR);
-	wstatus = 0;
-	while (wait(&wstatus) != -1 && errno != ECHILD)
-	{
-		if (WIFEXITED(wstatus))
-		{
-			estatus = WEXITSTATUS(wstatus);
-			set_last_exit_status(estatus);
-			if (estatus != EXIT_SUCCESS)
-				set_error(CHILD_FAILURE);
-		}
-		if (WIFSIGNALED(wstatus))
-		{
-			estatus = WTERMSIG(wstatus);
-			if (estatus != SIGINT)
-				ft_dprintf(STDERR_FILENO, "%s: error signal -%d --%s\n", SHNAME, wstatus, get_signal_error(wstatus)); //test
-			set_last_exit_status(estatus + 128);
-		}
-	}
-	if (WIFEXITED(wstatus))
-		set_last_exit_status(WEXITSTATUS(wstatus));
-}
-
-void	wait_for_last_child(pid_t last_child_pid)
-{
-	int		wstatus;
-	t_uchar	estatus;
-
-	set_error(NO_ERROR);
-	while (waitpid(last_child_pid, &wstatus, 0) != last_child_pid && !errno)
-		;
 	if (WIFEXITED(wstatus))
 	{
 		estatus = WEXITSTATUS(wstatus);
@@ -50,4 +18,33 @@ void	wait_for_last_child(pid_t last_child_pid)
 		if (estatus != EXIT_SUCCESS)
 			set_error(CHILD_FAILURE);
 	}
+	if (WIFSIGNALED(wstatus))
+	{
+		estatus = WTERMSIG(wstatus);
+		if (estatus != SIGINT)
+			ft_dprintf(STDERR_FILENO, "%s: error signal -%d --%s\n", SHNAME, wstatus, get_signal_error(wstatus)); //test
+		set_last_exit_status(estatus + 128);
+	}
+}
+
+void		wait_for_children(void)
+{
+	int		wstatus;
+
+	set_error(NO_ERROR);
+	wstatus = 0;
+	while (wait(&wstatus) != -1 && errno != ECHILD)
+		;
+	handle_wait_status(wstatus);
+}
+
+void		wait_for_last_child(pid_t last_child_pid)
+{
+	int		wstatus;
+
+	set_error(NO_ERROR);
+	wstatus = 0;
+	while (waitpid(last_child_pid, &wstatus, 0) != last_child_pid && !errno)
+		;
+	handle_wait_status(wstatus);
 }
