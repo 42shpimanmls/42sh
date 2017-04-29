@@ -9,6 +9,7 @@ static char		*get_backup_var(t_variable *env_backup, char *name)
 	t_variable	*env;
 	char		*val;
 
+	val = NULL;
 	env = get_shell_env()->variables;
 	get_shell_env()->variables = env_backup;
 	val = get_variable(name);
@@ -33,10 +34,12 @@ static void		restore_env(t_variable **env_backup, t_variable *assignments)
 		val = get_backup_var(*env_backup, assignments->name);
 		if (val)
 			setenv_as(&get_shell_env()->variables, assignments->name, val, true);
+		else
+			unsetenv_as(&get_shell_env()->variables, assignments->name);
 		ft_strdel(&val);
 		assignments = assignments->next;
 	}
-	free_variable(*env_backup);
+	delete_all_variables(env_backup);
 }
 
 t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
