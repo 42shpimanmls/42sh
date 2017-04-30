@@ -85,9 +85,9 @@ echo $PATH
 # unsetenv PATH; echo $PATH
 # unsetenv TOTO
 env toto=tata env
-# env -i ls
-# env -i foo
-# env -lol ls
+env -i ls
+env -i foo
+env -lol ls
 
 #################################
 ############# SETENV ############
@@ -184,6 +184,11 @@ chmod 755 segv
 
 ## Mixed
 ls ; echo "nasruit><rnasuti" > tmp ; cat < tmp
+
+## Assignments
+
+var=val export 1>/dev/null ; echo $var
+var=val env 1>/dev/null ; echo $var
 
 #################################
 ########## REDIRECTION ##########

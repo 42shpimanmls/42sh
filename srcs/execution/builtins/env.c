@@ -34,6 +34,8 @@ int			builtin_env(int argc, char **argv, t_simple_command *cmd)
 	run_env(argc, argv, cmd);
 	delete_all_variables(&e);
 	get_shell_env()->variables = save;
+	if (get_error() == ENV_EXEC_ERR)
+		set_last_exit_status(get_last_exit_status());
 	return (STATUS_SUCCESS);
 }
 
@@ -65,6 +67,8 @@ void		run_env(int argc, char **argv, t_simple_command *cmd)
 	{
 		cmd->argv = ft_tabdup(&(cmd->argv[i]));
 		execute_simple_command(cmd, 0);
+		if (get_last_exit_status())
+			set_error(ENV_EXEC_ERR);
 	}
 	else
 		display_variables(true);
