@@ -25,9 +25,10 @@ void	wait_for_childs(void)
 		}
 		if (WIFSIGNALED(wstatus))
 		{
-			if (WTERMSIG(wstatus) != SIGINT)
+			estatus = WTERMSIG(wstatus);
+			if (estatus != SIGINT)
 				ft_dprintf(STDERR_FILENO, "%s: error signal -%d --%s\n", SHNAME, wstatus, get_signal_error(wstatus)); //test
-			// set_last_exit_status(wstatus);
+			set_last_exit_status(estatus + 128);
 		}
 	}
 	if (WIFEXITED(wstatus))

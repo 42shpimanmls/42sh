@@ -3,6 +3,8 @@
 #include "strlist.h"
 #include "abstract_list.h"
 #include <libft.h>
+#include "errors.h"
+#include "utils.h"
 
 /*
 2.6 Word Expansions
@@ -61,6 +63,7 @@ static t_strlist	*expand_cmd_word(char const *word)
 		ft_strdel(&str);
 		if (!tmp)
 			return (NULL);
+		set_error(NO_ERROR);
 		result = field_splitting(tmp);
 		ft_strdel(&tmp);
 		it = result;
@@ -93,4 +96,6 @@ void				expand_cmd_words(char ***words_addr)
 	ft_freetabchar(*words_addr);
 	*words_addr = strlist_to_strarray(word_list);
 	strlist_delete(&word_list);
+	if (*words_addr && **words_addr)
+		set_error(NO_ERROR);
 }
