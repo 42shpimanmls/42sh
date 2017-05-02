@@ -77,7 +77,7 @@ t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
 			#endif
 				return (NO_SUCH_BUILTIN);
 			}
-			builtin->builtin(ft_tablen(cmd->argv), cmd->argv);
+			ret = builtin->builtin(ft_tablen(cmd->argv), cmd->argv);
 			set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1], false);
 			#ifdef FTSH_DEBUG
 			print_n_char_fd(' ', (lvl) * 2, 2);
