@@ -7,7 +7,6 @@
 #include "history/builtin/history.h"
 #include "parse_input/print_syntax_tree.h"
 #include "execution/execute_syntax_tree.h"
-
 #include "utils.h"
 #include "sig_handler.h"
 
@@ -27,10 +26,12 @@ static void		main_loop(void)
 		return ;
 	}
 	break_input();
-	add_to_history_list(&shell_env->history.list, create_history_entry(shell_env->input_string));
+	if (shell_env->input_string)
+		add_to_history_list(&shell_env->history.list, create_history_entry(shell_env->input_string));
 	if (get_error() != NO_ERROR)
 		return ;
-	ft_strdel(&get_shell_env()->input_string);
+	if (shell_env->input_string)
+		ft_strdel(&get_shell_env()->input_string);
 	parse_input();
 	if (get_error() != NO_ERROR)
 		return ;

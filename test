@@ -2,13 +2,15 @@
 <?php
 //////////////////////////
 //////////////////////////
-// USAGE ./test [detail] [random]
+// USAGE ./test [detail] [random] [show] [allsh]
 //////////////////////////
 //////////////////////////
 
 ///////// ARGUMENT //////////
 $testRandom = array_search("random", $argv) ? true : false;
 $detail 	= array_search("detail", $argv) ? true : false;
+$showOutput	= array_search("show", $argv) 	? true : false;
+$allsh		= array_search("allsh", $argv) 	? true : false;
 // $testSignal = array_search("signal", $argv)	? true : false;
 $testSignal = TRUE;
 //////////////////////////
@@ -22,6 +24,7 @@ $randomTest			= 100;
 $randomLengthMax	= 10;
 
 //////////////// HERE RANDOM /////////////////////
+$rshell 			= array("bash", "sh", "zsh", "csh");
 $rlogic_operator 	= array("&&", "||", ";");
 $rcommand 			= array("echo", "ls", "pwd");
 //////////////// HERE RANDOM /////////////////////
@@ -52,12 +55,18 @@ if ($testRandom)
 }
 else
 {
-	$content = file($filetest, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	foreach ($content as $key => $command) {
-		$tmp = trim($command);
-		if ($command && $tmp[0] == $commentChar)
-			continue;
-		compute($command);
+	if (!$allsh)
+		$rshell = array($shellexec2);
+	foreach ($rshell as $key => $shellexec2) {
+		if ($allsh)
+			echo "------------------------ $shellexec2 ------------------------\n";
+		$content = file($filetest, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		foreach ($content as $key2 => $command) {
+			$tmp = trim($command);
+			if ($command && $tmp[0] == $commentChar)
+				continue;
+			compute($command);
+		}
 	}
 }
 
@@ -117,17 +126,18 @@ function compute($command) {
 	global $COLORCLOSE;
 	global $shellexec1;
 	global $shellexec2;
+	global $showOutput;
 
 	$countAll++;
-	$result1  = exec("./$shellexec1 -c '$command' 2>&1", $null, $return_var1);
-	$result11 = exec("./$shellexec1 -c '$command' 2>/dev/null", $null, $return_var11);
-	$result2  = exec("$shellexec2 -c '$command' 2>&1", $null, $return_var2);
-	$result22 = exec("$shellexec2 -c '$command' 2>/dev/null", $null, $return_var22);
+	exec("./$shellexec1 -c '$command' 2>&1", $tmp, $return_var1);
+	exec("./$shellexec1 -c '$command' 2>/dev/null", $tmp1, $return_var11);
+	exec("$shellexec2 -c '$command' 2>&1", $tmp2, $return_var2);
+	exec("$shellexec2 -c '$command' 2>/dev/null", $tmp3, $return_var22);
 
-	file_put_contents("res1", $result1."\n");
-	file_put_contents("res11", $result11."\n");
-	file_put_contents("res2", $result2."\n");
-	file_put_contents("res22", $result22."\n");
+	file_put_contents("res1", implode("\n", $tmp)."\n");
+	file_put_contents("res11", implode("\n", $tmp1)."\n");
+	file_put_contents("res2", implode("\n", $tmp2)."\n");
+	file_put_contents("res22", implode("\n", $tmp3)."\n");
 
 	$res = shell_exec("diff res1 res2");
 	$ERRSTDOUT = shell_exec("diff res11 res22");
@@ -149,7 +159,7 @@ function compute($command) {
 		}
 		if ($detail)
 		{
-			$res = preg_replace('/---\n|1c1\n|>|</', '', $res);
+			$res = preg_replace('/---\n|1c1\n|1c1,2\n|>|</', '', $res);
 			if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
 				$allerror .= "$res";
 			else
@@ -162,14 +172,20 @@ function compute($command) {
 			else
 				$allerrorcheck .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
 		}
-		if (!$ERRSTDOUT)
-				$allerrorcheck .= "\n";
-
+		if ($showOutput)
+		{
+			if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
+				$allerror .= "---\n".implode("\n", $tmp)."\n"."---\n";
+			else
+				$allerrorcheck .= "---\n".implode("\n", $tmp)."\n"."---\n";
+		}
 	}
 	else
 	{
 		$countOK++;
 		echo "$COLORGREEN [OK] $COLORCLOSE \"$command\"\n";
+		if ($showOutput)
+			echo("---\n".implode("\n", $tmp)."\n"."---\n");
 	}
 }
 

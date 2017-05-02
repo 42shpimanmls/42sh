@@ -1,10 +1,11 @@
 # THIS IS A COMMENTS.
 # PIPE NOT WORK Ex: ls | ls
+# DOUBLE QUOTE NOT WORK
 
 ###########################################################################
 ################################# BUILTIN #################################
 ###########################################################################
-
+touch tmp tmp2
 
 #################################
 ############### CD ##############
@@ -57,6 +58,11 @@ echo \"nrau\|sntiu\"
 echo "\"nrau|sntiu\""
 echo "\">>\\ || && |<<|sntiu\""
 
+## Variable
+echo $PATH
+echo $PATH$PATH
+echo here$PWDtest
+
 #################################
 ############## EXIT #############
 #################################
@@ -80,14 +86,18 @@ exit 7139
 # env [-i] [name=value]... [utility [argument...]]
 
 # env
-export TOTO=toto
-echo $PATH
+# export TOTO=toto
 # unsetenv PATH; echo $PATH
 # unsetenv TOTO
 env toto=tata env
 env -i ls
 env -i foo
 env -lol ls
+env -i ls  -rlaH
+# env -i ./segv
+env -i whoami
+env -i pwd
+# env -i PATH=/usr/sbin:/usr/bin ownership
 
 #################################
 ############# SETENV ############
@@ -177,10 +187,10 @@ error
 chmod 000 segv
 ./segv
 chmod 755 segv
-# ./segv
+./segv
 
 ## Asshole
-  	 	  ls   -llll  -rrr  -- /
+  	 	  ls   -llll  -rrr  -- ~~
 
 ## Mixed
 ls ; echo "nasruit><rnasuti" > tmp ; cat < tmp
@@ -217,11 +227,12 @@ cat < tmp
 
 ## Double redirection
 cat < tmp > /tmp/txt; cat /tmp/txt; rm /tmp/txt
-cat < tmp >> /tmp/txt; cat /tmp/txt; rm /tmp/tx
-t
+cat < tmp >> /tmp/txt; cat /tmp/txt; rm /tmp/txt
+
 ### Same file name
 cat < tmp > tmp
 cat < tmp >> tmp
+rm -f tmp tmp2
 
 #################################
 ############## PIPE #############
@@ -249,10 +260,23 @@ ls && ls
 mkdir srcs || ls
 echo PASS && echo PASS
 ./segv && echo FAILURE
+echo PASS && ./segv && echo FAILURE
+echo PASS && ./segv || echo FAILURE
+./seg && ./segv || echo FAILURE
+./seg || ./segv || echo FAILURE
+./segv || ./segv || ./segv || ./segv || ./segv
+./notfound || ./segv || ./segv || ./segv || ls -rlaH
+# ./notfound || ./segv
+echo PASS && ./segv || ./segv
+./notfound || echo PASS
+./notfound || echo PASS || ./segv
+./notfound || ./segv || ./segv || ./segv || ./segv || echo PASS
+# ./notfound || ./segv || ./segv || ./segv || ./segv && echo PASS
 ./segv || echo FAILURE
 ./segv || ls
 mkdir srcs && echo PASS
-# `qsdqsdqsd` && echo SUCCESS || echo FAILURE
+`qsdqsdqsd` && echo SUCCESS || echo FAILURE
+./not_found || ./segv
 
 #################################
 ########## BACKQUOTE ##########
