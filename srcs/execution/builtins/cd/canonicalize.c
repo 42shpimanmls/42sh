@@ -11,7 +11,6 @@
 
 static t_strlist	*break_components(char const *path)
 {
-	ft_putendl("---------------------break");
 	char const	*start;
 	t_strlist	*cmpnts;
 	char		*tmp;
@@ -26,7 +25,6 @@ static t_strlist	*break_components(char const *path)
 			path++;
 		tmp = strdup_until(start, path);
 		strlist_append(&cmpnts, tmp);
-		ft_putendl(tmp);
 		free(tmp);
 		if (*path == '\0')
 			start = NULL;
@@ -54,7 +52,6 @@ static bool			comp_is_dot_dot(char const *comp)
 
 static void			remove_dots(t_strlist **cmpnts_addr)
 {
-	ft_putendl("-------------------------remove dots");
 	t_strlist	*component;
 
 	component = *cmpnts_addr;
@@ -68,7 +65,6 @@ static void			remove_dots(t_strlist **cmpnts_addr)
 		}
 		else
 		{
-			ft_putendl(component->str);
 			cmpnts_addr = &component->next;
 		}
 		component = *cmpnts_addr;
@@ -91,7 +87,6 @@ static bool			comp_is_directory(t_strlist *start, t_strlist *end)
 
 static int			try_remove_dot_dots(t_strlist **cmpnts_addr)
 {
-	ft_putendl("-------------------------remove dot dots");
 	t_strlist	*component;
 	t_strlist	*start;
 
@@ -101,31 +96,23 @@ static int			try_remove_dot_dots(t_strlist **cmpnts_addr)
 	{
 		if (comp_is_dot_dot(component->next->str) && component->str[0] != '/' && !comp_is_dot_dot(component->str))
 		{
-			ft_putendl("found dot dot");
 			if (!comp_is_directory(start, component))
-			{
-				ft_putendl_fd("42sh: preceding component wasn't a directory", 2);
 				return (EXIT_FAILURE);
-			}
 			*cmpnts_addr = component->next->next;
 			component->next->next = NULL;
 			strlist_delete(&component);
 		}
 		else
 		{
-			ft_putendl(component->str);
 			cmpnts_addr = &component->next;
 		}
 		component = *cmpnts_addr;
 	}
-	if (component != NULL)
-		ft_putendl(component->str);
 	return (EXIT_SUCCESS);
 }
 
 static void			simplify(t_strlist *components)
 {
-	ft_putendl("-------------------------simplify");
 	size_t	u;
 
 	if (components == NULL)
@@ -171,28 +158,20 @@ static void			simplify(t_strlist *components)
 
 char				*canonicalize_path(char const *path)
 {
-	ft_putendl("-------------------------canonicalize");
 	t_strlist	*components;
 	char		*result;
 
 	if (!path)
 		fatal_error("NULL ptr fed to canonicalize_path()");
-	ft_putendl(path);
 	components = break_components(path);
-	ft_putendl(strlist_to_str(components));
 	remove_dots(&components);
-	ft_putendl(strlist_to_str(components));
 	if (try_remove_dot_dots(&components) == EXIT_FAILURE)
 	{
 		strlist_delete(&components);
 		return (NULL);
 	}
-	ft_putendl(strlist_to_str(components));
 	simplify(components);
-	ft_putendl(strlist_to_str(components));
 	result = strlist_to_str(components);
 	strlist_delete(&components);
-	ft_putendl("-------------------------result");
-	ft_putendl(result);
 	return (result);
 }

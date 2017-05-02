@@ -21,12 +21,10 @@ static bool			first_comp_is_dot_or_dotdot(char const *str)
 	if ((str[0] == '.' && (str[1] == '/' || str[1] == '\0'))
 			|| (str[0] == '.' && str[1] == '.' && (str[2] == '/' || str[2] == '\0')))
 	{
-		ft_putendl("true");
 		return (true);
 	}
 	else
 	{
-		ft_putendl("false");
 		return (false);
 	}
 }
@@ -195,7 +193,6 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		{
 			// 5. Starting with the first pathname in the <colon>-separated pathnames of CDPATH (see the ENVIRONMENT VARIABLES section) if the pathname is non-null, test if the concatenation of that pathname, a <slash> character if that pathname did not end with a <slash> character, and the directory operand names a directory. If the pathname is null, test if the concatenation of dot, a <slash> character, and the operand names a directory. In either case, if the resulting string names an existing directory, set curpath to that string and proceed to step 7. Otherwise, repeat this step with the next pathname in CDPATH until all pathnames have been tested.
 			curpath = find_cdpath(directory);
-			ft_putendl("doin five");
 		}
 		// 6. Set curpath to the directory operand.
 		if (curpath == NULL)
