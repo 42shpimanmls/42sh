@@ -38,6 +38,13 @@ static void		main_loop(void)
 	delete_command_list(&get_shell_env()->syntax_tree);
 }
 
+int				convert_error_to_status(t_error_id id)
+{
+	if (id == UNEXPECTED_SEMI)
+		return (2);
+	return (1);
+}
+
 int				main(int ac, char **av)
 {
 	////////// TEST GET OPTION ////////////
@@ -68,6 +75,6 @@ int				main(int ac, char **av)
 	else
 	{
 		print_name_and_error(get_error());
-		return (EXIT_FAILURE);
+		return (convert_error_to_status(get_error()));
 	}
 }
