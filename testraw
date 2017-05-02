@@ -89,7 +89,7 @@ exit 7139
 # export TOTO=toto
 # unsetenv PATH; echo $PATH
 # unsetenv TOTO
-env toto=tata env
+env -i env toto=tata env
 env -i ls
 env -i foo
 env -lol ls
