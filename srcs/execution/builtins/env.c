@@ -13,6 +13,8 @@
 ** restore previous env var
 */
 
+#define STATUS_WRONG_USAGE 125
+
 int			builtin_env(int argc, char **argv, t_simple_command *cmd)
 {
 	char		*opt;
@@ -24,7 +26,7 @@ int			builtin_env(int argc, char **argv, t_simple_command *cmd)
 	if (check_only_allowed_option(opt, "i") == false)
 	{
 		ft_dprintf(STDERR_FILENO, "Usage: env [-i] name[=word]…\n");
-		return (STATUS_FAILURE);
+		return (STATUS_WRONG_USAGE);
 	}
 	e = ft_strchr(opt, 'i') != NULL ? NULL : \
 		copy_variable(get_shell_env()->variables);
