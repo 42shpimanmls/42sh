@@ -14,7 +14,8 @@ static bool	next_dollar_sign(char const *word, t_range *delimit, char *quoted)
 		if (word[delimit->start] == '\\')
 			delimit->start++;
 		else if (word[delimit->start] == '$' && !(*quoted & IS_QU_SIMPLE) \
-				&& word[delimit->start + 1] && !is_posix_blank(word[delimit->start + 1]))
+				&& word[delimit->start + 1] && \
+				!is_posix_blank(word[delimit->start + 1]))
 			return (true);
 		delimit->start++;
 	}
@@ -25,8 +26,8 @@ static void	goto_parameter_end(char *word, t_range *delimit)
 {
 	delimit->end++;
 	while (word[delimit->end] && word[delimit->end] != '\\' \
-			&& !is_posix_blank(word[delimit->end]) && !is_quote(word[delimit->end]) \
-			&& word[delimit->end] != '$')
+			&& !is_posix_blank(word[delimit->end]) \
+			&& !is_quote(word[delimit->end]) && word[delimit->end] != '$')
 		delimit->end++;
 }
 
@@ -47,8 +48,8 @@ static bool	is_special_parameter(char c)
 }
 
 /*
-	$VAR replaced by variable if found, by en empty string if not
-	$ can be quoted with simple quotes or a backslash
+** $VAR replaced by variable if found, by en empty string if not
+** $ can be quoted with simple quotes or a backslash
 */
 
 char		*parameter_expansion(char const *word)

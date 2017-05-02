@@ -8,9 +8,9 @@
 #include "abstract_list.h"
 #include "break_input/quoting.h"
 
-static void		end_of_quote(char const *word, t_range *delimit)
+static void	end_of_quote(char const *word, t_range *delimit)
 {
-	char 	quote;
+	char	quote;
 
 	quote = *word;
 	delimit->end++;
@@ -21,13 +21,13 @@ static void		end_of_quote(char const *word, t_range *delimit)
 		delimit->end++;
 }
 
-static void		skip_posix_blanks(char const *word, int *i)
+static void	skip_posix_blanks(char const *word, int *i)
 {
 	while (word[*i] && (is_posix_blank(word[*i]) || word[*i] == '\n'))
 		(*i)++;
 }
 
-static void		add_field(char const *word, t_strlist **result, t_range *delimit)
+static void	add_field(char const *word, t_strlist **result, t_range *delimit)
 {
 	char		*tmp;
 
@@ -51,10 +51,11 @@ static void		add_field(char const *word, t_strlist **result, t_range *delimit)
 
 // TO DO: white space fields (see comment above)
 
-t_strlist *field_splitting(char const *word)
+t_strlist	*field_splitting(char const *word)
 {
 	t_strlist	*result;
 	t_range		delimit;
+	t_strlist	*tmp;
 
 	result = NULL;
 	ft_bzero(&delimit, sizeof(t_range));
@@ -69,12 +70,8 @@ t_strlist *field_splitting(char const *word)
 		}
 		add_field(word, &result, &delimit);
 	}
-	t_strlist *tmp;
 	tmp = result;
-	while(tmp)
-	{
-	//	ft_printf("<field>%s</field>\n", tmp->str);
+	while (tmp)
 		tmp = tmp->next;
-	}
 	return (result);
 }

@@ -6,9 +6,7 @@
 char const	*get_system_error(int signum)
 {
 	static char const *errno_base_defs[N_ERRNO_BASE + 1] =
-	{
-	//DESCRIPTION					
-	"None", "Operation not permitted", "No such file or directory",
+	{"None", "Operation not permitted", "No such file or directory",
 	"No such process", "Interrupted system call", "I/O error", "No such device or address",
 	"Argument list too long", "Exec format error", "Bad file number",
 	"No child processes", "Try again", "Out of memory", "Permission denied",
@@ -22,9 +20,7 @@ char const	*get_system_error(int signum)
 	};
 
 	static char const *defs_else[N_ERRNO - N_ERRNO_BASE + 1] =
-	{
-	//DESCRIPTION		
-	"Resource deadlock would occur",
+	{"Resource deadlock would occur",
 	"File name too long",
 	"No record locks available",
 	"Invalid system call number",
@@ -123,7 +119,6 @@ char const	*get_system_error(int signum)
 	"State not recoverable",
 	"Operation not possible due to RF-kill",
 	"Memory page has hardware error",
-		
 	};
 
 	if (signum >= 0 && signum <= N_ERRNO_BASE)

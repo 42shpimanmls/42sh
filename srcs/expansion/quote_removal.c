@@ -4,9 +4,9 @@
 #include "break_input/quoting.h"
 #include "expansion.h"
 
-void	print_lstr(t_string *l_str)
+void		print_lstr(t_string *l_str)
 {
-	while(l_str)
+	while (l_str)
 	{
 		ft_putchar(l_str->c);
 		l_str = l_str->next;
@@ -17,9 +17,8 @@ void	print_lstr(t_string *l_str)
 static void	remove_backslash(t_string **l_addr, t_string **l_str, \
 								bool *quoted, size_t *pos)
 {
-
-	if (!quoted[0] && (quoted[1] && (*l_str)->next && ((*l_str)->next->c == '\"' \
-		|| (*l_str)->next->c == '\\')))
+	if (!quoted[0] && (quoted[1] && (*l_str)->next && \
+		((*l_str)->next->c == '\"' || (*l_str)->next->c == '\\')))
 	{
 		*l_str = (*l_str)->next;
 		list_pop_at_pos(*pos, (t_abstract_list **)l_addr);
@@ -80,7 +79,7 @@ static bool	has_quotes(char *str)
 	return (false);
 }
 
-void	quote_removal(char **word)
+void		quote_removal(char **word)
 {
 	t_string		*l_str;
 

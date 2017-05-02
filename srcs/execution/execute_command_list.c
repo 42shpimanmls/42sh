@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-static void print_ao_sep(t_ao_type sep_type, size_t lvl)
+static void	print_ao_sep(t_ao_type sep_type, size_t lvl)
 {
 #ifdef FTSH_DEBUG
 	if (sep_type == AO_END)

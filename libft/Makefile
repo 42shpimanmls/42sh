@@ -19,6 +19,17 @@ HDIR	=	includes/
 ODIR	=	obj/
 FOLDER	=	-I $(HDIR)
 
+ifeq ($(shell uname), Linux)
+NBTHREADS	=`cat /proc/cpuinfo | grep processor | wc -l`
+else ifeq ($(shell uname), Darwin)
+NBTHREADS	=`sysctl -a | grep hw.logicalcpu: | cut -d ' ' -f 2`
+else
+NBTHREADS	= 1
+endif
+$(eval NBTHREADS=$(shell echo $$(($(NBTHREADS)*2))))
+
+MAKE_OPTS_THREAD 	= -j$(NBTHREADS)
+
 SRCA = ft_strlen.c \
 	ft_strlen_char.c \
 	ft_intlen.c ft_tablen.c \
@@ -78,7 +89,7 @@ CC		=	gcc -g
 LIB		=	-L ./libft/ -lft
 FLAGS	=	-Wall -Wextra -Werror
 
-MAKE_OPTS = --no-print-directory -j9
+MAKE_OPTS = --no-print-directory $(MAKE_OPTS_THREAD)
 
 SRC 	=	$(patsubst %.c, $(SDIR)%.c, $(SRCA))
 HDR		=	$(patsubst %.h, $(HDIR)%.h, $(SRCH))

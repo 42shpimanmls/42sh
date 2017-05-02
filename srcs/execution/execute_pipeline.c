@@ -13,9 +13,11 @@
 
 t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 {
-	(void)lvl;
 	t_error_id	ret;
 
+	(void)lvl;
+	if (cmd->argv[0] == NULL)
+		fatal_error("NULL argv[0] fed to execute_file");
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "executing file %s\n", cmd->argv[0]);
@@ -23,28 +25,24 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 	if (enter_subshell() == FORKED_IN_CHILD)
 	{
 		signal(SIGINT, SIG_DFL);
-		if (cmd->argv[0])
-		{
-			pre_exec(cmd);
-	#ifdef FTSH_DEBUG
-			print_n_char_fd(' ', (lvl + 1) * 2, 2);
-	#endif
-			print_errno_error(errno, cmd->argv[0], NULL);
-			exit(EXIT_FAILURE);
-		}
-		exit (EXIT_SUCCESS);
+		pre_exec(cmd);
+#ifdef FTSH_DEBUG
+		print_n_char_fd(' ', (lvl + 1) * 2, 2);
+#endif
+		print_errno_error(errno, cmd->argv[0], NULL);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		wait_for_childs();
+		wait_for_children();
 		if (cmd->argv && cmd->argv[0])
-			set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1] , false);
+			set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1], false);
 		else
 		{
-			set_assignments(cmd->assignments);
-			set_variable("_", NULL , false);
+			set_assignments(cmd->assignments, false);
+			set_variable("_", NULL, false);
 		}
-		ret = get_error();
+		ret = get_last_exit_status();
 	}
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
@@ -56,7 +54,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 {
 	t_error_id	ret;
-	int 		*stdin_out_backup;
+	int			*stdin_out_backup;
 
 	ret = NO_ERROR;
 	if (cmd != NULL)
@@ -69,6 +67,8 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 		dprintf(2, "expanding simple command %s\n", cmd->argv[0]);
 #endif
 		expand_cmd_words(&cmd->argv);
+		if ((ret = get_error()) != NO_ERROR)
+			return (ret);
 #ifdef FTSH_DEBUG
 		print_n_char_fd(' ', (lvl + 1) * 2, 2);
 		dprintf(2, "done expanding simple command %s\n", cmd->argv[0]);
@@ -76,7 +76,7 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 		stdin_out_backup = save_stdin_stdout();
 		ret = redirect(cmd->redirections, stdin_out_backup);
 		//expand_assignments_values(cmd->assignments);
-		if (ret != NO_ERROR)
+		if (ret != NO_ERROR || cmd->argv[0] == NULL)
 			return (ret);
 		ret = execute_builtin(cmd, lvl + 1);
 		if (ret == NO_SUCH_BUILTIN)
@@ -121,7 +121,6 @@ t_error_id	execute_pipeline(t_simple_command *pipeline, size_t lvl)
 	}
 	wait_for_last_child(pipeline_state.last_pid);
 	kill(0, SIGINT);
-
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "done executing pipeline, %s\n", pipeline_state.last_ret == NO_ERROR ? "ok" : "error");

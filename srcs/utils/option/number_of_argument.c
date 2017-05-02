@@ -1,6 +1,6 @@
-# include <stdbool.h>
-# include <libft.h>
-# include "utils.h"
+#include <stdbool.h>
+#include <libft.h>
+#include "utils.h"
 
 size_t	number_of_argument(char **argv)
 {

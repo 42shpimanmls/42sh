@@ -19,7 +19,7 @@ void					set_variable(char const *var, char const *val,
 							bool overwrite);
 void					display_variables(bool only_exported);
 char					**get_variables_for_execution(t_variable *assignments);
-void					set_assignments(t_variable *assignments);
+void					set_assignments(t_variable *assignments, bool export);
 
 t_variable				*create_variable(char const *name, char const *value,
 											bool exported, bool overwrite);

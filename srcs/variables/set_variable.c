@@ -24,12 +24,11 @@ void			set_variable(char const *var, char const *val, bool overwrite)
 		env = create_variable(var, val, false, overwrite);
 }
 
-
-void			set_assignments(t_variable *assignments)
+void			set_assignments(t_variable *assignments, bool export)
 {
 	while (assignments)
 	{
-		set_variable(assignments->name, assignments->value, true);
+		setenv_as(&get_shell_env()->variables, assignments->name, assignments->value, export);
 		assignments = assignments->next;
 	}
 }

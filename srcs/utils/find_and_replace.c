@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "errors.h"
 
-int 	find_and_replace(char **str, char *to_find, char *replace, t_uint start)
+int		find_and_replace(char **str, char *to_find, char *replace, t_uint start)
 {
 	char	*tmp;
 	char	*tmp2;

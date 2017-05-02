@@ -38,6 +38,7 @@ $COLORCLOSE 	= "\033[0m";
 $allerror 	= "";
 $countAll 	= 0;
 $countOK 	= 0;
+$countMaybe = 0;
 
 if ($testRandom)
 {
@@ -60,16 +61,19 @@ else
 	}
 }
 
+echo $allerrorcheck;
 echo $allerror;
-if ($countOK == $countAll)
+$nb = $countOK + $countMaybe;
+$nb2 = $countAll - $countMaybe;
+if ($countOK == $nb2)
 	echo "$COLORGREEN";
 else
 	echo "$COLORRED";
 
-echo " ---------- Total $countOK/$countAll ----------";
+echo " ---------- Total $countOK/$nb2 ----------";
 echo "$COLORCLOSE\n";
 
-if ($allerror)
+if ($nb != $countAll)
 {
 	print "$COLORRED"." ------ REGRESSION DETECTED  ------"."$COLORCLOSE\n";
 	exit(1);
@@ -99,9 +103,11 @@ function getRandomCommand() {
 
 function compute($command) {
 	global $commentChar;
+	global $countMaybe;
 	global $countOK;
 	global $countAll;
 	global $allerror;
+	global $allerrorcheck;
 	global $detail;
 	global $testSignal;
 	global $COLORGREEN;
@@ -113,23 +119,52 @@ function compute($command) {
 	global $shellexec2;
 
 	$countAll++;
-	$result1 = exec("./$shellexec1 -c '$command' 2>&1", $null, $return_var1);
-	$result2 = exec("$shellexec2 -c '$command' 2>&1", $null, $return_var2);
+	$result1  = exec("./$shellexec1 -c '$command' 2>&1", $null, $return_var1);
+	$result11 = exec("./$shellexec1 -c '$command' 2>/dev/null", $null, $return_var11);
+	$result2  = exec("$shellexec2 -c '$command' 2>&1", $null, $return_var2);
+	$result22 = exec("$shellexec2 -c '$command' 2>/dev/null", $null, $return_var22);
 
-	file_put_contents("res1", $result1);
-	file_put_contents("res2", $result2);
+	file_put_contents("res1", $result1."\n");
+	file_put_contents("res11", $result11."\n");
+	file_put_contents("res2", $result2."\n");
+	file_put_contents("res22", $result22."\n");
 
 	$res = shell_exec("diff res1 res2");
+	$ERRSTDOUT = shell_exec("diff res11 res22");
 	unlink("res1");
+	unlink("res11");
 	unlink("res2");
+	unlink("res22");
 
-	if ($res || ($testSignal && ($return_var1 != $return_var2)))
+	if ($res || $ERRSTDOUT || ($testSignal && ($return_var1 != $return_var2)))
 	{
-		$allerror .= "$COLORRED [KO] $COLORCLOSE \"$command\"\n";
-		if ($testSignal && ($return_var1 != $return_var2))
-			$allerror .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
+		if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
+		{
+			$allerror .= "$COLORRED [KO] $COLORCLOSE \"$command\"\n";
+		}
+		else
+		{
+			$countMaybe++;
+			$allerrorcheck .= "$COLORYELLOW [CK] $COLORCLOSE \"$command\"\n";
+		}
 		if ($detail)
-			$allerror .= "$res";
+		{
+			$res = preg_replace('/---\n|1c1\n|>|</', '', $res);
+			if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
+				$allerror .= "$res";
+			else
+				$allerrorcheck .= "$res";
+		}
+		if ($testSignal && ($return_var1 != $return_var2))
+		{
+			if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
+				$allerror .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
+			else
+				$allerrorcheck .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
+		}
+		if (!$ERRSTDOUT)
+				$allerrorcheck .= "\n";
+
 	}
 	else
 	{

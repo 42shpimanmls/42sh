@@ -4,7 +4,7 @@ char			**copy_array(char **array, size_t start, int end)
 {
 	char	**copy;
 	size_t	i;
-	size_t size;
+	size_t	size;
 
 	i = 0;
 	size = end - start;

@@ -1,8 +1,8 @@
-# include <libft.h>
-# include "shell_env.h"
-# include "abstract_list.h"
+#include <libft.h>
+#include "shell_env.h"
+#include "abstract_list.h"
 
-static size_t	get_number_of_exported()
+static size_t	get_number_of_exported(void)
 {
 	t_variable	*e;
 	size_t		size;
@@ -33,7 +33,7 @@ static bool		is_in_assignment(t_variable *assignments, char *name)
 	return (false);
 }
 
-static size_t	number_in_assignment(t_variable	*e, t_variable *assignments)
+static size_t	number_in_assignment(t_variable *e, t_variable *assignments)
 {
 	size_t	nb;
 
@@ -57,7 +57,6 @@ static char		**create_envp(t_variable *e, size_t size)
 	if (!e)
 		return (NULL);
 	envp = memalloc_or_die(sizeof(char *) * (size + 1));
-
 	i = 0;
 	while (e)
 	{
@@ -72,7 +71,7 @@ static char		**create_envp(t_variable *e, size_t size)
 	return (envp);
 }
 
-char	**get_variables_for_execution(t_variable *assignments)
+char			**get_variables_for_execution(t_variable *assignments)
 {
 	size_t		size;
 	size_t		reassigned;
@@ -86,7 +85,6 @@ char	**get_variables_for_execution(t_variable *assignments)
 		size += list_count((t_abstract_list *)assignments) - reassigned;
 	if (!size)
 		return (NULL);
-
 	while (assignments)
 	{
 		setenv_as(&e, assignments->name, assignments->value, true);
