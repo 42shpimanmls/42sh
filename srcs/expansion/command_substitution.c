@@ -79,7 +79,7 @@ static void					add_substitution(t_strlist **strlist_addr
 		rm_trailing_newlines(tmp);
 		strlist_append(strlist_addr, tmp);
 		free(tmp);
-		wait_for_childs();
+		wait_for_children();
 	}
 	free(argv[0]);
 	free(argv[2]);
