@@ -27,6 +27,7 @@ typedef enum			e_error_id
 	UNEXPECTED_TOKEN,
 	NO_SUCH_BUILTIN,
 	CHILD_FAILURE,
+	ENV_EXEC_ERR,
 }						t_error_id;
 
 typedef struct			s_error

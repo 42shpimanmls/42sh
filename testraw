@@ -89,11 +89,10 @@ exit 7139
 # export TOTO=toto
 # unsetenv PATH; echo $PATH
 # unsetenv TOTO
-# env toto=tata env
+env -i env toto=tata env
 env -i ls
-# env -i foo
-# env -lol ls
-env -i ls
+env -i foo
+env -lol ls
 env -i ls  -rlaH
 # env -i ./segv
 env -i whoami
@@ -196,6 +195,11 @@ chmod 755 segv
 ## Mixed
 ls ; echo "nasruit><rnasuti" > tmp ; cat < tmp
 
+## Assignments
+
+var=val export 1>/dev/null ; echo $var
+var=val env 1>/dev/null ; echo $var
+
 #################################
 ########## REDIRECTION ##########
 #################################
@@ -289,8 +293,8 @@ echo `./error`
 echo `echo 'un'` `error` `echo trois`
 echo `echo 'un'``error``echo trois`
 echo `echo 'un'`et`error`et`echo trois`
-# echo "`ls`"
-# echo "`ls\``"
+echo "`ls`"
+#echo "`ls\``"
 echo '`ls`'
 
 #################################
