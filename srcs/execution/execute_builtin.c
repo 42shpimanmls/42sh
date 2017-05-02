@@ -90,5 +90,7 @@ t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
 	}
 	if (get_error() != ENV_EXEC_ERR)
 		set_last_exit_status(ret);
+	if (ret != 0)
+		ret = CHILD_FAILURE;
 	return (ret);
 }

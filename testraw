@@ -11,15 +11,15 @@ touch tmp tmp2
 ############### CD ##############
 #################################
 # cd [-L|-P] [directory]
-# cd ; pwd
-# cd ~ ; pwd
-# cd / ; pwd
-# cd - ; pwd
-# cd . ; pwd
-# cd .. ; pwd
-# cd ~/. ; pwd
-# cd nasrt
-# cd auteur
+cd ; pwd
+cd ~ ; pwd
+cd / ; pwd
+cd - ; pwd
+cd . ; pwd
+cd .. ; pwd
+cd ~/. ; pwd
+cd nasrt
+cd auteur
 
 #################################
 ############## ECHO #############

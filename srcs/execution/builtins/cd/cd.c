@@ -21,12 +21,10 @@ static bool			first_comp_is_dot_or_dotdot(char const *str)
 	if ((str[0] == '.' && (str[1] == '/' || str[1] == '\0'))
 			|| (str[0] == '.' && str[1] == '.' && (str[2] == '/' || str[2] == '\0')))
 	{
-		ft_putendl("true");
 		return (true);
 	}
 	else
 	{
-		ft_putendl("false");
 		return (false);
 	}
 }
@@ -153,6 +151,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 	char	*new_pwd;
 	char	*current_pwd;
 	t_uchar	opt;
+	int		ret;
 
 	/* If, during the execution of the above steps, the PWD environment variable is set, the OLDPWD environment variable shall also be set to the value of the old working directory (that is the current working directory immediately prior to the call to cd). */
 	current_pwd = getcwd(NULL, 0);
@@ -195,7 +194,6 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		{
 			// 5. Starting with the first pathname in the <colon>-separated pathnames of CDPATH (see the ENVIRONMENT VARIABLES section) if the pathname is non-null, test if the concatenation of that pathname, a <slash> character if that pathname did not end with a <slash> character, and the directory operand names a directory. If the pathname is null, test if the concatenation of dot, a <slash> character, and the operand names a directory. In either case, if the resulting string names an existing directory, set curpath to that string and proceed to step 7. Otherwise, repeat this step with the next pathname in CDPATH until all pathnames have been tested.
 			curpath = find_cdpath(directory);
-			ft_putendl("doin five");
 		}
 		// 6. Set curpath to the directory operand.
 		if (curpath == NULL)
@@ -217,8 +215,8 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		save_the_day(&curpath);
 	}
 	// 10. The cd utility shall then perform actions equivalent to the chdir() function called with curpath as the path argument. If these actions fail for any reason, the cd utility shall display an appropriate error message and the remainder of this step shall not be executed. If the -P option is not in effect, the PWD environment variable shall be set to the value that curpath had on entry to step 9 (i.e., before conversion to a relative pathname). If the -P option is in effect, the PWD environment variable shall be set to the string that would be output by pwd -P. If there is insufficient permission on the new directory, or on any parent of that directory, to determine the current working directory, the value of the PWD environment variable is unspecified.
-	chdir(curpath);
-	if (errno)
+	ret = chdir(curpath);
+	if (ret == -1)
 		print_errno_error(errno, "cd", curpath);
 	else if (opt != 'P')
 	{
@@ -226,7 +224,9 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		set_variable("PWD", new_pwd, true);
 	}
 	free(curpath);
-	return (errno);
+	if (ret != 0)
+		ret = 2;
+	return (ret);
 }
 
 /*
