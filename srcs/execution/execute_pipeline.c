@@ -34,7 +34,7 @@ t_error_id	execute_file(t_simple_command *cmd, size_t lvl)
 	}
 	else
 	{
-		wait_for_childs();
+		wait_for_children();
 		if (cmd->argv && cmd->argv[0])
 			set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1], false);
 		else
