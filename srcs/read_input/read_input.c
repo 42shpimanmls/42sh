@@ -29,6 +29,12 @@ void	read_input()
 	t_shell_env *shell_env;
 
 	shell_env = get_shell_env();
+	if (shell_env->del_input)
+	{
+		shell_env->del_input = 0;
+		ft_strdel(&shell_env->input_string);
+		get_shell_env()->last_unmatched = NO_ERROR;
+	}
 	if (shell_env->command_string != NULL)
 		handle_command_string(shell_env);
 	else
