@@ -6,6 +6,10 @@
 //////////////////////////
 //////////////////////////
 
+define('NO_ERROR', 0);
+define('ERROR_DIFFERENT_SIGNAL', 1);
+define('CHECK_DIFFERENT_SIGNAL', 2);
+
 ///////// ARGUMENT //////////
 $testRandom = array_search("random", $argv) ? true : false;
 $detail 	= array_search("detail", $argv) ? true : false;
@@ -146,35 +150,35 @@ function compute($command) {
 	unlink("res2");
 	unlink("res22");
 
-	if ($res || $ERRSTDOUT || ($testSignal && ($return_var1 != $return_var2)))
+	if ($res || $ERRSTDOUT || check_error_signal($return_var1, $return_var2))
 	{
-		if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
+		if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL)
 		{
-			$allerror .= "$COLORRED [KO] $COLORCLOSE \"$command\"\n";
+			$allerror .= "$COLORRED [$shellexec2][KO] $COLORCLOSE \"$command\"\n";
 		}
 		else
 		{
 			$countMaybe++;
-			$allerrorcheck .= "$COLORYELLOW [CK] $COLORCLOSE \"$command\"\n";
+			$allerrorcheck .= "$COLORYELLOW [$shellexec2][CK] $COLORCLOSE \"$command\"\n";
 		}
 		if ($detail)
 		{
 			$res = preg_replace('/---\n|1c1\n|1c1,2\n|>|</', '', $res);
-			if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
+			if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL)
 				$allerror .= "$res";
 			else
 				$allerrorcheck .= "$res";
 		}
-		if ($testSignal && ($return_var1 != $return_var2))
+		if (check_error_signal($return_var1, $return_var2))
 		{
-			if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
+			if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL)
 				$allerror .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
 			else
 				$allerrorcheck .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
 		}
 		if ($showOutput)
 		{
-			if ($ERRSTDOUT || ($testSignal && $return_var1 != $return_var2))
+			if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL)
 				$allerror .= "---\n".implode("\n", $tmp)."\n"."---\n";
 			else
 				$allerrorcheck .= "---\n".implode("\n", $tmp)."\n"."---\n";
@@ -183,10 +187,23 @@ function compute($command) {
 	else
 	{
 		$countOK++;
-		echo "$COLORGREEN [OK] $COLORCLOSE \"$command\"\n";
+		echo "$COLORGREEN [$shellexec2][OK] $COLORCLOSE \"$command\"\n";
 		if ($showOutput)
 			echo("---\n".implode("\n", $tmp)."\n"."---\n");
 	}
+}
+
+function check_error_signal($return_var1, $return_var2) {
+	global $testSignal;
+
+	if ($testSignal && $return_var1 != $return_var2)
+	{
+		if ($return_var1 > 0 && $return_var2 > 0)
+			return (2);
+		return (1);
+	}
+	else
+		return (0);
 }
 
 function get_ramdom_char() {
