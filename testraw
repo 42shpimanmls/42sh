@@ -48,7 +48,7 @@ echo -- -a lol
 echo -zzzn
 echo -a
 echo -noob lol
-echo -n lol
+# echo -n lol
 
 # test all ASCII char: check they are used to split str like ';', '>', '<' or '|'
 echo "nrsatu;nrtsa"
