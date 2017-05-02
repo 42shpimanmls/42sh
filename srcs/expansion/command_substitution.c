@@ -11,44 +11,7 @@
 #include "shell_env.h"
 #include "abstract_list.h"
 #include "break_input/quoting.h"
-
-static void					add_passive_string(t_strlist **strlist_addr
-										, char const *start, char const *end)
-{
-	char	*tmp;
-
-	tmp = strdup_until(start, end);
-	strlist_append(strlist_addr, tmp);
-	free(tmp);
-}
-
-static char					*fd_to_str(int fd)
-{
-	size_t const	bufsz = 4096;
-	char			buffer[bufsz];
-	t_strlist		*list;
-	int				ret;
-	char			*result;
-
-	list = NULL;
-	while ((ret = read(fd, buffer, bufsz - 1)) > 0)
-	{
-		buffer[ret] = '\0';
-		strlist_append(&list, buffer);
-	}
-	result = strlist_to_str(list);
-	strlist_delete(&list);
-	return (result);
-}
-
-static void					rm_trailing_newlines(char *str)
-{
-	size_t	len;
-
-	len = ft_strlen(str);
-	while (len-- > 0 && str[len] == '\n')
-		str[len] = '\0';
-}
+#include "read_input/command_substitution.h"
 
 static void					add_substitution(t_strlist **strlist_addr
 										, char const *start, char const *end)

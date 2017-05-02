@@ -61,31 +61,3 @@ void move_cursor_to(t_vec2i old_pos, t_vec2i new_pos, t_term *term)
 {
 	move_cursor(vec2i_sub(old_pos, new_pos), term);
 }
-
-EV_CB_RET 	event_cursor_up(EV_CB_ARGS)
-{
-	t_vec2i pos;
-
-	if (if_on_multiline(ed))
-		return ;
-	ed->need_refresh = true;
-
-	pos = get_cursor_vector(ed);
-	ed->cursor_position = find_index_at_vector(ed, pos.x, pos.y - 1);
-	move_cursor_to(pos, get_cursor_vector(ed), ed->term);
-	ed->pos = get_cursor_vector(ed);
-}
-
-EV_CB_RET 	event_cursor_down(EV_CB_ARGS)
-{
-	t_vec2i pos;
-
-	if (if_on_multiline(ed))
-		return ;
-
-	ed->need_refresh = true;
-	pos = get_cursor_vector(ed);
-	ed->cursor_position = find_index_at_vector(ed, pos.x, pos.y + 1);
-	move_cursor_to(pos, get_cursor_vector(ed), ed->term);
-	ed->pos = get_cursor_vector(ed);
-}
