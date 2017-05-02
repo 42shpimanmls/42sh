@@ -270,7 +270,7 @@ echo `echo 'un'` `error` `echo trois`
 echo `echo 'un'``error``echo trois`
 echo `echo 'un'`et`error`et`echo trois`
 echo "`ls`"
-echo "`ls\``"
+#echo "`ls\``"
 echo '`ls`'
 
 #################################
