@@ -77,7 +77,7 @@ t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
 			#endif
 				return (NO_SUCH_BUILTIN);
 			}
-			ret = builtin->builtin(ft_tablen(cmd->argv), cmd->argv);
+			builtin->builtin(ft_tablen(cmd->argv), cmd->argv);
 			set_variable("_", cmd->argv[ft_tablen(cmd->argv) - 1], false);
 			#ifdef FTSH_DEBUG
 			print_n_char_fd(' ', (lvl) * 2, 2);
@@ -90,5 +90,7 @@ t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
 	}
 	if (get_error() != ENV_EXEC_ERR)
 		set_last_exit_status(ret);
+	if (ret != 0)
+		ret = CHILD_FAILURE;
 	return (ret);
 }
