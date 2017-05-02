@@ -89,6 +89,6 @@ t_error_id		execute_builtin(t_simple_command *cmd, size_t lvl)
 		delete_all_variables(&env_backup);
 	}
 	if (get_error() != ENV_EXEC_ERR)
-		set_last_exit_status(ret == NO_ERROR ? 0 : 1);
+		set_last_exit_status(ret);
 	return (ret);
 }
