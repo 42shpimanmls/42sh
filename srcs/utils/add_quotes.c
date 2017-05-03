@@ -26,12 +26,10 @@ static void		add_quoted_backslash(char **word, size_t first)
 
 static void		quote_quotes(char **word)
 {
-	int		len;
 	char	*tmp;
 	int		i;
 
 	i = -3;
-	len = ft_strlen(*word);
 	while (i < (int)ft_strlen(*word))
 	{
 		if (!(tmp = ft_strchr(*word + i + 3, '\'')))

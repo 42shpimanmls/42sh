@@ -45,10 +45,8 @@ void			free_file_positions(t_file_position **files_addr)
 
 static void		new_file_position(char *filename, int position)
 {
-	t_file_position *files;
 	t_file_position *new;
 
-	files = get_shell_env()->history_files;
 	new = memalloc_or_die(sizeof(t_file_position));
 	new->filename = ft_strdup(filename);
 	new->position = position;
