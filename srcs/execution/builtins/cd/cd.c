@@ -76,13 +76,13 @@ it is considered possible under other circumstances is unspecified.
 Implementations may also apply this conversion if curpath is not longer than
 {PATH_MAX} bytes or the directory operand was longer than {PATH_MAX} bytes.
 */
-static void			save_the_day(char **curpath_addr, char const *directory, char const *pwd)
+void			save_the_day(char **curpath_addr, char const *directory, char const *pwd)
 {
 	char	*str;
 
 	if (curpath_addr == NULL || *curpath_addr == NULL)
 		fatal_error("NULL ptr fed to save_the_day");
-	if (!(ft_strlen(*curpath_addr) > PATH_MAX && ft_strlen(directory) <= PATH_MAX))
+	if (!(ft_strlen(*curpath_addr) + 1 > PATH_MAX && ft_strlen(directory) + 1 <= PATH_MAX))
 		return ;
 	if (!last_is_slash(pwd))
 		str = ft_strjoin(pwd, "/");
