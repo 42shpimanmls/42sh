@@ -44,14 +44,10 @@ static void		hist_parse_options(int argc, char **argv, t_hist_opt *options)
 
 int				builtin_history(int argc, char **argv)
 {
-	int			i;
-	t_history	*history;
 	t_hist_opt	options;
 
 	set_error(NO_ERROR);
 	ft_bzero(&options, sizeof(options));
-	history = get_shell_env()->history.list;
-	i = 1;
 	hist_parse_options(argc, argv, &options);
 	if (get_error() == NO_ERROR)
 		execute_options(&get_shell_env()->history.list, options);
