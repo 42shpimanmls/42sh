@@ -2,7 +2,7 @@
 #include "utils.h"
 #include <libft.h>
 
-static void 	print_assignments(t_variable const *a, size_t lvl)
+static void		print_assignments(t_variable const *a, size_t lvl)
 {
 	if (a == NULL)
 		return ;
@@ -21,7 +21,7 @@ static void 	print_assignments(t_variable const *a, size_t lvl)
 	ft_putchar('\n');
 }
 
-static void 	print_redirections(t_redirection const *r, size_t lvl)
+static void		print_redirections(t_redirection const *r, size_t lvl)
 {
 	if (r == NULL)
 		return ;
@@ -42,7 +42,7 @@ static void 	print_redirections(t_redirection const *r, size_t lvl)
 	ft_putchar('\n');
 }
 
-static void	print_simple_command(t_simple_command const *cmd, size_t lvl)
+static void		print_simple_command(t_simple_command const *cmd, size_t lvl)
 {
 	char **it;
 
@@ -70,7 +70,7 @@ static void	print_simple_command(t_simple_command const *cmd, size_t lvl)
 	print_redirections(cmd->redirections, lvl);
 }
 
-void		print_pipeline(t_simple_command const *pip, size_t lvl)
+void			print_pipeline(t_simple_command const *pip, size_t lvl)
 {
 	if (pip == NULL)
 	{

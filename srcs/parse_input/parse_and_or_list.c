@@ -6,7 +6,7 @@
 #include "errors.h"
 #include "shell_env.h"
 
-static t_token	**do_the_split(t_token const *tokens, size_t *len_addr)
+static t_token		**do_the_split(t_token const *tokens, size_t *len_addr)
 {
 	t_token_id		ids[2];
 
@@ -15,7 +15,7 @@ static t_token	**do_the_split(t_token const *tokens, size_t *len_addr)
 	return (split_tokens_mult(tokens, ids, 2, len_addr));
 }
 
-static t_ao_type		cut_ao_type(t_token **it)
+static t_ao_type	cut_ao_type(t_token **it)
 {
 	if ((*it) == NULL)
 		return (AO_END);
@@ -35,7 +35,7 @@ static t_ao_type		cut_ao_type(t_token **it)
 		return (AO_END);
 }
 
-t_and_or_list	*parse_and_or_list(t_token const *tokens)
+t_and_or_list		*parse_and_or_list(t_token const *tokens)
 {
 	t_and_or_list	*result;
 	t_and_or_list	**it;

@@ -1,6 +1,5 @@
 #include <libft.h>
-
-#define	N_MAX_SIG 31
+#define N_MAX_SIG 31
 
 char const	*get_signal_error(int signum)
 {
