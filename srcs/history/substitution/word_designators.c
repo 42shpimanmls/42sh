@@ -69,6 +69,7 @@ char			*parse_word_designators(char *str, int *i, t_range *range, \
 										char **entry)
 {
 	char	*result;
+
 	/*
 		!!!!!
 		It is not an error to use ‘*’ if there is just one word in the event;
