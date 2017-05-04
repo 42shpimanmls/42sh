@@ -187,6 +187,8 @@ chmod 000 segv
 ./segv
 chmod 755 segv
 ./segv
+echo "test" > tmp
+wc < tmp
 
 ## Asshole
   	 	  ls   -llll  -rrr  -- ~~
@@ -239,15 +241,24 @@ rm -f tmp tmp2
 # Les pipes “|”.
 
 ls | cat
-# ls | cat | cat
-# ls | cat | cat | cat
-# ls -A -l | cat -e | cat -e
-# ls | cat | wc -l
-# ls | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat
+ls | cat -e
+ls | cat | cat
+ls | cat | cat | cat
+ls -A -l | cat -e | cat -e
+ls | cat | wc -l
+ls | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat
 # ls || cat
 # ls ||||||||| cat
 # ls | | ls
 #|
+
+### Redirections with pipes
+ls | cat -e > tmp; cat tmp
+
+## Mix
+# ls -a | cat -e | wc > tmp ; cat tmp ; rm tmp
+# mkdir test1 ; cd test1 ; ls -a ; ls | cat | wc -c > fifi ; cat fifi ; rm fifi ; cd .. ; rm -rf test1
+# rm tmp ; ls ; pwd; ls -a | cat -e | wc > tmp ; cat tmp ; rm tmp
 
 #################################
 ######## LOGICAL OPERATOR #######
@@ -264,12 +275,12 @@ echo PASS && ./segv || echo FAILURE
 ./seg || ./segv || echo FAILURE
 ./segv || ./segv || ./segv || ./segv || ./segv
 ./notfound || ./segv || ./segv || ./segv || ls -rlaH
-# ./notfound || ./segv
+./notfound || ./segv
 echo PASS && ./segv || ./segv
 ./notfound || echo PASS
 ./notfound || echo PASS || ./segv
 ./notfound || ./segv || ./segv || ./segv || ./segv || echo PASS
-# ./notfound || ./segv || ./segv || ./segv || ./segv && echo PASS
+./notfound || ./segv || ./segv || ./segv || ./segv && echo PASS
 ./segv || echo FAILURE
 ./segv || ls
 mkdir srcs && echo PASS
@@ -330,13 +341,5 @@ cat auteur ; cat auteur ; cat auteur
 #mkdir -p 2>&1 | cat -e
 # echo No dollar character 1>&2 | cat -e
 
-### Ridirections with pipes
-#ls | cat -e > tmp; cat tmp
-
-# echo "!#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{|}~
 # all ASCII char without ` and "
-
-## Mix
-# rm tmp ; ls ; pwd; ls -a | cat -e | wc > tmp ; cat tmp ; rm tmp
-# ls -a | cat -e | wc >> tmp ; cat tmp ; rm tmp
-# mkdir test ; cd test ; ls -a ; ls | cat | wc -c > fifi ; cat fifi ; rm fifi ; cd .. ; rm -rf test
+# echo "!#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{|}~
