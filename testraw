@@ -1,7 +1,6 @@
 # THIS IS A COMMENTS.
-# PIPE NOT WORK Ex: ls | ls
-# DOUBLE QUOTE NOT WORK
 
+gcc -o segv testcomp/testsegv.c
 ###########################################################################
 ################################# BUILTIN #################################
 ###########################################################################
@@ -239,16 +238,15 @@ rm -f tmp tmp2
 #################################
 # Les pipes “|”.
 
-#ls | cat
-#ls | cat | cat
-#ls | cat | cat | cat
-#ls -A -l | cat -e | cat -e
-#ls | cat | wc -l
-#ls | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat \
-#   | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat
-#ls || cat
-#ls ||||||||| cat
-#ls | | ls
+ls | cat
+# ls | cat | cat
+# ls | cat | cat | cat
+# ls -A -l | cat -e | cat -e
+# ls | cat | wc -l
+# ls | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat
+# ls || cat
+# ls ||||||||| cat
+# ls | | ls
 #|
 
 #################################
@@ -298,7 +296,7 @@ echo "`ls`"
 echo '`ls`'
 
 #################################
-############# COMMA #############
+########### SEMICOLON ###########
 #################################
 # Le séparateur ";".
 

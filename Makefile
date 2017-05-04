@@ -6,12 +6,11 @@ CFLAGS 		= -Wall -Wextra -Werror -g -I$(INCL_ROOT) -I./libft/includes/
 LINKER 		= clang
 LFLAGS		= -L./libft/ -lft -lncurses
 
+NBTHREADS	= 1
 ifeq ($(shell uname), Linux)
 NBTHREADS	=`cat /proc/cpuinfo | grep processor | wc -l`
 else ifeq ($(shell uname), Darwin)
 NBTHREADS	=`sysctl -a | grep hw.logicalcpu: | cut -d ' ' -f 2`
-else
-NBTHREADS	= 1
 endif
 $(eval NBTHREADS=$(shell echo $$(($(NBTHREADS)*2))))
 
@@ -39,7 +38,6 @@ test:
 	@make re -C ./tests $(MAKE_OPTS) $(MAKE_OPTS_THREAD)
 
 testsh:
-	@gcc -o segv testcomp/testsegv.c
 	@./test detail
 
 $(PROG_NAME): $(OBJS_DIRS) $(OBJS)
