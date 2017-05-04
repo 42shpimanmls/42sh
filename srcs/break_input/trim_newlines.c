@@ -1,6 +1,6 @@
 #include "token.h"
 
-static bool		get_last_nl_list_start_impl(t_token const *tokens
+static bool				get_last_nl_list_start_impl(t_token const *tokens
 	, t_token const **result_addr)
 {
 	if (tokens == NULL)
