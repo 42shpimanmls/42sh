@@ -1,8 +1,8 @@
-# include <libft.h>
-# include <signal.h>
-# include "read_input/editor/editor.h"
-# include "read_input/event_callbacks/event_callback_def.h"
-# include "read_input/termcap/init_deinit.h"
+#include <libft.h>
+#include <signal.h>
+#include "read_input/editor/editor.h"
+#include "read_input/event_callbacks/event_callback_def.h"
+#include "read_input/termcap/init_deinit.h"
 
 static void	add_buffer_to_string(t_editor *ed, char buf[])
 {
@@ -24,7 +24,7 @@ void		print_cursor_vector(t_editor *ed)
 	ft_dprintf(2, "cx: %d, cy: %d\n", vec.x, vec.y);
 }
 
-char		*start_rescue_mode()
+char		*start_rescue_mode(void)
 {
 	char	*line;
 

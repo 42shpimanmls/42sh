@@ -5,7 +5,7 @@ size_t		find_index_at_vector(t_editor *ed, int ox, int oy)
 {
 	char	*str;
 	size_t	i;
-	long 	ret;
+	long	ret;
 	t_vec2i	vec;
 
 	str = ft_strjoinf(ed->prompt, get_string_from_list(ed->string), 2);

@@ -1,7 +1,7 @@
-# include "read_input/event_callbacks/event_callback_def.h"
-# include <libft.h>
+#include "read_input/event_callbacks/event_callback_def.h"
+#include <libft.h>
 
-void 	swap_position_if_needed(t_editor *ed)
+void	swap_position_if_needed(t_editor *ed)
 {
 	size_t tmp;
 

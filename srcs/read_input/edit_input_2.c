@@ -1,9 +1,9 @@
-# include <libft.h>
-# include <signal.h>
-# include "read_input/editor/editor.h"
-# include "read_input/event_callbacks/event_callback_def.h"
-# include "read_input/termcap/init_deinit.h"
-# include "read_input/edit_input.h"
+#include <libft.h>
+#include <signal.h>
+#include "read_input/editor/editor.h"
+#include "read_input/event_callbacks/event_callback_def.h"
+#include "read_input/termcap/init_deinit.h"
+#include "read_input/edit_input.h"
 
 void	refresh_termcap(int ret)
 {
@@ -21,11 +21,10 @@ void	refresh_termcap(int ret)
 	ed->pos = get_cursor_vector(ed);
 }
 
-char 		*edit_input()
+char	*edit_input(void)
 {
-
-	t_editor					*ed;
-	char						*line;
+	t_editor	*ed;
+	char		*line;
 
 	signal(SIGWINCH, refresh_termcap);
 	ft_start_termcaps();
