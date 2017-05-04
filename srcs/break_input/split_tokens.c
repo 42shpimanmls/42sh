@@ -8,7 +8,7 @@ t_token			**split_tokens_at(t_token const *tokens, t_token_id delim
 {
 	t_token			**result;
 	t_token const	*slice_start;
-	size_t	u;
+	size_t			u;
 
 	*len_addr = count_token_type(tokens, delim) + 1;
 	result = memalloc_or_die(sizeof(t_token*) * (*len_addr));
@@ -33,7 +33,7 @@ t_token			**split_tokens_mult(t_token const *tokens
 {
 	t_token			**result;
 	t_token const	*slice_start;
-	size_t	u;
+	size_t			u;
 
 	*len_addr = count_token_types(tokens, delims, nbr_delims) + 1;
 	result = memalloc_or_die(sizeof(t_token*) * (*len_addr));

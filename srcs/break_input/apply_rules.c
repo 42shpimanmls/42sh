@@ -68,7 +68,8 @@ void			apply_rules(t_tokenizer_state *state)
 		// Weird, not referenced but necessary (or illogism)
 		if (state->word_start == NULL)
 			state->word_start = state->current_char;
-		state->current_char = find_substitution_end(state->current_char + 1) + 1;
+		state->current_char =
+			find_substitution_end(state->current_char + 1) + 1;
 #ifdef TOKENIZER_DEBUG
 		ft_putstr("rule 5 aka ADD SUBSTITUTION TO WORD aka JUMP JUMP\n");
 #endif
