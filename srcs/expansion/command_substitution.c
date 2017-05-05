@@ -51,16 +51,12 @@ static void		add_substitution(t_strlist **strlist_addr
 	free(argv[2]);
 }
 
-t_strlist		*split_subsitutions(char const *word)
+t_strlist		*split_subsitutions_run(char const *word,
+				char const *passv_str_start,
+				t_strlist *result, char quoted)
 {
-	char const	*passv_str_start;
 	char const	*subst_end;
-	t_strlist	*result;
-	char		quoted;
 
-	quoted = 0;
-	passv_str_start = NULL;
-	result = NULL;
 	while (*word != '\0')
 	{
 		if (is_quote(*word))
@@ -92,4 +88,16 @@ t_strlist		*split_subsitutions(char const *word)
 	if (passv_str_start != NULL)
 		add_passive_string(&result, passv_str_start, word);
 	return (result);
+}
+
+t_strlist		*split_subsitutions(char const *word)
+{
+	char const	*passv_str_start;
+	t_strlist	*result;
+	char		quoted;
+
+	quoted = 0;
+	passv_str_start = NULL;
+	result = NULL;
+	return (split_subsitutions_run(word, passv_str_start, result, quoted));
 }
