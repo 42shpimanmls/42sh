@@ -51,7 +51,7 @@ static void		add_substitution(t_strlist **strlist_addr
 	free(argv[2]);
 }
 
-static t_strlist	*split_subsitutions(char const *word)
+t_strlist		*split_subsitutions(char const *word)
 {
 	char const	*passv_str_start;
 	char const	*subst_end;
@@ -91,16 +91,5 @@ static t_strlist	*split_subsitutions(char const *word)
 	}
 	if (passv_str_start != NULL)
 		add_passive_string(&result, passv_str_start, word);
-	return (result);
-}
-
-char			*command_substition(char const *word)
-{
-	t_strlist	*strlist;
-	char		*result;
-
-	strlist = split_subsitutions(word);
-	result = strlist_to_str(strlist);
-	strlist_delete(&strlist);
 	return (result);
 }
