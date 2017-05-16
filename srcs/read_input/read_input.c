@@ -40,10 +40,5 @@ void		read_input(void)
 		handle_command_string(shell_env);
 	else
 		handle_stdin(shell_env);
-#ifdef FTSH_DEBUG
-	ft_printf("<input_string>\n\"");
-	print_non_ascii_str(shell_env->input_string);
-	ft_printf("\"\n</input_string>\n");
-#endif
 	shell_env->last_unmatched = NO_ERROR;
 }

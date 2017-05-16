@@ -1,7 +1,7 @@
-# include "event_callback_def.h"
-# include <libft.h>
+#include "event_callback_def.h"
+#include <libft.h>
 
-void		move_cursor(t_vec2i	vec, t_term *term)
+void		move_cursor(t_vec2i vec, t_term *term)
 {
 	if (vec.x > 0)
 	{
@@ -25,7 +25,7 @@ void		move_cursor(t_vec2i	vec, t_term *term)
 	}
 }
 
-EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
+EV_CB_RET	ev_cursor_left(t_editor *ed)
 {
 	t_vec2i		cursor_vec;
 	t_vec2i		mov_vec;
@@ -41,7 +41,7 @@ EV_CB_RET 	event_cursor_left(EV_CB_ARGS)
 	}
 }
 
-EV_CB_RET 	event_cursor_right(EV_CB_ARGS)
+EV_CB_RET	ev_cursor_right(t_editor *ed)
 {
 	t_vec2i		cursor_vec;
 	t_vec2i		mov_vec;
@@ -57,7 +57,7 @@ EV_CB_RET 	event_cursor_right(EV_CB_ARGS)
 	}
 }
 
-void move_cursor_to(t_vec2i old_pos, t_vec2i new_pos, t_term *term)
+void		move_cursor_to(t_vec2i old_pos, t_vec2i new_pos, t_term *term)
 {
 	move_cursor(vec2i_sub(old_pos, new_pos), term);
 }

@@ -1,6 +1,6 @@
-# include "event_callback_def.h"
-# include <libft.h>
-# include "abstract_list.h"
+#include "event_callback_def.h"
+#include <libft.h>
+#include "abstract_list.h"
 
 static void	get_sub_string(t_editor *ed)
 {
@@ -16,11 +16,11 @@ static void	get_sub_string(t_editor *ed)
 	free(all);
 }
 
-static void delete_selected(t_editor *ed)
+static void	delete_selected(t_editor *ed)
 {
 	ed->cursor_position = ed->selected_string_end;
 	while (ed->cursor_position > ed->selected_string_start)
-		event_delete(ed);
+		ev_delete(ed);
 }
 
 static void	get_position(t_editor *ed)
@@ -40,7 +40,7 @@ static void	get_position(t_editor *ed)
 	}
 }
 
-EV_CB_RET	event_copy(EV_CB_ARGS)
+EV_CB_RET	ev_copy(t_editor *ed)
 {
 	get_position(ed);
 	if (ed->selected)
@@ -51,7 +51,7 @@ EV_CB_RET	event_copy(EV_CB_ARGS)
 	ed->string_size = list_count((t_abstract_list *)ed->string);
 }
 
-EV_CB_RET	event_cut(EV_CB_ARGS)
+EV_CB_RET	ev_cut(t_editor *ed)
 {
 	get_position(ed);
 	if (ed->selected)

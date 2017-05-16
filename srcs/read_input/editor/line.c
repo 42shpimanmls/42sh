@@ -2,8 +2,6 @@
 #include "read_input/event_callbacks/event_callback_def.h"
 #include "abstract_list.h"
 
-void		print_cursor_vector(t_editor *ed);
-
 void		move_start(t_editor *ed)
 {
 	while (ed->pos.y-- > 0)

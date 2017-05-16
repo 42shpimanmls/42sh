@@ -65,4 +65,7 @@ fclean: clean
 
 re: fclean all
 
+norme:
+	zsh -c "while ((1)) {sleep 1 && norminette **/*.[ch] | grep -v header > norm && clear && cat norm}"
+
 .PHONY: all clean fclean re test testsh

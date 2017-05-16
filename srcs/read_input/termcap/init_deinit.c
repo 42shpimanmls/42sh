@@ -37,8 +37,6 @@ t_term					*init_term(void)
 		set_rescue_mode(new);
 	if ((new->clear_line = tgetstr("cd", NULL)) == NULL)
 		set_rescue_mode(new);
-	// new->save_cursor_pos = tgetstr("sc", NULL);
-	// new->restore_cursor_pos = tgetstr("rc", NULL);
 	return (new);
 }
 

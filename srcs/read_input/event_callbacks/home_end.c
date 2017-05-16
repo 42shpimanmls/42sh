@@ -1,7 +1,7 @@
 #include "event_callback_def.h"
 #include <libft.h>
 
-EV_CB_RET 	event_cursor_home(EV_CB_ARGS)
+EV_CB_RET	ev_cursor_home(t_editor *ed)
 {
 	t_vec2i		pos;
 
@@ -12,7 +12,7 @@ EV_CB_RET 	event_cursor_home(EV_CB_ARGS)
 	ed->pos = get_cursor_vector(ed);
 }
 
-EV_CB_RET 	event_cursor_end(EV_CB_ARGS)
+EV_CB_RET	ev_cursor_end(t_editor *ed)
 {
 	t_vec2i		pos;
 

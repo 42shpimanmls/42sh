@@ -7,9 +7,9 @@
 
 typedef struct			s_unmatched_def
 {
-		t_error_id		id;
-		char const		*str;
-}					t_unmatched_def;
+	t_error_id			id;
+	char const			*str;
+}						t_unmatched_def;
 
 typedef struct			s_string
 {
