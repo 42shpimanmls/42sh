@@ -8,6 +8,7 @@
 #include "shell_env.h"
 
 #include "read_input/editor/editor.h"
+#include "read_input/editor/editor_struct.h"
 #include "read_input/event_callbacks/event_callback_def.h"
 #include "read_input/termcap/init_deinit.h"
 
@@ -15,12 +16,6 @@
 
 #include "variable.h"
 #include <sys/utsname.h>
-
-typedef struct		s_unmatched_def
-{
-	t_error_id	id;
-	char const	*str;
-}					t_unmatched_def;
 
 static char const	*get_unmatched_str(t_error_id id)
 {
