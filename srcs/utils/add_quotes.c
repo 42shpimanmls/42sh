@@ -68,16 +68,8 @@ static void		add_quote_at_pos(t_string **l_str, size_t pos)
 ** quotes each word delimited by space, tab or \n
 */
 
-void			quote_per_word(char **str)
+static void		quote_per_word_loop(t_string *l_str, t_string *beg, int pos)
 {
-	t_string	*l_str;
-	t_string	*beg;
-	int			pos;
-
-	pos = 0;
-	quote_word(str);
-	l_str = str_to_list(*str);
-	beg = l_str;
 	while (l_str)
 	{
 		if (is_posix_blank(l_str->c) || l_str->c == '\n')
@@ -95,6 +87,19 @@ void			quote_per_word(char **str)
 		l_str = l_str->next;
 		pos++;
 	}
+}
+
+void			quote_per_word(char **str)
+{
+	t_string	*l_str;
+	t_string	*beg;
+	int			pos;
+
+	pos = 0;
+	quote_word(str);
+	l_str = str_to_list(*str);
+	beg = l_str;
+	quote_per_word_loop(l_str, beg, pos);
 	ft_strdel(str);
 	*str = get_string_from_list(beg);
 	free_string(beg);
