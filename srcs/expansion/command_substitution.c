@@ -13,7 +13,7 @@
 #include "break_input/quoting.h"
 #include "read_input/command_substitution.h"
 
-static void		if_fork_in_child(t_strlist **strlist_addr, int pipefds[2])
+static void		if_fork_not_in_child(t_strlist **strlist_addr, int pipefds[2])
 {
 	char				*tmp;
 
@@ -46,7 +46,7 @@ static void		add_substitution(t_strlist **strlist_addr
 		fatal_error("failed to execute recursively in add_substitution");
 	}
 	else
-		if_fork_in_child(strlist_addr, pipefds);
+		if_fork_not_in_child(strlist_addr, pipefds);
 	free(argv[0]);
 	free(argv[2]);
 }
