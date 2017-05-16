@@ -22,7 +22,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	if ((ft_strlen(s1) + ft_strlen(s2)) < 1)
 		return (NULL);
-	res = (char *)memalloc_or_die((sizeof(char)) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	res = memalloc_or_die((sizeof(char)) *
+		(ft_strlen(s1) + ft_strlen(s2) + 1));
 	i = -1;
 	j = 0;
 	if (s1)
