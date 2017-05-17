@@ -14,6 +14,12 @@ static int 	get_default_fd(t_redir_type type)
 	return (-1);
 }
 
+static t_redirection	*free_result(t_redirection *result)
+{
+	free(result);
+	return (NULL);
+}
+
 static t_redirection	*create_redirection(t_token const *tokens, t_token const **end)
 {
 	t_redirection		*result;
@@ -31,19 +37,13 @@ static t_redirection	*create_redirection(t_token const *tokens, t_token const **
 	if (tokens == NULL || (tokens->type->id != (t_token_id)REDIR_OUTPUT
 					&& tokens->type->id != (t_token_id)REDIR_INPUT
 					&& tokens->type->id != (t_token_id)APPEND_OUTPUT))
-	{
-		free(result);
-		return (NULL);
-	}
+	return (free_result(result));
 	if (result->n == -1)
 		result->n = get_default_fd((t_redir_type)tokens->type->id);
 	result->type = (t_redir_type)tokens->type->id;
 	tokens = tokens->next;
 	if (tokens == NULL || tokens->type->id != TOKEN_TOKID)
-	{
-		free(result);
-		return (NULL);
-	}
+	return (free_result(result));
 	result->word = ft_strdup(tokens->str);
 	*end = tokens->next;
 	return (result);
