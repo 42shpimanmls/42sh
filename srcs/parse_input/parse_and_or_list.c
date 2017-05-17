@@ -35,21 +35,12 @@ static t_ao_type	cut_ao_type(t_token **it)
 		return (AO_END);
 }
 
-t_and_or_list		*parse_and_or_list(t_token const *tokens)
+t_and_or_list		*parse_and_or_list_run(t_and_or_list *result, size_t u,\
+				t_token **splited, size_t splited_len)
 {
-	t_and_or_list	*result;
 	t_and_or_list	**it;
-	t_token			**splited;
-	size_t			splited_len;
-	size_t			u;
 	t_token			*trimed;
 
-	set_error(NO_ERROR);
-	if (tokens == NULL)
-		return (NULL);
-	splited = do_the_split(tokens, &splited_len);
-	u = 0;
-	result = NULL;
 	it = &result;
 	while (u < splited_len)
 	{
@@ -76,4 +67,18 @@ t_and_or_list		*parse_and_or_list(t_token const *tokens)
 	}
 	delete_tokens_array(splited, splited_len);
 	return (result);
+}
+
+t_and_or_list		*parse_and_or_list(t_token const *tokens)
+{
+	t_and_or_list	*result;
+	t_token			**splited;
+	size_t			splited_len;
+
+	set_error(NO_ERROR);
+	if (tokens == NULL)
+		return (NULL);
+	splited = do_the_split(tokens, &splited_len);
+	result = NULL;
+	return (parse_and_or_list_run(result, 0, splited, splited_len));
 }
