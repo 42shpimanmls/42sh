@@ -53,9 +53,10 @@ static void		add_substitution(t_strlist **strlist_addr
 
 t_strlist		*split_subsitutions_run(char const *word,
 				char const *passv_str_start,
-				t_strlist *result, char quoted)
+				t_strlist *result)
 {
 	char const	*subst_end;
+	char		quoted;
 
 	while (*word != '\0')
 	{
@@ -94,10 +95,8 @@ t_strlist		*split_subsitutions(char const *word)
 {
 	char const	*passv_str_start;
 	t_strlist	*result;
-	char		quoted;
 
-	quoted = 0;
 	passv_str_start = NULL;
 	result = NULL;
-	return (split_subsitutions_run(word, passv_str_start, result, quoted));
+	return (split_subsitutions_run(word, passv_str_start, result));
 }
