@@ -71,7 +71,6 @@ t_and_or_list		*parse_and_or_list_run(t_and_or_list *result, size_t u,\
 
 t_and_or_list		*parse_and_or_list(t_token const *tokens)
 {
-	t_and_or_list	*result;
 	t_token			**splited;
 	size_t			splited_len;
 
@@ -79,6 +78,5 @@ t_and_or_list		*parse_and_or_list(t_token const *tokens)
 	if (tokens == NULL)
 		return (NULL);
 	splited = do_the_split(tokens, &splited_len);
-	result = NULL;
-	return (parse_and_or_list_run(result, 0, splited, splited_len));
+	return (parse_and_or_list_run(NULL, 0, splited, splited_len));
 }
