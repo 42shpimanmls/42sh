@@ -1,9 +1,6 @@
-# include "event_callback_def.h"
+#include "event_callback_def.h"
 
-void restore_old_cursor_position(t_editor *ed, t_vec2i old_pos);
-void		print_cursor_vector(t_editor *ed);
-
-EV_CB_RET	event_paste(EV_CB_ARGS)
+EV_CB_RET	ev_paste(t_editor *ed)
 {
 	size_t i;
 

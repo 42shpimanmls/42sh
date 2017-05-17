@@ -12,8 +12,6 @@
 #include "read_input/event_callbacks/event_callback_def.h"
 #include "read_input/termcap/init_deinit.h"
 
-// #include "history/history.h"
-
 #include "variable.h"
 #include <sys/utsname.h>
 

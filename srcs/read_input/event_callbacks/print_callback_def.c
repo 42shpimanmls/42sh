@@ -3,8 +3,7 @@
 #include <stdio.h>
 #include "utils.h"
 
-void								print_event_callback_def(
-	t_event_callback_def const *def)
+void	print_event_callback_def(t_event_callback_def const *def)
 {
 	if (def != NULL)
 	{

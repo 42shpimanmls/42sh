@@ -1,7 +1,6 @@
 #include <libft.h>
 #include "editor.h"
 
-
 static long	return_value(t_editor *ed, char *str, int i)
 {
 	long	ret;
