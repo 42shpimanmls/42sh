@@ -39,27 +39,18 @@ void			apply_rules(t_tokenizer_state *state)
 		&& is_operator_part(state))
 	{
 		state->current_char++;
-#ifdef TOKENIZER_DEBUG
-		ft_putstr("rule 2 aka ADD TO OPERATOR\n");
-#endif
 		return ;
 	}
 	// rule 3
 	if (state->op_start != NULL && !is_operator_part(state))
 	{
 		delimit_token(state);
-#ifdef TOKENIZER_DEBUG
-		ft_putstr("rule 3 aka DELIMIT OPERATOR\n");
-#endif
 		return ;
 	}
 	// rule 4
 	if (is_quote(c) && !is_quoted(state))
 	{
 		apply_quoting(state);
-#ifdef TOKENIZER_DEBUG
-		ft_putstr("rule 4 aka APPLY QUOTING\n");
-#endif
 		return ;
 	}
 	// rule 5 (incomplete !! recursion not handled) // not quoted if double quotes?
@@ -70,9 +61,6 @@ void			apply_rules(t_tokenizer_state *state)
 			state->word_start = state->current_char;
 		state->current_char =
 			find_substitution_end(state->current_char + 1) + 1;
-#ifdef TOKENIZER_DEBUG
-		ft_putstr("rule 5 aka ADD SUBSTITUTION TO WORD aka JUMP JUMP\n");
-#endif
 		return ;
 	}
 	// rule 6
@@ -81,9 +69,6 @@ void			apply_rules(t_tokenizer_state *state)
 		delimit_token(state);
 		state->op_start = state->current_char;
 		state->current_char++;
-#ifdef TOKENIZER_DEBUG
-		ft_putstr("rule 6 aka START OPERATOR\n");
-#endif
 		return ;
 	}
 	// rule 7
@@ -91,18 +76,12 @@ void			apply_rules(t_tokenizer_state *state)
 	{
 		delimit_token(state);
 		state->current_char++;
-#ifdef TOKENIZER_DEBUG
-		ft_putstr("rule 7 aka SKIP BLANK\n");
-#endif
 		return ;
 	}
 	// rule 8
 	if (state->word_start != NULL)
 	{
 		state->current_char++;
-#ifdef TOKENIZER_DEBUG
-		ft_putstr("rule 8 aka ADD TO WORD\n");
-#endif
 		return ;
 	}
 	// rule 9
@@ -111,15 +90,9 @@ void			apply_rules(t_tokenizer_state *state)
 		while (*(state->current_char) != '\0'
 			&& *(state->current_char) != '\n')
 			state->current_char++;
-#ifdef TOKENIZER_DEBUG
-		ft_putstr("rule 9 aka SKIP COMMENT\n");
-#endif
 		return ;
 	}
 	// rule 10
 	state->word_start = state->current_char;
 	state->current_char++;
-#ifdef TOKENIZER_DEBUG
-	ft_putstr("rule 10 aka START WORD\n");
-#endif
 }
