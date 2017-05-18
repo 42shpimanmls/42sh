@@ -34,25 +34,28 @@ void			apply_rules(t_tokenizer_state *state)
 
 	c = *state->current_char;
 	print_tokenizer_state(state);
-	// rule 2
 	if (state->op_start != NULL && !is_quoted(state)
 		&& is_operator_part(state))
 	{
 		state->current_char++;
 		return ;
 	}
-	// rule 3
 	if (state->op_start != NULL && !is_operator_part(state))
 	{
 		delimit_token(state);
 		return ;
 	}
-	// rule 4
 	if (is_quote(c) && !is_quoted(state))
 	{
 		apply_quoting(state);
 		return ;
 	}
+	if (apply_rules_2(state) == false || apply_rules_3(state, c) == false)
+		return ;
+}
+
+bool			apply_rules_2(t_tokenizer_state *state)
+{
 	// rule 5 (incomplete !! recursion not handled) // not quoted if double quotes?
 	if (!is_quoted(state) && is_substitution_start(state->current_char))
 	{
@@ -61,38 +64,39 @@ void			apply_rules(t_tokenizer_state *state)
 			state->word_start = state->current_char;
 		state->current_char =
 			find_substitution_end(state->current_char + 1) + 1;
-		return ;
+		return (false);
 	}
-	// rule 6
 	if (!is_quoted(state) && is_operator_part(state))
 	{
 		delimit_token(state);
 		state->op_start = state->current_char;
 		state->current_char++;
-		return ;
+		return (false);
 	}
-	// rule 7
+	return (true);
+}
+
+bool			apply_rules_3(t_tokenizer_state *state, char c)
+{
 	if (!is_quoted(state) && is_posix_blank(c))
 	{
 		delimit_token(state);
 		state->current_char++;
-		return ;
+		return (false);
 	}
-	// rule 8
 	if (state->word_start != NULL)
 	{
 		state->current_char++;
-		return ;
+		return (false);
 	}
-	// rule 9
 	if (c == '#')
 	{
 		while (*(state->current_char) != '\0'
 			&& *(state->current_char) != '\n')
 			state->current_char++;
-		return ;
+		return (false);
 	}
-	// rule 10
 	state->word_start = state->current_char;
 	state->current_char++;
+	return (true);
 }
