@@ -42,39 +42,29 @@ The '$' character is used to introduce parameter expansion, command substitution
 the result is unspecified.
 */
 
-static t_strlist	*expand_cmd_word(char const *word)
+static t_strlist	*expand_cmd_word(t_strlist *result, char *str,
+				t_strlist *it, char *tmp)
 {
-	t_strlist	*result;
-	char		*str;
-	t_strlist	*it;
-	char		*tmp;
-
-	result = NULL;
-	if (word != NULL)
+	tmp = parameter_expansion(str);
+	ft_strdel(&str);
+	str = tmp;
+	if (!str)
+		return (NULL);
+	tmp = command_substition(str);
+	ft_strdel(&str);
+	if (!tmp)
+		return (NULL);
+	set_error(NO_ERROR);
+	result = field_splitting(tmp);
+	ft_strdel(&tmp);
+	it = result;
+	while (it != NULL)
 	{
-		str = tilde_expansion(word);
-		// tmp = str;
-		tmp = parameter_expansion(str);
-		ft_strdel(&str);
-		str = tmp;
-		if (!str)
-			return (NULL);
-		tmp = command_substition(str);
-		ft_strdel(&str);
-		if (!tmp)
-			return (NULL);
-		set_error(NO_ERROR);
-		result = field_splitting(tmp);
-		ft_strdel(&tmp);
-		it = result;
-		while (it != NULL)
-		{
-			/*str = pathname_expansion(it->str);
-			free(it->str);
-			*/
-			quote_removal(&it->str);
-			it = it->next;
-		}
+		/*str = pathname_expansion(it->str);
+		free(it->str);
+		*/
+		quote_removal(&it->str);
+		it = it->next;
 	}
 	return (result);
 }
@@ -89,7 +79,11 @@ void				expand_cmd_words(char ***words_addr)
 	word_list = NULL;
 	while (*words != (char*)NULL)
 	{
-		fields = expand_cmd_word(*words);
+		if (*words == NULL)
+			fields = NULL;
+		else
+			fields = expand_cmd_word(
+				NULL, tilde_expansion(*words), NULL, NULL);
 		list_concat((t_abstract_list**)&word_list, (t_abstract_list*)fields);
 		words++;
 	}
