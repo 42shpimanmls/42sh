@@ -54,29 +54,29 @@ static bool	is_special_parameter(char c)
 
 char		*parameter_expansion(char const *word)
 {
-	t_range	delimit;
+	t_range	limit;
 	char	quoted;
 	char	*result;
-	char	*parameter;
+	char	*param;
 
 	result = ft_strdup(word);
 	quoted = 0;
-	ft_bzero(&delimit, sizeof(t_range));
-	while (result && delimit.start < ft_strlen(result))
+	ft_bzero(&limit, sizeof(t_range));
+	while (result && limit.start < ft_strlen(result))
 	{
-		if (next_dollar_sign(result, &delimit, &quoted))
+		if (next_dollar_sign(result, &limit, &quoted))
 		{
-			delimit.end = delimit.start;
-			if (is_special_parameter(result[delimit.start + 1]))
-				delimit.end = delimit.start + 2;
+			limit.end = limit.start;
+			if (is_special_parameter(result[limit.start + 1]))
+				limit.end = limit.start + 2;
 			else
-				goto_parameter_end(result, &delimit);
-			parameter = ft_strsub(result, delimit.start, delimit.end - delimit.start);
-			replace_by_variable(&result, parameter, &delimit.start);
-			ft_strdel(&parameter);
+				goto_parameter_end(result, &limit);
+			param = ft_strsub(result, limit.start, limit.end - limit.start);
+			replace_by_variable(&result, param, &limit.start);
+			ft_strdel(&param);
 		}
 		else
-			delimit.start++;
+			limit.start++;
 	}
 	return (result);
 }

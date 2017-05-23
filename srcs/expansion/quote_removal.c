@@ -75,16 +75,10 @@ void		quote_removal(char **word)
 
 	if (has_quotes(*word))
 	{
-		#ifdef EXPANSION_DEBUG
-			ft_dprintf(2, "before quote removal: %s\n", *word);
-		#endif
 		l_str = str_to_list(*word);
 		remove_quotes(&l_str);
 		ft_strdel(word);
 		*word = get_string_from_list(l_str);
-		#ifdef EXPANSION_DEBUG
-			ft_dprintf(2, "after quote removal: <str> %s</str>\n", *word);
-		#endif
 		free_string(l_str);
 	}
 }
