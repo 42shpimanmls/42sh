@@ -35,6 +35,15 @@ static t_ao_type	cut_ao_type(t_token **it)
 		return (AO_END);
 }
 
+void				set_unexpected_if(t_and_or_list **result, \
+								size_t splitted_len, size_t u)
+{
+	set_error(UNEXPECTED_IF);
+	if (u == splitted_len - 1)
+		get_shell_env()->last_unmatched = UNEXPECTED_IF;
+	*result = NULL; //delete_command_list(&result);
+}
+
 t_and_or_list		*parse_and_or_list_run(t_and_or_list *result, size_t u,\
 				t_token **splited, size_t splited_len)
 {
@@ -46,13 +55,9 @@ t_and_or_list		*parse_and_or_list_run(t_and_or_list *result, size_t u,\
 	{
 		(*it) = memalloc_or_die(sizeof(t_and_or_list));
 		(*it)->separation_type = cut_ao_type(splited + u);
-		trimed = trim_newlines(splited[u]);
-		if (trimed == NULL)
+		if ((trimed = trim_newlines(splited[u])) == NULL)
 		{
-			set_error(UNEXPECTED_IF);
-			if (u == splited_len - 1)
-				get_shell_env()->last_unmatched = UNEXPECTED_IF;
-			result = NULL; //delete_command_list(&result);
+			set_unexpected_if(&result, splited_len, u);
 			break ;
 		}
 		(*it)->pipeline = parse_pipeline(trimed);
