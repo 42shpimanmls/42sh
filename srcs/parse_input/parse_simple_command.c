@@ -34,6 +34,7 @@ t_simple_command	*parse_simple_command(t_token const *tokens)
 	if (tokens == NULL)
 		return (NULL);
 	result = memalloc_or_die(sizeof(t_simple_command));
+	remains = NULL;
 	result->redirections = parse_redirections(tokens, &remains);
 	if (get_error() == NO_ERROR)
 	{
