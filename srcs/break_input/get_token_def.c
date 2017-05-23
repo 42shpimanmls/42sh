@@ -35,4 +35,4 @@ t_token_def const			*get_token_def(t_token_id id)
 		u += 1;
 	}
 	return (NULL);
-};
+}
