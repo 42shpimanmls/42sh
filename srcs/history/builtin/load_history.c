@@ -58,7 +58,7 @@ void		load_history(t_shell_env *shell_env, char *filename, bool n_opt)
 	i = 0;
 	position = 0;
 	if (!filename)
-		filename = HISTFILE;
+		filename = get_shell_env()->history.histfile;
 	if ((fd = open(filename, O_RDONLY)) >= 0)
 	{
 		if (n_opt)

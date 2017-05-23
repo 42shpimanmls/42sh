@@ -1,8 +1,6 @@
 #ifndef HISTORY_DEF_H
 # define HISTORY_DEF_H
 
-# define HISTFILE ".42sh_history"
-
 typedef struct				s_str_subst
 {
 	char					*to_find;
@@ -32,6 +30,7 @@ typedef struct				s_sh_history
 	t_file_position			*files;
 	t_str_subst				last_subst;
 	char					*last_search;
+	char					*histfile;
 }							t_sh_history;
 
 #endif
