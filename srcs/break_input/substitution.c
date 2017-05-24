@@ -5,7 +5,6 @@
 
 bool		is_substitution_start(char const *s)
 {
-	// does the tokenizer take into account the quoting for start? (it does for end - below)
 	if (s && *s && *s == '`')
 		return (true);
 	return (false);
