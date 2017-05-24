@@ -5,7 +5,7 @@
 #include "errors.h"
 #include "variable.h"
 
-static int 	get_default_fd(t_redir_type type)
+static int				get_default_fd(t_redir_type type)
 {
 	if (type == REDIR_OUTPUT || type == APPEND_OUTPUT)
 		return (1);
@@ -14,7 +14,14 @@ static int 	get_default_fd(t_redir_type type)
 	return (-1);
 }
 
-static t_redirection	*create_redirection(t_token const *tokens, t_token const **end)
+static t_redirection	*free_result(t_redirection *result)
+{
+	free(result);
+	return (NULL);
+}
+
+static t_redirection	*create_redirection(t_token const *tokens, \
+											t_token const **end)
 {
 	t_redirection		*result;
 
@@ -31,19 +38,13 @@ static t_redirection	*create_redirection(t_token const *tokens, t_token const **
 	if (tokens == NULL || (tokens->type->id != (t_token_id)REDIR_OUTPUT
 					&& tokens->type->id != (t_token_id)REDIR_INPUT
 					&& tokens->type->id != (t_token_id)APPEND_OUTPUT))
-	{
-		free(result);
-		return (NULL);
-	}
+		return (free_result(result));
 	if (result->n == -1)
 		result->n = get_default_fd((t_redir_type)tokens->type->id);
 	result->type = (t_redir_type)tokens->type->id;
 	tokens = tokens->next;
 	if (tokens == NULL || tokens->type->id != TOKEN_TOKID)
-	{
-		free(result);
-		return (NULL);
-	}
+		return (free_result(result));
 	result->word = ft_strdup(tokens->str);
 	*end = tokens->next;
 	return (result);
@@ -56,18 +57,13 @@ t_redirection			*parse_redirections(t_token const *tokens\
 	t_redirection	**next_addr;
 	t_token			**next_remain;
 
-	set_error(NO_ERROR);
-	*remains = NULL;
 	result = NULL;
 	next_addr = &result;
 	next_remain = remains;
 	while (tokens != NULL)
 	{
-		*next_addr = create_redirection(tokens, &tokens);
-		if (*next_addr == NULL)
+		if (!(*next_addr = create_redirection(tokens, &tokens)))
 		{
-			// if the word is not part of redirection and a valid word,
-			// copy it in remains
 			if (tokens->type->id != TOKEN_TOKID)
 			{
 				delete_redirections(&result);
