@@ -32,13 +32,7 @@ static void	add_field(char const *word, t_strlist **result, t_range *delimit)
 	char		*tmp;
 
 	tmp = ft_strsub(word, delimit->start, delimit->end - delimit->start);
-	#ifdef EXPANSION_DEBUG
-		ft_dprintf(2, "Adding field, str: %s\n", tmp);
-	#endif
 	strlist_append(result, tmp);
-	// Each occurrence in the input of an IFS character that is not IFS white space,
-	// along with any adjacent IFS white space, shall delimit a field, as described previously.
-	// Non-zero-length IFS white space shall delimit a field
 	skip_posix_blanks(word, &delimit->end);
 	delimit->start = delimit->end;
 	ft_strdel(&tmp);
@@ -48,8 +42,6 @@ static void	add_field(char const *word, t_strlist **result, t_range *delimit)
 **	scan the results of expansions and substitutions
 ** 	that did not occur in double-quotes and split into fields
 */
-
-// TO DO: white space fields (see comment above)
 
 t_strlist	*field_splitting(char const *word)
 {

@@ -14,5 +14,8 @@ void				quote_removal(char **word);
 void				handle_quotes(char c, char *quoted);
 char				*tilde_expansion(char const *word);
 t_strlist			*split_subsitutions(char const *word);
+t_strlist			*split_subsitutions_run(char const *word,
+					char const *passv_str_start,
+					t_strlist *result, char quoted);
 
 #endif
