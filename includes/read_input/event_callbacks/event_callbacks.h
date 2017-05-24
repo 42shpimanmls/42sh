@@ -8,24 +8,24 @@
 
 typedef EV_CB_RET	(*t_event_callback)(t_editor *ed);
 
-void	event_cursor_right(t_editor *ed);
-void	event_newline(t_editor *ed);
-void	event_cursor_left(t_editor *ed);
-void	event_cursor_right(t_editor *ed);
-void	event_cursor_up(t_editor *ed);
-void	event_cursor_down(t_editor *ed);
-void	event_cursor_home(t_editor *ed);
-void	event_cursor_end(t_editor *ed);
-void	event_cursor_word_right(t_editor *ed);
-void	event_cursor_word_left(t_editor *ed);
-void	event_history_up(t_editor *ed);
-void	event_history_down(t_editor *ed);
-void	event_copy(t_editor *ed);
-void	event_cut(t_editor *ed);
-void	event_paste(t_editor *ed);
-void	event_cancel(t_editor *ed);
-void	event_exit(t_editor *ed);
-void	event_delete(t_editor *ed);
-void	event_delete_right(t_editor *ed);
+void	ev_cursor_right(t_editor *ed);
+void	ev_newline(t_editor *ed);
+void	ev_cursor_left(t_editor *ed);
+void	ev_cursor_right(t_editor *ed);
+void	ev_cursor_up(t_editor *ed);
+void	ev_cursor_down(t_editor *ed);
+void	ev_cursor_home(t_editor *ed);
+void	ev_cursor_end(t_editor *ed);
+void	ev_wrd_r(t_editor *ed);
+void	ev_wrd_l(t_editor *ed);
+void	ev_history_up(t_editor *ed);
+void	ev_history_down(t_editor *ed);
+void	ev_copy(t_editor *ed);
+void	ev_cut(t_editor *ed);
+void	ev_paste(t_editor *ed);
+void	ev_cancel(t_editor *ed);
+void	ev_exit(t_editor *ed);
+void	ev_delete(t_editor *ed);
+void	ev_delete_right(t_editor *ed);
 
 #endif

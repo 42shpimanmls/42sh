@@ -6,8 +6,8 @@
 
 char const	*find_double_quote_end(t_tokenizer_state *state)
 {
-	char const *it;
-	char nc;
+	char const	*it;
+	char		nc;
 
 	it = state->current_char + 1;
 	while (*it != '\0')

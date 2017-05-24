@@ -10,7 +10,6 @@
 #include "utils.h"
 #include "sig_handler.h"
 
-
 static void		main_loop(void)
 {
 	t_shell_env *shell_env;
@@ -27,7 +26,8 @@ static void		main_loop(void)
 	}
 	break_input();
 	if (shell_env->input_string)
-		add_to_history_list(&shell_env->history.list, create_history_entry(shell_env->input_string));
+		add_to_history_list(&shell_env->history.list,
+				create_history_entry(shell_env->input_string));
 	if (get_error() != NO_ERROR)
 		return ;
 	if (shell_env->input_string)
@@ -62,7 +62,6 @@ int				main(int ac, char **av)
 	// ft_dprintf(2, "NB ARG: %d\n", number_of_argument(av));
 	// return (0);
 	///////////////////////////////////////
-
 	signal(SIGINT, &sig_handler);
 	setbuf(stdout, NULL);
 	setbuf(stderr, NULL);

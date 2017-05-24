@@ -25,6 +25,25 @@ void				overwrite_fd(int src, int overwrited)
 	}
 }
 
+static void				pipe_me_in_2(t_pipeline_state *state, pid_t fork_ret)
+{
+	if (fork_ret == FORKED_IN_CHILD)
+	{
+		if (state->prev_pipe != NULL)
+			overwrite_fd(pipe_get_read_fd(state->prev_pipe), STDIN_FILENO);
+		if (state->next_pipe != NULL)
+			overwrite_fd(pipe_get_write_fd(state->next_pipe), STDOUT_FILENO);
+		delete_pipe(&state->prev_pipe);
+	}
+	else
+	{
+		delete_pipe(&state->prev_pipe);
+		state->prev_pipe = state->next_pipe;
+		state->next_pipe = NULL;
+		state->last_pid = fork_ret;
+	}
+}
+
 int					pipe_me_in(t_pipeline_state *state)
 {
 	pid_t	fork_ret;
@@ -42,20 +61,6 @@ int					pipe_me_in(t_pipeline_state *state)
 	if (!state->last_cmd)
 		create_next_pipe(state);
 	fork_ret = enter_subshell();
-	if (fork_ret == FORKED_IN_CHILD)
-	{
-		if (state->prev_pipe != NULL)
-			overwrite_fd(pipe_get_read_fd(state->prev_pipe), STDIN_FILENO);
-		if (state->next_pipe != NULL)
-			overwrite_fd(pipe_get_write_fd(state->next_pipe), STDOUT_FILENO);
-		delete_pipe(&state->prev_pipe);
-	}
-	else
-	{
-		delete_pipe(&state->prev_pipe);
-		state->prev_pipe = state->next_pipe;
-		state->next_pipe = NULL;
-		state->last_pid = fork_ret;
-	}
+	pipe_me_in_2(state, fork_ret);
 	return (fork_ret);
 }

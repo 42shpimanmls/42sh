@@ -2,8 +2,6 @@
 
 void		handle_quotes(char c, char *quoted)
 {
-	// if (c == '\\')
-	// 	;
 	if (c == '\'')
 	{
 		if (*quoted & IS_QU_SIMPLE)

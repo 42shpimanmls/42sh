@@ -24,6 +24,7 @@ t_abstract_list				*list_dup_until(t_abstract_list const *list
 						, t_abstract_list const *stop, size_t elem_size);
 bool						list_goto_n(t_abstract_list **list, t_uint n);
 void						list_concat(t_abstract_list	**dst
-														, t_abstract_list *src);
+													, t_abstract_list *src);
+void						list_free(t_abstract_list **list);
 
 #endif

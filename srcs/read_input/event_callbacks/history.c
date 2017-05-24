@@ -1,22 +1,17 @@
 #include "event_callback_def.h"
 #include "history/history_def.h"
 #include "abstract_list.h"
+#include "utils.h"
 #include <libft.h>
 
-/** general functions that can be moved/reused  **/
+/*
+** general functions that can be moved/reused
+*/
 
-void	list_free(t_abstract_list **list)
-{
-	if ((*list) && (*list)->next)
-		list_free(&(*list)->next);
-	free(*list);
-	*list = NULL;
-}
-
-static void	str_to_list(t_editor *ed, char *str)
+static void	str_to_list_in_editor(t_editor *ed, char *str)
 {
 	if (str == NULL)
-		return;
+		return ;
 	while (*str)
 	{
 		add_to_string(ed, *str);
@@ -24,22 +19,24 @@ static void	str_to_list(t_editor *ed, char *str)
 	}
 }
 
-/***************************************/
+/*
+**********************************************
+*/
 
-static void change_string(EV_CB_ARGS, char *line)
+static void	change_string(t_editor *ed, char *line)
 {
 	char	*trimed;
 
 	clear_selected_pos(ed);
 	list_free((t_abstract_list **)&ed->string);
 	trimed = ft_strtrim(line);
-	str_to_list(ed, trimed);
+	str_to_list_in_editor(ed, trimed);
 	ed->string_size = list_count((t_abstract_list *)ed->string);
 	ed->cursor_position = ed->string_size;
 	free(trimed);
 }
 
-void		close_history(EV_CB_ARGS)
+void		close_history(t_editor *ed)
 {
 	free(ed->history_saved_current_string);
 	ed->history_saved_current_string = NULL;
@@ -47,7 +44,7 @@ void		close_history(EV_CB_ARGS)
 	ed->history_current = NULL;
 }
 
-EV_CB_RET 	event_history_up(EV_CB_ARGS)
+EV_CB_RET	ev_history_up(t_editor *ed)
 {
 	if (!ed->in_history)
 	{
@@ -66,7 +63,7 @@ EV_CB_RET 	event_history_up(EV_CB_ARGS)
 	}
 }
 
-EV_CB_RET 	event_history_down(EV_CB_ARGS)
+EV_CB_RET	ev_history_down(t_editor *ed)
 {
 	if (!ed->in_history)
 	{
@@ -77,10 +74,8 @@ EV_CB_RET 	event_history_down(EV_CB_ARGS)
 	{
 		ed->in_history = true;
 		ed->need_refresh = true;
-
 		if (ed->history_current)
 			ed->history_current = ed->history_current->next;
-
 		if (ed->history_current)
 		{
 			change_string(ed, ed->history_current->line);

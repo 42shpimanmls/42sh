@@ -5,6 +5,12 @@
 # include <stdbool.h>
 # include "vec2i.h"
 
+typedef struct			s_unmatched_def
+{
+	t_error_id			id;
+	char const			*str;
+}						t_unmatched_def;
+
 typedef struct			s_string
 {
 	struct s_string		*next;

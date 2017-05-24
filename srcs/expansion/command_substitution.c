@@ -13,12 +13,23 @@
 #include "break_input/quoting.h"
 #include "read_input/command_substitution.h"
 
-static void					add_substitution(t_strlist **strlist_addr
+static void		if_fork_not_in_child(t_strlist **strlist_addr, int pipefds[2])
+{
+	char				*tmp;
+
+	close(pipefds[1]);
+	tmp = fd_to_str(pipefds[0]);
+	rm_trailing_newlines(tmp);
+	strlist_append(strlist_addr, tmp);
+	free(tmp);
+	wait_for_children();
+}
+
+static void		add_substitution(t_strlist **strlist_addr
 										, char const *start, char const *end)
 {
 	int					pipefds[2];
 	char				**argv;
-	char				*tmp;
 	t_simple_command	cmd;
 
 	argv = (char*[]){ft_strdup(get_shell_env()->path_to_42sh), "-c"
@@ -35,45 +46,43 @@ static void					add_substitution(t_strlist **strlist_addr
 		fatal_error("failed to execute recursively in add_substitution");
 	}
 	else
-	{
-		close(pipefds[1]);
-		tmp = fd_to_str(pipefds[0]);
-
-		rm_trailing_newlines(tmp);
-		strlist_append(strlist_addr, tmp);
-		free(tmp);
-		wait_for_children();
-	}
+		if_fork_not_in_child(strlist_addr, pipefds);
 	free(argv[0]);
 	free(argv[2]);
 }
 
-static t_strlist			*split_subsitutions(char const *word)
+static void		handle_subst_quotes(char *quoted, char const **word, \
+									char const **passv_str_start)
 {
-	char const	*passv_str_start;
-	char const	*subst_end;
-	t_strlist	*result;
-	char		quoted;
+	handle_quotes(**word, quoted);
+	if (*passv_str_start == NULL)
+		*passv_str_start = *word;
+	if (**word == '\\' && **(word + 1) == '`')
+		(*word)++;
+	(*word)++;
+}
 
-	quoted = 0;
-	passv_str_start = NULL;
-	result = NULL;
+static void		handle_passv_str(char const *passv_str_start, \
+								char const *word, t_strlist **result)
+{
+	if (passv_str_start != NULL)
+		add_passive_string(result, passv_str_start, word);
+}
+
+t_strlist		*split_subsitutions_run(char const *word,
+				char const *passv_str_start,
+				t_strlist *result, char quoted)
+{
+	char const	*subst_end;
+
 	while (*word != '\0')
 	{
 		if (is_quote(*word))
-		{
-			handle_quotes(*word, &quoted);
-			if (passv_str_start == NULL)
-				passv_str_start = word;
-			if (*word == '\\' && *(word + 1) == '`')
-				word++;
-			word++;
-		}
+			handle_subst_quotes(&quoted, &word, &passv_str_start);
 		else if (is_substitution_start(word) && \
 			(!(quoted & IS_QU_SIMPLE) || (quoted & IS_QU_DOUBLE)))
 		{
-			if (passv_str_start != NULL)
-				add_passive_string(&result, passv_str_start, word);
+			handle_passv_str(passv_str_start, word, &result);
 			subst_end = find_substitution_end(word + 1);
 			add_substitution(&result, word + 1, subst_end);
 			word = subst_end + 1;
@@ -86,18 +95,6 @@ static t_strlist			*split_subsitutions(char const *word)
 			word++;
 		}
 	}
-	if (passv_str_start != NULL)
-		add_passive_string(&result, passv_str_start, word);
-	return (result);
-}
-
-char						*command_substition(char const *word)
-{
-	t_strlist	*strlist;
-	char		*result;
-
-	strlist = split_subsitutions(word);
-	result = strlist_to_str(strlist);
-	strlist_delete(&strlist);
+	handle_passv_str(passv_str_start, word, &result);
 	return (result);
 }

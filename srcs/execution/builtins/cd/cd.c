@@ -8,6 +8,7 @@
 #include <errno.h>
 #include "utils.h"
 #include "execution/builtins/cd.h"
+#include <limits.h>
 
 bool				last_is_slash(char const *str)
 {
@@ -64,9 +65,33 @@ static void			set_curpath_from_pwd(char **str_addr)
 	*str_addr = ft_strjoinf(path, *str_addr, 3);
 }
 
-static void			save_the_day(char **str_addr)
+/*
+9. If curpath is longer than {PATH_MAX} bytes (including the terminating null)
+and the directory operand was not longer than {PATH_MAX} bytes (including the
+terminating null), then curpath shall be converted from an absolute pathname to
+an equivalent relative pathname if possible. This conversion shall always be
+considered possible if the value of PWD, with a trailing <slash> added if it
+does not already have one, is an initial substring of curpath. Whether or not
+it is considered possible under other circumstances is unspecified.
+Implementations may also apply this conversion if curpath is not longer than
+{PATH_MAX} bytes or the directory operand was longer than {PATH_MAX} bytes.
+*/
+void			save_the_day(char **curpath_addr, char const *directory, char const *pwd)
 {
-	(void)str_addr;
+	char	*str;
+
+	if (curpath_addr == NULL || *curpath_addr == NULL)
+		fatal_error("NULL ptr fed to save_the_day");
+	if (!(ft_strlen(*curpath_addr) + 1 > PATH_MAX && ft_strlen(directory) + 1 <= PATH_MAX))
+		return ;
+	if (!last_is_slash(pwd))
+		str = ft_strjoin(pwd, "/");
+	else
+		str = ft_strdup(pwd);
+	if (!ft_strstr(*curpath_addr, str))
+		return ;
+	strfreeswap(curpath_addr, ft_strdup((*curpath_addr) + ft_strlen(str)));
+	free(str);
 }
 
 // 5. Starting with the first pathname in the <colon>-separated pathnames of CDPATH (see the ENVIRONMENT VARIABLES section) if the pathname is non-null, test if the concatenation of that pathname, a <slash> character if that pathname did not end with a <slash> character, and the directory operand names a directory. If the pathname is null, test if the concatenation of dot, a <slash> character, and the operand names a directory. In either case, if the resulting string names an existing directory, set curpath to that string and proceed to step 7. Otherwise, repeat this step with the next pathname in CDPATH until all pathnames have been tested.
@@ -185,7 +210,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 	if (directory[0] == '/')
 	{
 		// 3. If the directory operand begins with a <slash> character, set curpath to the operand and proceed to step 7.
-		curpath = directory;
+		curpath = ft_strdup(directory);
 	}
 	else
 	{
@@ -197,9 +222,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		}
 		// 6. Set curpath to the directory operand.
 		if (curpath == NULL)
-			curpath = directory;
-		else
-			free(directory);
+			curpath = ft_strdup(directory);
 	}
 	// 7. If the -P option is in effect, proceed to step 10. If curpath does not begin with a <slash> character, set curpath to the string formed by the concatenation of the value of PWD, a <slash> character if the value of PWD did not end with a <slash> character, and curpath.
 	if (opt != 'P')
@@ -209,10 +232,13 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		strfreeswap(&curpath, canonicalize_path(curpath));
 		// If, as a result of this canonicalization, the curpath variable is null, no further steps shall be taken.
 		if (curpath == NULL)
+		{
+			free(directory);
 			return (EXIT_SUCCESS);
+		}
 		new_pwd = ft_strdup(curpath);
 		// 9. If curpath is longer than {PATH_MAX} bytes (including the terminating null) and the directory operand was not longer than {PATH_MAX} bytes (including the terminating null), then curpath shall be converted from an absolute pathname to an equivalent relative pathname if possible. This conversion shall always be considered possible if the value of PWD, with a trailing <slash> added if it does not already have one, is an initial substring of curpath. Whether or not it is considered possible under other circumstances is unspecified. Implementations may also apply this conversion if curpath is not longer than {PATH_MAX} bytes or the directory operand was longer than {PATH_MAX} bytes.
-		save_the_day(&curpath);
+		save_the_day(&curpath, directory, current_pwd);
 	}
 	// 10. The cd utility shall then perform actions equivalent to the chdir() function called with curpath as the path argument. If these actions fail for any reason, the cd utility shall display an appropriate error message and the remainder of this step shall not be executed. If the -P option is not in effect, the PWD environment variable shall be set to the value that curpath had on entry to step 9 (i.e., before conversion to a relative pathname). If the -P option is in effect, the PWD environment variable shall be set to the string that would be output by pwd -P. If there is insufficient permission on the new directory, or on any parent of that directory, to determine the current working directory, the value of the PWD environment variable is unspecified.
 	ret = chdir(curpath);
@@ -224,6 +250,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		set_variable("PWD", new_pwd, true);
 	}
 	free(curpath);
+	free(directory);
 	if (ret != 0)
 		ret = 2;
 	return (ret);

@@ -6,22 +6,13 @@
 #include "errors.h"
 #include "shell_env.h"
 
-t_simple_command	*parse_pipeline(t_token const *tokens)
+static void		parse_pipeline_sub(size_t splited_len, t_token **splited,
+		t_simple_command *result, t_simple_command  **it)
 {
-	t_simple_command	*result;
-	t_simple_command	**it;
-	t_token				**splited;
-	t_token				*trimed;
-	size_t				splited_len;
 	size_t				u;
+	t_token				*trimed;
 
-	set_error(NO_ERROR);
-	if (tokens == NULL)
-		return (NULL);
-	splited = split_tokens_at(tokens, OR_TOKID, &splited_len);
 	u = 0;
-	result = NULL;
-	it = &result;
 	while (u < splited_len)
 	{
 		trimed = trim_newlines(splited[u]);
@@ -43,6 +34,20 @@ t_simple_command	*parse_pipeline(t_token const *tokens)
 		it = &(*it)->next;
 		u++;
 	}
+}
+
+t_simple_command	*parse_pipeline(t_token const *tokens)
+{
+	t_simple_command	*result;
+	t_token				**splited;
+	size_t				splited_len;
+
+	set_error(NO_ERROR);
+	if (tokens == NULL)
+		return (NULL);
+	splited = split_tokens_at(tokens, OR_TOKID, &splited_len);
+	result = NULL;
+	parse_pipeline_sub(splited_len, splited, result, &result);
 	delete_tokens_array(splited, splited_len);
 	return (result);
 }

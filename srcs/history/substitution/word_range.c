@@ -4,7 +4,9 @@
 
 #include "history_substitutions.h"
 
-// !! to fix: !!-2 no \n
+/*
+** !! to fix: !!-2 no \n
+*/
 
 void		range_selection(char *str, int *i, t_range *range, char **words)
 {

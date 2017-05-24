@@ -1,18 +1,16 @@
-# include <libft.h>
-# include "read_input/event_callbacks/event_callback_def.h"
-# include "abstract_list.h"
+#include <libft.h>
+#include "read_input/event_callbacks/event_callback_def.h"
+#include "abstract_list.h"
 
-void		print_cursor_vector(t_editor *ed);
-
-void move_start(t_editor *ed)
+void		move_start(t_editor *ed)
 {
 	while (ed->pos.y-- > 0)
 		ft_putstr(ed->term->move_up);
 	ft_putstr(ed->term->move_cursor_begining);
 }
 
-static void print_command_string(t_editor *ed, char const *prompt, t_string *cmd_str
-	, size_t term_width)
+static void	print_command_string(t_editor *ed, char const *prompt,
+		t_string *cmd_str, size_t term_width)
 {
 	char	*str;
 
@@ -23,7 +21,7 @@ static void print_command_string(t_editor *ed, char const *prompt, t_string *cmd
 	free(str);
 }
 
-void put_line(t_editor *ed)
+void		put_line(t_editor *ed)
 {
 	char		*line;
 
@@ -35,13 +33,13 @@ void put_line(t_editor *ed)
 	free(line);
 }
 
-void restore_old_cursor_position(t_editor *ed, t_vec2i old_pos)
+void		restore_old_cursor_position(t_editor *ed, t_vec2i old_pos)
 {
 	move_cursor(vec2i_sub(old_pos, ed->pos), ed->term);
 	ed->cursor_position = ed->old_position;
 }
 
-void refresh_line(t_editor *ed)
+void		refresh_line(t_editor *ed)
 {
 	if (ed->need_refresh == true)
 	{

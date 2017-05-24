@@ -1,7 +1,7 @@
 #include "read_input/editor/editor.h"
 #include <libft.h>
 
-static void highlighted_core(char* line, size_t cur, size_t start, size_t len)
+static void	highlighted_core(char *line, size_t cur, size_t start, size_t len)
 {
 	char *begin;
 	char *middle;
@@ -30,7 +30,7 @@ static void highlighted_core(char* line, size_t cur, size_t start, size_t len)
 	free(end);
 }
 
-void put_highlighted_line(t_editor *ed, char* line)
+void		put_highlighted_line(t_editor *ed, char *line)
 {
 	size_t	cur;
 	size_t	start;
