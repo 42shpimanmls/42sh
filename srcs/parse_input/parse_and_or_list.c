@@ -41,7 +41,7 @@ void				set_unexpected_if(t_and_or_list **result, \
 	set_error(UNEXPECTED_IF);
 	if (u == splitted_len - 1)
 		get_shell_env()->last_unmatched = UNEXPECTED_IF;
-	*result = NULL; //delete_command_list(&result);
+	delete_and_or_list(result);
 }
 
 t_and_or_list		*parse_and_or_list_run(t_and_or_list *result, size_t u,\
@@ -64,7 +64,7 @@ t_and_or_list		*parse_and_or_list_run(t_and_or_list *result, size_t u,\
 		delete_all_tokens(&trimed);
 		if (get_error() != NO_ERROR)
 		{
-			result = NULL; //delete_command_list(&result);
+			delete_and_or_list(&result);
 			break ;
 		}
 		it = &(*it)->next;
