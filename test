@@ -19,6 +19,9 @@ $allsh		= array_search("allsh", $argv) 	? true : false;
 $testSignal = TRUE;
 //////////////////////////
 
+declare(ticks = 1);
+pcntl_signal(SIGINT, "sig_handler");
+
 $filetest			= "./testraw";
 $shellexec1			= "42sh";
 $shellexec2			= "sh";
@@ -42,10 +45,11 @@ $COLORGREEN 	= "\033[32m";
 $COLORRED 		= "\033[31m";
 $COLORCLOSE 	= "\033[0m";
 
-$allerror 	= "";
-$countAll 	= 0;
-$countOK 	= 0;
-$countMaybe = 0;
+$allerror 		= "";
+$allerrorcheck 	= "";
+$countAll 		= 0;
+$countOK 		= 0;
+$countMaybe 	= 0;
 
 if ($testRandom)
 {
@@ -91,6 +95,9 @@ if ($nb != $countAll)
 	print "$COLORRED"." ------ REGRESSION DETECTED  ------"."$COLORCLOSE\n";
 	exit(1);
 }
+exit(0);
+
+// exec("./$shellexec1 -c 'ls | cat' 2>&1", $tmp, $return_var1);
 
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// FUNCTION ////////////////////////////////////
@@ -114,7 +121,10 @@ function getRandomCommand() {
 	return ($command);
 }
 
+function sig_handler($signo) {}
+
 function compute($command) {
+	// l'usage des ticks est nécessaire depuis PHP 4.3.0
 	global $commentChar;
 	global $countMaybe;
 	global $countOK;
@@ -137,6 +147,8 @@ function compute($command) {
 	exec("./$shellexec1 -c '$command' 2>/dev/null", $tmp1, $return_var11);
 	exec("$shellexec2 -c '$command' 2>&1", $tmp2, $return_var2);
 	exec("$shellexec2 -c '$command' 2>/dev/null", $tmp3, $return_var22);
+	if ($return_var1 == 2 && $return_var2 !=2)
+		$return_var1 = 0;
 
 	file_put_contents("res1", implode("\n", $tmp)."\n");
 	file_put_contents("res11", implode("\n", $tmp1)."\n");
