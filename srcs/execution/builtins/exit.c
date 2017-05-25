@@ -1,11 +1,14 @@
 #include "builtins.h"
 
+#include "history/builtin/history.h"
+
 #include "utils.h"
 #include <libft.h>
 
 int		builtin_exit(int argc, char **argv)
 {
-	int	ret;
+	int			ret;
+	t_shell_env	*shell_env;
 
 	if (argc > 1)
 		ret = ft_atoi(argv[1]);
@@ -20,5 +23,7 @@ int		builtin_exit(int argc, char **argv)
 	{
 		ret = ret % 256;
 	}
+	shell_env = get_shell_env();
+	hist_to_file(shell_env->history.list, shell_env->history.histfile, true);
 	exit(ret);
 }

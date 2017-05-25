@@ -6,17 +6,16 @@
 #include "ftsh.h"
 #include "abstract_list.h"
 
-
 // #define HISTORY_TEST_VERBOSE
 
 void	initialize_history()
 {
 	char *av[] = {"42sh"};
 	init(1, av);
-	load_history(get_shell_env(), HISTFILE, 0);
+	load_history(get_shell_env(), get_shell_env()->history.histfile, 0);
 
 	#ifdef HISTORY_TEST_VERBOSE
-	ft_printf("\nHistory list has been initialized from %s: \n", HISTFILE);
+	ft_printf("\nHistory list has been initialized from %s: \n", get_shell_env()->history.histfile);
 	print_history(get_shell_env()->history.list, 0);
 	#endif
 }
