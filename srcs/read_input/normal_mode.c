@@ -23,6 +23,7 @@ static void		handle_etx(t_editor *ed)
 		get_shell_env()->del_input = true;
 	get_shell_env()->last_unmatched = NO_ERROR;
 	print_control_char_notation(ETX);
+	ev_cursor_end(ed);
 	ft_putstr("\n");
 	change_string(ed, "");
 	ed->pos = get_cursor_vector(ed);
