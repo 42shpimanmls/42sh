@@ -69,7 +69,10 @@ char			*start_normal_mode(t_editor *ed)
 	{
 		buf[ret] = '\0';
 		if (handle_control_char(ed, buf))
-			break ;
+		{
+			ft_close_termcaps();
+			return (NULL);
+		}
 		if (handle_callback(ed, buf))
 			break ;
 		refresh_line(ed);
