@@ -33,9 +33,8 @@ static void		main_loop(void)
 	if (shell_env->input_string)
 		ft_strdel(&get_shell_env()->input_string);
 	parse_input();
-	if (get_error() != NO_ERROR)
-		return ;
-	execute_command_list(get_shell_env()->syntax_tree);
+	if (get_error() == NO_ERROR)
+		execute_command_list(get_shell_env()->syntax_tree);
 	delete_command_list(&get_shell_env()->syntax_tree);
 }
 
