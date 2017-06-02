@@ -58,7 +58,8 @@ t_strlist	*field_splitting(char const *word)
 		{
 			if (is_quote(word[delimit.end]))
 				end_of_quote(&word[delimit.end], &delimit);
-			delimit.end++;
+			if (word[delimit.end])
+				delimit.end++;
 		}
 		add_field(word, &result, &delimit);
 	}

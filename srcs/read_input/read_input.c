@@ -16,8 +16,7 @@ static void	handle_stdin(t_shell_env *shell_env)
 	if (shell_env->input_string != NULL)
 	{
 		tmp = shell_env->input_string;
-		shell_env->input_string = ft_strjoin(shell_env->input_string,
-				edit_input());
+		shell_env->input_string = ft_strjoinf(shell_env->input_string, edit_input(), 2);
 		free(tmp);
 		shell_env->should_run = true;
 	}
