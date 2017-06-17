@@ -16,9 +16,12 @@ static void	end_of_quote(char const *word, t_range *delimit)
 	delimit->end++;
 	if (quote == '\\')
 		return ;
-	while (word[delimit->end] && (word[delimit->end] != quote \
+	if (word && delimit->end > 0 && ft_strlen(word) >= (size_t)(delimit->end))
+	{
+		while (word[delimit->end] && (word[delimit->end] != quote \
 			|| (word[delimit->end - 1] && word[delimit->end - 1] == '\\')))
-		delimit->end++;
+			delimit->end++;
+	}
 }
 
 static void	skip_posix_blanks(char const *word, int *i)
@@ -54,7 +57,7 @@ t_strlist	*field_splitting(char const *word)
 	while (word[delimit.start])
 	{
 		while (word[delimit.end] && !is_posix_blank(word[delimit.end]) \
-				&& word[delimit.end] != '\n')
+			&& word[delimit.end] != '\n')
 		{
 			if (is_quote(word[delimit.end]))
 				end_of_quote(&word[delimit.end], &delimit);
