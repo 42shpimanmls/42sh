@@ -30,14 +30,14 @@ static void	parse_cmd_list_sub(size_t splited_len, t_token **splited,
 		if (splited[u] == NULL)
 		{
 			set_error(UNEXPECTED_SEMI);
-			result = NULL; //delete_command_list(&result);
+			delete_command_list(&result);
 			break ;
 		}
 		(*it) = memalloc_or_die(sizeof(t_command_list));
 		(*it)->and_or_list = parse_and_or_list(splited[u]);
 		if (get_error() != NO_ERROR)
 		{
-			result = NULL; //delete_command_list(&result);
+			delete_command_list(&result);
 			break ;
 		}
 		it = &(*it)->next;

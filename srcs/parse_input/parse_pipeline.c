@@ -21,14 +21,14 @@ static void		parse_pipeline_sub(size_t splited_len, t_token **splited,
 			set_error(UNEXPECTED_PIPE);
 			if (u == splited_len - 1)
 				get_shell_env()->last_unmatched = UNEXPECTED_PIPE;
-			result = NULL; //delete_command_list(&result);
+			delete_pipeline(&result);
 			break ;
 		}
 		(*it) = parse_simple_command(trimed);
 		delete_all_tokens(&trimed);
 		if (get_error() != NO_ERROR)
 		{
-			result = NULL; //delete_command_list(&result);
+			delete_pipeline(&result);
 			break ;
 		}
 		it = &(*it)->next;
