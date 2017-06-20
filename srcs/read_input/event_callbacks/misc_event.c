@@ -1,5 +1,6 @@
 #include "event_callback_def.h"
 #include "abstract_list.h"
+#include "read_input/termcap/init_deinit.h"
 #include <libft.h>
 
 EV_CB_RET	ev_newline(t_editor *ed)
@@ -18,7 +19,11 @@ EV_CB_RET	ev_cancel(t_editor *ed)
 EV_CB_RET	ev_exit(t_editor *ed)
 {
 	if (ed->string_size == 0)
+	{
+		write(STDOUT_FILENO, "\x0A", 1);
+		ft_close_termcaps();
 		builtin_exit(0, NULL);
+	}
 }
 
 EV_CB_RET	ev_delete(t_editor *ed)

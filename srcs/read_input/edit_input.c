@@ -5,7 +5,7 @@
 #include "read_input/termcap/init_deinit.h"
 #include "read_input/edit_input.h"
 
-void	refresh_termcap(int ret)
+static void	refresh_termcap(int ret)
 {
 	t_editor *ed;
 
@@ -21,7 +21,17 @@ void	refresh_termcap(int ret)
 	ed->pos = get_cursor_vector(ed);
 }
 
-char	*edit_input(void)
+static char	*start_rescue_mode(void)
+{
+	char *line;
+
+	ft_close_termcaps();
+	ft_printf("[RESCUE MODE]$ ");
+	line = ft_getline(STDIN_FILENO);
+	return (line);
+}
+
+char		*edit_input(void)
 {
 	t_editor	*ed;
 	char		*line;

@@ -5,6 +5,7 @@
 # include <stdbool.h>
 # include "uint.h"
 # include "read_input/editor/editor_struct.h"
+# include "control_character.h"
 
 # define ARG_STOP "--"
 
