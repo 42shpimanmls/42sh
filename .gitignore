@@ -38,5 +38,6 @@ errlog
 tmp
 tmp2
 segv
+.42sh_history
 
 vgcore.*
