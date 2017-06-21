@@ -120,7 +120,7 @@ t_error_id	execute_pipeline(t_simple_command *pipeline, size_t lvl)
 		pipeline = pipeline->next;
 	}
 	wait_for_last_child(pipeline_state.last_pid);
-	kill(0, SIGINT);
+	//kill(0, SIGINT);
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "done executing pipeline, %s\n", pipeline_state.last_ret == NO_ERROR ? "ok" : "error");
