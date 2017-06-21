@@ -19,13 +19,9 @@ $allsh		= array_search("allsh", $argv) 	? true : false;
 $testSignal = TRUE;
 //////////////////////////
 
-declare(ticks = 1);
-pcntl_signal(SIGINT, "sig_handler");
-
 $filetest			= "./testraw";
 $shellexec1			= "42sh";
 $shellexec2			= "sh";
-// $TG					= "1>&- 2>&-";
 $commentChar		= '#';
 $randomTest			= 100;
 $randomLengthMax	= 10;
@@ -97,8 +93,6 @@ if ($nb != $countAll)
 }
 exit(0);
 
-// exec("./$shellexec1 -c 'ls | cat' 2>&1", $tmp, $return_var1);
-
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// FUNCTION ////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
@@ -120,8 +114,6 @@ function getRandomCommand() {
 
 	return ($command);
 }
-
-function sig_handler($signo) {}
 
 function compute($command) {
 	// l'usage des ticks est nécessaire depuis PHP 4.3.0
@@ -209,11 +201,7 @@ function check_error_signal($return_var1, $return_var2) {
 	global $testSignal;
 
 	if ($testSignal && $return_var1 != $return_var2)
-	{
-		if ($return_var1 > 0 && $return_var2 > 0)
-			return (2);
 		return (1);
-	}
 	else
 		return (0);
 }

@@ -17,8 +17,8 @@ cd - ; pwd
 cd . ; pwd
 cd .. ; pwd
 cd ~/. ; pwd
-cd nasrt
-cd auteur
+# cd nasrt
+# cd auteur
 
 #################################
 ############## ECHO #############
@@ -66,8 +66,8 @@ echo here$PWDtest
 ############## EXIT #############
 #################################
 # exit [n]
-exit -99999
-exit -1
+# exit -99999
+# exit -1
 exit 0
 exit 1
 exit 2
@@ -91,7 +91,7 @@ exit 7139
 env -i env toto=tata env
 env -i ls
 env -i foo
-env -lol ls
+# env -lol ls
 env -i ls  -rlaH
 # env -i ./segv
 env -i whoami
