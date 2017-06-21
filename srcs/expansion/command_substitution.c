@@ -75,7 +75,7 @@ t_strlist		*split_subsitutions_run(char const *word,
 {
 	char const	*subst_end;
 
-	while (*word != '\0')
+	while (word != NULL && *word != '\0')
 	{
 		if (is_quote(*word))
 			handle_subst_quotes(&quoted, &word, &passv_str_start);
@@ -85,7 +85,7 @@ t_strlist		*split_subsitutions_run(char const *word,
 			handle_passv_str(passv_str_start, word, &result);
 			subst_end = find_substitution_end(word + 1);
 			add_substitution(&result, word + 1, subst_end);
-			word = subst_end + 1;
+			word = subst_end + (subst_end != NULL ? 1 : 0);
 			passv_str_start = word;
 		}
 		else
