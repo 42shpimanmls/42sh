@@ -1,4 +1,5 @@
 #include "completion.h"
+#include "put_on_tty.h"
 #include <term.h>
 
 int		getpad(t_strlist *l, int line)

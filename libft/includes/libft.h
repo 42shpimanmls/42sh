@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:28:51 by pilespin          #+#    #+#             */
-/*   Updated: 2017/06/21 17:26:39 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/22 17:11:57 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,5 @@ int			ft_count_char(char *str, char car);
 
 char		**ft_splitfilepath(char *file);
 void		ft_doublearrayndel(void ***a, size_t n);
-int			ft_rputchar(int c);
 
 #endif

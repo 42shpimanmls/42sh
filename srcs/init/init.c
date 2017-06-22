@@ -75,7 +75,7 @@ void		init(int ac, char **av)
 	shell_env = get_shell_env();
 	ft_bzero(shell_env, sizeof(t_shell_env));
 	ft_bzero(&shell_env->history, sizeof(t_sh_history));
-	if ((shell_env->tty_fd = open("/dev/tty"), O_WRONLY) == -1)
+	if ((shell_env->tty_fd = open("/dev/tty", O_WRONLY)) == -1)
 		shell_env->tty_fd = 1;
 	shell_env->path_to_42sh = get_path_to_ftsh(av[0]);
 	init_variables_list(shell_env);

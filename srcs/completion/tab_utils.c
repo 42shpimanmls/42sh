@@ -1,5 +1,6 @@
 #include "completion.h"
 #include "variable.h"
+#include "put_on_tty.h"
 #include <libft.h>
 #include <term.h>
 

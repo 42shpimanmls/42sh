@@ -26,7 +26,7 @@ typedef struct			s_shell_env
 	t_error_id			last_unmatched;
 	char const			*path_to_42sh;
 	volatile bool		del_input;
-	int const			tty_fd;
+	int					tty_fd;
 }						t_shell_env;
 
 t_shell_env				*get_shell_env(void);

@@ -1,6 +1,7 @@
 #include <libft.h>
 #include "completion.h"
 #include "ansii_colors.h"
+#include "put_on_tty.h"
 #include <term.h>
 
 static void		recover_curs(t_editor *ed, int line)
