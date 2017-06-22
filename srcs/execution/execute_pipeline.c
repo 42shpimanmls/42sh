@@ -75,7 +75,8 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 #endif
 		stdin_out_backup = save_stdin_stdout();
 		ret = redirect(cmd->redirections, stdin_out_backup);
-		//expand_assignments_values(cmd->assignments);
+		if (ret == NO_ERROR && cmd->argv[0] == NULL)
+			set_assignments(cmd->assignments, false);
 		if (ret != NO_ERROR || cmd->argv[0] == NULL)
 			return (ret);
 		ret = execute_builtin(cmd, lvl + 1);
