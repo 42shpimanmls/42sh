@@ -10,15 +10,17 @@ define('ERROR_DIFFERENT_SIGNAL', 1);
 define('CHECK_DIFFERENT_SIGNAL', 2);
 
 ///////// ARGUMENT //////////
-$testRandom = array_search("random", $argv) ? true : false;
-$detail 	= array_search("detail", $argv) ? true : false;
-$showOutput	= array_search("show", $argv) 	? true : false;
-$allsh		= array_search("allsh", $argv) 	? true : false;
+$testRandom 	= array_search("random", 	$argv) 	? true : false;
+$detail 		= array_search("detail", 	$argv) 	? true : false;
+$showOutput		= array_search("show", 		$argv) 	? true : false;
+$allsh			= array_search("allsh", 	$argv) 	? true : false;
+$OptValgrind	= array_search("valgrind", 	$argv) 	? true : false;
 // $testSignal = array_search("signal", $argv)	? true : false;
 $testSignal = TRUE;
 //////////////////////////
 
 $filetest			= "./testraw";
+$valgrind			= "valgrind --leak-check=full --error-exitcode=1 ";
 $shellexec1			= "42sh";
 $shellexec2			= "sh";
 $commentChar		= '#';
@@ -42,6 +44,7 @@ $COLORCLOSE 	= "\033[0m";
 
 $allerror 		= "";
 $allerrorcheck 	= "";
+$outputSelect 	= 0;
 $countAll 		= 0;
 $countOK 		= 0;
 $countMaybe 	= 0;
@@ -132,14 +135,21 @@ function compute($command) {
 	global $shellexec1;
 	global $shellexec2;
 	global $showOutput;
+	global $valgrind;
+	global $OptValgrind;
+	global $outputSelect;
 
 	$countAll++;
 	exec("./$shellexec1 -c '$command' 2>&1", $tmp, $return_var1);
 	exec("./$shellexec1 -c '$command' 2>/dev/null", $tmp1, $return_var11);
+
+	if ($OptValgrind)
+		exec("$valgrind ./$shellexec1 -c '$command' 2>/dev/null 1>/dev/null", $null, $return_valgrind);
+	else
+		$return_valgrind = 0;
+
 	exec("$shellexec2 -c '$command' 2>&1", $tmp2, $return_var2);
 	exec("$shellexec2 -c '$command' 2>/dev/null", $tmp3, $return_var22);
-	if ($return_var1 == 2 && $return_var2 !=2)
-		$return_var1 = 0;
 
 	file_put_contents("res1", implode("\n", $tmp)."\n");
 	file_put_contents("res11", implode("\n", $tmp1)."\n");
@@ -153,47 +163,74 @@ function compute($command) {
 	unlink("res2");
 	unlink("res22");
 
-	if ($res || $ERRSTDOUT || check_error_signal($return_var1, $return_var2))
+	if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL || check_error_valgrind($return_valgrind))
+		$outputSelect = 1;
+	else
+		$outputSelect = 2;
+
+	if ($res || $ERRSTDOUT || check_error_signal($return_var1, $return_var2) || check_error_valgrind($return_valgrind))
 	{
-		if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL)
+		if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL || check_error_valgrind($return_valgrind))
 		{
-			$allerror .= "$COLORRED [$shellexec2][KO] $COLORCLOSE \"$command\"\n";
+			$allerror .= "$COLORRED [$shellexec2][KO] $COLORCLOSE";
+			if ($OptValgrind && $return_valgrind)
+				$allerror .= "$COLORRED [LEAKS] $COLORCLOSE";
+			$allerror .= "\"$command\"\n";
 		}
 		else
 		{
 			$countMaybe++;
-			$allerrorcheck .= "$COLORYELLOW [$shellexec2][CK] $COLORCLOSE \"$command\"\n";
+			$allerrorcheck .= "$COLORYELLOW [$shellexec2][CK] $COLORCLOSE";
+			if ($OptValgrind && $return_valgrind)
+				$allerrorcheck .= "$COLORRED [LEAKS] $COLORCLOSE";
+			$allerrorcheck .= "\"$command\"\n";
 		}
 		if ($detail)
 		{
 			$res = preg_replace('/---\n|1c1\n|1c1,2\n|>|</', '', $res);
-			if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL)
-				$allerror .= "$res";
-			else
-				$allerrorcheck .= "$res";
+			add_error($res);
 		}
 		if (check_error_signal($return_var1, $return_var2))
 		{
-			if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL)
-				$allerror .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
-			else
-				$allerrorcheck .= "$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n";
+			add_error("$COLORBLUE DIFFERENT SIGNAL: $COLORCLOSE $shellexec1=$return_var1 vs $shellexec2=$return_var2\n");
 		}
 		if ($showOutput)
 		{
-			if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL)
-				$allerror .= "---\n".implode("\n", $tmp)."\n"."---\n";
-			else
-				$allerrorcheck .= "---\n".implode("\n", $tmp)."\n"."---\n";
+			add_error("---\n".implode("\n", $tmp)."\n"."---\n");
 		}
 	}
 	else
 	{
 		$countOK++;
-		echo "$COLORGREEN [$shellexec2][OK] $COLORCLOSE \"$command\"\n";
+		echo "$COLORGREEN [$shellexec2][OK] $COLORCLOSE";
+		if ($OptValgrind && $return_valgrind)
+			echo "$COLORRED [LEAKS] $COLORCLOSE";
+		echo "\"$command\"\n";
 		if ($showOutput)
 			echo("---\n".implode("\n", $tmp)."\n"."---\n");
 	}
+}
+
+function add_error($str) {
+	global $allerror;
+	global $allerrorcheck;
+	global $outputSelect;
+
+	if ($outputSelect == 1)
+		$allerror .= $str;
+	else if ($outputSelect == 2)
+		$allerrorcheck .= $str;
+}
+
+function check_error_valgrind($return_valgrind) {
+	global $valgrind;
+	global $OptValgrind;
+
+	if ($valgrind && $OptValgrind && $return_valgrind)
+		// if ($testSignal && $return_var1 != $return_var2)
+		return (1);
+	else
+		return (0);
 }
 
 function check_error_signal($return_var1, $return_var2) {
