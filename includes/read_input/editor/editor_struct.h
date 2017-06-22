@@ -21,6 +21,7 @@ typedef struct			s_term
 {
 	bool				rescue_mode;
 	int					width;
+	int					rows;
 	char				*move_cursor_begining;
 	char				*move_left;
 	char				*move_right;
