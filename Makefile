@@ -38,7 +38,7 @@ test:
 	@make re -C ./tests $(MAKE_OPTS) $(MAKE_OPTS_THREAD)
 
 testsh:
-	@./test detail
+	@php test detail
 
 $(PROG_NAME): $(OBJS_DIRS) $(OBJS)
 	@echo "LINK   " $@
