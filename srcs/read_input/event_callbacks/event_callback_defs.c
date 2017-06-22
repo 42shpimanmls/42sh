@@ -25,7 +25,8 @@ t_event_callback_def const	*get_event_callback_defs(void)
 		{ CANCEL_EVID, "CANCEL", "\x3", ev_cancel },
 		{ EXIT_EVID, "EXIT", "\x4", ev_exit },
 		{ DELETE_EVID, "DELETE", "\x7f", ev_delete },
-		{ DELETE_RIGHT_EVID, "DELETE_RIGHT", "\x1b[3~", ev_delete_right }
+		{ DELETE_RIGHT_EVID, "DELETE_RIGHT", "\x1b[3~", ev_delete_right },
+		{ TAB_EVID, "TAB", "\x9", ev_tab }
 	};
 
 	return (defs);
