@@ -25,11 +25,11 @@ static void		main_loop(void)
 		return ;
 	}
 	break_input();
+	if (get_error() != NO_ERROR)
+		return ;
 	if (shell_env->input_string)
 		add_to_history_list(&shell_env->history.list,
 				create_history_entry(shell_env->input_string));
-	if (get_error() != NO_ERROR)
-		return ;
 	if (shell_env->input_string)
 		ft_strdel(&get_shell_env()->input_string);
 	parse_input();
