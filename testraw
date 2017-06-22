@@ -348,3 +348,5 @@ cat auteur ; cat auteur ; cat auteur
 #####################################|#####################################
 
 echo ` echo \`echo \\\`pwd \\\` | cat -e \` `
+var=val; echo $var
+var=val ls; echo $var
