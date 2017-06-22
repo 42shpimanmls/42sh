@@ -1,5 +1,6 @@
 #include <libft.h>
 #include "completion.h"
+#include "ansii_colors.h"
 #include <term.h>
 
 static void		recover_curs(t_editor *ed, int line)
@@ -29,10 +30,10 @@ static void		print_one(int pad, int tot, char *str, int lst_index)
 		tputs(tgetstr("mr", 0), 1, ft_rputchar);
 	if (!str)
 		return ;
-//	if (*(str + ft_strlen(str) - 1) == '/')
-//		ft_putstr(BLUE);
+	if (*(str + ft_strlen(str) - 1) == '/')
+		ft_putstr(BLUE);
 	print_pad(pad, str);
-	//ft_putstr(RESET);
+	ft_putstr(RESET);
 }
 
 static int		line_needed(t_strlist *files, t_editor *ed, int line)
