@@ -27,5 +27,6 @@ void	ev_cancel(t_editor *ed);
 void	ev_exit(t_editor *ed);
 void	ev_delete(t_editor *ed);
 void	ev_delete_right(t_editor *ed);
+void	ev_tab(t_editor *ed);
 
 #endif

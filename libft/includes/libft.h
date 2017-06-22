@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:28:51 by pilespin          #+#    #+#             */
-/*   Updated: 2016/02/21 00:15:55 by pilespin         ###   ########.fr       */
+/*   Updated: 2017/06/21 17:26:39 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <string.h>
 # include <stdlib.h>
 # include <stdarg.h>
-# include <stdlib.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/uio.h>
@@ -133,5 +132,9 @@ int			ft_random(int min, int max);
 
 void		ft_replace_char(char *line, char del, char add);
 int			ft_count_char(char *str, char car);
+
+char		**ft_splitfilepath(char *file);
+void		ft_doublearrayndel(void ***a, size_t n);
+int			ft_rputchar(int c);
 
 #endif

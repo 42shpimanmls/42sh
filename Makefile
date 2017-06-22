@@ -42,7 +42,6 @@ testsh:
 	@echo "------------- OPTIONAL TEST VALGRIND -------------"
 	@-php test detail valgrind
 
-
 $(PROG_NAME): $(OBJS_DIRS) $(OBJS)
 	@echo "LINK   " $@
 	@$(LINKER) -o $@ $(OBJS) $(LFLAGS)

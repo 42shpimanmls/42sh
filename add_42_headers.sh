@@ -5,10 +5,10 @@ makefile_header="# *************************************************************
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mazimi <mazimi@student.42.fr>              +#+  +:+       +#+         #
+#    By: 42shTeam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/05/04 15:35:21 by mazimi            #+#    #+#              #
-#    Updated: 2017/05/04 15:35:21 by mazimi           ###   ########.fr        #
+#    Created: 2017/05/03 15:35:21 by 42shTeam          #+#    #+#              #
+#    Updated: 2017/05/03 15:35:21 by 42shTeam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #\n"       
 
@@ -17,10 +17,10 @@ c_header="/* *******************************************************************
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazimi <mazimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: 42shTeam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/04 15:35:21 by mazimi            #+#    #+#             */
-/*   Updated: 2017/05/04 15:35:21 by mazimi           ###   ########.fr       */
+/*   Created: 2017/05/03 15:35:21 by 42shTeam          #+#    #+#             */
+/*   Updated: 2017/05/03 15:35:21 by 42shTeam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */\n" 
 
@@ -28,17 +28,21 @@ add_42_headers() {
     cd srcs
     for file in $(find . -name "*.c"); do
       add_42_header "$file"
+      echo -n "."
     done
     cd ../includes
     for file in $(find . -name "*.h"); do
       add_42_header "$file"
+      echo -n "."
     done
     cd ..
     add_42_header "Makefile"
-    git status
-    git diff
-    git add srcs includes Makefile
-    git commit -m "[mod] add 42 headers on top of files."
+    echo "."
+    
+    # git status
+    # git diff
+    # git add srcs includes Makefile
+    # git commit -m "[mod] add 42 headers on top of files."
 }
 
 add_42_header() {
