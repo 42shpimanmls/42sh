@@ -359,3 +359,5 @@ echo `unsetenv $PATH` ; echo $PATH
 #####################################|#####################################
 
 echo ` echo \`echo \\\`pwd \\\` | cat -e \` `
+var=val; echo $var
+var=val ls; echo $var
