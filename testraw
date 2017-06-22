@@ -91,7 +91,7 @@ exit 7139
 env -i env toto=tata env
 env -i ls
 env -i foo
-env -lol ls
+# env -lol ls
 env -i ls  -rlaH
 # env -i ./segv
 env -i whoami
@@ -123,7 +123,6 @@ env -i pwd
 ############# UNSET #############
 #################################
 # unset [-fv] name...
-
 
 
 #################################
@@ -354,3 +353,9 @@ echo `unsetenv $PATH` ; echo $PATH
 
 # all ASCII char without ` and "
 # echo "!#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{|}~
+
+###########################################################################
+################################## LILO MOULTIPASS ########################
+#####################################|#####################################
+
+echo ` echo \`echo \\\`pwd \\\` | cat -e \` `

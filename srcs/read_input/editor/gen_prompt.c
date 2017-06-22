@@ -52,6 +52,8 @@ static char			*mangle_home(char *str)
 	size_t	home_str_len;
 
 	home_str = get_variable("HOME");
+	if (home_str == NULL)
+		return (str);
 	result = ft_strstr(str, home_str);
 	home_str_len = ft_strlen(home_str);
 	free(home_str);

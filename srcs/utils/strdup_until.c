@@ -7,7 +7,10 @@ char			*strdup_until(char const *src, char const *stop)
 	char	*result;
 	size_t	len;
 
-	len = stop - src;
+	if (stop == NULL)
+		len = ft_strlen(src);
+	else
+		len = stop - src;
 	result = memalloc_or_die(sizeof(char) * (len + 1));
 	ft_strncpy(result, src, len);
 	result[len] = '\0';
