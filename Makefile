@@ -38,7 +38,9 @@ test:
 	@make re -C ./tests $(MAKE_OPTS) $(MAKE_OPTS_THREAD)
 
 testsh:
-	@./test detail
+	@php test detail
+	@echo "------------- OPTIONAL TEST VALGRIND -------------"
+	@-php test detail valgrind
 
 $(PROG_NAME): $(OBJS_DIRS) $(OBJS)
 	@echo "LINK   " $@

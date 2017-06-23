@@ -1,4 +1,5 @@
 #include "completion.h"
+#include "put_on_tty.h"
 #include <term.h>
 
 int		getpad(t_strlist *l, int line)
@@ -25,11 +26,11 @@ void	print_pad(int pad, char *str)
 	int spaces;
 
 	spaces = pad - ft_strlen(str);
-	ft_putstr(str);
+	putstr_on_tty(str);
 	while (spaces--)
 	{
 		if (spaces == 2)
 			tputs(tgetstr("me", 0), 1, ft_rputchar);
-		ft_putchar(' ');
+		putchar_on_tty(' ');
 	}
 }

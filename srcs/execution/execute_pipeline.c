@@ -75,7 +75,9 @@ t_error_id	execute_simple_command(t_simple_command *cmd, size_t lvl)
 #endif
 		stdin_out_backup = save_stdin_stdout();
 		ret = redirect(cmd->redirections, stdin_out_backup);
-		//expand_assignments_values(cmd->assignments);
+		expand_assignments_values(cmd->assignments);
+		if (ret == NO_ERROR && cmd->argv[0] == NULL)
+			set_assignments(cmd->assignments, false);
 		if (ret != NO_ERROR || cmd->argv[0] == NULL)
 			return (ret);
 		ret = execute_builtin(cmd, lvl + 1);
@@ -120,7 +122,7 @@ t_error_id	execute_pipeline(t_simple_command *pipeline, size_t lvl)
 		pipeline = pipeline->next;
 	}
 	wait_for_last_child(pipeline_state.last_pid);
-	kill(0, SIGINT);
+	//kill(0, SIGINT);
 #ifdef FTSH_DEBUG
 	print_n_char_fd(' ', (lvl) * 2, 2);
 	dprintf(2, "done executing pipeline, %s\n", pipeline_state.last_ret == NO_ERROR ? "ok" : "error");

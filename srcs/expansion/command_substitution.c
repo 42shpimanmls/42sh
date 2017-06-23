@@ -13,6 +13,16 @@
 #include "break_input/quoting.h"
 #include "read_input/command_substitution.h"
 
+static void rm_backslashes(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\\' && (*(str + 1) == '\\' || *(str + 1) == '`'))
+			ft_strcpy(str, str + 1);
+		str++;
+	}
+}
+
 static void		if_fork_not_in_child(t_strlist **strlist_addr, int pipefds[2])
 {
 	char				*tmp;
@@ -31,9 +41,12 @@ static void		add_substitution(t_strlist **strlist_addr
 	int					pipefds[2];
 	char				**argv;
 	t_simple_command	cmd;
+	char*				cmd_str;
 
+	cmd_str = strdup_until(start, end);
+	rm_backslashes(cmd_str);
 	argv = (char*[]){ft_strdup(get_shell_env()->path_to_42sh), "-c"
-											, strdup_until(start, end), NULL};
+											, cmd_str, NULL};
 	pipe(pipefds);
 	if (enter_subshell() == FORKED_IN_CHILD)
 	{
@@ -75,7 +88,7 @@ t_strlist		*split_subsitutions_run(char const *word,
 {
 	char const	*subst_end;
 
-	while (*word != '\0')
+	while (word != NULL && *word != '\0')
 	{
 		if (is_quote(*word))
 			handle_subst_quotes(&quoted, &word, &passv_str_start);
@@ -85,7 +98,7 @@ t_strlist		*split_subsitutions_run(char const *word,
 			handle_passv_str(passv_str_start, word, &result);
 			subst_end = find_substitution_end(word + 1);
 			add_substitution(&result, word + 1, subst_end);
-			word = subst_end + 1;
+			word = subst_end + (subst_end != NULL ? 1 : 0);
 			passv_str_start = word;
 		}
 		else

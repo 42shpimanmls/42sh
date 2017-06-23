@@ -1,6 +1,7 @@
 #include <libft.h>
 #include "completion.h"
 #include "ansii_colors.h"
+#include "put_on_tty.h"
 #include <term.h>
 
 static void		recover_curs(t_editor *ed, int line)
@@ -8,11 +9,11 @@ static void		recover_curs(t_editor *ed, int line)
 	int col;
 
 	while (line--)
-		ft_putstr(ed->term->move_up);
+		putstr_on_tty(ed->term->move_up);
 	col = (ed->cursor_position + ed->prompt_size) % ed->term->width;
-	ft_putstr(ed->term->move_cursor_begining);
+	putstr_on_tty(ed->term->move_cursor_begining);
 	while (col--)
-		ft_putstr(ed->term->move_right);
+		putstr_on_tty(ed->term->move_right);
 }
 
 static void		print_one(int pad, int tot, char *str, int lst_index)
@@ -31,9 +32,9 @@ static void		print_one(int pad, int tot, char *str, int lst_index)
 	if (!str)
 		return ;
 	if (*(str + ft_strlen(str) - 1) == '/')
-		ft_putstr(BLUE);
+		putstr_on_tty(BLUE);
 	print_pad(pad, str);
-	ft_putstr(RESET);
+	putstr_on_tty(RESET);
 }
 
 static int		line_needed(t_strlist *files, t_editor *ed, int line)
@@ -70,7 +71,7 @@ static int		true_display(t_strlist *files, t_editor *ed)
 
 	tot = 0;
 	lst_index = 0;
-	ft_putstr(ed->term->clear_line);
+	putstr_on_tty(ed->term->clear_line);
 	if ((get_tabinfo()->nb_lines = line_needed(files, ed, 1)) == -1)
 		return (-1);
 	while (files)
@@ -104,8 +105,8 @@ void      tab_display(t_editor *ed, char *line, t_tabinfo *info)
 			ev_cursor_right(ed);
 		if (true_display(info->list, ed) == -1)
 		{
-			ft_putstr(ed->term->move_down);
-			ft_putstr("Window too small");
+			putstr_on_tty(ed->term->move_down);
+			putstr_on_tty("Window too small");
 			recover_curs(ed, 1);
 		}
 		save = ed->cursor_position - save;

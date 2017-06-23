@@ -6,22 +6,22 @@ void		move_cursor(t_vec2i vec, t_term *term)
 	if (vec.x > 0)
 	{
 		while (vec.x-- > 0)
-			ft_putstr(term->move_left);
+			putstr_on_tty(term->move_left);
 	}
 	else if (vec.x < 0)
 	{
 		while (vec.x++ < 0)
-			ft_putstr(term->move_right);
+			putstr_on_tty(term->move_right);
 	}
 	if (vec.y > 0)
 	{
 		while (vec.y-- > 0)
-			ft_putstr(term->move_up);
+			putstr_on_tty(term->move_up);
 	}
 	else if (vec.y < 0)
 	{
 		while (vec.y++ < 0)
-			ft_putstr(term->move_down);
+			putstr_on_tty(term->move_down);
 	}
 }
 

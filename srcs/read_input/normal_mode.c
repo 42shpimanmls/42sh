@@ -25,7 +25,7 @@ static void		handle_etx(t_editor *ed)
 	get_shell_env()->last_unmatched = NO_ERROR;
 	print_control_char_notation(ETX);
 	ev_cursor_end(ed);
-	ft_putstr("\n");
+	putstr_on_tty("\n");
 	change_string(ed, "");
 	ed->pos = get_cursor_vector(ed);
 	ed->need_refresh = true;
