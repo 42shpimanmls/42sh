@@ -3,6 +3,7 @@
 
 # include <stdbool.h>
 # include "event_callbacks.h"
+# include "put_on_tty.h"
 
 typedef enum				e_event_id
 {

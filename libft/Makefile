@@ -6,7 +6,7 @@
 #    By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/09 11:34:04 by pilespin          #+#    #+#              #
-#    Updated: 2017/06/21 17:59:18 by asenat           ###   ########.fr        #
+#    Updated: 2017/06/22 17:11:47 by asenat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,6 @@ SRCA = ft_strlen.c \
 	ft_replace_char.c \
 	ft_doublearrayndel.c \
 	ft_splitfilepath.c \
-	ft_rputchar.c \
 	memalloc_or_die.c \
 
 SRCH	=	libft.h \

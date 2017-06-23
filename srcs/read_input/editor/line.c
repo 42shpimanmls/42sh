@@ -5,8 +5,8 @@
 void		move_start(t_editor *ed)
 {
 	while (ed->pos.y-- > 0)
-		ft_putstr(ed->term->move_up);
-	ft_putstr(ed->term->move_cursor_begining);
+		putstr_on_tty(ed->term->move_up);
+	putstr_on_tty(ed->term->move_cursor_begining);
 }
 
 static void	print_command_string(t_editor *ed, char const *prompt,
@@ -23,10 +23,10 @@ static void	print_command_string(t_editor *ed, char const *prompt,
 		while (i > 0 && str[i] != '\n')
 			i--;
 		if (ft_strlen(str + ++i) % (int)term_width == 0)
-			ft_putchar('\n');
+      		putchar_on_tty('\n');
 	}
 	else  if (ft_strlen(str) % (int)term_width == 0)
-		ft_putchar('\n');
+		putchar_on_tty('\n');
 	free(str);
 }
 
@@ -53,10 +53,10 @@ void		refresh_line(t_editor *ed)
 	if (ed->need_refresh == true)
 	{
 		ed->need_refresh = false;
-		ft_putstr(ed->term->hide_cursor);
+		putstr_on_tty(ed->term->hide_cursor);
 		clear_line(ed);
 		put_line(ed);
 		restore_old_cursor_position(ed, get_cursor_vector(ed));
-		ft_putstr(ed->term->show_cursor);
+		putstr_on_tty(ed->term->show_cursor);
 	}
 }

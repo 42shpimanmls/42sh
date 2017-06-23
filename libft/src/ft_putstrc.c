@@ -6,26 +6,26 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/18 12:43:16 by pilespin          #+#    #+#             */
-/*   Updated: 2015/10/15 15:30:17 by pilespin         ###   ########.fr       */
+/*   Updated: 2017/06/23 14:44:19 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstrc(int color, int background, char *str)
+void	ft_putstrc(int color, int background, char *str, int fd)
 {
 	if (color >= 0 && color <= 7)
 	{
-		ft_putstr("\033[");
-		ft_putnbr(color + 30);
+		ft_putstr_fd("\033[", fd);
+		ft_putnbr_fd(color + 30, fd);
 		if (background >= 0 && background <= 7)
 		{
-			ft_putstr(";");
-			ft_putnbr(background + 40);
+			ft_putstr_fd(";", fd);
+			ft_putnbr_fd(background + 40, fd);
 		}
-		ft_putstr("m");
-		ft_putstr(str);
-		ft_putstr("\033[0m");
+		ft_putstr_fd("m", fd);
+		ft_putstr_fd(str, fd);
+		ft_putstr_fd("\033[0m", fd);
 	}
 }
 
