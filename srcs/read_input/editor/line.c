@@ -10,13 +10,22 @@ void		move_start(t_editor *ed)
 }
 
 static void	print_command_string(t_editor *ed, char const *prompt,
-		t_string *cmd_str, size_t term_width)
+									t_string *cmd_str, size_t term_width)
 {
 	char	*str;
+	int		i;
 
 	str = ft_strjoinf(prompt, get_string_from_list(cmd_str), 2);
 	put_highlighted_line(ed, str);
-	if (ft_strlen(str) % (int)term_width == 0 && !if_on_multiline(ed))
+	if (if_on_multiline(ed))
+	{
+		i = ft_strlen(str);
+		while (i > 0 && str[i] != '\n')
+			i--;
+		if (ft_strlen(str + ++i) % (int)term_width == 0)
+      		putchar_on_tty('\n');
+	}
+	else  if (ft_strlen(str) % (int)term_width == 0)
 		putchar_on_tty('\n');
 	free(str);
 }
