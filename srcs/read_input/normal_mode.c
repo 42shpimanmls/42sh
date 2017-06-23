@@ -48,11 +48,13 @@ static bool		handle_callback(t_editor *ed, char buf[])
 	if (def)
 	{
 		def->callback(ed);
+		ed->last_event = def->id;
 		if (def->id == NEWLINE_EVID)
 			return (true);
 	}
 	else
 	{
+		ed->last_event = 0;
 		close_history(ed);
 		add_buffer_to_string(ed, buf);
 	}

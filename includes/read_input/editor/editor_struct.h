@@ -54,6 +54,7 @@ typedef struct			s_editor
 	bool				action_move_left;
 	bool				in_edition;
 	bool				in_history;
+	int					last_event;
 }						t_editor;
 
 #endif
