@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:28:51 by pilespin          #+#    #+#             */
-/*   Updated: 2017/06/22 17:11:57 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/23 14:43:26 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		ft_putcharc(int color, int background, char str);
 void		ft_putnchar(int x, char c);
 void		ft_putchar_fd(char c, int fd);
 void		ft_putstr(char const *s);
-void		ft_putstrc(int color, int background, char *str);
+void		ft_putstrc(int color, int background, char *str, int fd);
 void		ft_putstr_fd(char const *s, int fd);
 void		ft_putendl(char const *s);
 void		ft_putendl_fd(char const *s, int fd);

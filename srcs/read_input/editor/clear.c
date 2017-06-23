@@ -4,7 +4,7 @@
 void	clear_line(t_editor *ed)
 {
 	move_start(ed);
-	ft_putstr(ed->term->clear_line);
+	putstr_on_tty(ed->term->clear_line);
 	ed->pos = get_cursor_vector(ed);
 }
 
