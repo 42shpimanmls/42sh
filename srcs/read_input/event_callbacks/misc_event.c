@@ -8,6 +8,7 @@ EV_CB_RET	ev_newline(t_editor *ed)
 	ev_cursor_end(ed);
 	close_history(ed);
 	add_to_string(ed, '\n');
+	clear_selected_pos(ed);
 	refresh_line(ed);
 }
 
