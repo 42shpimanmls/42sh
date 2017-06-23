@@ -111,5 +111,6 @@ void      tab_display(t_editor *ed, char *line, t_tabinfo *info)
 		save = ed->cursor_position - save;
 		while (save--)
 			ev_cursor_left(ed);
+		ed->need_refresh = 0;
 	}
 }

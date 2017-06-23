@@ -61,7 +61,6 @@ void			choice_tab(t_editor *ed, char *line, char *path)
 		get_tabinfo()->list = l;
 		get_tabinfo()->total_word = path;
 		tab_display(ed, line, get_tabinfo());
-		ed->need_refresh = 0;
 	}
 	else
 		ft_strdel(&path);
