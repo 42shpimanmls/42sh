@@ -8,6 +8,8 @@ EV_CB_RET	ev_tab(t_editor *ed)
 	char *line;
 	char *path;
 
+	if (ed->in_selection)
+		return ;
 	line = get_string_from_list(ed->string);
 	while (line[ed->cursor_position] != ' ' && line[ed->cursor_position])
 		ev_cursor_right(ed);
