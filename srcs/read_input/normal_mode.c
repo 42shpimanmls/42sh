@@ -4,6 +4,7 @@
 #include "read_input/event_callbacks/event_callback_def.h"
 #include "read_input/termcap/init_deinit.h"
 #include "control_character.h"
+#include "completion.h"
 
 static void		add_buffer_to_string(t_editor *ed, char buf[])
 {
@@ -28,6 +29,7 @@ static void		handle_etx(t_editor *ed)
 	change_string(ed, "");
 	ed->pos = get_cursor_vector(ed);
 	ed->need_refresh = true;
+	clear_down(ed);
 }
 
 static bool		handle_control_char(t_editor *ed, char buf[])
