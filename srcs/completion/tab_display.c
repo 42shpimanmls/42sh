@@ -9,9 +9,9 @@ static void		recover_curs(t_editor *ed, int line)
 
 	while (line--)
 		ft_putstr(ed->term->move_up);
-	col = ed->cursor_position % ed->term->width;
+	col = (ed->cursor_position + ed->prompt_size) % ed->term->width;
 	ft_putstr(ed->term->move_cursor_begining);
-	while (col-- +  ed->prompt_size)
+	while (col--)
 		ft_putstr(ed->term->move_right);
 }
 
