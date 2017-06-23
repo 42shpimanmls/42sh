@@ -178,6 +178,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 	t_uchar	opt;
 	int		ret;
 
+	new_pwd = 0;
 	/* If, during the execution of the above steps, the PWD environment variable is set, the OLDPWD environment variable shall also be set to the value of the old working directory (that is the current working directory immediately prior to the call to cd). */
 	current_pwd = getcwd(NULL, 0);
 	curpath = NULL;
@@ -191,6 +192,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 			/* 1. If no directory operand is given and the HOME environment variable is empty or undefined,
 			the default behavior is implementation-defined and no further steps shall be taken. */
 			ft_putendl_fd("42sh: cd: HOME not set", 2);
+			ft_strdel(&current_pwd);
 			return (EXIT_FAILURE);
 		}
 		else
@@ -204,7 +206,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 	if (ft_strequ(directory, "-"))
 	{
 		free(directory);
-		free(current_pwd);
+		ft_strdel(&current_pwd);
 		return (cd_oldpwd());
 	}
 	if (directory[0] == '/')
@@ -234,6 +236,7 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 		if (curpath == NULL)
 		{
 			free(directory);
+			ft_strdel(&current_pwd);
 			return (EXIT_SUCCESS);
 		}
 		new_pwd = ft_strdup(curpath);
@@ -248,9 +251,11 @@ BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
 	{
 		set_variable("OLDPWD", current_pwd, true);
 		set_variable("PWD", new_pwd, true);
+		ft_strdel(&new_pwd);
 	}
 	free(curpath);
 	free(directory);
+	ft_strdel(&current_pwd);
 	if (ret != 0)
 		ret = 2;
 	return (ret);

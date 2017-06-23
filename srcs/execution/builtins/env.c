@@ -52,6 +52,7 @@ void		run_env(int argc, char **argv, t_simple_command *cmd)
 {
 	int		i;
 	char	**split;
+	char  **fre;
 
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
@@ -67,7 +68,9 @@ void		run_env(int argc, char **argv, t_simple_command *cmd)
 	}
 	if (argc > i)
 	{
+		fre = cmd->argv;
 		cmd->argv = ft_tabdup(&(cmd->argv[i]));
+		ft_freetabchar(fre);
 		execute_simple_command(cmd, 0);
 		if (get_last_exit_status())
 			set_error(ENV_EXEC_ERR);
