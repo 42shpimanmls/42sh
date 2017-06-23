@@ -29,6 +29,7 @@ static void		handle_etx(t_editor *ed)
 	change_string(ed, "");
 	ed->pos = get_cursor_vector(ed);
 	ed->need_refresh = true;
+	ed->last_event = 0;
 	clear_down(ed);
 }
 
@@ -50,7 +51,7 @@ static bool		handle_callback(t_editor *ed, char buf[])
 	if (def)
 	{
 		def->callback(ed);
-		ed->last_event = def->id;
+		ed->last_event = (ed->last_event != -1) ? def->id : 0;
 		if (def->id == NEWLINE_EVID)
 			return (true);
 	}

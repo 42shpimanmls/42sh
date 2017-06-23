@@ -52,6 +52,7 @@ void			choice_tab(t_editor *ed, char *line, char *path)
 		tab_display(ed, line, get_tabinfo());
 		check_tab_input(ed, line);
 		ft_strdel(&path);
+		ed->last_event = -1;
 		return ;
 	}
 	clear_tabinfo();
