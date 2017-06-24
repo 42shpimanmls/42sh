@@ -6,13 +6,13 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 16:28:59 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/24 16:34:41 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/24 17:16:34 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution/builtins/cd.h"
 
-static char			*parse_options(t_uchar *opt_addr, int argc, char **argv)
+static char		*parse_options(t_uchar *opt_addr, int argc, char **argv)
 {
 	char	*str;
 
@@ -26,13 +26,13 @@ static char			*parse_options(t_uchar *opt_addr, int argc, char **argv)
 		if (str[0] == '-' && (str[1] == 'L' || str[1] == 'P'))
 			*opt_addr = str[1];
 		else
-			return ft_strdup(str);
+			return (ft_strdup(str));
 		argv++;
 	}
 	return (NULL);
 }
 
-BUILTIN_RET 		builtin_cd(BUILTIN_ARGS)
+int				builtin_cd(int argc, char **argv)
 {
 	char	*directory;
 	char	*curpath;

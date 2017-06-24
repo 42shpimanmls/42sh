@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 17:57:27 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/24 16:40:48 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/24 17:08:13 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ bool		last_is_slash(char const *str)
 bool		first_comp_is_dot_or_dotdot(char const *str)
 {
 	if ((str[0] == '.' && (str[1] == '/' || str[1] == '\0'))
-			|| (str[0] == '.' && str[1] == '.' && (str[2] == '/' || str[2] == '\0')))
+			|| (str[0] == '.' && str[1] == '.' && (str[2] == '/'
+					|| str[2] == '\0')))
 	{
 		return (true);
 	}
@@ -52,8 +53,8 @@ int			go_home(char *current_pwd, char **directory)
 int			go_standard(char *directory, char **curpath,
 		char **current_pwd, t_uchar opt)
 {
-	char *new_pwd;
-	int ret;
+	char	*new_pwd;
+	int		ret;
 
 	if (opt != 'P')
 	{
@@ -87,7 +88,7 @@ void		handle_special_cases(char **curpath, char *directory)
 	{
 		if (!first_comp_is_dot_or_dotdot(directory))
 			*curpath = find_cdpath(directory);
-		if (curpath == NULL)
+		if (*curpath == NULL)
 			*curpath = ft_strdup(directory);
 	}
 }

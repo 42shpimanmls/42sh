@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 16:28:54 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/24 16:34:14 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/24 17:07:16 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ void			set_curpath_from_pwd(char **str_addr)
 	*str_addr = ft_strjoinf(path, *str_addr, 3);
 }
 
-void			save_the_day(char **curpath_addr, char const *directory, char const *pwd)
+void			save_the_day(char **curpath_addr, char const *directory,
+					char const *pwd)
 {
 	char	*str;
 
 	if (curpath_addr == NULL || *curpath_addr == NULL)
 		fatal_error("NULL ptr fed to save_the_day");
-	if (!(ft_strlen(*curpath_addr) + 1 > PATH_MAX && ft_strlen(directory) + 1 <= PATH_MAX))
+	if (!(ft_strlen(*curpath_addr) + 1 > PATH_MAX &&
+				ft_strlen(directory) + 1 <= PATH_MAX))
 		return ;
 	if (!last_is_slash(pwd))
 		str = ft_strjoin(pwd, "/");
@@ -96,9 +98,6 @@ BUILTIN_RET		cd_oldpwd(void)
 	BUILTIN_RET	ret;
 	char		*oldpwd;
 
-	/*this shall be equivalent to the command:
-
-	cd "$OLDPWD" && pwd*/
 	oldpwd = get_variable("OLDPWD");
 	if (oldpwd == NULL)
 	{
