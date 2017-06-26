@@ -6,13 +6,13 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:09:49 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 15:10:33 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/26 16:37:26 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "completion.h"
 
-t_strlis	**getmin(t_strlist **lst)
+t_strlist	**getmin(t_strlist **lst)
 {
 	t_strlist **ret;
 

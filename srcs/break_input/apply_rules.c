@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 14:43:42 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 14:46:36 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/26 16:57:20 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void			apply_rules(t_tokenizer_state *state)
 	char c;
 
 	c = *state->current_char;
-	print_tokenizer_state(state);
 	if (state->op_start != NULL && !is_quoted(state)
 		&& is_operator_part(state))
 	{
