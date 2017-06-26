@@ -4,42 +4,7 @@
 #include "file_positions.h"
 #include <errno.h>
 
-void		add_to_history_list(t_history **list, t_history *new)
-{
-	t_history *tmp;
-
-	if (new)
-	{
-		if (*list == NULL)
-			*list = new;
-		else
-		{
-			tmp = *list;
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new;
-			new->prev = tmp;
-		}
-	}
-}
-
-t_history	*create_history_entry(char *line)
-{
-	t_history *new;
-
-	if (line && ft_strcmp(line, "\n"))
-	{
-		new = (t_history *)memalloc_or_die(sizeof(t_history));
-		new->line = ft_strdup(line);
-		new->appended = false;
-		new->next = NULL;
-		new->prev = NULL;
-		return (new);
-	}
-	return (NULL);
-}
-
-void		history_add_with_nl(t_shell_env *shell_env, char *line)
+void			history_add_with_nl(t_shell_env *shell_env, char *line)
 {
 	char	*tmp;
 
@@ -48,7 +13,44 @@ void		history_add_with_nl(t_shell_env *shell_env, char *line)
 	ft_strdel(&tmp);
 }
 
-void		load_history(t_shell_env *shell_env, char *filename, bool n_opt)
+t_file_position	*get_file_position(char *filename)
+{
+	t_file_position *files;
+
+	files = get_shell_env()->history_files;
+	while (files)
+	{
+		if (!ft_strcmp(files->filename, filename))
+			return (files);
+		files = files->next;
+	}
+	return (NULL);
+}
+
+static void		new_file_position(char *filename, int position)
+{
+	t_file_position *new;
+
+	new = memalloc_or_die(sizeof(t_file_position));
+	new->filename = ft_strdup(filename);
+	new->position = position;
+	new->next = NULL;
+	list_push_back((t_abstract_list **)&get_shell_env()->history_files, \
+					(t_abstract_list *)new);
+}
+
+void			update_file_position(char *filename, int new_position)
+{
+	t_file_position *files;
+
+	if (!(files = get_file_position(filename)))
+		new_file_position(filename, new_position);
+	else
+		files->position = new_position;
+}
+
+void			load_history(t_shell_env *shell_env, char *filename,
+							bool n_opt)
 {
 	char	*line;
 	int		fd;
