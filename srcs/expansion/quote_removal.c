@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quote_removal.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/26 17:09:36 by asenat            #+#    #+#             */
+/*   Updated: 2017/06/26 17:22:15 by asenat           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "read_input/editor/editor.h"
 #include "abstract_list.h"
 #include "utils.h"
 #include "break_input/quoting.h"
 #include "expansion.h"
 
-static t_string	*remove_backslash(t_string **l_addr, t_string **l_str, \
+static t_string		*remove_backslash(t_string **l_addr, t_string **l_str, \
 								bool *quoted, size_t *pos)
 {
 	void	*to_del;
@@ -33,7 +45,8 @@ static t_string	*remove_backslash(t_string **l_addr, t_string **l_str, \
 	return (*l_str);
 }
 
-static t_string	*remove_quote(t_string **l_addr, t_string *l_str, bool *quoted, size_t *pos)
+static t_string		*remove_quote(t_string **l_addr, t_string *l_str, \
+						bool *quoted, size_t *pos)
 {
 	size_t			i;
 	char const		*quotes;
@@ -54,7 +67,7 @@ static t_string	*remove_quote(t_string **l_addr, t_string *l_str, bool *quoted, 
 	return (l_str);
 }
 
-static void	remove_quotes(t_string **l_addr)
+static void			remove_quotes(t_string **l_addr)
 {
 	bool			quoted[2];
 	size_t			pos;
@@ -78,7 +91,7 @@ static void	remove_quotes(t_string **l_addr)
 	}
 }
 
-static bool	has_quotes(char *str)
+static bool			has_quotes(char *str)
 {
 	while (*str)
 	{
@@ -89,7 +102,7 @@ static bool	has_quotes(char *str)
 	return (false);
 }
 
-void		quote_removal(char **word)
+void				quote_removal(char **word)
 {
 	t_string		*l_str;
 
