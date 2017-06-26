@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 16:28:59 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/24 17:16:34 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/26 13:14:54 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int				builtin_cd(int argc, char **argv)
 	current_pwd = getcwd(NULL, 0);
 	curpath = NULL;
 	directory = parse_options(&opt, argc, argv);
-	if (directory == NULL && go_home(current_pwd, &directory) == -1)
+	if (directory == NULL && go_home(current_pwd, &directory) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_strequ(directory, "-"))
 	{
