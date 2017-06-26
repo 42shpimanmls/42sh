@@ -10,9 +10,9 @@ static void		recover_curs(t_editor *ed, int line)
 
 	while (line--)
 		putstr_on_tty(ed->term->move_up);
-	col = ed->cursor_position % ed->term->width;
+	col = (ed->cursor_position + ed->prompt_size) % ed->term->width;
 	putstr_on_tty(ed->term->move_cursor_begining);
-	while (col-- +  ed->prompt_size)
+	while (col--)
 		putstr_on_tty(ed->term->move_right);
 }
 
@@ -112,5 +112,6 @@ void      tab_display(t_editor *ed, char *line, t_tabinfo *info)
 		save = ed->cursor_position - save;
 		while (save--)
 			ev_cursor_left(ed);
+		ed->need_refresh = 0;
 	}
 }
