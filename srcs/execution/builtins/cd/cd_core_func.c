@@ -97,6 +97,7 @@ BUILTIN_RET		cd_oldpwd(void)
 {
 	BUILTIN_RET	ret;
 	char		*oldpwd;
+	char		*s;
 
 	oldpwd = get_variable("OLDPWD");
 	if (oldpwd == NULL)
@@ -106,7 +107,10 @@ BUILTIN_RET		cd_oldpwd(void)
 	}
 	ret = builtin_cd(2, (char*[]){"cd", oldpwd, NULL});
 	if (ret == EXIT_SUCCESS)
-		ft_putendl(get_variable("PWD"));
+	{
+		ft_putendl(s = get_variable("PWD"));
+		ft_strdel(&s);
+	}
 	free(oldpwd);
 	return (ret);
 }
