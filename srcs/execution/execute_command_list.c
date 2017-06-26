@@ -43,7 +43,8 @@ t_error_id	execute_and_or_list(t_and_or_list *ao_list, size_t lvl)
 	{
 		if (!skip)
 		{
-			ret = execute_pipeline(ao_list->pipeline, lvl + 1);
+			execute_pipeline(ao_list->pipeline, lvl + 1);
+			ret = get_last_exit_status();
 			print_ao_sep(ao_list->separation_type, lvl);
 		}
 		skip = false;
