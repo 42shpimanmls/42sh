@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   apply_rules.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/26 14:43:42 by asenat            #+#    #+#             */
+/*   Updated: 2017/06/26 14:46:36 by asenat           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "token.h"
 #include <stdlib.h>
 #include "utils.h"
@@ -56,10 +68,8 @@ void			apply_rules(t_tokenizer_state *state)
 
 bool			apply_rules_2(t_tokenizer_state *state)
 {
-	// rule 5 (incomplete !! recursion not handled) // not quoted if double quotes?
 	if (!is_quoted(state) && is_substitution_start(state->current_char))
 	{
-		// Weird, not referenced but necessary (or illogism)
 		if (state->word_start == NULL)
 			state->word_start = state->current_char;
 		state->current_char =
