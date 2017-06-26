@@ -2,6 +2,7 @@
 # define EXPANSION_H
 
 # include "strlist.h"
+# include "variable.h"
 
 # define IS_QU_SIMPLE 0b0001
 # define IS_QU_DOUBLE 0b0010
@@ -17,5 +18,6 @@ t_strlist			*split_subsitutions(char const *word);
 t_strlist			*split_subsitutions_run(char const *word,
 					char const *passv_str_start,
 					t_strlist *result, char quoted);
+void				expand_assignments_values(t_variable *assignments);
 
 #endif

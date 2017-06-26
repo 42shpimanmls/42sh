@@ -5,19 +5,28 @@
 void		move_start(t_editor *ed)
 {
 	while (ed->pos.y-- > 0)
-		ft_putstr(ed->term->move_up);
-	ft_putstr(ed->term->move_cursor_begining);
+		putstr_on_tty(ed->term->move_up);
+	putstr_on_tty(ed->term->move_cursor_begining);
 }
 
 static void	print_command_string(t_editor *ed, char const *prompt,
-		t_string *cmd_str, size_t term_width)
+									t_string *cmd_str, size_t term_width)
 {
 	char	*str;
+	int		i;
 
 	str = ft_strjoinf(prompt, get_string_from_list(cmd_str), 2);
 	put_highlighted_line(ed, str);
-	if (ft_strlen(str) % (int)term_width == 0 && !if_on_multiline(ed))
-		ft_putchar('\n');
+	if (if_on_multiline(ed))
+	{
+		i = ft_strlen(str);
+		while (i > 0 && str[i] != '\n')
+			i--;
+		if (ft_strlen(str + ++i) % (int)term_width == 0)
+      		putchar_on_tty('\n');
+	}
+	else  if (ft_strlen(str) % (int)term_width == 0)
+		putchar_on_tty('\n');
 	free(str);
 }
 
@@ -44,10 +53,10 @@ void		refresh_line(t_editor *ed)
 	if (ed->need_refresh == true)
 	{
 		ed->need_refresh = false;
-		ft_putstr(ed->term->hide_cursor);
+		putstr_on_tty(ed->term->hide_cursor);
 		clear_line(ed);
 		put_line(ed);
 		restore_old_cursor_position(ed, get_cursor_vector(ed));
-		ft_putstr(ed->term->show_cursor);
+		putstr_on_tty(ed->term->show_cursor);
 	}
 }

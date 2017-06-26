@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_rputchar.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/08 21:05:39 by pilespin          #+#    #+#             */
-/*   Updated: 2014/11/23 22:16:33 by pilespin         ###   ########.fr       */
+/*   Created: 2017/06/21 13:54:21 by asenat            #+#    #+#             */
+/*   Updated: 2017/06/22 17:03:01 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "put_on_tty.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int		ft_rputchar(int c)
 {
-	char	*s;
-
-	s = ft_itoa(n);
-	ft_putstr_fd(s, fd);
-	free(s);
+	putchar_on_tty(c);
+	return (c);
 }

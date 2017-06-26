@@ -8,6 +8,7 @@ EV_CB_RET	ev_newline(t_editor *ed)
 	ev_cursor_end(ed);
 	close_history(ed);
 	add_to_string(ed, '\n');
+	clear_selected_pos(ed);
 	refresh_line(ed);
 }
 
@@ -18,7 +19,7 @@ EV_CB_RET	ev_cancel(t_editor *ed)
 
 EV_CB_RET	ev_exit(t_editor *ed)
 {
-	if (ed->string_size == 0)
+	if (ed->string_size == 0 && get_shell_env()->last_unmatched == NO_ERROR)
 	{
 		write(STDOUT_FILENO, "\x0A", 1);
 		ft_close_termcaps();

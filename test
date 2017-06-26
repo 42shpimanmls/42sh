@@ -19,8 +19,9 @@ $OptValgrind	= array_search("valgrind", 	$argv) 	? true : false;
 $testSignal = TRUE;
 //////////////////////////
 
+$exitCodeValgrind	= 242;
 $filetest			= "./testraw";
-$valgrind			= "valgrind --leak-check=full --error-exitcode=1 ";
+$valgrind			= "valgrind --leak-check=full --error-exitcode=$exitCodeValgrind ";
 $shellexec1			= "42sh";
 $shellexec2			= "sh";
 $commentChar		= '#';
@@ -118,7 +119,6 @@ function getRandomCommand() {
 }
 
 function compute($command) {
-	// l'usage des ticks est nécessaire depuis PHP 4.3.0
 	global $commentChar;
 	global $countMaybe;
 	global $countOK;
@@ -173,7 +173,7 @@ function compute($command) {
 		if ($ERRSTDOUT || check_error_signal($return_var1, $return_var2) == ERROR_DIFFERENT_SIGNAL || check_error_valgrind($return_valgrind))
 		{
 			$allerror .= "$COLORRED [$shellexec2][KO] $COLORCLOSE";
-			if ($OptValgrind && $return_valgrind)
+			if (check_error_valgrind($return_valgrind))
 				$allerror .= "$COLORRED [LEAKS] $COLORCLOSE";
 			$allerror .= "\"$command\"\n";
 		}
@@ -181,7 +181,7 @@ function compute($command) {
 		{
 			$countMaybe++;
 			$allerrorcheck .= "$COLORYELLOW [$shellexec2][CK] $COLORCLOSE";
-			if ($OptValgrind && $return_valgrind)
+			if (check_error_valgrind($return_valgrind))
 				$allerrorcheck .= "$COLORRED [LEAKS] $COLORCLOSE";
 			$allerrorcheck .= "\"$command\"\n";
 		}
@@ -203,7 +203,7 @@ function compute($command) {
 	{
 		$countOK++;
 		echo "$COLORGREEN [$shellexec2][OK] $COLORCLOSE";
-		if ($OptValgrind && $return_valgrind)
+		if (check_error_valgrind($return_valgrind))
 			echo "$COLORRED [LEAKS] $COLORCLOSE";
 		echo "\"$command\"\n";
 		if ($showOutput)
@@ -223,11 +223,10 @@ function add_error($str) {
 }
 
 function check_error_valgrind($return_valgrind) {
-	global $valgrind;
 	global $OptValgrind;
+	global $exitCodeValgrind;
 
-	if ($valgrind && $OptValgrind && $return_valgrind)
-		// if ($testSignal && $return_var1 != $return_var2)
+	if ($OptValgrind && $return_valgrind == $exitCodeValgrind)
 		return (1);
 	else
 		return (0);

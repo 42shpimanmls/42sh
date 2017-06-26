@@ -1,4 +1,5 @@
 #include <libft.h>
+#include "read_input/event_callbacks/event_callback_def.h"
 #include "completion.h"
 
 char	*get_cur_word(int curspos, char *line)
@@ -23,7 +24,6 @@ static t_strlist		*get_files(char *path)
 	struct dirent	*dirent;
 	t_strlist			*l;
 
-
 	split = ft_splitfilepath(path);
 	if (!(dir = (split[0]) ? opendir(split[0]) : opendir(".")))
 	{
@@ -41,22 +41,20 @@ static t_strlist		*get_files(char *path)
 	asciisort(&l);
 	return (l);
 }
+
 void			choice_tab(t_editor *ed, char *line, char *path)
 {
-	static int	lastpos = -1;
 	t_strlist	*l;
 
-	if (lastpos == (int)ed->cursor_position &&
-			(!ft_strcmp(path, get_tabinfo()->total_word)
-			 || (!path && !get_tabinfo()->total_word)))
+	if (ed->last_event == TAB_EVID)
 	{
 		get_tabinfo()->select_mode = 1;
 		tab_display(ed, line, get_tabinfo());
 		check_tab_input(ed, line);
 		ft_strdel(&path);
+		ed->last_event = -1;
 		return ;
 	}
-	lastpos = ed->cursor_position;
 	clear_tabinfo();
 	l = get_files(path);
 	if (l)

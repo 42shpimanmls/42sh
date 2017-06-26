@@ -1,5 +1,6 @@
 #include "completion.h"
 #include "variable.h"
+#include "put_on_tty.h"
 #include <libft.h>
 #include <term.h>
 
@@ -60,7 +61,7 @@ void		clear_down(t_editor *ed)
 	char	*home;
 
 	home = get_variable("HOME");
-	if (!s || !home || s[0] != '~')
+	if (!s || !home || home[0] == '\0' || s[0] != '~')
 	{
 		ft_strdel(&home);
 		return (s);

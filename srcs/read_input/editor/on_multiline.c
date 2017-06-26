@@ -9,7 +9,7 @@ bool		if_on_multiline(t_editor *ed)
 	str = get_string_from_list(ed->string);
 	nb = ft_count_char(str, '\n');
 	free(str);
-	if (nb > 0)
+	if (nb > 1)
 		return (true);
 	return (false);
 }

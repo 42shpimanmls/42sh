@@ -30,6 +30,32 @@ static t_strlist	*expand_cmd_word(t_strlist *result, char *str,
 	return (result);
 }
 
+static char	*expand_assignment(char const *str)
+{
+	char *tmp;
+
+	tmp = parameter_expansion(str);
+	if (!tmp)
+		return (NULL);
+	strfreeswap(&tmp, command_substition(tmp));
+	if (!tmp)
+		return (NULL);
+	set_error(NO_ERROR);
+	quote_removal(&tmp);
+	return (tmp);
+}
+
+void		expand_assignments_values(t_variable *assignments)
+{
+	while (assignments != NULL)
+	{
+		strfreeswap(&assignments->value, expand_assignment(assignments->value));
+		assignments = assignments->next;
+	}
+}
+
+
+
 void				expand_cmd_words(char ***words_addr)
 {
 	char		**words;
@@ -43,8 +69,7 @@ void				expand_cmd_words(char ***words_addr)
 		if (*words == NULL)
 			fields = NULL;
 		else
-			fields = expand_cmd_word(
-				NULL, tilde_expansion(*words), NULL, NULL);
+			fields = expand_cmd_word(NULL, tilde_expansion(*words), NULL, NULL);
 		list_concat((t_abstract_list**)&word_list, (t_abstract_list*)fields);
 		words++;
 	}

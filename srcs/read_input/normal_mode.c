@@ -4,6 +4,7 @@
 #include "read_input/event_callbacks/event_callback_def.h"
 #include "read_input/termcap/init_deinit.h"
 #include "control_character.h"
+#include "completion.h"
 
 static void		add_buffer_to_string(t_editor *ed, char buf[])
 {
@@ -24,10 +25,12 @@ static void		handle_etx(t_editor *ed)
 	get_shell_env()->last_unmatched = NO_ERROR;
 	print_control_char_notation(ETX);
 	ev_cursor_end(ed);
-	ft_putstr("\n");
+	putstr_on_tty("\n");
 	change_string(ed, "");
 	ed->pos = get_cursor_vector(ed);
 	ed->need_refresh = true;
+	ed->last_event = 0;
+	clear_down(ed);
 }
 
 static bool		handle_control_char(t_editor *ed, char buf[])
@@ -48,11 +51,13 @@ static bool		handle_callback(t_editor *ed, char buf[])
 	if (def)
 	{
 		def->callback(ed);
+		ed->last_event = (ed->last_event != -1) ? def->id : 0;
 		if (def->id == NEWLINE_EVID)
 			return (true);
 	}
 	else
 	{
+		ed->last_event = 0;
 		close_history(ed);
 		add_buffer_to_string(ed, buf);
 	}

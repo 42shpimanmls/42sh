@@ -1,5 +1,6 @@
 #include "read_input/editor/editor.h"
 #include <libft.h>
+#include "put_on_tty.h"
 
 static void	highlighted_core(char *line, size_t cur, size_t start, size_t len)
 {
@@ -22,9 +23,9 @@ static void	highlighted_core(char *line, size_t cur, size_t start, size_t len)
 		middle = ft_strsub(line, cur, start - cur);
 		end = ft_strsub(line, start, len - start);
 	}
-	ft_putstr(begin);
-	ft_putstrc(4, 3, middle);
-	ft_putstr(end);
+	putstr_on_tty(begin);
+	ft_putstrc(4, 3, middle, get_shell_env()->tty_fd);
+	putstr_on_tty(end);
 	free(begin);
 	free(middle);
 	free(end);
@@ -49,6 +50,6 @@ void		put_highlighted_line(t_editor *ed, char *line)
 	}
 	else
 	{
-		ft_putstr(line);
+		putstr_on_tty(line);
 	}
 }
