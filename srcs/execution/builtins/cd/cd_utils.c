@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 17:57:27 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 13:54:48 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/26 16:40:31 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			go_home(char *current_pwd, char **directory)
 	}
 	else
 		*directory = home;
-	return (1);
+	return (0);
 }
 
 int			go_standard(char *directory, char **curpath,
