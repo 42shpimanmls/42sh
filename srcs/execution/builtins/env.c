@@ -34,7 +34,7 @@ int			builtin_env(int argc, char **argv, t_simple_command *cmd)
 	ft_strdel(&opt);
 	get_shell_env()->variables = e;
 	run_env(argc, argv, cmd);
-	delete_all_variables(&e);
+	delete_all_variables(&(get_shell_env()->variables));
 	get_shell_env()->variables = save;
 	if (get_error() == ENV_EXEC_ERR)
 		set_last_exit_status(get_last_exit_status());
@@ -52,7 +52,7 @@ void		run_env(int argc, char **argv, t_simple_command *cmd)
 {
 	int		i;
 	char	**split;
-	char  **fre;
+	char	**fre;
 
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
