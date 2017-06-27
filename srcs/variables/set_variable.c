@@ -22,7 +22,8 @@ void			set_variable(char const *var, char const *val, bool overwrite)
 		env->next = create_variable(var, val, false, overwrite);
 	else
 	{
-		get_shell_env()->variables = create_variable(var, val, false, overwrite);
+		get_shell_env()->variables = create_variable(var, val, false
+			, overwrite);
 	}
 }
 
