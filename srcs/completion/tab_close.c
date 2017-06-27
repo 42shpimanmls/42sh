@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:13:41 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/27 15:38:20 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/27 17:01:34 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 static void		insert_to_str(t_editor *ed, char *to_write)
 {
+	char last;
+
+	last = 0;
 	while (*to_write)
 	{
 		add_to_string(ed, *to_write);
+		last = *to_write;
 		++to_write;
 	}
+	(last && last != '/') ? add_to_string(ed, ' ') : 0;
 }
 
 void			tab_close(t_editor *ed, char *line)

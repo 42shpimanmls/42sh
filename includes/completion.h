@@ -27,7 +27,8 @@ typedef struct		s_dat
 char				*get_cur_word(int curspos, char *line);
 void				tab_display(t_editor *ed, char *line, t_tabinfo *info);
 void				check_tab_input(t_editor *ed, char *line);
-void				add_file(t_strlist **lst, struct dirent *dir);
+void				add_file(t_strlist **lst, struct dirent *dir,
+						char *prepath);
 t_tabinfo			*get_tabinfo(void);
 void				clear_tabinfo(void);
 void				clear_down(t_editor *ed);

@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:16:16 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/27 15:47:44 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/27 17:21:01 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_strlist	*get_files(char *path)
 	l = NULL;
 	while ((dirent = readdir(dir)))
 		if (!ft_strncmp(dirent->d_name, split[1], ft_strlen(split[1])))
-			add_file(&l, dirent);
+			add_file(&l, dirent, split[0]);
 	(get_tabinfo()->file_prefix) ? free(get_tabinfo()->file_prefix) : 0;
 	get_tabinfo()->file_prefix = str_escape(split[1], " \\;|<>'\"");
 	ft_doublearrayndel((void***)&split, 2);
