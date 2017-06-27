@@ -39,6 +39,8 @@ test:
 
 testsh:
 	@php test detail
+
+testshvg:
 	@echo "------------- OPTIONAL TEST VALGRIND -------------"
 	@-php test detail valgrind
 
