@@ -63,6 +63,8 @@ t_command_list	*parse_command_list(t_token const *tokens)
 		if (last_is_semi(trimed))
 			splited_len--;
 		parse_cmd_list_sub(splited_len, splited, result, &result);
+		if (get_shell_env()->last_unmatched == UNEXPECTED_IF && splited_len > 0)
+			get_shell_env()->last_unmatched = NO_ERROR;
 	}
 	delete_all_tokens(&trimed);
 	delete_tokens_array(splited, splited_len);
