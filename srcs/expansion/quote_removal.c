@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quote_removal.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/26 17:09:36 by asenat            #+#    #+#             */
+/*   Updated: 2017/06/26 17:22:15 by asenat           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "read_input/editor/editor.h"
 #include "abstract_list.h"
 #include "utils.h"
@@ -84,7 +96,7 @@ static char *find_and_remove_quote(char *str)
 		return (str + 1);
 }
 
-static bool	has_quotes(char *str)
+static bool			has_quotes(char *str)
 {
 	while (*str != '\0')
 	{
