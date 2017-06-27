@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:16:16 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/27 15:43:34 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/27 15:47:44 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static t_strlist	*get_files(char *path)
 
 static t_strlist	*get_binaries(char *bin)
 {
-	char *tmp;
-	char **spath;
-	int i;
-	t_strlist *ret;
+	char		*tmp;
+	char		**spath;
+	int			i;
+	t_strlist	*ret;
 
 	if (!(tmp = get_variable("PATH")))
 		tmp = ft_strdup(_PATH_DEFPATH);

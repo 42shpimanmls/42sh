@@ -34,7 +34,8 @@ void				clear_down(t_editor *ed);
 void				asciisort(t_strlist **lst);
 char				*replace_home(char *s);
 char				*str_escape(char *s, char *to_escape);
-void				choice_tab(t_editor *ed, char *line, char *path, int first_word);
+void				choice_tab(t_editor *ed, char *line, char *path,
+						int first_word);
 int					getpad(t_strlist *l, int line);
 void				print_pad(int pad, char *str);
 

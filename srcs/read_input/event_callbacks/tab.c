@@ -30,7 +30,7 @@ EV_CB_RET	ev_tab(t_editor *ed)
 	line = get_string_from_list(ed->string);
 	first_w = is_first_word(line, ed->cursor_position);
 	while (line[ed->cursor_position] != ' ' && line[ed->cursor_position])
-		ev_cursor_right(ed);	
+		ev_cursor_right(ed);
 	path = get_cur_word(ed->cursor_position, line);
 	if (first_w && !ft_strchr(path, '/'))
 		choice_tab(ed, line, path, 1);
