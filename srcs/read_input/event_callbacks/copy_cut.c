@@ -47,6 +47,7 @@ EV_CB_RET	ev_copy(t_editor *ed)
 	{
 		get_sub_string(ed);
 		clear_selected_pos(ed);
+		ed->need_refresh = true;
 	}
 	ed->string_size = list_count((t_abstract_list *)ed->string);
 }
