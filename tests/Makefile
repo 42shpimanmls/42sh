@@ -19,7 +19,7 @@ OBJS = $(patsubst $(SRCS_ROOT)/%.c, $(OBJS_ROOT)/%.o, $(SRCS))
 
 CUNIT_VER ?= $(shell pwd)/CUnit-2.1-3
 CUNIT_SRC_ARCHIVE ?= $(CUNIT_VER).tar.bz2
-CUNIT_LOCAL_DIR ?= $(CUNIT_VER)/install
+CUNIT_LOCAL_DIR ?= $(CUNIT_VER)/installdir
 CUNIT_STATIC_LIB ?= $(CUNIT_LOCAL_DIR)/lib/libcunit.a
 CUNIT_INCLUDE_ROOT ?= $(CUNIT_LOCAL_DIR)/include
 
@@ -44,7 +44,7 @@ $(CUNIT_STATIC_LIB):
 	cd $(CUNIT_VER) && mv configure.in configure.ac
 	cd $(CUNIT_VER) && aclocal
 	cd $(CUNIT_VER) && autoreconf -i
-	cd $(CUNIT_VER) && ./configure --prefix $(CUNIT_VER)/install
+	cd $(CUNIT_VER) && ./configure --prefix $(CUNIT_LOCAL_DIR)
 	make -C $(CUNIT_VER)
 	make install -C $(CUNIT_VER)
 
