@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:23:08 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 15:23:11 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/27 15:44:32 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,10 @@ void			tab_display(t_editor *ed, char *line, t_tabinfo *info)
 	int save;
 
 	if ((save = list_count((t_abstract_list*)info->list)) == 1)
+	{
 		tab_close(ed, line);
+		ed->last_event = -1;
+	}
 	else if (save == 0)
 		clear_tabinfo();
 	else

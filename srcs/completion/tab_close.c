@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:13:41 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 15:14:01 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/27 15:38:20 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void			tab_close(t_editor *ed, char *line)
 	i = ft_strlen(get_tabinfo()->file_prefix);
 	to_write = tmp->str + i;
 	insert_to_str(ed, to_write);
+	if (!*to_write)
+		clear_down(ed);
 	clear_tabinfo();
 	(void)line;
 }
