@@ -9,6 +9,10 @@ define('NO_ERROR', 0);
 define('ERROR_DIFFERENT_SIGNAL', 1);
 define('CHECK_DIFFERENT_SIGNAL', 2);
 
+declare(ticks = 1);		
+pcntl_signal(SIGINT, "sig_handler");
+function sig_handler($signo) {}
+
 ///////// ARGUMENT //////////
 $testRandom 	= array_search("random", 	$argv) 	? true : false;
 $detail 		= array_search("detail", 	$argv) 	? true : false;
@@ -140,17 +144,24 @@ function compute($command) {
 	global $outputSelect;
 
 	$countAll++;
-	exec("./$shellexec1 -c '$command' 2>&1", $tmp, $return_var1);
-	exec("./$shellexec1 -c '$command' 2>/dev/null", $tmp1, $return_var11);
+	try {
 
-	if ($OptValgrind)
-		exec("$valgrind ./$shellexec1 -c '$command' 2>/dev/null 1>/dev/null", $null, $return_valgrind);
-	else
-		$return_valgrind = 0;
+		exec("./$shellexec1 -c '$command' 2>&1", $tmp, $return_var1);
+		exec("./$shellexec1 -c '$command' 2>/dev/null", $tmp1, $return_var11);
 
-	exec("$shellexec2 -c '$command' 2>&1", $tmp2, $return_var2);
-	exec("$shellexec2 -c '$command' 2>/dev/null", $tmp3, $return_var22);
+		if ($OptValgrind)
+			exec("$valgrind ./$shellexec1 -c '$command' 2>/dev/null 1>/dev/null", $null, $return_valgrind);
+		else
+			$return_valgrind = 0;
+		
 
+
+		exec("$shellexec2 -c '$command' 2>&1", $tmp2, $return_var2);
+		exec("$shellexec2 -c '$command' 2>/dev/null", $tmp3, $return_var22);
+	} catch (Exception $e) {
+		echo 'EXEPTION THROWED';
+		
+	}
 	file_put_contents("res1", implode("\n", $tmp)."\n");
 	file_put_contents("res11", implode("\n", $tmp1)."\n");
 	file_put_contents("res2", implode("\n", $tmp2)."\n");
@@ -235,9 +246,15 @@ function check_error_valgrind($return_valgrind) {
 function check_error_signal($return_var1, $return_var2) {
 	global $testSignal;
 
-	if ($testSignal && $return_var1 != $return_var2)
+	if ($testSignal && $return_var1 != $return_var2)		  	
+	{		
+		// with pcntl
+		if ($return_var1 > 0 && $return_var2 > 0)		
+			return (2);
+					
 		return (1);
-	else
+	}		
+	else		  
 		return (0);
 }
 
