@@ -9,6 +9,10 @@
 
 # define ARG_STOP "--"
 
+# define SIMPLE_QUOTE '\''
+# define DOUBLE_QUOTE '"'
+# define BACKSLASH '\\'
+
 void					event_callback_test(void);
 char					*strdup_until(char const *src, char const *stop);
 bool					is_posix_blank(char c);
@@ -44,5 +48,6 @@ void					quote_word(char **word);
 void					quote_per_word(char **str);
 int						convert_base(int nbr, int base_from, int base_to);
 bool					is_special_builtin(char *builtin);
+char					*erase_char(char *str);
 
 #endif
