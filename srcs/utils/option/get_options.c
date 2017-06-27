@@ -58,6 +58,7 @@ char	*get_options_core(int ac, char **av)
 			j = 0;
 			while (av[i][++j])
 			{
+				ft_strdel(&arg);
 				arg = get_name(av, i, j);
 				if (arg == (char*)-1)
 					return (arg);

@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:53:33 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 15:53:37 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/27 12:38:19 by nmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,9 @@ void		run_env(int argc, char **argv, t_simple_command *cmd)
 			break ;
 	while (i < argc && ft_strchr(argv[i], '=') != NULL)
 	{
-		split = ft_strsplit(argv[i], '=');
-		setenv_as(&get_shell_env()->variables, split[0], split[1],\
-			true);
+		split = ft_strsplit(argv[i++], '=');
+		setenv_as(&get_shell_env()->variables, split[0], split[1], true);
 		ft_freetabchar(split);
-		i++;
 	}
 	if (argc > i)
 	{

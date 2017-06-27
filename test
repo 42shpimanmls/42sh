@@ -11,7 +11,6 @@ define('CHECK_DIFFERENT_SIGNAL', 2);
 
 declare(ticks = 1);		
 pcntl_signal(SIGINT, "sig_handler");
-function sig_handler($signo) {}
 
 ///////// ARGUMENT //////////
 $testRandom 	= array_search("random", 	$argv) 	? true : false;
@@ -122,6 +121,11 @@ function getRandomCommand() {
 	return ($command);
 }
 
+function sig_handler($signo) {
+	global $signalHandled;
+	$signalHandled = true;
+}
+
 function compute($command) {
 	global $commentChar;
 	global $countMaybe;
@@ -142,6 +146,8 @@ function compute($command) {
 	global $valgrind;
 	global $OptValgrind;
 	global $outputSelect;
+	global $signalHandled;
+	$signalHandled = false;
 
 	$countAll++;
 	try {
@@ -159,9 +165,13 @@ function compute($command) {
 		exec("$shellexec2 -c '$command' 2>&1", $tmp2, $return_var2);
 		exec("$shellexec2 -c '$command' 2>/dev/null", $tmp3, $return_var22);
 	} catch (Exception $e) {
-		echo 'EXEPTION THROWED';
-		
+		echo 'EXCEPTION THROWED';
 	}
+
+	// exception for command with pipe
+	if ($signalHandled && $return_var1 == 2 && $return_var2 == 0)		
+		$return_var1 = 0;
+
 	file_put_contents("res1", implode("\n", $tmp)."\n");
 	file_put_contents("res11", implode("\n", $tmp1)."\n");
 	file_put_contents("res2", implode("\n", $tmp2)."\n");
@@ -248,10 +258,6 @@ function check_error_signal($return_var1, $return_var2) {
 
 	if ($testSignal && $return_var1 != $return_var2)		  	
 	{		
-		// with pcntl
-		if ($return_var1 > 0 && $return_var2 > 0)		
-			return (2);
-					
 		return (1);
 	}		
 	else		  
