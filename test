@@ -9,6 +9,9 @@ define('NO_ERROR', 0);
 define('ERROR_DIFFERENT_SIGNAL', 1);
 define('CHECK_DIFFERENT_SIGNAL', 2);
 
+declare(ticks = 1);		
+pcntl_signal(SIGINT, "sig_handler");
+
 ///////// ARGUMENT //////////
 $testRandom 	= array_search("random", 	$argv) 	? true : false;
 $detail 		= array_search("detail", 	$argv) 	? true : false;
@@ -118,6 +121,11 @@ function getRandomCommand() {
 	return ($command);
 }
 
+function sig_handler($signo) {
+	global $signalHandled;
+	$signalHandled = true;
+}
+
 function compute($command) {
 	global $commentChar;
 	global $countMaybe;
@@ -138,18 +146,31 @@ function compute($command) {
 	global $valgrind;
 	global $OptValgrind;
 	global $outputSelect;
+	global $signalHandled;
+	$signalHandled = false;
 
 	$countAll++;
-	exec("./$shellexec1 -c '$command' 2>&1", $tmp, $return_var1);
-	exec("./$shellexec1 -c '$command' 2>/dev/null", $tmp1, $return_var11);
+	try {
 
-	if ($OptValgrind)
-		exec("$valgrind ./$shellexec1 -c '$command' 2>/dev/null 1>/dev/null", $null, $return_valgrind);
-	else
-		$return_valgrind = 0;
+		exec("./$shellexec1 -c '$command' 2>&1", $tmp, $return_var1);
+		exec("./$shellexec1 -c '$command' 2>/dev/null", $tmp1, $return_var11);
 
-	exec("$shellexec2 -c '$command' 2>&1", $tmp2, $return_var2);
-	exec("$shellexec2 -c '$command' 2>/dev/null", $tmp3, $return_var22);
+		if ($OptValgrind)
+			exec("$valgrind ./$shellexec1 -c '$command' 2>/dev/null 1>/dev/null", $null, $return_valgrind);
+		else
+			$return_valgrind = 0;
+		
+
+
+		exec("$shellexec2 -c '$command' 2>&1", $tmp2, $return_var2);
+		exec("$shellexec2 -c '$command' 2>/dev/null", $tmp3, $return_var22);
+	} catch (Exception $e) {
+		echo 'EXCEPTION THROWED';
+	}
+
+	// exception for command with pipe
+	if ($signalHandled && $return_var1 == 2 && $return_var2 == 0)		
+		$return_var1 = 0;
 
 	file_put_contents("res1", implode("\n", $tmp)."\n");
 	file_put_contents("res11", implode("\n", $tmp1)."\n");
@@ -235,9 +256,11 @@ function check_error_valgrind($return_valgrind) {
 function check_error_signal($return_var1, $return_var2) {
 	global $testSignal;
 
-	if ($testSignal && $return_var1 != $return_var2)
+	if ($testSignal && $return_var1 != $return_var2)		  	
+	{		
 		return (1);
-	else
+	}		
+	else		  
 		return (0);
 }
 
