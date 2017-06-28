@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 17:57:27 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 16:40:31 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/27 18:26:34 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int			go_standard(char *directory, char **curpath,
 	{
 		set_variable("OLDPWD", *current_pwd, true);
 		set_variable("PWD", new_pwd, true);
+		ft_strdel(&new_pwd);
 	}
-	ft_strdel(&new_pwd);
 	return (ret);
 }
 
