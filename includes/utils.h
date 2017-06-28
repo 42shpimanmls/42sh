@@ -49,5 +49,6 @@ void					quote_per_word(char **str);
 int						convert_base(int nbr, int base_from, int base_to);
 bool					is_special_builtin(char *builtin);
 char					*erase_char(char *str);
+bool					is_xbd_name(char const *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:52:45 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 15:52:47 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/28 13:40:05 by nmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "shell_env.h"
 #include "abstract_list.h"
 #include "variable.h"
+#include "utils.h"
 
 int		builtin_setenv(int argc, char **argv)
 {
@@ -45,6 +46,19 @@ int		builtin_setenv(int argc, char **argv)
 	return (STATUS_FAILURE);
 }
 
+static bool try_create_variable(t_variable** env, char *name, char *value
+																, bool exported)
+{
+	if (!is_xbd_name(name))
+	{
+		ft_putendl_fd("42sh: setenv: variable name is not a xbd name!", 2);
+		return (false);
+	}
+	list_push_back((t_abstract_list**)&env,
+		(t_abstract_list*)create_variable(name, value, exported, true));
+	return (true);
+}
+
 int		setenv_as(t_variable **env, char *name, char *value, bool exported)
 {
 	if (env && ft_strlen(name) > 0)
@@ -56,9 +70,8 @@ int		setenv_as(t_variable **env, char *name, char *value, bool exported)
 			else
 				return (STATUS_SUCCESS);
 		}
-		list_push_back((t_abstract_list**)&env,
-			(t_abstract_list*)create_variable(name, value, exported, true));
-		return (STATUS_SUCCESS);
+		if (try_create_variable(env, name, value, exported))
+			return (STATUS_SUCCESS);
 	}
 	return (STATUS_FAILURE);
 }

@@ -14,6 +14,21 @@ static bool				is_xbd_name_char(char c, size_t u)
 	return (false);
 }
 
+bool					is_xbd_name(char const *str)
+{
+	size_t	i;
+	char	c;
+
+	i = 0;
+	while ((c = str[i]) != '\0')
+	{
+		if (!is_xbd_name_char(c, i))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 static char const		*find_assignment_equal(char const *str)
 {
 	char	c;
