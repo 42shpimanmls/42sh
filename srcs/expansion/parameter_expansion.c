@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 17:09:04 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 17:09:30 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/28 16:01:47 by nmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void	goto_parameter_end(char *word, t_range *delimit)
 	while (word[delimit->end] && word[delimit->end] != '\\' \
 			&& !is_posix_blank(word[delimit->end]) \
 			&& !is_quote(word[delimit->end]) && word[delimit->end] != '$'
-			&& word[delimit->end] != '`')
+			&& word[delimit->end] != '`'
+			&& word[delimit->end] != '\n')
 		delimit->end++;
 }
 
