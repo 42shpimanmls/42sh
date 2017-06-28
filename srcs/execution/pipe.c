@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 16:01:50 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 16:01:58 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/28 15:53:01 by abruno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ pid_t				enter_subshell(void)
 	if (fork_ret < 0)
 	{
 		ft_putendl_fd("42sh: failed to fork", 2);
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 	return (fork_ret);
 }
