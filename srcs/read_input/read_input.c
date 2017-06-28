@@ -9,10 +9,18 @@ static void	handle_command_string(t_shell_env *shell_env)
 	shell_env->should_run = false;
 }
 
+static void handle_notty(t_shell_env *shell_env)
+{
+	shell_env->input_string = fd_to_str(0);
+	shell_env->should_run = false;
+}
+
 static void	handle_stdin(t_shell_env *shell_env)
 {
 	char	*tmp;
 
+	if (!isatty(0))
+		return (handle_notty(shell_env));
 	if (shell_env->input_string != NULL)
 	{
 		tmp = shell_env->input_string;
