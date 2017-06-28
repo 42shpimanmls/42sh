@@ -19,5 +19,6 @@ t_strlist			*split_subsitutions_run(char const *word,
 					char const *passv_str_start,
 					t_strlist *result, char quoted);
 void				expand_assignments_values(t_variable *assignments);
+char				*remove_double_quotes(char *str);
 
 #endif
