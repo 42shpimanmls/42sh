@@ -21,11 +21,12 @@ static void	refresh_termcap(int ret)
 	ed->pos = get_cursor_vector(ed);
 }
 
-static char	*start_rescue_mode(void)
+static char	*start_rescue_mode(bool close_term)
 {
 	char *line;
 
-	ft_close_termcaps();
+	if (close_term)
+		ft_close_termcaps();
 	ft_printf("[RESCUE MODE]$ ");
 	line = ft_getline(STDIN_FILENO);
 	return (line);
@@ -36,14 +37,18 @@ char		*edit_input(void)
 	t_editor	*ed;
 	char		*line;
 
+	if (!(line = get_variable("TERM")))
+	{
+		free(line);
+		line = start_rescue_mode(false);
+		return (line);
+	}
 	signal(SIGWINCH, refresh_termcap);
 	ft_start_termcaps();
 	ed = get_editor();
 	init_editor();
 	if (ed->term->rescue_mode)
-	{
-		line = start_rescue_mode();
-	}
+		line = start_rescue_mode(true);
 	else
 	{
 		ed->in_edition = true;
