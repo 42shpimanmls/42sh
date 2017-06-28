@@ -39,10 +39,10 @@ char		*edit_input(void)
 
 	if (!(line = get_variable("TERM")))
 	{
-		free(line);
 		line = start_rescue_mode(false);
 		return (line);
 	}
+	free(line);
 	signal(SIGWINCH, refresh_termcap);
 	ft_start_termcaps();
 	ed = get_editor();
