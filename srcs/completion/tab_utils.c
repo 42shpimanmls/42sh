@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:18:31 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 15:22:48 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/27 17:32:57 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "put_on_tty.h"
 #include <libft.h>
 #include <term.h>
+#include <sys/stat.h>
 
 t_tabinfo	*get_tabinfo(void)
 {
@@ -34,20 +35,25 @@ void		clear_tabinfo(void)
 	ft_bzero(get_tabinfo(), sizeof(t_tabinfo));
 }
 
-void		add_file(t_strlist **lst, struct dirent *dir)
+void		add_file(t_strlist **lst, struct dirent *dir, char *prepath)
 {
-	char *tmp;
-	char *escaped;
+	char			*tmp;
+	char			*for_stat;
+	char			*escaped;
+	struct stat		my_stat;
 
 	if (!ft_strcmp(dir->d_name, ".") || !ft_strcmp(dir->d_name, ".."))
 		return ;
 	tmp = ft_strdup(dir->d_name);
-	if (dir->d_type == DT_DIR)
+	for_stat = ft_strjoinf(prepath, dir->d_name, 0);
+	stat(for_stat, &my_stat);
+	if (S_ISDIR(my_stat.st_mode))
 		tmp = ft_strjoinf(tmp, "/", 1);
 	escaped = str_escape(tmp, " \\;|<>'\"");
 	list_push_back((t_abstract_list**)&lst,
 			(t_abstract_list*)strlist_construct(escaped));
 	ft_strdel(&tmp);
+	ft_strdel(&for_stat);
 	ft_strdel(&escaped);
 }
 
