@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 16:00:28 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/27 12:57:19 by nmeier           ###   ########.fr       */
+/*   Updated: 2017/06/28 13:07:20 by nmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ t_error_id	execute_pipeline(t_simple_command *pipeline, size_t lvl)
 			pipeline_state.last_cmd = true;
 		if (pipe_me_in(&pipeline_state) == FORKED_IN_CHILD)
 		{
-			ret = execute_simple_command(pipeline, lvl + 1);
-			if (ret == NO_ERROR)
+			if ((ret = execute_simple_command(pipeline, lvl + 1)) == NO_ERROR)
 				exit(EXIT_SUCCESS);
 			else
 				exit(EXIT_FAILURE);
