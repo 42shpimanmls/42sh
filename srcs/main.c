@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include "ftsh.h"
 #include "init/init.h"
-#include <stdio.h>
 #include "errors.h"
 #include "history/substitution/history_substitutions.h"
 #include "history/builtin/history.h"
@@ -23,11 +22,12 @@ static void		main_loop(void)
 	if (shell_env->input_string)
 		add_to_history_list(&shell_env->history.list,
 				create_history_entry(shell_env->input_string));
-	if (shell_env->input_string)
-		ft_strdel(&get_shell_env()->input_string);
 	parse_input();
 	if (get_error() == NO_ERROR)
+	{
 		execute_command_list(get_shell_env()->syntax_tree);
+		ft_strdel(&get_shell_env()->input_string);
+	}
 	delete_command_list(&get_shell_env()->syntax_tree);
 }
 
