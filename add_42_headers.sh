@@ -48,6 +48,10 @@ add_42_headers() {
 add_42_header() {
     src_file=$1
     tmp="/tmp/42_header"
+	first_chars=$(head -c 3 $src_file)
+	if [ $first_chars = "/* " ]; then
+		return
+	fi
     if [ $src_file = "Makefile" ]; then
         echo $makefile_header > $tmp
     else
