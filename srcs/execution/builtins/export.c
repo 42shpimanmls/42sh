@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 15:52:57 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 15:52:58 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/29 15:12:37 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ int				builtin_export(int argc, char **argv)
 	else
 	{
 		ft_dprintf(STDERR_FILENO, "Usage: export [-p] name[=word]...\n");
+		ft_strdel(&opt);
 		return (STATUS_FAILURE);
 	}
+	ft_strdel(&opt);
 	return (STATUS_SUCCESS);
 }
