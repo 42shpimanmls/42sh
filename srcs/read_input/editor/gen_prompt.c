@@ -2,6 +2,7 @@
 #include <term.h>
 #include <termios.h>
 #include <curses.h>
+#include <unistd.h>
 
 #include "utils.h"
 #include "abstract_list.h"
@@ -73,7 +74,8 @@ char				*gen_prompt(void)
 	shell_env = get_shell_env();
 	if (!shell_env->last_unmatched)
 	{
-		tmp = ft_strjoinf(mangle_home(get_variable("PWD")), "]$ ", 1);
+		//tmp = ft_strjoinf(mangle_home(get_variable("PWD")), "]$ ", 1);
+		tmp = ft_strjoinf(mangle_home(getcwd(0, 0)), "]$ ", 1);
 		result = ft_strjoin(" ", tmp);
 		free(tmp);
 		tmp = ft_strjoinf(get_variable("USER"), "@", 1);

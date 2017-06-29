@@ -20,7 +20,7 @@ void			set_curpath_from_pwd(char **str_addr)
 		fatal_error("NULL ptr fed to set_curpath_from_pwd");
 	if ((*str_addr)[0] == '/')
 		return ;
-	path = get_variable("PWD");
+	path = getcwd(0, 0);//get_variable("PWD");
 	if (!last_is_slash(path))
 		path = ft_strjoinf(path, "/", 1);
 	*str_addr = ft_strjoinf(path, *str_addr, 3);
@@ -108,7 +108,7 @@ BUILTIN_RET		cd_oldpwd(void)
 	ret = builtin_cd(2, (char*[]){"cd", oldpwd, NULL});
 	if (ret == EXIT_SUCCESS)
 	{
-		ft_putendl(s = get_variable("PWD"));
+		ft_putendl(s = getcwd(0, 0));//get_variable("PWD"));
 		ft_strdel(&s);
 	}
 	free(oldpwd);

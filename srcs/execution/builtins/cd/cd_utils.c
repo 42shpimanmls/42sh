@@ -66,7 +66,7 @@ int			go_standard(char *directory, char **curpath,
 			ft_strdel(current_pwd);
 			return (EXIT_SUCCESS);
 		}
-		new_pwd = ft_strdup(*curpath);
+		new_pwd = getcwd(0, 0);//ft_strdup(*curpath);
 		save_the_day(curpath, directory, *current_pwd);
 	}
 	ret = chdir(*curpath);
