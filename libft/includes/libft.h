@@ -6,7 +6,7 @@
 /*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:28:51 by pilespin          #+#    #+#             */
-/*   Updated: 2017/06/23 14:43:26 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/29 12:50:12 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/uio.h>
 # include <fcntl.h>
 # include <sys/time.h>
+# include "get_next_line.h"
 
 # define BUFF_SIZE 4095
 
@@ -117,7 +118,6 @@ void		ft_striteri(char *s, void(*f)(unsigned int, char *));
 char		*ft_strmap(char const *s, char(*f)(char));
 char		*ft_strmapi(char const *s, char(*f)(unsigned int, char));
 int			ft_get_next_line(int const fd, char **line);
-char		*ft_getline(int const fd);
 
 char		**ft_make_tabchar(int size);
 

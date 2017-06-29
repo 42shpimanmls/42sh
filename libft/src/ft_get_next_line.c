@@ -1,69 +1,95 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_next_line.c                                 :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/22 12:07:13 by pilespin          #+#    #+#             */
-/*   Updated: 2016/02/29 18:19:58 by pilespin         ###   ########.fr       */
+/*   Created: 2016/11/24 13:30:37 by asenat            #+#    #+#             */
+/*   Updated: 2017/06/29 12:49:50 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
-static char	*ft_keep_just_line(char *tmp)
+t_content	*init_content(int fd, char *content)
 {
-	char *tmp2;
+	t_content *res;
 
-	tmp2 = ft_strchr(tmp, '\n');
-	tmp[ft_strlen(tmp) - ft_strlen(tmp2)] = '\0';
-	return (ft_strdup(tmp2 + 1));
+	if (!(res = (t_content*)malloc(sizeof(struct s_content))))
+		return (NULL);
+	res->fd = fd;
+	res->rest = content;
+	return (res);
 }
 
-static int	ft_suit(int fd, char *tmp, char **tmp3, char **line)
+t_list		*getlist(int fd, t_list **lst)
 {
-	int		ret;
-	char	*buff;
+	t_list		*tmp;
+	t_content	*new;
 
-	ret = 1;
-	if (ft_strchr(tmp, '\n'))
-		tmp3[fd] = ft_keep_just_line(tmp);
-	else
+	new = init_content(fd, NULL);
+	tmp = *lst;
+	if (!*lst)
 	{
-		buff = (char *)memalloc_or_die(BUFF_SIZE + 1);
-		while (ret > 0)
-		{
-			ret = read(fd, buff, BUFF_SIZE);
-			buff[ret] = '\0';
-			tmp = ft_strjoinf(tmp, buff, 1);
-			if (ft_strchr(buff, '\n'))
-			{
-				tmp3[fd] = ft_keep_just_line(tmp);
-				ft_strdel(&buff);
-				break ;
-			}
-		}
+		*lst = ft_lstnew(new, sizeof(struct s_content));
+		ft_memdel((void**)(&new));
+		return (*lst);
 	}
-	*line = ft_strdup(tmp);
-	ft_strdel(&tmp);
-	return (ret);
+	while (tmp)
+	{
+		if (((t_content*)(tmp->content))->fd == fd)
+			break ;
+		tmp = tmp->next;
+	}
+	if (!tmp)
+	{
+		ft_lstadd(lst, ft_lstnew(new, sizeof(struct s_content)));
+		ft_memdel((void**)(&new));
+		return (*lst);
+	}
+	ft_memdel((void**)(&new));
+	return (tmp);
 }
 
-int			ft_get_next_line(int const fd, char **line)
+int			readline(int fd, t_list *lst, char **line)
 {
-	int			ritourn;
-	char		*tmp;
-	static char	*tmp3[256];
+	int			loc;
+	char		*red;
+	t_content	*ctnt;
 
-	if (fd < 0 || (line == NULL))
+	ctnt = (t_content*)(lst->content);
+	red = ft_realloc(ft_strdup(ctnt->rest), BUFF_SIZE);
+	while (!ft_strchr(red, '\n'))
+	{
+		if (read(fd, (red + ft_strlen(red)), BUFF_SIZE) <= 0)
+			break ;
+		red = ft_realloc(red, BUFF_SIZE);
+	}
+	loc = (ft_strchr(red, '\n')) ? ft_strchr(red, '\n') - red : -1;
+	if (loc < 0)
+	{
+		*line = ft_strdup(red);
+		ft_memdel((void**)(&red));
+		ft_strdel(&(ctnt->rest));
+		return ((**line == '\0') ? 0 : 1);
+	}
+	ft_strdel(&(ctnt->rest));
+	ctnt->rest = ft_strsub(red, loc + 1, ft_strlen(red) - loc);
+	*line = ft_strsub(red, 0, loc);
+	ft_memdel((void**)(&red));
+	return (1);
+}
+
+int			get_next_line(int const fd, char **line)
+{
+	static t_list	*lst = NULL;
+	t_list			*current;
+
+	if (fd < 0 || !line)
 		return (-1);
-	if (tmp3[fd])
-		tmp = ft_strdup(tmp3[fd]);
-	else
-		tmp = ft_strnew(0);
-	ritourn = ft_suit(fd, tmp, tmp3, line);
-	if (ritourn == -1)
+	if (read(fd, 0, 0) == -1)
 		return (-1);
-	return ((ritourn == 0) ? 0 : 1);
+	current = getlist(fd, &lst);
+	return (readline(fd, current, line));
 }

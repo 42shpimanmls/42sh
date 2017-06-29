@@ -59,19 +59,21 @@ void			load_history(t_shell_env *shell_env, char *filename,
 
 	i = 0;
 	position = 0;
+	line = NULL;
 	if (!filename)
 		filename = get_shell_env()->history.histfile;
 	if ((fd = open(filename, O_RDONLY)) >= 0)
 	{
 		if (n_opt)
 			position = get_file_position(filename)->position;
-		while ((line = ft_getline(fd)))
+		while ((get_next_line(fd, &line)))
 		{
 			if (i >= position)
 				history_add_with_nl(shell_env, line);
 			ft_strdel(&line);
 			i++;
 		}
+		ft_strdel(&line);
 		close(fd);
 		update_file_position(filename, i);
 	}
