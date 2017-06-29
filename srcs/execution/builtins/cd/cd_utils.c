@@ -66,12 +66,12 @@ int			go_standard(char *directory, char **curpath,
 			ft_strdel(current_pwd);
 			return (EXIT_SUCCESS);
 		}
-		new_pwd = getcwd(0, 0);//ft_strdup(*curpath);
 		save_the_day(curpath, directory, *current_pwd);
 	}
 	ret = chdir(*curpath);
+	new_pwd = getcwd(0, 0);
 	(ret == -1) ? print_errno_error(errno, "cd", *curpath) : 0;
-	if (opt != 'P' && ret != -1)
+	if (ret != -1)
 	{
 		set_variable("OLDPWD", *current_pwd, true);
 		set_variable("PWD", new_pwd, true);
