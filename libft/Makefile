@@ -6,7 +6,7 @@
 #    By: pilespin <pilespin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/09 11:34:04 by pilespin          #+#    #+#              #
-#    Updated: 2017/06/22 17:11:47 by asenat           ###   ########.fr        #
+#    Updated: 2017/06/29 13:04:01 by asenat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ SRCA = ft_strlen.c \
 	ft_strmap.c \
 	ft_strmapi.c \
 	ft_sorttab.c ft_swapchar.c \
-	ft_get_next_line.c ft_getline.c \
+	ft_get_next_line.c \
 	ft_freetabchar.c \
 	ft_make_tabchar.c \
 	ft_pow.c ft_sqrt.c ft_absint.c \
@@ -81,6 +81,9 @@ SRCA = ft_strlen.c \
 	ft_replace_char.c \
 	ft_doublearrayndel.c \
 	ft_splitfilepath.c \
+	ft_lstnew.c \
+	ft_realloc.c \
+	ft_lstadd.c \
 	memalloc_or_die.c \
 
 SRCH	=	libft.h \

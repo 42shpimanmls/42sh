@@ -27,8 +27,13 @@ static char	*start_rescue_mode(bool close_term)
 
 	if (close_term)
 		ft_close_termcaps();
+	line = NULL;
 	ft_printf("[RESCUE MODE]$ ");
-	line = ft_getline(STDIN_FILENO);
+	if (get_next_line(STDIN_FILENO, &line) <= 0)
+	{
+		ft_strdel(&line);
+		return (NULL);
+	}
 	return (line);
 }
 
