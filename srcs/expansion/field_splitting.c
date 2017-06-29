@@ -6,7 +6,7 @@
 /*   By: asenat <asenat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 17:07:33 by asenat            #+#    #+#             */
-/*   Updated: 2017/06/26 17:21:03 by asenat           ###   ########.fr       */
+/*   Updated: 2017/06/29 13:15:44 by nmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "strlist.h"
 #include <stdlib.h>
 #include <libft.h>
-#include <stdio.h>
 #include "range.h"
 #include "utils.h"
 #include "abstract_list.h"
@@ -24,7 +23,7 @@ static void		end_of_quote(char const *word, t_range *delimit)
 {
 	char	quote;
 
-	quote = *word;
+	quote = word[delimit->end];
 	delimit->end++;
 	if (quote == '\\')
 		return ;
@@ -63,7 +62,6 @@ t_strlist		*field_splitting(char const *word)
 {
 	t_strlist	*result;
 	t_range		delimit;
-	t_strlist	*tmp;
 
 	result = NULL;
 	ft_bzero(&delimit, sizeof(t_range));
@@ -73,14 +71,11 @@ t_strlist		*field_splitting(char const *word)
 			&& word[delimit.end] != '\n')
 		{
 			if (is_quote(word[delimit.end]))
-				end_of_quote(&word[delimit.end], &delimit);
+				end_of_quote(word, &delimit);
 			if (word[delimit.end])
 				delimit.end++;
 		}
 		add_field(word, &result, &delimit);
 	}
-	tmp = result;
-	while (tmp)
-		tmp = tmp->next;
 	return (result);
 }
