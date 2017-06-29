@@ -15,6 +15,7 @@ EV_CB_RET	ev_history_up(t_editor *ed)
 	if (!ed->in_history)
 	{
 		ed->history_current = ed->history;
+		ft_strdel(&ed->history_saved_current_string);
 		ed->history_saved_current_string = get_string_from_list(ed->string);
 	}
 	else if (ed->history_current->prev)
@@ -34,6 +35,7 @@ EV_CB_RET	ev_history_down(t_editor *ed)
 	if (!ed->in_history)
 	{
 		ed->history_current = ed->history;
+		ft_strdel(&ed->history_saved_current_string);
 		ed->history_saved_current_string = get_string_from_list(ed->string);
 	}
 	if (ed->history_current)

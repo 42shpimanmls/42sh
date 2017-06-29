@@ -31,6 +31,7 @@ static void		handle_etx(t_editor *ed)
 	ed->need_refresh = true;
 	ed->last_event = 0;
 	clear_down(ed);
+	ft_strdel(&ed->history_saved_current_string);
 }
 
 static bool		handle_control_char(t_editor *ed, char buf[])
