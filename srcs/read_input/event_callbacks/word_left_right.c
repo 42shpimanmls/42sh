@@ -15,13 +15,16 @@ static size_t	get_next_word(t_editor *ed)
 	char	*str;
 	size_t	pos;
 
-	str = get_string_from_list(ed->string);
 	pos = ed->cursor_position;
 	if (pos >= ed->string_size)
 		return (pos);
+	str = get_string_from_list(ed->string);
 	pos++;
 	if (pos > ft_strlen(str))
+	{
+		free(str);
 		return (ed->cursor_position);
+	}
 	while (str[pos] && is_white(str[pos]))
 		pos++;
 	while (str[pos] && !is_white(str[pos]))
@@ -35,10 +38,10 @@ static size_t	get_previous_word(t_editor *ed)
 	char	*str;
 	size_t	pos;
 
-	str = get_string_from_list(ed->string);
 	pos = ed->cursor_position;
 	if (pos <= 0)
 		return (0);
+	str = get_string_from_list(ed->string);
 	pos--;
 	while (pos > 0 && str[pos] && !is_white(str[pos]))
 		pos--;
