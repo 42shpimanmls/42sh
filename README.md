@@ -4,7 +4,7 @@
 FEATURES
 ---
 
-- [ ] Édition de ligne
+- [x] Édition de ligne
 	- [x] Éditer la ligne à l’endroit où se trouve le curseur.
 	- [x] Déplacer le curseur vers la gauche et vers la droite.
 	- [x] Les flèches du haut et du bas pour naviguer dans l’historique.
@@ -18,7 +18,7 @@ FEATURES
 	- [x] Gérer complètement les quotes et doubles quotes, (hors expansions).
 
 - [ ] Builtins
-	- [ ] cd [-L|-P] [directory]
+	- [x] cd [-L|-P] [directory]
 	- [x] echo [string...]
 	- [x] exit [n]
 	- [x] env [-i] [name=value]... [utility [argument...]]
@@ -26,20 +26,20 @@ FEATURES
 	- [x] unsetenv
 	- [x] unset [-fv] name...
 	- [x] export [-p] name[=word]...
-	- [x] history
+	- [ ] history
 
-- [ ] Exécution
+- [x] Exécution
 	- [x] Exécution de commandes avec leurs paramètres et gestion du PATH.
 	- [x] Gestion des erreurs et de la valeur de retour des commandes.
 	- [x] Les redirection suivantes : ">", ">>", "<".
 	- [x] Les pipes “|”.
-	- [ ] Les opérateurs logiques "&&" et "||".
+	- [x] Les opérateurs logiques "&&" et "||".
 	- [x] Les back quotes "‘".
 	- [x] Le séparateur ";".
 
-- [ ] Shell
-	- [ ] Les variables locales.
-	- [ ] Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash).
+- [x] Shell
+	- [x] Les variables locales.
+	- [x] Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash).
 
 - [x] Signaux 
 	- [x] ctrl+D
@@ -47,7 +47,7 @@ FEATURES
 
 - [ ] Bonus
 	- [ ] Le heredoc "<<".
-	- [ ] Complétion dynamique.
+	- [x] Complétion dynamique.
 	- [ ] Le Job control, job, fg et bg, et l’operateur "&".
 	- [ ] Les aggrégations de descripteurs de fichiers 2>&- etc.
 	- [ ] Rechercher dans l’historique avec ctrl+R.
